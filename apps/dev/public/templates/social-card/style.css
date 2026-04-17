@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+.social {
+  position: fixed;
+  bottom: 80px;
+  right: 48px;
+  font-family: 'Inter', system-ui, sans-serif;
+  transform: translateX(120%);
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.social.visible {
+  transform: translateX(0);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
+
+.social.out {
+  transform: translateX(120%);
+  opacity: 0;
+  filter: blur(4px);
+  transition:
+    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.4s ease 0.1s,
+    filter 0.4s ease 0.1s;
+}
+
+.social-card {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 24px 28px;
+  max-width: 400px;
+  min-width: 340px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blue accent bar on left */
+.social-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  border-radius: 4px 0 0 4px;
+}
+
+.social-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.social-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.social-avatar-initials {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.social-user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.social-user-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.social-user-handle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.social-platform {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #0f172a;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.social-text {
+  font-size: 15px;
+  font-weight: 400;
+  color: #334155;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}

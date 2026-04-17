@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; overflow: hidden; }</style>
+</head>
+<body>
+  <sport-lineup></sport-lineup>
+  <script type="module">
+    import SportLineup from './graphic.mjs';
+    const el = document.querySelector('sport-lineup');
+    const defaultData = {
+      team: 'FC Barcelona',
+      meta: 'La Liga — Matchday 32',
+      formation: '4-3-3',
+      coach: 'H. Flick',
+      players: [
+        { number: 1, name: 'ter Stegen', position: 'GK' },
+        { number: 23, name: 'Koundé', position: 'RB' },
+        { number: 4, name: 'Araújo', position: 'CB' },
+        { number: 15, name: 'Christensen', position: 'CB' },
+        { number: 28, name: 'Baldé', position: 'LB' },
+        { number: 8, name: 'Pedri', position: 'CM' },
+        { number: 16, name: 'Fermín', position: 'CM' },
+        { number: 6, name: 'Gavi', position: 'CM' },
+        { number: 11, name: 'Yamal', position: 'RW' },
+        { number: 9, name: 'Lewandowski', position: 'ST' },
+        { number: 19, name: 'Raphinha', position: 'LW' },
+      ]
+    };
+    window.addEventListener('message', async (e) => {
+      const { action, data } = e.data || {};
+      if (!action) return;
+      switch (action) {
+        case 'load': await el.load({ data: data || defaultData }); break;
+        case 'play': await el.playAction({}); break;
+        case 'stop': await el.stopAction({}); break;
+        case 'update': await el.updateAction({ data }); break;
+      }
+    });
+    el.load({ data: defaultData, renderType: 'realtime', renderCharacteristics: {} });
+  </script>
+</body>
+</html>

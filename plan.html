@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGraf Community Portal — Product Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #08090d;
+      --bg-card: #0f1117;
+      --bg-card-hover: #161821;
+      --border: #1e2130;
+      --border-hover: #2a2e45;
+      --text: #e2e4ed;
+      --text-muted: #8b8fa7;
+      --text-dim: #5c6078;
+      --brand: #4f6fff;
+      --brand-light: #7b9aff;
+      --brand-dim: #2a3a80;
+      --brand-glow: rgba(79, 111, 255, 0.08);
+      --amber: #f0b445;
+      --amber-dim: #3d2e10;
+      --green: #34d399;
+      --green-dim: #0d3326;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --purple-dim: #2a2050;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- NAV --- */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 9, 13, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--brand); }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    /* --- HERO --- */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 32px 80px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, var(--brand-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #fff;
+      max-width: 700px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      margin-top: 20px;
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .hero p strong { color: var(--text); font-weight: 500; }
+
+    /* --- SECTION --- */
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 32px;
+    }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .section-desc {
+      margin-top: 12px;
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    /* --- DOMAIN SPLIT --- */
+    .domain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    @media (max-width: 800px) { .domain-grid { grid-template-columns: 1fr; } }
+    .domain-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 32px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .domain-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+    }
+    .domain-card .domain-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .domain-card .domain-name span { color: var(--brand); }
+    .domain-card .domain-role {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-light);
+      background: var(--brand-dim);
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .domain-card .domain-tagline {
+      margin-top: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .domain-card .domain-desc {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .domain-card ul {
+      margin-top: 16px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .domain-card ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .domain-card ul li::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--brand);
+      flex-shrink: 0;
+    }
+
+    /* --- FEATURES / KILLER --- */
+    .killer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .killer-card {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .killer-card:hover { border-color: var(--border-hover); }
+    .killer-num {
+      width: 56px; height: 56px;
+      border-radius: var(--radius-sm);
+      background: var(--brand-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand-light);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .killer-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .killer-card .killer-subtitle {
+      font-size: 13px;
+      color: var(--brand-light);
+      margin-top: 2px;
+    }
+    .killer-card p {
+      margin-top: 8px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* --- ROADMAP --- */
+    .roadmap {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .roadmap { grid-template-columns: 1fr; } }
+    .phase-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .phase-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .phase-card.mvp::before { background: var(--green); }
+    .phase-card.p2::before { background: var(--brand); }
+    .phase-card.p3::before { background: var(--purple); }
+    .phase-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .mvp .phase-label { color: var(--green); background: var(--green-dim); }
+    .p2 .phase-label { color: var(--brand-light); background: var(--brand-dim); }
+    .p3 .phase-label { color: var(--purple); background: var(--purple-dim); }
+    .phase-card .phase-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 12px;
+    }
+    .phase-card .phase-time {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .phase-card h4 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    .phase-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .phase-card ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 3px 0;
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+    .phase-card ul li::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* --- ECOSYSTEM MAP --- */
+    .eco-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .eco-category {
+      margin-top: 32px;
+    }
+    .eco-category-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eco-category-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .eco-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: border-color 0.2s;
+    }
+    .eco-item:hover { border-color: var(--border-hover); }
+    .eco-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .eco-item-type {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .eco-item-type.oss { color: var(--green); background: var(--green-dim); }
+    .eco-item-type.commercial { color: var(--amber); background: var(--amber-dim); }
+    .eco-item-type.official { color: var(--brand-light); background: var(--brand-dim); }
+
+    /* --- SITEMAP --- */
+    .sitemap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 700px) { .sitemap-grid { grid-template-columns: 1fr; } }
+    .sitemap-col {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 28px;
+    }
+    .sitemap-col h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .sitemap-col h3 span { color: var(--brand); }
+    .sitemap-item {
+      padding: 6px 0;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .sitemap-item .path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--brand-light);
+      white-space: nowrap;
+      min-width: 140px;
+    }
+    .sitemap-item .label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .sitemap-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    /* --- TECH STACK --- */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .stack-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      padding: 16px 20px;
+    }
+    .stack-item .stack-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+    .stack-item .stack-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .stack-item .stack-reason {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* --- JOURNEYS --- */
+    .journey {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 32px;
+      margin-top: 20px;
+    }
+    .journey h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .journey .persona {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-style: italic;
+    }
+    .journey ol {
+      margin-top: 16px;
+      padding-left: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    .journey ol li {
+      counter-increment: step;
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .journey ol li::before {
+      content: counter(step);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-light);
+      background: var(--brand-dim);
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .journey .outcome {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--green-dim);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+    }
+
+    /* --- LAUNCH --- */
+    .launch-timeline {
+      margin-top: 32px;
+      position: relative;
+      padding-left: 28px;
+    }
+    .launch-timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+    .launch-step {
+      position: relative;
+      padding: 12px 0;
+    }
+    .launch-step::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 18px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      border: 2px solid var(--bg);
+    }
+    .launch-step .launch-phase {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-light);
+    }
+    .launch-step h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .launch-step p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    footer p a {
+      color: var(--brand-light);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">ograf<span>.plan</span></a>
+    <div class="nav-links">
+      <a href="#positioning">Positioning</a>
+      <a href="#features">Features</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#sitemap">Sitemap</a>
+      <a href="#stack">Stack</a>
+      <a href="#journeys">Journeys</a>
+      <a href="#launch">Launch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <div class="dot"></div>
+    Product &amp; Ecosystem Plan &mdash; April 2026
+  </div>
+  <h1>The Community Hub for <em>Open Broadcast Graphics</em></h1>
+  <p>
+    A plan to build <strong>ograf.dev</strong> and <strong>ograf.tools</strong> &mdash; the definitive community portal and interactive workbench for the EBU OGraf ecosystem. Not a replacement for the official spec. The layer that makes it <strong>accessible, testable, and actionable</strong>.
+  </p>
+</div>
+
+<!-- POSITIONING / DOMAIN SPLIT -->
+<section id="positioning">
+  <div class="section-label">01 &mdash; Positioning</div>
+  <div class="section-title">Three Sites, Three Roles</div>
+  <div class="section-desc">
+    The official spec site stays authoritative. We build the community layer and the developer workbench. The three form a triangle, not a hierarchy.
+  </div>
+
+  <div class="domain-grid">
+    <div class="domain-card">
+      <div class="domain-name">ograf.ebu<span>.io</span></div>
+      <div class="domain-role">The Standard</div>
+      <div class="domain-tagline">Normative specification</div>
+      <div class="domain-desc">Official EBU site. Specification docs, JSON schemas, governance, working group. We link to it &mdash; we don't duplicate it.</div>
+      <ul>
+        <li>Graphics Definition v1 (stable)</li>
+        <li>Server/Control API (draft, mid-2026)</li>
+        <li>JSON schemas &amp; examples</li>
+        <li>Working group governance</li>
+      </ul>
+    </div>
+
+    <div class="domain-card">
+      <div class="domain-name">ograf<span>.dev</span></div>
+      <div class="domain-role">The Community</div>
+      <div class="domain-tagline">Learn, connect, discover, contribute</div>
+      <div class="domain-desc">The editorial and community hub. Where a developer, designer, or broadcaster starts their OGraf journey and returns for reference.</div>
+      <ul>
+        <li>Tutorials &amp; getting started guides</li>
+        <li>Ecosystem map &amp; compatibility matrix</li>
+        <li>Migration guides (CasparCG, SPX)</li>
+        <li>Community showcase &amp; blog</li>
+        <li>Discord community</li>
+        <li>Contributor guide</li>
+      </ul>
+    </div>
+
+    <div class="domain-card">
+      <div class="domain-name">ograf<span>.tools</span></div>
+      <div class="domain-role">The Workbench</div>
+      <div class="domain-tagline">Validate, preview, convert, test</div>
+      <div class="domain-desc">The interactive tooling hub. Where developers open a second tab to validate, preview, explore schemas, or generate templates.</div>
+      <ul>
+        <li>Package validator (manifest + full zip)</li>
+        <li>Live preview sandbox with lifecycle controls</li>
+        <li>GDD schema explorer &amp; builder</li>
+        <li>Starter template generator</li>
+        <li>CasparCG migration scorer</li>
+        <li>CLI &amp; CI/CD tools (future)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- KILLER FEATURES -->
+<section id="features">
+  <div class="section-label">02 &mdash; Killer Features</div>
+  <div class="section-title">Five Features That Make This the Bookmark</div>
+  <div class="section-desc">
+    Each solves a real gap in the current ecosystem. Together they cover discovery, validation, testing, onboarding, and migration.
+  </div>
+
+  <div class="killer-grid">
+    <div class="killer-card">
+      <div class="killer-num">01</div>
+      <div>
+        <h3>Instant Package Validation</h3>
+        <div class="killer-subtitle">Validate in 10 seconds &mdash; ograf.tools/validate</div>
+        <p>Paste your <code>.ograf.json</code>, get instant line-level errors, warnings, and spec references. Add a "Validate on ograf.tools" badge to GitHub READMEs. Every developer uses this daily &mdash; it becomes muscle memory. No signup, no install.</p>
+      </div>
+    </div>
+    <div class="killer-card">
+      <div class="killer-num">02</div>
+      <div>
+        <h3>Zero-Install Live Playground</h3>
+        <div class="killer-subtitle">The CodePen of broadcast graphics &mdash; ograf.tools/preview</div>
+        <p>Load any OGraf graphic from URL, zip, or gallery. Full lifecycle controls (play, stop, update, customAction), auto-generated data editor from GDD schema, action log, shareable links. The best demo in any meeting: "open this link and click Play."</p>
+      </div>
+    </div>
+    <div class="killer-card">
+      <div class="killer-num">03</div>
+      <div>
+        <h3>Interactive Ecosystem Map</h3>
+        <div class="killer-subtitle">Every tool in one view &mdash; ograf.dev/ecosystem</div>
+        <p>Visual, interactive landscape of every tool, renderer, editor, and library in the OGraf world. Click any node for details, GitHub stats, and compatibility info. Replaces visiting 10+ different sites. The first thing a CTO evaluating OGraf will bookmark.</p>
+      </div>
+    </div>
+    <div class="killer-card">
+      <div class="killer-num">04</div>
+      <div>
+        <h3>15-Minute First Template</h3>
+        <div class="killer-subtitle">Guided getting started &mdash; ograf.dev/get-started</div>
+        <p>Step-by-step code-along from zero to a working OGraf lower third. Embedded editor, live preview at each step, downloadable result. Collapses the current 4&ndash;5 site onboarding into one linear path.</p>
+      </div>
+    </div>
+    <div class="killer-card">
+      <div class="killer-num">05</div>
+      <div>
+        <h3>CasparCG Migration Scorecard</h3>
+        <div class="killer-subtitle">Automated assessment &mdash; ograf.tools/convert/casparcg</div>
+        <p>Upload a CasparCG template, get: complexity score (Easy/Medium/Hard), auto-convertible percentage, manual steps checklist, partially-generated OGraf package. CasparCG has 1000+ stars &mdash; this taps the largest potential migration audience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-label">03 &mdash; Roadmap</div>
+  <div class="section-title">Three Phases: Bookmark &rarr; Essential &rarr; Platform</div>
+
+  <div class="roadmap">
+    <div class="phase-card mvp">
+      <span class="phase-label">MVP</span>
+      <div class="phase-title">Become the Bookmark</div>
+      <div class="phase-time">Weeks 1&ndash;6</div>
+
+      <h4>ograf.dev</h4>
+      <ul>
+        <li>Homepage with hero &amp; ecosystem overview</li>
+        <li>15-minute "Get Started" tutorial</li>
+        <li>"Why OGraf?" positioning page</li>
+        <li>Ecosystem map (all tools, renderers, editors)</li>
+        <li>Blog section (3 launch articles)</li>
+        <li>Discord community (seeded pre-launch)</li>
+        <li>Newsletter signup</li>
+      </ul>
+
+      <h4>ograf.tools</h4>
+      <ul>
+        <li>Package Validator (paste/upload manifest)</li>
+        <li>Live Preview Sandbox (upload zip or URL)</li>
+        <li>Starter Template Generator (6 types)</li>
+      </ul>
+    </div>
+
+    <div class="phase-card p2">
+      <span class="phase-label">Phase 2</span>
+      <div class="phase-title">Become Essential</div>
+      <div class="phase-time">Months 2&ndash;4</div>
+
+      <h4>ograf.dev</h4>
+      <ul>
+        <li>Full tutorial series (8 articles)</li>
+        <li>CasparCG &rarr; OGraf migration guide</li>
+        <li>SPX legacy &rarr; OGraf migration guide</li>
+        <li>Renderer compatibility matrix</li>
+        <li>Community showcase page</li>
+        <li>Full-text search (Pagefind)</li>
+      </ul>
+
+      <h4>ograf.tools</h4>
+      <ul>
+        <li>GDD Schema Explorer &amp; visual builder</li>
+        <li>Package Inspector (deep analysis)</li>
+        <li>Template Gallery (curated, searchable)</li>
+        <li>Manifest Diff Tool</li>
+      </ul>
+    </div>
+
+    <div class="phase-card p3">
+      <span class="phase-label">Phase 3</span>
+      <div class="phase-title">Become the Platform</div>
+      <div class="phase-time">Months 5&ndash;8</div>
+
+      <h4>ograf.dev</h4>
+      <ul>
+        <li>Video tutorials &amp; screencasts</li>
+        <li>OGraf Cookbook (recipe-style solutions)</li>
+        <li>Annual "State of OGraf" report</li>
+        <li>Event calendar (IBC, NAB, EBU)</li>
+        <li>Translations (DE, FR, ES)</li>
+      </ul>
+
+      <h4>ograf.tools</h4>
+      <ul>
+        <li>MCP Server for AI-assisted development</li>
+        <li>CLI tool (create, validate, preview, pack)</li>
+        <li>CasparCG &rarr; OGraf converter</li>
+        <li>Renderer Compliance Test Suite</li>
+        <li>Template Registry API</li>
+        <li>CI/CD GitHub Action</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="section-label">04 &mdash; Ecosystem Map</div>
+  <div class="section-title">The OGraf Landscape in 2026</div>
+  <div class="section-desc">
+    Every tool, renderer, editor, and resource. This is what the ecosystem page on ograf.dev will surface.
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Official</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">OGraf Specification</span>
+        <span class="eco-item-type official">official</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">OGraf GitHub &mdash; 70&#9733;</span>
+        <span class="eco-item-type official">official</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Editors (Create)</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">Loopic</span>
+        <span class="eco-item-type commercial">commercial</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">DJ HTML Creator</span>
+        <span class="eco-item-type commercial">commercial</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">Eyevinn ograf-editor &mdash; 2&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">Ferryman &mdash; 30&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Controllers (Operate)</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">SPX-GC &mdash; 409&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">SuperConductor</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Renderers &amp; Servers (Run)</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">CasparCG &mdash; 1000+&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">ograf-server &mdash; 24&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">SPX Graphics Server</span>
+        <span class="eco-item-type commercial">commercial</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Developer Tools</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">ograf-devtool &mdash; 18&#9733;</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">ograf-form</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+      <div class="eco-item">
+        <span class="eco-item-name">ograf.tools (this project)</span>
+        <span class="eco-item-type oss">open source</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="eco-category">
+    <div class="eco-category-title">Consulting &amp; Integration</div>
+    <div class="eco-grid">
+      <div class="eco-item">
+        <span class="eco-item-name">Xperity</span>
+        <span class="eco-item-type commercial">commercial</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SITEMAP -->
+<section id="sitemap">
+  <div class="section-label">05 &mdash; Information Architecture</div>
+  <div class="section-title">Sitemap</div>
+
+  <div class="sitemap-grid">
+    <div class="sitemap-col">
+      <h3>ograf<span>.dev</span></h3>
+
+      <div class="sitemap-item"><span class="path">/</span><span class="label">Homepage</span></div>
+      <div class="sitemap-item"><span class="path">/get-started</span><span class="label">Quick start guide</span></div>
+      <div class="sitemap-item"><span class="path">/get-started/first</span><span class="label">15-min walkthrough</span></div>
+      <hr class="sitemap-divider">
+      <div class="sitemap-item"><span class="path">/docs</span><span class="label">Documentation hub</span></div>
+      <div class="sitemap-item"><span class="path">/docs/concepts/*</span><span class="label">Packages, Manifest, Lifecycle, Steps, GDD, Actions</span></div>
+      <div class="sitemap-item"><span class="path">/docs/guides/*</span><span class="label">Animations, Data Binding, Multi-step, Testing</span></div>
+      <div class="sitemap-item"><span class="path">/docs/migration/*</span><span class="label">CasparCG, SPX, Lottie</span></div>
+      <div class="sitemap-item"><span class="path">/docs/api/*</span><span class="label">Web Component, Manifest schema, GDD types</span></div>
+      <hr class="sitemap-divider">
+      <div class="sitemap-item"><span class="path">/ecosystem</span><span class="label">Full ecosystem map</span></div>
+      <div class="sitemap-item"><span class="path">/ecosystem/compat</span><span class="label">Compatibility matrix</span></div>
+      <div class="sitemap-item"><span class="path">/showcase</span><span class="label">Community showcase</span></div>
+      <div class="sitemap-item"><span class="path">/blog</span><span class="label">News &amp; articles</span></div>
+      <div class="sitemap-item"><span class="path">/community</span><span class="label">Discord, contributing</span></div>
+    </div>
+
+    <div class="sitemap-col">
+      <h3>ograf<span>.tools</span></h3>
+
+      <div class="sitemap-item"><span class="path">/</span><span class="label">Tool directory</span></div>
+      <hr class="sitemap-divider">
+      <div class="sitemap-item"><span class="path">/validate</span><span class="label">Package Validator</span></div>
+      <div class="sitemap-item"><span class="path">/preview</span><span class="label">Live Preview Sandbox</span></div>
+      <div class="sitemap-item"><span class="path">/explore</span><span class="label">Schema Explorer</span></div>
+      <div class="sitemap-item"><span class="path">/explore/gdd/*</span><span class="label">GDD type browser</span></div>
+      <div class="sitemap-item"><span class="path">/generate</span><span class="label">Template Generator</span></div>
+      <hr class="sitemap-divider">
+      <div class="sitemap-item"><span class="path">/inspect</span><span class="label">Package Inspector (P2)</span></div>
+      <div class="sitemap-item"><span class="path">/gallery</span><span class="label">Template Gallery (P2)</span></div>
+      <hr class="sitemap-divider">
+      <div class="sitemap-item"><span class="path">/convert/casparcg</span><span class="label">CasparCG Converter (P3)</span></div>
+      <div class="sitemap-item"><span class="path">/matrix</span><span class="label">Compatibility Matrix (P3)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="section-label">06 &mdash; Technical Architecture</div>
+  <div class="section-title">Stack &amp; Deployment</div>
+  <div class="section-desc">
+    Both sites compile to fully static assets. No server runtime. Deployed to Bunny.net CDN for ~$1&ndash;3/month.
+  </div>
+
+  <div class="stack-grid">
+    <div class="stack-item">
+      <div class="stack-label">Framework</div>
+      <div class="stack-value">Vite 6 + React 19</div>
+      <div class="stack-reason">Full SPA, compiles to static assets</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Language</div>
+      <div class="stack-value">TypeScript (strict)</div>
+      <div class="stack-reason">Type safety, matches ecosystem</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Routing</div>
+      <div class="stack-value">React Router 7</div>
+      <div class="stack-reason">Client-side SPA routing</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Styling</div>
+      <div class="stack-value">Tailwind CSS + Radix UI</div>
+      <div class="stack-reason">Fast iteration, accessible, dark mode</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Content</div>
+      <div class="stack-value">MDX via Vite plugin</div>
+      <div class="stack-reason">Compiled at build time, no server</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Code Editor</div>
+      <div class="stack-value">Monaco Editor</div>
+      <div class="stack-reason">JSON schema intellisense</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Validation</div>
+      <div class="stack-value">Ajv</div>
+      <div class="stack-reason">JSON Schema validator, industry standard</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Search</div>
+      <div class="stack-value">Pagefind</div>
+      <div class="stack-reason">Static index, works offline</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Monorepo</div>
+      <div class="stack-value">Turborepo + pnpm</div>
+      <div class="stack-reason">Shared packages, fast builds</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Deploy</div>
+      <div class="stack-value">Bunny.net CDN</div>
+      <div class="stack-reason">~$1/mo, global CDN, fastest TTFB</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">Fallback</div>
+      <div class="stack-value">DigitalOcean App Platform</div>
+      <div class="stack-reason">If API needs emerge in Phase 3</div>
+    </div>
+    <div class="stack-item">
+      <div class="stack-label">CI/CD</div>
+      <div class="stack-value">GitHub Actions</div>
+      <div class="stack-reason">Build &rarr; upload &rarr; purge cache</div>
+    </div>
+  </div>
+</section>
+
+<!-- USER JOURNEYS -->
+<section id="journeys">
+  <div class="section-label">07 &mdash; User Journeys</div>
+  <div class="section-title">Three Paths Through the Portal</div>
+
+  <div class="journey">
+    <h3>Developer Building Their First Template</h3>
+    <p class="persona">Alex &mdash; web developer at a regional broadcaster. Knows HTML/CSS/JS. Never built a broadcast graphic.</p>
+    <ol>
+      <li>Lands on ograf.dev homepage &rarr; clicks "Get Started"</li>
+      <li>Follows 15-min tutorial, clicks "Open in Playground" &rarr; ograf.tools/preview</li>
+      <li>Finishes template, validates at ograf.tools/validate &rarr; green checkmark</li>
+      <li>Explores GDD types at ograf.tools/explore/gdd, builds schema visually</li>
+      <li>Joins Discord, asks questions, gets answers within hours</li>
+    </ol>
+    <div class="outcome">First working template in 15 minutes. Production-quality in 2&ndash;3 hours.</div>
+  </div>
+
+  <div class="journey">
+    <h3>Designer Migrating from CasparCG</h3>
+    <p class="persona">Maria &mdash; broadcast designer at a sports network. 40+ CasparCG templates in production.</p>
+    <ol>
+      <li>Reads ograf.dev/docs/migration/casparcg &rarr; side-by-side comparison</li>
+      <li>Uploads complex template to ograf.tools/convert/casparcg &rarr; "Medium complexity, 70% auto-convertible"</li>
+      <li>Downloads partially converted package, tests in ograf.tools/preview</li>
+      <li>Checks ograf.dev/ecosystem/compatibility for renderer feature support</li>
+      <li>Reports to team with concrete estimates per template type</li>
+    </ol>
+    <div class="outcome">Concrete migration plan with time estimates, not a vague "we should look into it."</div>
+  </div>
+
+  <div class="journey">
+    <h3>Broadcaster Evaluating OGraf</h3>
+    <p class="persona">Thomas &mdash; Head of Technology at a medium European broadcaster. Currently uses Vizrt + CasparCG.</p>
+    <ol>
+      <li>Reads ograf.dev "Why OGraf?" &rarr; vendor independence, EBU backing, growing ecosystem</li>
+      <li>Explores ograf.dev/ecosystem &rarr; sees SPX, Loopic, CasparCG all supporting OGraf</li>
+      <li>Opens ograf.tools/preview &rarr; loads example templates, shares URL with team</li>
+      <li>Checks compatibility matrix &rarr; cross-references with infrastructure</li>
+      <li>Reads showcase &rarr; sees broadcasters already using OGraf in production</li>
+    </ol>
+    <div class="outcome">Enough evidence to write an internal recommendation memo.</div>
+  </div>
+</section>
+
+<!-- LAUNCH PLAN -->
+<section id="launch">
+  <div class="section-label">08 &mdash; Launch Strategy</div>
+  <div class="section-title">Go-to-Market Plan</div>
+
+  <div class="launch-timeline">
+    <div class="launch-step">
+      <div class="launch-phase">Pre-Launch &mdash; 2 weeks before</div>
+      <h4>Seed the Community</h4>
+      <p>Create Discord server. Personally invite 10&ndash;15 key people: Johan Nyman (SuperFlyTV), Eyevinn team, StreamShapers, SPX creator Tuomo, Loopic team, CasparCG community leaders. Email EBU working group &mdash; position as complementary to ograf.ebu.io.</p>
+    </div>
+    <div class="launch-step">
+      <div class="launch-phase">Pre-Launch</div>
+      <h4>Prepare Content</h4>
+      <p>Write 3 launch articles: "Introducing ograf.dev", "First OGraf Template in 15 Minutes", "The OGraf Ecosystem in 2026: A Complete Map".</p>
+    </div>
+    <div class="launch-step">
+      <div class="launch-phase">Launch Day</div>
+      <h4>Lead with the Tool</h4>
+      <p>"Validate your OGraf package in 10 seconds" is more compelling than "read our docs." The validator is the hook.</p>
+    </div>
+    <div class="launch-step">
+      <div class="launch-phase">Launch Day</div>
+      <h4>Hit Every Channel</h4>
+      <p>CasparCG Forum, ebu/ograf GitHub Discussions, Hacker News ("open standard vs $4.9B proprietary market"), Reddit (r/broadcasting, r/obs), X/Twitter (@EBU_Tech), LinkedIn broadcast groups.</p>
+    </div>
+    <div class="launch-step">
+      <div class="launch-phase">Post-Launch &mdash; Weeks 1&ndash;4</div>
+      <h4>Build Momentum</h4>
+      <p>One blog post per week. Submit to EBU newsletter. Add "Validate on ograf.tools" badges to ecosystem repos. Target: 500 monthly visitors, 100 Discord members in 3 months.</p>
+    </div>
+    <div class="launch-step">
+      <div class="launch-phase">Post-Launch</div>
+      <h4>IBC 2026</h4>
+      <p>IBC is in September. Present at the open-source meetup (where OGraf debuted in 2025). Prepare ecosystem report and demo reel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section>
+  <div class="section-label">09 &mdash; Business Model</div>
+  <div class="section-title">Community First, Revenue Later</div>
+  <div class="section-desc">
+    Everything core is free and open source. Build trust for 12+ months before considering any premium layer.
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px;">
+    <div class="phase-card mvp">
+      <span class="phase-label">Free Forever</span>
+      <div class="phase-title" style="font-size: 16px;">Core &amp; Open Source (MIT)</div>
+      <ul style="margin-top: 16px;">
+        <li>All docs, tutorials, guides</li>
+        <li>Package validator</li>
+        <li>Live preview sandbox</li>
+        <li>Schema explorer &amp; template generator</li>
+        <li>Template gallery</li>
+        <li>CLI tool &amp; GitHub Action</li>
+        <li>MCP server</li>
+        <li>Discord community</li>
+      </ul>
+    </div>
+    <div class="phase-card p3">
+      <span class="phase-label">Future (Year 2+)</span>
+      <div class="phase-title" style="font-size: 16px;">Potential Revenue Streams</div>
+      <ul style="margin-top: 16px;">
+        <li>Sponsored ecosystem listings ($200&ndash;500/mo)</li>
+        <li>Premium template packs ($49&ndash;199)</li>
+        <li>Migration consulting ($2k&ndash;5k)</li>
+        <li>OGraf Certification badge program</li>
+        <li>Job board ($99&ndash;299/listing)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    OGraf Community Portal Plan &mdash; April 2026<br>
+    <a href="https://ograf.ebu.io">ograf.ebu.io</a> &middot; ograf.dev &middot; ograf.tools
+  </p>
+</footer>
+
+</body>
+</html>

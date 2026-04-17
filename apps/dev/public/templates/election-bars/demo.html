@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; overflow: hidden; }</style>
+</head>
+<body>
+  <election-bars></election-bars>
+  <script type="module">
+    import ElectionBars from './graphic.mjs';
+    const el = document.querySelector('election-bars');
+    const defaultData = {
+      title: 'General Election 2026',
+      subtitle: '78% reporting',
+      parties: [
+        { name: 'Progressives', pct: 42, votes: 1284000, color: '#2563eb' },
+        { name: 'Conservatives', pct: 35, votes: 1070000, color: '#dc2626' },
+        { name: 'Centrists', pct: 15, votes: 459000, color: '#f59e0b' },
+        { name: 'Greens', pct: 8, votes: 245000, color: '#16a34a' },
+      ]
+    };
+    window.addEventListener('message', async (e) => {
+      const { action, data } = e.data || {};
+      if (!action) return;
+      switch (action) {
+        case 'load': await el.load({ data: data || defaultData }); break;
+        case 'play': await el.playAction({}); break;
+        case 'stop': await el.stopAction({}); break;
+        case 'update': await el.updateAction({ data }); break;
+      }
+    });
+    el.load({ data: defaultData, renderType: 'realtime', renderCharacteristics: {} });
+  </script>
+</body>
+</html>

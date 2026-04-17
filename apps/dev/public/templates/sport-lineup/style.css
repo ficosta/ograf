@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: transparent; overflow: hidden; }
+
+.lineup {
+  position: fixed;
+  inset: 40px 48px;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.lineup.visible {
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.lineup.visible .lineup-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lineup.out {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.lineup-container {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  max-width: 800px;
+  width: 100%;
+}
+
+.lineup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.lineup-team {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.lineup-meta {
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.lineup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 2px;
+  padding: 2px;
+  background: #e2e8f0;
+}
+
+.lineup-card {
+  background: white;
+  padding: 16px 12px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lineup-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0f172a;
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.lineup-player-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.lineup-position {
+  font-size: 10px;
+  font-weight: 600;
+  color: #2563eb;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+
+.lineup-footer {
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e2e8f0;
+}
+
+.lineup-formation {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lineup-coach {
+  font-size: 11px;
+  color: #64748b;
+}

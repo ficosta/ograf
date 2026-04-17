@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; overflow: hidden; }</style>
+</head>
+<body>
+  <election-bars></election-bars>
+  <script type="module">
+    import ElectionBars from './graphic.mjs';
+    const el = document.querySelector('election-bars');
+    await el.load({ data: {
+      title: 'General Election 2026',
+      subtitle: '78% reporting',
+      parties: [
+        { name: 'Progressives', pct: 42, votes: 1284000, color: '#2563eb' },
+        { name: 'Conservatives', pct: 35, votes: 1070000, color: '#dc2626' },
+        { name: 'Centrists', pct: 15, votes: 459000, color: '#f59e0b' },
+        { name: 'Greens', pct: 8, votes: 245000, color: '#16a34a' },
+      ]
+    }, renderType: 'realtime', renderCharacteristics: {} });
+    await el.playAction({});
+  </script>
+</body>
+</html>

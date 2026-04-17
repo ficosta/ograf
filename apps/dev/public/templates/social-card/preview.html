@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; overflow: hidden; }</style>
+</head>
+<body>
+  <social-card></social-card>
+  <script type="module">
+    import SocialCard from './graphic.mjs';
+    const el = document.querySelector('social-card');
+    await el.load({ data: { user: 'Johan Nyman', handle: '@nytamin', text: 'Just shipped our first OGraf template to production. The future of broadcast graphics is open.', platform: 'X' }, renderType: 'realtime', renderCharacteristics: {} });
+    await el.playAction({ delta: 1 });
+  </script>
+</body>
+</html>

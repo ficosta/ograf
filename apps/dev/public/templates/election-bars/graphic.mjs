@@ -1,0 +1,151 @@
+export default class ElectionBars extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+      <div class="election">
+        <div class="election-container">
+          <div class="election-header">
+            <span class="election-title"></span>
+            <span class="election-subtitle"></span>
+          </div>
+          <div class="election-bars"></div>
+        </div>
+      </div>
+    `;
+    this._root = this.querySelector('.election');
+    this._title = this.querySelector('.election-title');
+    this._subtitle = this.querySelector('.election-subtitle');
+    this._barsContainer = this.querySelector('.election-bars');
+    this._step = undefined;
+    this._counters = [];
+  }
+
+  _renderBars(parties) {
+    this._barsContainer.innerHTML = parties.map((p, i) => `
+      <div class="election-row" style="transition-delay: ${i * 100}ms">
+        <div class="election-party">
+          <div class="election-party-name">${p.name}</div>
+          <div class="election-party-votes">${(p.votes || 0).toLocaleString()} votes</div>
+        </div>
+        <div class="election-bar-wrapper">
+          <div class="election-bar-track">
+            <div class="election-bar-fill" style="background: ${p.color}" data-pct="${p.pct}"></div>
+          </div>
+          <div class="election-pct ${p.pct >= 15 ? 'inside' : 'outside'}" data-pct="${p.pct}">
+            <span class="election-pct-value">0%</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /**
+   * Animate the number from 0 to target with easing
+   */
+  _countUp(el, target, duration) {
+    const start = performance.now();
+    const update = (now) => {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current + '%';
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    };
+    requestAnimationFrame(update);
+  }
+
+  _animateBars() {
+    const rows = this._barsContainer.querySelectorAll('.election-row');
+    const fills = this._barsContainer.querySelectorAll('.election-bar-fill');
+    const pctLabels = this._barsContainer.querySelectorAll('.election-pct');
+
+    // Show rows with stagger
+    rows.forEach((row, i) => {
+      setTimeout(() => row.classList.add('show'), i * 120);
+    });
+
+    // Animate bar widths + move labels + count up numbers
+    setTimeout(() => {
+      fills.forEach((fill, i) => {
+        const pct = Number(fill.dataset.pct);
+        fill.style.width = pct + '%';
+
+        // Move the label to stick to the bar edge
+        const label = pctLabels[i];
+        if (label) {
+          label.style.left = pct + '%';
+
+          // Count up the number
+          const valueEl = label.querySelector('.election-pct-value');
+          if (valueEl) {
+            // Delay count-up slightly so bar is visible first
+            setTimeout(() => this._countUp(valueEl, pct, 900), 150);
+          }
+        }
+      });
+    }, 200);
+  }
+
+  async load({ data }) {
+    if (data?.title) this._title.textContent = data.title;
+    if (data?.subtitle) this._subtitle.textContent = data.subtitle;
+    if (data?.parties) this._renderBars(data.parties);
+    return { statusCode: 200 };
+  }
+
+  async playAction({ skipAnimation } = {}) {
+    this._root.classList.remove('out');
+    void this._root.offsetWidth;
+    this._root.classList.add('visible');
+
+    if (!skipAnimation) {
+      await new Promise(r => setTimeout(r, 400));
+      this._animateBars();
+      await new Promise(r => setTimeout(r, 1400));
+    } else {
+      const fills = this._barsContainer.querySelectorAll('.election-bar-fill');
+      const rows = this._barsContainer.querySelectorAll('.election-row');
+      const labels = this._barsContainer.querySelectorAll('.election-pct');
+      rows.forEach(r => r.classList.add('show'));
+      fills.forEach((f, i) => {
+        const pct = f.dataset.pct;
+        f.style.transition = 'none';
+        f.style.width = pct + '%';
+        if (labels[i]) {
+          labels[i].style.transition = 'none';
+          labels[i].style.left = pct + '%';
+          const v = labels[i].querySelector('.election-pct-value');
+          if (v) v.textContent = pct + '%';
+        }
+      });
+    }
+
+    this._step = 0;
+    return { statusCode: 200, currentStep: this._step };
+  }
+
+  async stopAction({ skipAnimation } = {}) {
+    this._root.classList.add('out');
+    if (!skipAnimation) await new Promise(r => setTimeout(r, 400));
+    this._root.classList.remove('visible', 'out');
+    this._step = undefined;
+    return { statusCode: 200 };
+  }
+
+  async updateAction({ data }) {
+    if (data?.title) this._title.textContent = data.title;
+    if (data?.subtitle) this._subtitle.textContent = data.subtitle;
+    if (data?.parties) {
+      this._renderBars(data.parties);
+      this._animateBars();
+    }
+    return { statusCode: 200 };
+  }
+
+  async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
+}
+
+customElements.define('election-bars', ElectionBars);

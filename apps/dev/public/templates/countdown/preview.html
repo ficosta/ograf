@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; overflow: hidden; }</style>
+</head>
+<body>
+  <countdown-timer></countdown-timer>
+  <script type="module">
+    import CountdownTimer from './graphic.mjs';
+    const el = document.querySelector('countdown-timer');
+    await el.load({ data: { label: 'STARTING IN', seconds: 120 }, renderType: 'realtime', renderCharacteristics: {} });
+    await el.playAction({ delta: 1 });
+  </script>
+</body>
+</html>

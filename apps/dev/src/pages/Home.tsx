@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { ArrowLeftRight, Code2, Unlock } from "lucide-react";
+import { ArrowLeftRight, Check, Code2, Minus, Unlock, X } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
 
 const ROTATING_WORDS = ["community", "guide", "hub", "partner", "toolkit", "resource"];
@@ -137,6 +137,95 @@ const FEATURES = [
   },
 ];
 
+type CellState = "yes" | "no" | "partial";
+
+const COMPARISON_SYSTEMS = [
+  { name: "OGraf", note: "Open spec", highlight: true },
+  { name: "Vizrt", note: "Viz Engine" },
+  { name: "Chyron", note: "PRIME / LyricX" },
+  { name: "Ross", note: "XPression" },
+  { name: "Avid", note: "Maestro" },
+  { name: "Flowics", note: "Cloud" },
+  { name: "Singular.live", note: "Cloud" },
+];
+
+const COMPARISON_ROWS: { feature: string; note?: string; values: CellState[] }[] = [
+  // OGraf, Vizrt, Chyron, Ross, Avid, Flowics, Singular
+  { feature: "Open specification", values: ["yes", "no", "no", "no", "no", "no", "no"] },
+  { feature: "Web-native (HTML/CSS/JS)", values: ["yes", "partial", "partial", "partial", "partial", "yes", "yes"] },
+  { feature: "Cross-renderer portable", note: "Same package runs on any compliant system", values: ["yes", "no", "no", "no", "no", "no", "no"] },
+  { feature: "Self-hosted option", values: ["yes", "yes", "yes", "yes", "yes", "no", "no"] },
+  { feature: "Open-source reference implementation", values: ["yes", "no", "no", "no", "no", "no", "partial"] },
+  { feature: "Cloud rendering available", values: ["partial", "partial", "partial", "no", "partial", "yes", "yes"] },
+];
+
+function ComparisonCell({ state }: { state: CellState }) {
+  if (state === "yes") {
+    return (
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+        <Check className="h-4 w-4" strokeWidth={2.5} />
+      </span>
+    );
+  }
+  if (state === "partial") {
+    return (
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+        <Minus className="h-4 w-4" strokeWidth={2.5} />
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+      <X className="h-4 w-4" strokeWidth={2.5} />
+    </span>
+  );
+}
+
+const FAQ_COLUMNS = [
+  [
+    {
+      q: "What is OGraf?",
+      a: "An open specification from the European Broadcasting Union (EBU) for HTML-based broadcast graphics. Graphics are packaged as Web Components with a standard lifecycle, so one package runs on any compliant renderer.",
+    },
+    {
+      q: "Is this the official OGraf website?",
+      a: "No. The official specification lives at ograf.ebu.io. This portal is community-run — a hub for tutorials, tools, and ecosystem mapping to help people actually adopt OGraf.",
+    },
+    {
+      q: "Is OGraf production-ready?",
+      a: "Graphics Definition v1 has been stable since September 2025 and is already running in live productions. The Server/Control API is still in draft, with v1 expected mid-2026.",
+    },
+  ],
+  [
+    {
+      q: "What renderers support OGraf?",
+      a: "ograf-server is the reference implementation. SPX-GC is shipping full OGraf compliance. CasparCG renders OGraf via its HTML producer. Loopic exports OGraf natively from its no-code editor.",
+    },
+    {
+      q: "Can I migrate existing templates?",
+      a: "Yes. Because OGraf is just HTML, CasparCG templates port over by wrapping them as Web Components and adding a manifest. Proprietary formats (Vizrt, Chyron) need a rebuild, but the underlying assets usually transfer.",
+    },
+    {
+      q: "What does OGraf cost?",
+      a: "Nothing. The specification is free, the reference renderers are MIT-licensed open source, and the graphics you build belong to you. No per-seat fees, no runtime licenses.",
+    },
+  ],
+  [
+    {
+      q: "What is ograf.tools?",
+      a: "Our companion site with interactive developer tools: manifest validator, live preview sandbox, schema explorer, and template generator — all running in your browser with no install required.",
+    },
+    {
+      q: "How do I contribute?",
+      a: "Everything here is MIT-licensed and open. Templates, documentation, translations, tools — all contributions welcome. Start with the GitHub repos linked in the footer.",
+    },
+    {
+      q: "Where can I ask questions?",
+      a: "A Discord server is in the works. For now, the CasparCG Community Forum has active OGraf threads, and spec discussions happen on the official ebu/ograf GitHub Discussions.",
+    },
+  ],
+];
+
 export function Home() {
   return (
     <>
@@ -208,6 +297,80 @@ export function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Comparison chart */}
+      <section id="compare" className="bg-slate-50 py-20 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+              Where OGraf fits in.
+            </h2>
+            <p className="mt-4 text-lg tracking-tight text-slate-700">
+              Broadcast graphics is a deep, mature space — Vizrt, Chyron, Ross, Avid, Singular, Flowics and many others power the world's biggest productions. OGraf isn't here to replace them. It adds a portable, open layer so the same graphic can travel between systems.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-16 overflow-x-auto rounded-2xl bg-white shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5">
+            <table className="min-w-full divide-y divide-slate-200 text-left">
+              <thead>
+                <tr>
+                  <th scope="col" className="sticky left-0 z-10 bg-white px-6 py-5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    Feature
+                  </th>
+                  {COMPARISON_SYSTEMS.map((sys) => (
+                    <th
+                      key={sys.name}
+                      scope="col"
+                      className={`px-4 py-5 text-center ${sys.highlight ? "bg-blue-50" : ""}`}
+                    >
+                      <div className={`font-display text-sm font-semibold ${sys.highlight ? "text-blue-700" : "text-slate-900"}`}>
+                        {sys.name}
+                      </div>
+                      <div className="mt-0.5 text-[11px] font-normal text-slate-500">{sys.note}</div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {COMPARISON_ROWS.map((row) => (
+                  <tr key={row.feature}>
+                    <th scope="row" className="sticky left-0 bg-white px-6 py-4 align-top text-sm font-medium text-slate-900">
+                      {row.feature}
+                      {row.note && (
+                        <div className="mt-0.5 text-xs font-normal text-slate-500">{row.note}</div>
+                      )}
+                    </th>
+                    {row.values.map((state, idx) => (
+                      <td
+                        key={`${row.feature}-${idx}`}
+                        className={`px-4 py-4 text-center ${COMPARISON_SYSTEMS[idx].highlight ? "bg-blue-50/60" : ""}`}
+                      >
+                        <ComparisonCell state={state} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
+            <span className="inline-flex items-center gap-2">
+              <ComparisonCell state="yes" /> Supported
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <ComparisonCell state="partial" /> Partial / via add-on
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <ComparisonCell state="no" /> Not supported
+            </span>
+          </div>
+
+          <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-slate-500">
+            This chart focuses on one specific axis: whether a graphic authored on one system can be rendered on another. Every platform above earned its place by solving real production problems — OGraf's contribution is the shared format, not a replacement for the runtimes teams already trust. Specialist platforms like <span className="font-medium text-slate-700">Brainstorm</span>, <span className="font-medium text-slate-700">Aximmetry</span>, <span className="font-medium text-slate-700">WASP3D</span>, and <span className="font-medium text-slate-700">Zero Density</span> lead in virtual studios, AR and XR; open stacks like <span className="font-medium text-slate-700">CasparCG</span>, <span className="font-medium text-slate-700">SPX-GC</span>, and <span className="font-medium text-slate-700">ograf-server</span> render OGraf packages natively today.
+          </p>
         </div>
       </section>
 
@@ -292,6 +455,7 @@ export function Home() {
           <TutorialCards
             title="Learn by building real graphics."
             subtitle="Each tutorial builds a production-quality broadcast graphic from scratch — with live interactive demos."
+            max={4}
           />
         </div>
       </section>
@@ -305,23 +469,7 @@ export function Home() {
             </h2>
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
-            {[
-              [
-                { q: "What is OGraf?", a: "OGraf is an open specification by the European Broadcasting Union (EBU) for HTML-based broadcast graphics. It defines how to package graphics as Web Components with a standard lifecycle so they work across any compliant renderer." },
-                { q: "Is this the official OGraf website?", a: "No. The official specification lives at ograf.ebu.io. We are a community-driven hub providing tutorials, tools, ecosystem mapping, and resources to help people adopt OGraf." },
-                { q: "Is OGraf ready for production?", a: "The Graphics Definition v1 is stable and production-ready since September 2025. The Server/Control API is still in draft and expected to be finalized mid-2026." },
-              ],
-              [
-                { q: "What renderers support OGraf?", a: "SPX-GC is adding full OGraf compliance. ograf-server is the reference implementation. CasparCG supports OGraf via its HTML producer. Loopic exports OGraf natively." },
-                { q: "Can I migrate from CasparCG templates?", a: "Yes. OGraf graphics are HTML-based, just like CasparCG templates. The main change is wrapping them as Web Components and adding a manifest. Our migration guide walks you through it." },
-                { q: "What is ograf.tools?", a: "Our companion site with interactive developer tools: a manifest validator, live preview sandbox, schema explorer, and template generator — all running in your browser." },
-              ],
-              [
-                { q: "How do I contribute?", a: "Everything is open source under MIT. You can contribute templates, documentation, translations, or tools. Check our GitHub for contribution guidelines." },
-                { q: "Who maintains this?", a: "This portal is community-maintained and not affiliated with the EBU. We build on top of the official specification and link to official resources where appropriate." },
-                { q: "Is there a community chat?", a: "We're setting up a Discord server. In the meantime, the CasparCG Community Forum has active OGraf discussions, and you can use GitHub Discussions on the official ebu/ograf repo." },
-              ],
-            ].map((column, i) => (
+            {FAQ_COLUMNS.map((column, i) => (
               <div key={i} className="space-y-8">
                 {column.map((faq) => (
                   <div key={faq.q}>

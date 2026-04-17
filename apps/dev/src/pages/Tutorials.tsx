@@ -1,76 +1,14 @@
 import { Link } from "react-router";
 import { TemplateDemo } from "../components/TemplateDemo";
+import tutorials from "../content/tutorials.json";
+import type { Tutorial, TutorialDifficulty, TutorialField } from "../content/tutorials.types";
 
-const TUTORIALS = [
-  {
-    slug: "/get-started",
-    title: "Lower Third",
-    subtitle: "The classic name & title overlay",
-    difficulty: "Beginner",
-    time: "15 min",
-    desc: "The most common broadcast graphic. A name and title card that slides in from the left with a clean CBS-inspired design. Learn the full OGraf lifecycle: load, play, update, stop.",
-    demo: {
-      src: "/templates/lower-third/demo.html",
-      fields: [
-        { key: "name", label: "Name", defaultValue: "Jane Smith" },
-        { key: "title", label: "Title", defaultValue: "Senior Graphics Engineer" },
-      ],
-    },
-    concepts: ["Web Component basics", "Manifest structure", "CSS transitions", "Lifecycle methods"],
-  },
-  {
-    slug: "/tutorials/bug",
-    title: "Bug / Watermark",
-    subtitle: "Corner logo with status indicator",
-    difficulty: "Beginner",
-    time: "10 min",
-    desc: "A corner bug that pops in with a scale animation. Typically used for channel branding, LIVE indicators, or event logos. Demonstrates simple animations and minimal data schema.",
-    demo: {
-      src: "/templates/bug/demo.html",
-      fields: [
-        { key: "label", label: "Label", defaultValue: "LIVE" },
-        { key: "sublabel", label: "Sublabel", defaultValue: "Breaking News" },
-      ],
-    },
-    concepts: ["Scale animations", "Corner positioning", "Minimal manifest", "Brand consistency"],
-  },
-  {
-    slug: "/tutorials/ticker",
-    title: "News Ticker",
-    subtitle: "Scrolling headline crawl",
-    difficulty: "Intermediate",
-    time: "20 min",
-    desc: "A continuous scrolling ticker at the bottom of the screen — the kind you see on CNN or BBC News. Demonstrates infinite CSS animations, dynamic data arrays, and seamless looping.",
-    demo: {
-      src: "/templates/ticker/demo.html",
-      fields: [
-        { key: "badge", label: "Badge", defaultValue: "Breaking" },
-      ],
-    },
-    concepts: ["CSS keyframe animations", "Dynamic data arrays", "Seamless looping", "Bottom bar layout"],
-  },
-  {
-    slug: "/tutorials/quote",
-    title: "Full Page Quote",
-    subtitle: "Cinematic full-screen typography",
-    difficulty: "Intermediate",
-    time: "15 min",
-    desc: "An elegant full-screen quote card with staggered reveal animations — quote text, divider line, then attribution appear sequentially. Uses Instrument Serif for editorial impact.",
-    demo: {
-      src: "/templates/quote/demo.html",
-      fields: [
-        { key: "text", label: "Quote", defaultValue: "Open graphics, open broadcast, open standards. That's the future." },
-        { key: "author", label: "Author", defaultValue: "Demo Quote" },
-        { key: "role", label: "Role", defaultValue: "Sample Credit" },
-      ],
-    },
-    concepts: ["Staggered animations", "Full-screen layout", "Typography design", "CSS transition delays"],
-  },
-];
+const TUTORIALS = tutorials as readonly Tutorial[];
 
-const DIFFICULTY_STYLES = {
+const DIFFICULTY_STYLES: Record<TutorialDifficulty, string> = {
   Beginner: "bg-emerald-50 text-emerald-700",
   Intermediate: "bg-amber-50 text-amber-700",
+  Advanced: "bg-rose-50 text-rose-700",
 };
 
 export function Tutorials() {
@@ -104,7 +42,7 @@ export function Tutorials() {
                   <p className="text-base text-slate-600 max-w-2xl">{tut.desc}</p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${DIFFICULTY_STYLES[tut.difficulty as keyof typeof DIFFICULTY_STYLES]}`}>
+                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${DIFFICULTY_STYLES[tut.difficulty]}`}>
                     {tut.difficulty}
                   </span>
                   <span className="text-xs text-slate-400">{tut.time}</span>
@@ -114,8 +52,9 @@ export function Tutorials() {
               {/* Live demo */}
               <TemplateDemo
                 src={tut.demo.src}
-                fields={tut.demo.fields}
+                fields={tut.demo.fields as readonly TutorialField[]}
                 title={`${tut.title} — OGraf Template`}
+                defaultData={tut.demo.defaultData}
               />
 
               {/* Concepts + CTA */}
@@ -134,6 +73,25 @@ export function Tutorials() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Suggest a tutorial */}
+        <div className="mt-24 rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-8 sm:p-12 text-center">
+          <p className="font-display text-2xl tracking-tight text-slate-900">
+            Have an idea for a tutorial?
+          </p>
+          <p className="mt-3 text-sm text-slate-600 max-w-lg mx-auto">
+            We're always looking for new graphic types to cover — scoreboards, tickers, data visualizations, AR overlays, or anything you've seen on air and want to learn how to build.
+          </p>
+          <a
+            href="https://github.com/ebu/ograf/issues/new?title=Tutorial+idea:+&labels=tutorial&body=I'd+like+to+see+a+tutorial+for..."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-slate-900 hover:ring-slate-300 hover:bg-white transition-all"
+          >
+            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" /></svg>
+            Suggest a tutorial on GitHub
+          </a>
         </div>
       </div>
     </section>

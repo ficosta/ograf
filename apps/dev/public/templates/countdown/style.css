@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+.countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  filter: blur(8px);
+  font-family: 'Inter', system-ui, sans-serif;
+  text-align: center;
+}
+
+.countdown.visible {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
+
+.countdown.out {
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  filter: blur(8px);
+  transition:
+    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.4s ease,
+    filter 0.4s ease;
+}
+
+.countdown-card {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 16px;
+  padding: 48px 72px;
+  box-shadow:
+    0 8px 48px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Blue accent bar on top */
+.countdown-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 50%, #2563eb 100%);
+}
+
+.countdown-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.countdown-time {
+  font-size: 72px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pulse animation for last 10 seconds */
+.countdown.urgent .countdown-time {
+  animation: urgentPulse 1s ease infinite;
+  color: #dc2626;
+}
+
+@keyframes urgentPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Digit change animation */
+.countdown-time.tick {
+  animation: digitTick 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes digitTick {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}

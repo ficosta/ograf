@@ -13,6 +13,8 @@ import {
   Star,
   Wrench,
 } from "lucide-react";
+import ecosystemJson from "../content/ecosystem.json";
+
 interface EcoItem {
   readonly name: string;
   readonly desc: string;
@@ -34,29 +36,45 @@ interface Category extends Omit<CategoryJson, "icon"> {
   readonly icon: LucideIcon;
 }
 
-const CATEGORIES: readonly Category[] = [
-  {
-    id: "community-hub",
-    name: "Community Hub",
-    icon: Heart,
-    description: "That's us. The independent, community-driven home for learning, building, and testing OGraf.",
-    featured: true,
-    items: [
-      {
-        name: "ograf.dev",
-        desc: "This site. Tutorials, ecosystem map, spec history, migration guides, and everything else the community needs to ship OGraf graphics.",
-        url: "https://ograf.dev",
-        type: "oss",
-      },
-      {
-        name: "ograf.tools",
-        desc: "Our companion workbench. Browser-based validator, live preview sandbox, schema explorer, and template generator. Zero install.",
-        url: "https://ograf.tools",
-        type: "oss",
-      },
+const ICON_MAP: Readonly<Record<string, LucideIcon>> = {
+  BookOpen,
+  Briefcase,
+  FileCode2,
+  Gamepad2,
+  Heart,
+  PenTool,
+  Server,
+  ShieldCheck,
+  Wrench,
+};
+
+function resolveIcon(name: string): LucideIcon {
+  return ICON_MAP[name] ?? Wrench;
+}
+
 const CATEGORIES: readonly Category[] = (ecosystemJson as readonly CategoryJson[]).map(
   (c) => ({ ...c, icon: resolveIcon(c.icon) }),
 );
+
+const TYPE_STYLES: Record<EcoItem["type"], string> = {
+  oss: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
+  commercial: "bg-amber-50 text-amber-700 ring-amber-600/20",
+  official: "bg-blue-50 text-blue-700 ring-blue-600/20",
+};
+
+const TYPE_LABELS: Record<EcoItem["type"], string> = {
+  oss: "open source",
+  commercial: "commercial",
+  official: "official",
+};
+
+const ALL_ITEMS = CATEGORIES.flatMap((c) => c.items);
+const TOTAL = ALL_ITEMS.length;
+const OSS_COUNT = ALL_ITEMS.filter((i) => i.type === "oss").length;
+const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length;
+
+export function Ecosystem() {
+  return (
     <>
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">

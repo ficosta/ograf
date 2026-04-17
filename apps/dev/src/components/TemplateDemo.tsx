@@ -13,9 +13,15 @@ type Field =
       readonly label: string;
       readonly type: "list";
       readonly defaultValue: readonly string[];
+    }
+  | {
+      readonly key: string;
+      readonly label: string;
+      readonly type: "json";
+      readonly defaultValue: unknown;
     };
 
-type FieldValue = string | string[];
+type FieldValue = string | string[] | unknown;
 
 type PlayMode = "once" | "loop";
 
@@ -25,14 +31,21 @@ interface TemplateDemoProps {
   readonly title: string;
   readonly showPlayMode?: boolean;
   readonly defaultPlayMode?: PlayMode;
+  readonly defaultData?: Record<string, unknown>;
 }
 
 function isListField(f: Field): f is Extract<Field, { type: "list" }> {
   return f.type === "list";
 }
 
+function isJsonField(f: Field): f is Extract<Field, { type: "json" }> {
+  return f.type === "json";
+}
+
 function initialValue(field: Field): FieldValue {
-  return isListField(field) ? [...field.defaultValue] : field.defaultValue;
+  if (isListField(field)) return [...field.defaultValue];
+  if (isJsonField(field)) return JSON.stringify(field.defaultValue, null, 2);
+  return field.defaultValue;
 }
 
 export function TemplateDemo({
@@ -41,6 +54,7 @@ export function TemplateDemo({
   title,
   showPlayMode = false,
   defaultPlayMode = "loop",
+  defaultData,
 }: TemplateDemoProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -50,11 +64,20 @@ export function TemplateDemo({
   );
 
   const buildPayload = useCallback(
-    (currentValues: Record<string, FieldValue>, currentMode: PlayMode) => ({
-      ...currentValues,
-      loop: currentMode === "loop",
-    }),
-    [],
+    (currentValues: Record<string, FieldValue>, currentMode: PlayMode) => {
+      const resolved: Record<string, unknown> = { ...(defaultData ?? {}) };
+      for (const field of fields) {
+        const val = currentValues[field.key];
+        if (isJsonField(field) && typeof val === "string") {
+          try { resolved[field.key] = JSON.parse(val); } catch { /* keep string */ }
+        } else {
+          resolved[field.key] = val;
+        }
+      }
+      resolved.loop = currentMode === "loop";
+      return resolved;
+    },
+    [defaultData, fields],
   );
 
   const send = useCallback((action: string, data?: Record<string, unknown>) => {
@@ -180,6 +203,26 @@ export function TemplateDemo({
                           <Plus className="h-3 w-3" /> Add item
                         </button>
                       </div>
+                    </div>
+                  );
+                }
+                if (isJsonField(field)) {
+                  return (
+                    <div key={field.key} className="sm:col-span-2">
+                      <label className="mb-1 flex items-center justify-between text-xs font-medium text-slate-500">
+                        <span>
+                          {field.label}
+                          <span className="ml-1.5 rounded bg-slate-100 px-1 py-0.5 font-mono text-[10px] font-normal text-slate-500">
+                            JSON
+                          </span>
+                        </span>
+                      </label>
+                      <textarea
+                        value={(values[field.key] as string) ?? ""}
+                        onChange={(e) => updateText(field.key, e.target.value)}
+                        rows={Math.min(12, ((values[field.key] as string) ?? "").split("\n").length + 1)}
+                        className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-900 font-mono focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+                      />
                     </div>
                   );
                 }
