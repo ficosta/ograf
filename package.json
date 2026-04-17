@@ -9,7 +9,9 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "setup:hooks": "git config core.hooksPath .githooks",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
     "turbo": "^2.5.0",

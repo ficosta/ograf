@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+#
+# Pre-push reminder: community-maintained content often goes stale.
+# This hook prints a short freshness report and never blocks the push.
+# Skip it explicitly with:  git push --no-verify
+#
+
+# Don't run in CI / non-interactive pushes.
+if [ -n "$CI" ]; then
+  exit 0
+fi
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+[ -z "$repo_root" ] && exit 0
+cd "$repo_root" || exit 0
+
+# Portable "days since YYYY-MM-DD" — works on both BSD (macOS) and GNU date.
+days_since() {
+  local iso="$1"
+  [ -z "$iso" ] && { echo "?"; return; }
+  local then_ts
+  if date -j -f "%Y-%m-%d" "$iso" +%s >/dev/null 2>&1; then
+    then_ts=$(date -j -f "%Y-%m-%d" "$iso" +%s)
+  else
+    then_ts=$(date -d "$iso" +%s 2>/dev/null)
+  fi
+  [ -z "$then_ts" ] && { echo "?"; return; }
+  echo $(( ($(date +%s) - then_ts) / 86400 ))
+}
+
+last_updated() {
+  git log -1 --format=%cs -- "$1" 2>/dev/null
+}
+
+TARGETS=(
+  "apps/dev/src/content/news.ts|News & events|Edit the NEWS_ITEMS / EVENTS arrays"
+  "apps/dev/src/content/specThreads.json|Spec history|./apps/dev/scripts/refresh-spec-history.sh"
+)
+
+# ANSI colors — degrade gracefully when output isn't a TTY.
+if [ -t 2 ]; then
+  bold=$'\033[1m'
+  dim=$'\033[2m'
+  yellow=$'\033[33m'
+  reset=$'\033[0m'
+else
+  bold=""; dim=""; yellow=""; reset=""
+fi
+
+printed_header=0
+for entry in "${TARGETS[@]}"; do
+  path="${entry%%|*}"
+  rest="${entry#*|}"
+  label="${rest%%|*}"
+  hint="${rest#*|}"
+
+  [ -f "$path" ] || continue
+
+  if [ "$printed_header" = "0" ]; then
+    echo "" >&2
+    echo "  ${bold}Pre-push · content freshness check${reset}" >&2
+    echo "  ${dim}(Skip with: git push --no-verify)${reset}" >&2
+    echo "" >&2
+    printed_header=1
+  fi
+
+  iso="$(last_updated "$path")"
+  ago="$(days_since "$iso")"
+  flag=""
+  if [ "$ago" != "?" ] && [ "$ago" -gt 30 ]; then
+    flag=" ${yellow}· ${ago}d old, consider refreshing${reset}"
+  elif [ "$ago" != "?" ]; then
+    flag=" ${dim}· ${ago}d ago${reset}"
+  fi
+
+  printf "  %-14s  %s%s\n" "$label" "${dim}$path${reset}" "" >&2
+  printf "  %-14s  last updated: %s%s\n" "" "$iso" "$flag" >&2
+  printf "  %-14s  ${dim}how:${reset} %s\n" "" "$hint" >&2
+  echo "" >&2
+done
+
+exit 0
