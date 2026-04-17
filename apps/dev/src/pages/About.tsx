@@ -1,4 +1,10 @@
+import { useMeta } from "../hooks/useMeta";
+
 export function About() {
+  useMeta({
+    title: "About",
+    description: "About ograf.dev — a community-driven portal for the OGraf open broadcast graphics standard.",
+  });
   return (
     <section className="py-16">
       <div className="mx-auto w-full max-w-2xl px-6 md:max-w-3xl lg:max-w-4xl lg:px-10">

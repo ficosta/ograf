@@ -37,7 +37,7 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              <a href="https://github.com/ebu/ograf" target="_blank" rel="noopener noreferrer" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+              <a href="https://github.com/ficosta/ograf" target="_blank" rel="noopener noreferrer" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 GitHub
               </a>
             </div>
@@ -68,12 +68,14 @@ export function Navbar() {
         {menuOpen && (
           <div className="absolute inset-x-4 top-24 z-50 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5">
             <Link to="/tutorials" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Tutorials</Link>
+            <Link to="/spec" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Spec</Link>
             <Link to="/ecosystem" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Ecosystem</Link>
-            <Link to="/history" className="block w-full p-2" onClick={() => setMenuOpen(false)}>History</Link>
             <Link to="/news" className="block w-full p-2" onClick={() => setMenuOpen(false)}>News</Link>
+            <Link to="/history" className="block w-full p-2" onClick={() => setMenuOpen(false)}>History</Link>
+            <Link to="/about" className="block w-full p-2" onClick={() => setMenuOpen(false)}>About</Link>
             <a href="https://ograf.tools" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Tools</a>
             <hr className="m-2 border-slate-300/40" />
-            <a href="https://github.com/ebu/ograf" className="block w-full p-2" onClick={() => setMenuOpen(false)}>GitHub</a>
+            <a href="https://github.com/ficosta/ograf" target="_blank" rel="noopener noreferrer" className="block w-full p-2" onClick={() => setMenuOpen(false)}>GitHub</a>
           </div>
         )}
       </div>

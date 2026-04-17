@@ -1,6 +1,7 @@
 import { ExternalLink, GitMerge } from "lucide-react";
 import { SPEC_HISTORY, type SpecHistoryEntry } from "../content/specHistory";
 import { HistoryEntryCard } from "../components/HistoryEntryCard";
+import { useMeta } from "../hooks/useMeta";
 
 function groupByYear(entries: SpecHistoryEntry[]): Record<string, SpecHistoryEntry[]> {
   return entries.reduce<Record<string, SpecHistoryEntry[]>>((acc, entry) => {
@@ -33,6 +34,7 @@ const CATEGORY_COUNTS = (() => {
 const MERGED_COUNT = SPEC_HISTORY.filter((e) => e.mergedBy !== undefined).length;
 
 export function History() {
+  useMeta({ title: "History", description: "A timeline of the OGraf specification — from early drafts to the stable v1 release and beyond." });
   const grouped = groupByYear(SPEC_HISTORY);
   const years = Object.keys(grouped).sort().reverse();
   const oldest = SPEC_HISTORY[SPEC_HISTORY.length - 1].closedAt.slice(0, 4);

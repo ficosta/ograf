@@ -14,6 +14,7 @@ import {
   Wrench,
 } from "lucide-react";
 import ecosystemJson from "../content/ecosystem.json";
+import { useMeta } from "../hooks/useMeta";
 
 interface EcoItem {
   readonly name: string;
@@ -74,6 +75,7 @@ const OSS_COUNT = ALL_ITEMS.filter((i) => i.type === "oss").length;
 const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length;
 
 export function Ecosystem() {
+  useMeta({ title: "Ecosystem", description: "Every OGraf-compatible tool, editor, renderer, and resource worth knowing about." });
   return (
     <>
       {/* Hero */}
