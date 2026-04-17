@@ -1,0 +1,55 @@
+[
+  {
+    "date": "2026-09-11",
+    "endDate": "2026-09-14",
+    "title": "IBC 2026",
+    "location": "Amsterdam, RAI",
+    "url": "https://show.ibc.org/",
+    "summary": "Europe's flagship broadcast-industry show. Expect OGraf demos and presentations across multiple vendor stands — monitor the show page as sessions are announced."
+  },
+  {
+    "date": "2026-04-18",
+    "title": "SMPTE VIBE: OGraf — Making Broadcast Graphics Open and Interoperable",
+    "location": "NAB Show, Las Vegas · N259LMR · 2:20–2:35 p.m.",
+    "speaker": "Willem Vermost, EBU",
+    "url": "https://nab26.mapyourshow.com/8_0/sessions/session-details.cfm?scheduleid=250",
+    "summary": "The EBU's Willem Vermost introduces OGraf at SMPTE's VIBE conference — how one graphic package runs across mixed vendor stacks, covering live broadcast, streaming, and post-production."
+  },
+  {
+    "date": "2025-09-13",
+    "title": "OGraf at Open Source Meetup · IBC 2025",
+    "location": "IBC 2025, Amsterdam",
+    "speaker": "Niels Borg",
+    "url": "https://tech.ebu.ch/publications/presentations/2025/ibc25_opensource_meetup/ograf-open-html-standard-for-broadcast-graphics",
+    "summary": "Niels Borg's OGraf talk at the Open Source Meetup during IBC 2025 — part of a broader open-source-in-broadcast session."
+  },
+  {
+    "date": "2025-06-18",
+    "title": "OGraf: A new HTML standard — EBU Network Technology Seminar 2025",
+    "location": "EBU NTS 2025",
+    "speaker": "Niels Borg",
+    "url": "https://tech.ebu.ch/publications/presentations/2025/nts2025/ograf-a-new-html-standard",
+    "summary": "Technical deep-dive presentation at the EBU Network Technology Seminar covering OGraf's architecture, manifest format, and server API direction."
+  },
+  {
+    "date": "2025-04-28",
+    "title": "HTML graphics in broadcast applications with EBU's OGraf spec",
+    "location": "EBU webinar",
+    "url": "https://tech.ebu.ch/events/2025/html-graphics-in-broadcast-applications-with-ebu-s-ograf-spec",
+    "summary": "Public EBU webinar walking through OGraf's role in practical broadcast applications and the problem space it addresses."
+  },
+  {
+    "date": "2025-03-27",
+    "title": "EBU's Open Standard for HTML Graphics in the Broadcast Industry",
+    "location": "EBU roundtable",
+    "url": "https://tech.ebu.ch/events/2025/ebus-open-standard-for-html-graphics-in-the-broadcast-industry",
+    "summary": "Early public session introducing the draft HTML graphics spec that became OGraf."
+  },
+  {
+    "date": "2024-09-13",
+    "title": "Evolution of the Control Room — IBC 2024 Accelerator",
+    "location": "IBC 2024, Amsterdam",
+    "url": "https://show.ibc.org/accelerator-project-evolution-control-room",
+    "summary": "Pre-OGraf context: the IBC Accelerator project that included HTML-based graphics as a workstream and helped seed the case for an open standard."
+  }
+]

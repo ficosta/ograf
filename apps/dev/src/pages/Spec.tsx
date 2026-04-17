@@ -5,6 +5,7 @@ import {
   FolderOpen, FileJson, Settings, Image, Type, AlignLeft, List, Pipette, Percent,
   Timer, Wrench, BookOpen, Map, CheckCircle, Target, ChevronRight,
 } from "lucide-react";
+import { TutorialCards } from "../components/TutorialCards";
 
 function CodeBlock({ code, filename, language }: { code: string; filename?: string; language?: string }) {
   return (
@@ -492,62 +493,15 @@ export function Spec() {
               </div>
             </div>
 
-            {/* Real-World Examples */}
+            {/* Real-World Examples — linked to actual tutorials */}
             <div id="real-world" className="mb-20 scroll-mt-24">
-              <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">Real-world examples</h2>
               <p className="text-base text-slate-700 mb-6">
-                Here's how different types of broadcast graphics map to OGraf concepts:
+                Every concept in this spec maps to something real you can build. Each tutorial walks you through one complete OGraf graphic — manifest, Web Component, animation, data — in 10 to 25 minutes.
               </p>
-
-              <div className="space-y-4">
-                {[
-                  {
-                    name: "News Lower Third",
-                    steps: "1 step",
-                    data: "Name, title, optional logo",
-                    actions: "None needed",
-                    desc: "The most common graphic. Slides in from the left, shows a name and title, slides out when the director says so.",
-                  },
-                  {
-                    name: "Sports Scoreboard",
-                    steps: "1 step",
-                    data: "Team names, scores, time, period",
-                    actions: "Goal scored (flash animation), penalty, timeout",
-                    desc: "Stays on screen the whole match. Updated constantly via updateAction. Custom actions trigger special animations like a goal celebration.",
-                  },
-                  {
-                    name: "Election Results",
-                    steps: "5 steps",
-                    data: "Candidate names, percentages, party colors",
-                    actions: "None needed",
-                    desc: "Each step shows a different race or breakdown. The director clicks Play to advance through pages.",
-                  },
-                  {
-                    name: "Breaking News Sting",
-                    steps: "0 steps (fire-and-forget)",
-                    data: "None",
-                    actions: "None",
-                    desc: "A dramatic animation that plays once automatically — the 'BREAKING NEWS' flash. No data, no operator input, just pure motion.",
-                  },
-                  {
-                    name: "Weather Map",
-                    steps: "3 steps",
-                    data: "Temperatures, forecast icons, city names",
-                    actions: "Toggle radar, switch to 5-day view",
-                    desc: "Step 1: current conditions. Step 2: tomorrow's forecast. Step 3: 5-day outlook. Custom actions toggle map layers.",
-                  },
-                ].map((ex) => (
-                  <div key={ex.name} className="rounded-xl ring-1 ring-slate-200 p-5">
-                    <p className="font-display text-base font-medium text-slate-900">{ex.name}</p>
-                    <p className="text-sm text-slate-600 mt-1">{ex.desc}</p>
-                    <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3">
-                      <span className="text-xs text-slate-400"><strong className="text-slate-600">Steps:</strong> {ex.steps}</span>
-                      <span className="text-xs text-slate-400"><strong className="text-slate-600">Data:</strong> {ex.data}</span>
-                      <span className="text-xs text-slate-400"><strong className="text-slate-600">Custom actions:</strong> {ex.actions}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <TutorialCards
+                title="Real-world examples"
+                subtitle="Pick one and build it. Every example ships as a working OGraf package."
+              />
             </div>
 
             {/* Advanced */}

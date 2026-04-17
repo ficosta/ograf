@@ -1,0 +1,197 @@
+[
+  {
+    "id": "community-hub",
+    "name": "Community Hub",
+    "icon": "Heart",
+    "description": "That's us. The independent, community-driven home for learning, building, and testing OGraf.",
+    "featured": true,
+    "items": [
+      {
+        "name": "ograf.dev",
+        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, and everything else the community needs to ship OGraf graphics.",
+        "url": "https://ograf.dev",
+        "type": "oss"
+      },
+      {
+        "name": "ograf.tools",
+        "desc": "Our companion workbench. Browser-based validator, live preview sandbox, schema explorer, and template generator. Zero install.",
+        "url": "https://ograf.tools",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "official",
+    "name": "Official",
+    "icon": "ShieldCheck",
+    "description": "The spec itself and its authoritative source of truth.",
+    "items": [
+      {
+        "name": "OGraf Specification",
+        "desc": "The EBU OGraf open graphics standard. Graphics Definition v1 is stable. Server/Control API is in draft.",
+        "url": "https://ograf.ebu.io",
+        "type": "official"
+      },
+      {
+        "name": "OGraf GitHub",
+        "desc": "Official specification repository with JSON schemas, examples, and documentation.",
+        "url": "https://github.com/ebu/ograf",
+        "type": "official",
+        "stars": "70"
+      }
+    ]
+  },
+  {
+    "id": "editors",
+    "name": "Editors",
+    "icon": "PenTool",
+    "description": "Build graphics — no-code authoring tools or developer-facing editors.",
+    "items": [
+      {
+        "name": "Loopic",
+        "desc": "No-code browser-based TV graphics template builder with one-click OGraf export.",
+        "url": "https://www.loopic.io",
+        "type": "commercial"
+      },
+      {
+        "name": "DJ HTML Creator",
+        "desc": "Windows desktop motion graphics app with timeline editor. Exports as OGraf Web Component.",
+        "url": "https://djhtmlcreator.com",
+        "type": "commercial"
+      },
+      {
+        "name": "Eyevinn ograf-editor",
+        "desc": "Web-based visual template editor with drag-and-drop, Monaco code editor, and animation system.",
+        "url": "https://github.com/Eyevinn/ograf-editor",
+        "type": "oss",
+        "stars": "2"
+      },
+      {
+        "name": "Ferryman",
+        "desc": "Convert After Effects / Lottie JSON animations into HTML broadcast templates for CasparCG, SPX, and OGraf.",
+        "url": "https://ferryman.streamshapers.com",
+        "type": "oss",
+        "stars": "30"
+      }
+    ]
+  },
+  {
+    "id": "controllers",
+    "name": "Controllers",
+    "icon": "Gamepad2",
+    "description": "Drive graphics live from a control surface or operator UI.",
+    "items": [
+      {
+        "name": "SPX-GC",
+        "desc": "Professional browser-based graphics controller for live productions. CasparCG, OBS, vMix support. OGraf compliance in v1.4.",
+        "url": "https://github.com/TuomoKu/SPX-GC",
+        "type": "oss",
+        "stars": "409"
+      },
+      {
+        "name": "SuperConductor",
+        "desc": "Cross-platform playout client controlling CasparCG, ATEM, OBS, vMix, and HTTP devices.",
+        "url": "https://github.com/SuperFlyTV/SuperConductor",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "renderers",
+    "name": "Renderers & Servers",
+    "icon": "Server",
+    "description": "Render graphics to output — SDI, NDI, browser canvas, or cloud pipeline.",
+    "items": [
+      {
+        "name": "CasparCG",
+        "desc": "Open-source professional graphics and video playout server. SDI/NDI output. OGraf via HTML producer.",
+        "url": "https://github.com/CasparCG/server",
+        "type": "oss",
+        "stars": "1000+"
+      },
+      {
+        "name": "ograf-server",
+        "desc": "Reference OGraf renderer with upload API, control API, and browser-based rendering.",
+        "url": "https://github.com/SuperFlyTV/ograf-server",
+        "type": "oss",
+        "stars": "24"
+      },
+      {
+        "name": "SPX Graphics Server",
+        "desc": "Dedicated commercial server with full OGraf + SPX template support and ServerAPI for automated playout.",
+        "url": "https://www.spx.graphics",
+        "type": "commercial"
+      }
+    ]
+  },
+  {
+    "id": "devtools",
+    "name": "Developer Tools",
+    "icon": "Wrench",
+    "description": "Validate, inspect, test, and generate OGraf assets while you build.",
+    "items": [
+      {
+        "name": "ograf-devtool",
+        "desc": "Developer tool for building and validating OGraf graphics with compliance checks and control GUIs.",
+        "url": "https://github.com/SuperFlyTV/ograf-devtool",
+        "type": "oss",
+        "stars": "18"
+      },
+      {
+        "name": "ograf-form",
+        "desc": "Web Component that auto-generates input forms from OGraf/GDD schemas.",
+        "url": "https://github.com/SuperFlyTV/ograf-form",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "templates",
+    "name": "Templates & Examples",
+    "icon": "FileCode2",
+    "description": "Starter templates and reference implementations you can learn from or fork.",
+    "items": [
+      {
+        "name": "ograf-graphics",
+        "desc": "Open-source collection of OGraf graphics templates.",
+        "url": "https://github.com/nytamin/ograf-graphics",
+        "type": "oss",
+        "stars": "4"
+      }
+    ]
+  },
+  {
+    "id": "community",
+    "name": "Community & Docs",
+    "icon": "BookOpen",
+    "description": "Docs, forums, and everything else worth reading.",
+    "items": [
+      {
+        "name": "StreamShapers Docs",
+        "desc": "Documentation covering OGraf, CasparCG, SPX, and After Effects workflows.",
+        "url": "https://streamshapers.com/docs",
+        "type": "oss"
+      },
+      {
+        "name": "CasparCG Forum",
+        "desc": "Active community forum with OGraf discussion threads.",
+        "url": "https://casparcgforum.org",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "consulting",
+    "name": "Consulting",
+    "icon": "Briefcase",
+    "description": "Hire someone to accelerate your OGraf rollout.",
+    "items": [
+      {
+        "name": "Xperity",
+        "desc": "OGraf adoption consulting with the Xperity Synthesis Framework for migration and integration.",
+        "url": "https://xperity.io",
+        "type": "commercial"
+      }
+    ]
+  }
+]

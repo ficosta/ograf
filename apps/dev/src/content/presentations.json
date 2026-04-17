@@ -1,0 +1,36 @@
+[
+  {
+    "date": "2025-06-18",
+    "title": "OGraf — A new HTML standard (EBU NTS 2025)",
+    "speaker": "Niels Borg",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/networks25/presentations/NTS2025_Niels_Borg_OGraf_A_new%20HTML-graphics_standard.pdf",
+    "summary": "Technical deck from the EBU Network Technology Seminar 2025. Manifest, Web Component lifecycle, render paths, and roadmap."
+  },
+  {
+    "date": "2025-04-28",
+    "title": "HTML graphics with EBU's OGraf standard (webinar deck)",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/roundtable_2025_HTML_graphics/presentations/EBU_webinar_HTML_graphics_OGraf_standard.pdf",
+    "summary": "Slide deck from the 28 Apr 2025 EBU webinar — scope, problem statement, and the path to standardisation."
+  },
+  {
+    "date": "2025-03-27",
+    "title": "OGraf — HTML graphics spec webinar deck",
+    "localUrl": "/docs/ograf-webinar-2025-03-27.pdf",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/roundtable_2025_EBU_open_standard_for_HTML_graphic_in_the_broadcast_industry/presentations/webinar_OGraf_HTML_graphics_spec.pdf",
+    "summary": "The earliest publicly distributed OGraf deck — framing, motivation, and the foundational ideas that became the v1 spec."
+  },
+  {
+    "date": "2025-10-01",
+    "title": "tech-i issue 66 — Bringing flexibility to HTML5 graphics workflows with OGraf",
+    "localUrl": "/docs/tech-i-066.pdf",
+    "externalUrl": "https://tech.ebu.ch/docs/tech-i/tech-i-066.pdf",
+    "summary": "EBU tech-i magazine issue 66. The OGraf feature article covers workflow flexibility wins for broadcasters moving off proprietary stacks."
+  },
+  {
+    "date": "2025-04-01",
+    "title": "tech-i issue 64 — OGraf: defining the future of broadcast graphics",
+    "localUrl": "/docs/tech-i-064.pdf",
+    "externalUrl": "https://tech.ebu.ch/docs/tech-i/tech-i-064.pdf",
+    "summary": "EBU tech-i magazine issue 64. Official announcement piece introducing OGraf's vision and the working group behind it."
+  }
+]

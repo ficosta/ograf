@@ -13,7 +13,6 @@ import {
   Star,
   Wrench,
 } from "lucide-react";
-
 interface EcoItem {
   readonly name: string;
   readonly desc: string;
@@ -22,13 +21,17 @@ interface EcoItem {
   readonly stars?: string;
 }
 
-interface Category {
+interface CategoryJson {
   readonly id: string;
   readonly name: string;
-  readonly icon: LucideIcon;
+  readonly icon: string;
   readonly description: string;
   readonly items: readonly EcoItem[];
   readonly featured?: boolean;
+}
+
+interface Category extends Omit<CategoryJson, "icon"> {
+  readonly icon: LucideIcon;
 }
 
 const CATEGORIES: readonly Category[] = [
@@ -51,203 +54,9 @@ const CATEGORIES: readonly Category[] = [
         url: "https://ograf.tools",
         type: "oss",
       },
-    ],
-  },
-  {
-    id: "official",
-    name: "Official",
-    icon: ShieldCheck,
-    description: "The spec itself and its authoritative source of truth.",
-    items: [
-      {
-        name: "OGraf Specification",
-        desc: "The EBU OGraf open graphics standard. Graphics Definition v1 is stable. Server/Control API is in draft.",
-        url: "https://ograf.ebu.io",
-        type: "official",
-      },
-      {
-        name: "OGraf GitHub",
-        desc: "Official specification repository with JSON schemas, examples, and documentation.",
-        url: "https://github.com/ebu/ograf",
-        type: "official",
-        stars: "70",
-      },
-    ],
-  },
-  {
-    id: "editors",
-    name: "Editors",
-    icon: PenTool,
-    description: "Build graphics — no-code authoring tools or developer-facing editors.",
-    items: [
-      {
-        name: "Loopic",
-        desc: "No-code browser-based TV graphics template builder with one-click OGraf export.",
-        url: "https://www.loopic.io",
-        type: "commercial",
-      },
-      {
-        name: "DJ HTML Creator",
-        desc: "Windows desktop motion graphics app with timeline editor. Exports as OGraf Web Component.",
-        url: "https://djhtmlcreator.com",
-        type: "commercial",
-      },
-      {
-        name: "Eyevinn ograf-editor",
-        desc: "Web-based visual template editor with drag-and-drop, Monaco code editor, and animation system.",
-        url: "https://github.com/Eyevinn/ograf-editor",
-        type: "oss",
-        stars: "2",
-      },
-      {
-        name: "Ferryman",
-        desc: "Convert After Effects / Lottie JSON animations into HTML broadcast templates for CasparCG, SPX, and OGraf.",
-        url: "https://ferryman.streamshapers.com",
-        type: "oss",
-        stars: "30",
-      },
-    ],
-  },
-  {
-    id: "controllers",
-    name: "Controllers",
-    icon: Gamepad2,
-    description: "Drive graphics live from a control surface or operator UI.",
-    items: [
-      {
-        name: "SPX-GC",
-        desc: "Professional browser-based graphics controller for live productions. CasparCG, OBS, vMix support. OGraf compliance in v1.4.",
-        url: "https://github.com/TuomoKu/SPX-GC",
-        type: "oss",
-        stars: "409",
-      },
-      {
-        name: "SuperConductor",
-        desc: "Cross-platform playout client controlling CasparCG, ATEM, OBS, vMix, and HTTP devices.",
-        url: "https://github.com/SuperFlyTV/SuperConductor",
-        type: "oss",
-      },
-    ],
-  },
-  {
-    id: "renderers",
-    name: "Renderers & Servers",
-    icon: Server,
-    description: "Render graphics to output — SDI, NDI, browser canvas, or cloud pipeline.",
-    items: [
-      {
-        name: "CasparCG",
-        desc: "Open-source professional graphics and video playout server. SDI/NDI output. OGraf via HTML producer.",
-        url: "https://github.com/CasparCG/server",
-        type: "oss",
-        stars: "1000+",
-      },
-      {
-        name: "ograf-server",
-        desc: "Reference OGraf renderer with upload API, control API, and browser-based rendering.",
-        url: "https://github.com/SuperFlyTV/ograf-server",
-        type: "oss",
-        stars: "24",
-      },
-      {
-        name: "SPX Graphics Server",
-        desc: "Dedicated commercial server with full OGraf + SPX template support and ServerAPI for automated playout.",
-        url: "https://www.spx.graphics",
-        type: "commercial",
-      },
-    ],
-  },
-  {
-    id: "devtools",
-    name: "Developer Tools",
-    icon: Wrench,
-    description: "Validate, inspect, test, and generate OGraf assets while you build.",
-    items: [
-      {
-        name: "ograf-devtool",
-        desc: "Developer tool for building and validating OGraf graphics with compliance checks and control GUIs.",
-        url: "https://github.com/SuperFlyTV/ograf-devtool",
-        type: "oss",
-        stars: "18",
-      },
-      {
-        name: "ograf-form",
-        desc: "Web Component that auto-generates input forms from OGraf/GDD schemas.",
-        url: "https://github.com/SuperFlyTV/ograf-form",
-        type: "oss",
-      },
-    ],
-  },
-  {
-    id: "templates",
-    name: "Templates & Examples",
-    icon: FileCode2,
-    description: "Starter templates and reference implementations you can learn from or fork.",
-    items: [
-      {
-        name: "ograf-graphics",
-        desc: "Open-source collection of OGraf graphics templates.",
-        url: "https://github.com/nytamin/ograf-graphics",
-        type: "oss",
-        stars: "4",
-      },
-    ],
-  },
-  {
-    id: "community",
-    name: "Community & Docs",
-    icon: BookOpen,
-    description: "Docs, forums, and everything else worth reading.",
-    items: [
-      {
-        name: "StreamShapers Docs",
-        desc: "Documentation covering OGraf, CasparCG, SPX, and After Effects workflows.",
-        url: "https://streamshapers.com/docs",
-        type: "oss",
-      },
-      {
-        name: "CasparCG Forum",
-        desc: "Active community forum with OGraf discussion threads.",
-        url: "https://casparcgforum.org",
-        type: "oss",
-      },
-    ],
-  },
-  {
-    id: "consulting",
-    name: "Consulting",
-    icon: Briefcase,
-    description: "Hire someone to accelerate your OGraf rollout.",
-    items: [
-      {
-        name: "Xperity",
-        desc: "OGraf adoption consulting with the Xperity Synthesis Framework for migration and integration.",
-        url: "https://xperity.io",
-        type: "commercial",
-      },
-    ],
-  },
-];
-
-const TYPE_STYLES: Record<EcoItem["type"], string> = {
-  oss: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-  commercial: "bg-amber-50 text-amber-700 ring-amber-600/20",
-  official: "bg-blue-50 text-blue-700 ring-blue-600/20",
-};
-
-const TYPE_LABELS: Record<EcoItem["type"], string> = {
-  oss: "open source",
-  commercial: "commercial",
-  official: "official",
-};
-
-const ALL_ITEMS = CATEGORIES.flatMap((c) => c.items);
-const TOTAL = ALL_ITEMS.length;
-const OSS_COUNT = ALL_ITEMS.filter((i) => i.type === "oss").length;
-const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length;
-
-export function Ecosystem() {
-  return (
+const CATEGORIES: readonly Category[] = (ecosystemJson as readonly CategoryJson[]).map(
+  (c) => ({ ...c, icon: resolveIcon(c.icon) }),
+);
     <>
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">

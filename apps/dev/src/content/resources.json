@@ -1,0 +1,57 @@
+[
+  {
+    "title": "OGraf project hub",
+    "url": "https://ograf.ebu.io/",
+    "description": "Official home — current status, roadmap, and tool links."
+  },
+  {
+    "title": "OGraf Graphics specification",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification.html",
+    "description": "The main human-readable graphics spec."
+  },
+  {
+    "title": "OGraf Server API specification",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification_Server_API.html",
+    "description": "Human-readable server API documentation."
+  },
+  {
+    "title": "EBU HTML Graphics working group",
+    "url": "https://tech.ebu.ch/groups/html_graphics",
+    "description": "Official working-group page."
+  },
+  {
+    "title": "Official GitHub repository",
+    "url": "https://github.com/ebu/ograf",
+    "description": "Spec source, issues, and project timeline."
+  },
+  {
+    "title": "Reference examples",
+    "url": "https://github.com/ebu/ograf/tree/main/v1/examples",
+    "description": "OGraf example graphics on GitHub."
+  },
+  {
+    "title": "Changelog",
+    "url": "https://ograf.ebu.io/CHANGELOG.html",
+    "description": "Current change history."
+  },
+  {
+    "title": "TVBEurope OGraf tag",
+    "url": "https://www.tvbeurope.com/tag/ograf",
+    "description": "Watch this tag page for new OGraf press coverage."
+  },
+  {
+    "title": "Loopic blog",
+    "url": "https://docs.loopic.io/blog",
+    "description": "Useful for IBC/NAB posts and Loopic implementation notes."
+  },
+  {
+    "title": "Everviz conference posts",
+    "url": "https://www.everviz.com/blog/category/conference/",
+    "description": "IBC/NAB and event-related Everviz posts in one place."
+  },
+  {
+    "title": "StreamShapers OGraf docs",
+    "url": "https://streamshapers.com/docs/documentation/ograf/",
+    "description": "Third-party context docs — useful background."
+  }
+]
