@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80" role="img" aria-label="SPX logo">
+  <text x="100" y="62"
+        text-anchor="middle"
+        font-family="Arial Black, Inter, Helvetica, Arial, sans-serif"
+        font-size="72"
+        font-weight="900"
+        letter-spacing="-2"
+        fill="#64748b">SPX</text>
+</svg>

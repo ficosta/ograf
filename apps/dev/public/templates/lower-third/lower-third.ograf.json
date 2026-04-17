@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.lower-third",
+  "version": "1.0.0",
+  "name": "CBS-Style Lower Third",
+  "description": "Clean white and blue lower third with slide-in animation. Built as part of the ograf.dev tutorial.",
+  "author": {
+    "name": "ograf.dev",
+    "url": "https://ograf.dev"
+  },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "gddType": "single-line",
+        "default": "Jane Smith"
+      },
+      "title": {
+        "type": "string",
+        "title": "Title",
+        "gddType": "single-line",
+        "default": "Senior Graphics Engineer"
+      }
+    }
+  }
+}

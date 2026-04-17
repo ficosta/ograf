@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <lower-third></lower-third>
+  <script type="module">
+    import LowerThird from './graphic.mjs';
+
+    const el = document.querySelector('lower-third');
+
+    // Listen for commands from the parent page
+    window.addEventListener('message', async (e) => {
+      const { action, data } = e.data || {};
+      if (!action) return;
+
+      switch (action) {
+        case 'load':
+          await el.load({ data: data || { name: 'Jane Smith', title: 'Senior Graphics Engineer' } });
+          break;
+        case 'play':
+          await el.playAction({ delta: 1 });
+          break;
+        case 'stop':
+          await el.stopAction({});
+          break;
+        case 'update':
+          await el.updateAction({ data });
+          break;
+      }
+    });
+
+    // Auto-load with default data on init
+    el.load({
+      data: { name: 'Jane Smith', title: 'Senior Graphics Engineer' },
+      renderType: 'realtime',
+      renderCharacteristics: { resolution: { width: 1920, height: 1080 } }
+    });
+  </script>
+</body>
+</html>

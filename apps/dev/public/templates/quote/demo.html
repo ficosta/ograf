@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: #0f172a; min-height: 100vh; }</style>
+</head>
+<body>
+  <quote-graphic></quote-graphic>
+  <script type="module">
+    import QuoteGraphic from './graphic.mjs';
+    const el = document.querySelector('quote-graphic');
+    const defaultData = {
+      text: "Open graphics, open broadcast, open standards. That's the future.",
+      author: 'Demo Quote',
+      role: 'Sample Credit'
+    };
+    window.addEventListener('message', async (e) => {
+      const { action, data } = e.data || {};
+      if (!action) return;
+      switch (action) {
+        case 'load': await el.load({ data: data || defaultData }); break;
+        case 'play': await el.playAction({}); break;
+        case 'stop': await el.stopAction({}); break;
+        case 'update': await el.updateAction({ data }); break;
+      }
+    });
+    el.load({ data: defaultData, renderType: 'realtime', renderCharacteristics: {} });
+  </script>
+</body>
+</html>

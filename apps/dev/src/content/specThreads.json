@@ -1,0 +1,546 @@
+[
+  {
+    "number": 20,
+    "title": "Thumbnail",
+    "url": "https://github.com/ebu/ograf/issues/20",
+    "closedAt": "2026-04-15",
+    "author": "didikunz",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "Concluded"
+    ],
+    "body": "What we just touched, during the meeting and went missing while talking about the Preview idea, is the thumbnail thing. Maybe we should consider adding a link to a PNG file with an image of the template. I would not expect it to be dynamically created by the template, but supplied by the template author. Could also made to be optional.",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-08-20T14:49:32Z",
+        "body": "Notes from Working Group discussion 2025-08-20:\n\nThe Group thinks that the concept of having a thumbnail is a good idea.\n\nSome notes:\n\n* We should limit PNG, JPG, GIF, webp\n* Something to watch for is performance, if we're generating thumbnails on the fly, that can be quite expensiven updating many graphics.\n* The thumbnail should be defined in the manifest, since this allows for a \"graphics builder\" to prerender and embed a thumbnail.\n* If would ge good if it is possible to add multiple thumbnails (in different resolutions, for example).\n* There was a discussion on additional formats such as svg, or html-iframes. We leave this for now for vendors to implement\n"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-19T15:19:36Z",
+        "body": "What about this:\n\n```\n    \"thumbnails\": [\n        {\n            \"ratio\": \"16by9\",\n            \"file\": \"../thumbs/16by9.png\"\n        }, {\n            \"ratio\": \"9by16\",\n            \"file\": \"../thumbs/9by16.png\"\n        }, {\n            \"ratio\": \"1by1\",\n            \"file\": \"../thumbs/1by1.png\"\n        } \n    ]\n```\n\nWe could define a bunch of predefined aspect ratios. I guess there are less than actual resolutions. The images could be as big as the renderer the template runs on (1920x1080 etc.) or as small as the author see fit. The whole thing (\"thumbnails\" object) could be optional. Also the ratio could be optional, but then it would not make much sense to have more than one entry in the array."
+      }
+    ]
+  },
+  {
+    "number": 25,
+    "title": "Rendering engine version",
+    "url": "https://github.com/ebu/ograf/issues/25",
+    "closedAt": "2026-04-15",
+    "author": "imaretic",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "OGraf Graphic",
+      "Concluded"
+    ],
+    "body": "Despite OGrafs being defined by this specification, they can still render differently across different “OGraf renderers” since not every “OGraf renderer” will be using the same version of HTML rendering engine (Blink, Gecko, etc.), where differences in support for specific HTML, CSS, or JS features can occur. It would be useful to include the minimum compatible engine version for the template in the manifest file because the choice of rendering engine directly affects how OGrafs are displayed. This requirement could potentially be added to the `RenderRequirement` object of the manifest file.\n\nSince CEF is commonly used in video production software, we should consider whether it makes sense to specify minimum CEF version requirements only, or whether the manifest should remain flexible enough to support defining minimum versions for other rendering engines as well.",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-09-22T06:39:50Z",
+        "body": "I think we should include the `CEF`-version in the version descriptor, to allow for potential other rendering engines in the future.\nSomething like this, perhaps?\n```json\n{\n    \"renderRequirements\": [\n        {\n            \"engine\": {\n                \"cefVersion\": { \"min\": 139 }\n            }\n        }\n    ]\n}\n```"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-01T13:30:28Z",
+        "body": "What about:\n```\n{\n    \"renderRequirements\": [\n        {\n            \"engine\": {\n                \"type\": \"CEF\",\n                \"version\": { \"min\": 139 }\n            }\n        }\n    ]\n}\n```\nWould allow other engines, like Gecko etc."
+      },
+      {
+        "author": "herzogmedia",
+        "createdAt": "2025-10-01T15:52:35Z",
+        "body": "The original proposal would do so as well, when used like so:\n```json\n{\n    \"renderRequirements\": [\n        {\n            \"engine\": {\n                \"cefVersion\": { \"min\": 139 },\n                \"geckoVersion\": { \"min\": 106 }\n            }\n        }\n    ]\n}\n```\nThat said, I would still prefer @didikunz 's version, since it is a bit more verbose."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-01T16:21:25Z",
+        "body": "Or a combination of both:\n\n```\n{\n    \"renderRequirements\": [\n        {\n            \"engine\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"CEF\",\n\t\t\t\t\t\"minVersion\": 139\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"Gecko\",\n\t\t\t\t\t\"minVersion\": 106\n\t\t\t\t}\n\t\t\t]\n        }\n}\n```\n\nThe version could always be a minimal version, so that could be shorthanded, or could left as is for compatibility with other numeric values, that have a range etc. In this way different engines could be mention, without having fixed assomptions on types. So it could also be vendor specific types."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-29T16:27:14Z",
+        "body": "What we discussed during the meeting on 2025-10-29:\n\n```\n{\n    \"renderRequirements\": [\n        {\n            \"engine\": [\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"CEF\",\n\t\t\t\t\t\"version\": { \"min\": 139 }\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"type\": \"Gecko\",\n\t\t\t\t\t\"version\": { \"min\": 106 }\n\t\t\t\t}\n\t\t\t]\n        }\n}\n```"
+      }
+    ]
+  },
+  {
+    "number": 27,
+    "title": "Schema property order",
+    "url": "https://github.com/ebu/ograf/issues/27",
+    "closedAt": "2026-04-15",
+    "author": "imaretic",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "OGraf Graphic",
+      "Concluded"
+    ],
+    "body": "Schema properties in OGraf manifest are contained within the `schema` JSON object, which means there is no defined order in which the controller UI will read and render input elements to the user.\n\nThis can be inconvenient, as less important (or optional) properties may appear before more important ones, making the interface harder to use.\n\nA potential solution to this problem could be to add an optional `order` property to each schema property item.",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-09-19T11:10:05Z",
+        "body": "That's a good point. Another solution could be to just let the UI render the controls from top to bottom, let the order in which the properties are listed be the implicit order number. AFAIK that is also the way it's meant to be in GDD."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-09-22T06:27:33Z",
+        "body": "I think this would be a good addition. To further add to the context, the order of properties in a json-object is implied only, and not guaranteed to be unchanged.\n\n>\"An object is an unordered collection of zero or more name/value pairs, where a name is a string and a value is a string, number, boolean, null, object, or array.\" (Source [RFC 7159](https://www.rfc-editor.org/rfc/rfc7159))"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-10-29T16:34:29Z",
+        "body": "Notes from Working Group meeting 2025-10-29:\n\nConclusion: Let's add an optional `order` property"
+      }
+    ]
+  },
+  {
+    "number": 46,
+    "title": "Suggestion: Manifest schema property to include \"useInName\"",
+    "url": "https://github.com/ebu/ograf/issues/46",
+    "closedAt": "2026-04-15",
+    "author": "nytamin",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "Concluded"
+    ],
+    "body": "## Proposal:\n\nAdd a `useInName?: boolean` property to the manifest schema properties. When `useInName = true`, this indicates that the value of the property should be included when labelling a graphics in a GUI.\n\n## Motivation:\n\nWhen working on implementing OGraf support into [Sofie TV Automation](https://sofie-automation.github.io/), I found that this would have been nice to have, in order to display meaningful labels to the user (and omit not-so-useful data).\n\n### Example:\n\n```json\n{\n    \"$schema\": \"https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json\",\n    \"id\": \"title\",\n    \"name\": \"Title screen\",\n    \"main\": \"title.js\",\n    \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n            \"mainText\": {\n                \"type\": \"string\",\n                \"title\": \"Main Title text\",\n                \"useInName\": true\n            },\n            \"titleColor\": {\n                \"type\": \"string\",\n                \"default\": \"#d32f2f\"\n            },\n            \"titlePosition\": {\n                \"type\": \"string\"\n            },\n        }\n    }\n}\n```\n\nIn this example, `mainText` would be useful to display in a gui (eg \"Title screen: Johan Nyman\"), whereas the color and position is not.",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-15T10:26:46Z",
+        "body": "I like the idea and would support that change.\n\nBut I would suggest to do it the other way around: Name the property \"hidden\" and default it to false. So every field would be included, except the ones that are explicitly hidden. Would also provide some backward compatibility to the way it is now."
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-16T06:44:21Z",
+        "body": "LiveOS has a similar boolean property for parameters called `visible`. It is used in the UI inside the graphics playlist application. When set to true, the template parameter will be shown inside the playlist item. Note that we can still overwrite this when editing the playlist item, so the property in the manifest only serves as a default value. It is currently implemented as a vendor-specific field. \n\nI never thought about proposing this field into this group as I thought it was very specific to our UI, but clearly it isn't :-). I agree with @didikunz though and would inverse it to keep backwards compatibility. In that case, 'hidden' seems to be a good name."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-02-18T15:23:04Z",
+        "body": "notes from meeting 2026-02-18: Adding a `hidden` property would probably be best, as it best retains \"backwards compatibility\"."
+      }
+    ]
+  },
+  {
+    "number": 63,
+    "title": "License model: Set MIT license",
+    "url": "https://github.com/ebu/ograf/issues/63",
+    "closedAt": "2026-04-15",
+    "author": "nytamin",
+    "labels": [
+      "Concluded"
+    ],
+    "body": "Notes from Working group meeting 2026-04-15:\n\nPaola raised the need to add a license to the repo, and suggested the MIT license.\n\nNo one was against, so we'll move forward with setting the MIT license on the repo.",
+    "comments": []
+  },
+  {
+    "number": 50,
+    "title": "Suggestion: \"group\" property in manifest",
+    "url": "https://github.com/ebu/ograf/issues/50",
+    "closedAt": "2026-03-18",
+    "author": "jhobz",
+    "labels": [
+      "Idea",
+      "Manifest"
+    ],
+    "body": "Oftentimes multiple graphics are meant to share the same area of the output, e.g. a lower-third, or a full screen takeover. If we add a top-level \"group\" property (string) to the manifest file, renderers could use this to compare against any graphics that are currently playing and play their stop action whenever a new graphic is played into that group.\n\nFor example, if I have a ticker at the bottom of the screen and want to play a different graphic to bring up a call-to-action in the same screen space, I'd define the group for both graphics to be \"footer\" (or similar). When I run the `playAction` for the CTA, the renderer automatically calls `stopAction` on all graphics in the \"footer\" group then, after the promise returns, runs the `playAction` for the CTA graphic.\n\nWhile I think the benefits to this solution are rather evident, I can already see some drawbacks:\n* The server would now need to keep track of state of which graphics are in/out -- note, not which are _loaded_, but which are currently _playing_ -- which is a non-trivial additional complexity.\n* This proposal would mean the play action would not happen immediately after issuing the command from a controller, it would happen after the return of the `stopAction` promises from other graphics in the group. This is likely what the user would want in most cases, but it still means there would be no way to force the `playAction` to happen instantly.\n\nPerhaps a better implementation would be adding an optional parameter in the `playAction` API call to tell the server to pay attention to the group property? Or make the group property an object rather than a string, with a shape similar to below?\n```json\n\"group\": {\n    \"name\": \"footer\"\n    \"simultaneousGraphicsAllowed\": 1\n}\n```\n\nInterested in thoughts from others. I know in my own implementations this is already a parameter I've been looking for.",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-19T13:02:40Z",
+        "body": "My intention is to keep the OGraf standard as slim and simple as possible, and because of that, I would not want to add this. \n\nI have this situation with one client. Durring their news program the always show a graphic with the Theme for the whole story. This occupies the area, where the lower third is shown. So to make that work, I use a JavaScript feature called \"Local Storage\". It allows to write and read values to a storage, that can be accessed by all browser windows. The trick here is, that the other templates can subscribe to an event, that always occur, when something is written to the storage. So the lower third templates make the theme disappear and, on animating out let it reappear. This is quite an easy workflow and is only used when necessary.\n\n"
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-20T07:13:06Z",
+        "body": "What you ask is I think related to a concept we introduced in the Server API (https://ograf.ebu.io/v1/specification/open-api/docs/index.html): `RenderTarget`. It is a concept introduced to support layers and more advanced forms of grouping inside a rendering engine. The idea is to not restrict implementers of rendering engines to a one-dimensional layer structure, but that they are free to define their own structure, which we call with a more generic name 'RenderTarget'. So that group you are referring to can be seen as a RenderTarget. Note that it is up to the implementer how a RenderTarget is interpreted:\n* implementer defines the schema\n* implementer decides how many graphics are allowed per RenderTarget\n* implementer decides how RenderTarget 'conflicts' are resolved (e.g. smooth crossfade transition or just a cut, or something else).\n\nNow, from a manifest perspective, there is currently no notion of a default RenderTarget for a given graphic. And that is normal, because a RenderTarget is specific for the renderer, not the graphic itself. I can imagine that there will be vendor specific fields in the manifest allowing you to specify a default render target. Inside LiveOS, we do that as well. But I think it is hard to specify such a thing from an OGraf perspective.\n"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-18T15:46:36Z",
+        "body": "Notes from Working Group meeting 2026-03-18:\n\nThis seems like a useful thing to add, but _at this time_ we're not able to come up with a definition that would both be generic and useable by a Controller.\n\nSo we'll close this thread as **Not Planned** for now, but we'll keep the door open in case someone comes up with a solution in the future."
+      }
+    ]
+  },
+  {
+    "number": 47,
+    "title": "Suggestion: GDD graphics positions",
+    "url": "https://github.com/ebu/ograf/issues/47",
+    "closedAt": "2026-03-05",
+    "author": "nytamin",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "GDD Types"
+    ],
+    "body": "(The suggestions below are intended to spark discussion, perhaps we can come up with something even better?)\n\n## Background\n\nThere are some graphics that take position data as input. One example is this one from the olympics:\n\n![Image](https://github.com/user-attachments/assets/93cae12f-034f-4755-947c-83e4caba6f22)\n\n\n## Relative position\n\nBelow are suggestions for how relative positions could be defined.\nI include a `typicalValue`, with the intention that it is used to scale the input, so that \"one human interaction\" (like \"one scroll\", \"one drag operation\" or \"one swipe\") typically result in sent values with a sum in this magnitude.\n\n```json\n{\n  \"type\": \"number\",\n  \"gddType\": \"relative-position-1d\",\n  \"gddOptions\": {\n    \"typicalValue\": 100 // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n  }\n}\n```\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"relative-position-2d\",\n  \"gddOptions\": {\n    \"typicalValueX\": 100, // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n    \"typicalValueY\": 100 // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n  },\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n    },\n    \"y\": {\n      \"type\": \"number\",\n    }\n  }\n}\n```\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"relative-position-3d\",\n  \"gddOptions\": {\n    \"typicalValueX\": 100, // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n    \"typicalValueY\": 100, // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n    \"typicalValueZ\": 100 // [Optional, number] A typical value during one interaction (An interaction can be a drag, or a scroll, etc).\n  },\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n    },\n    \"y\": {\n      \"type\": \"number\",\n    },\n    \"z\": {\n      \"type\": \"number\",\n    }\n  }\n}\n```\n\n## Absolute position\n\nBelow are suggestions for how absolute positions could be defined.\nThe min/max values should be used by a GUI to define the values sent.\n\n\n```json\n{\n  \"type\": \"number\",\n  \"gddType\": \"absolute-position-1d\",\n  \"gddOptions\": {},\n  \"maximum\": number,          // [Optional] See JSON-schema definition\n  \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n  \"minimum\": number,          // [Optional] See JSON-schema definition\n  \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n}\n```\n\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"absolute-position-2d\",\n  \"gddOptions\": {},\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    },\n    \"y\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    }\n  }\n}\n```\n\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"absolute-position-3d\",\n  \"gddOptions\": {},\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    },\n    \"y\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    },\n    \"z\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    }\n  }\n}\n```\n\n### Absolute positions - variants\n\n#### GPS position\n\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"absolute-position-2d/gps\", // X and Y are longitude and latitude, respectively.\n  \"gddOptions\": {},\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    },\n    \"y\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    }\n  }\n}\n```\n\n#### Position on screen\n\n(This would be used for the example screenshot above)\n\n```json\n{\n  \"type\": \"object\",\n  \"gddType\": \"absolute-position-2d/screen\", // X and Y are positions on a screen with (0,0) being the top-left corner of the screen.\n  \"gddOptions\": {},\n  \"properties\": {\n    \"x\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    },\n    \"y\": {\n      \"type\": \"number\",\n      \"maximum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMaximum\": number, // [Optional] See JSON-schema definition\n      \"minimum\": number,          // [Optional] See JSON-schema definition\n      \"exclusiveMinimum\": number, // [Optional] See JSON-schema definition\n    }\n  }\n}\n```\n\n",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-18T15:46:17Z",
+        "body": "Do we really need an extra specification for this? To me it simply looks like an array of numbers/integers."
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-19T07:12:13Z",
+        "body": "Agreed, that is my feeling as well. It is a dangerous path to introduce these kind of parameter types, because you don't know where this ends. They are useful, but what is our incentive to make this particular (extension) type part of the spec and others not. \n\nThe only advantage you achieve is a potential nicer representation of this kind of data across different vendor-specific controllers. Suppose we don't standardize these types, but a specific vendor wants to use this, am I right that the vendor can extend the OGraf schema with new types that are only known in the vendor's ecosystem?"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-02-19T15:47:16Z",
+        "body": ">Do we really need an extra specification for this? To me it simply looks like an array of numbers/integers.\n\nYes, the underlying data structure is JSON, as is all the GDD types. My intention with this proposal is I think that it would be useful for GUI:s to know about positions-type data, so that they can provide better user interfaces.\n\n\n>The only advantage you achieve is a potential nicer representation of this kind of data across different vendor-specific controllers.\n\nAgreed, but that also apply to all GDD-types. They allow for a GUI to provide a nicer GUI for both simple and complex json data types.\n\n> what is our incentive to make this particular (extension) type part of the spec and others not.\n\nAs the original creator of GDD, it was my intention that they would be extended with new types continously, to provide a better user experience.\nThe GDD-types are all designed to be opt-in and to [allow for graceful degradation](https://github.com/ebu/ograf/tree/main/v1/specification/json-schemas/gdd#gdd-types), ie fall back to primitive data types if a particular GUI can't render a particular GDD-type.\n"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-19T15:59:39Z",
+        "body": "If you see a use for that and don't think it adds too much clouter, I am not against it.\n\n> As the original creator of GDD, it was my intention that they would be extended with new types continously, to provide a better user experience.\n> The GDD-types are all designed to be opt-in and to [allow for graceful degradation](https://github.com/ebu/ograf/tree/main/v1/specification/json-schemas/gdd#gdd-types), ie fall back to primitive data types if a particular GUI can't render a particular GDD-type.\n> \nThat will free me to suggest whatever comes to my mind also :)"
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-19T16:04:45Z",
+        "body": "> As the original creator of GDD, it was my intention that they would be extended with new types continously, to provide a better user experience.\nThe GDD-types are all designed to be opt-in and to [allow for graceful degradation](https://github.com/ebu/ograf/tree/main/v1/specification/json-schemas/gdd#gdd-types), ie fall back to primitive data types if a particular GUI can't render a particular GDD-type.\n\nYes, I like this graceful degradation approach and it works very well for all primitive types, except for `object`. How would a controller fallback implementation look like for extensions of object. The only thing I can imagine is a plain JSON string ... Of course this can work, but I wonder if we should promote the use of complex objects, because every new type that inherits from object needs either to be implemented by controllers or to be shown as an ugly JSON string."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-19T16:35:01Z",
+        "body": "The object type is maybe more use full for some automated system like a stock ticker that get's it's data not from a GUI but from some process running somewhere."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-03T14:19:47Z",
+        "body": "> Yes, I like this graceful degradation approach and it works very well for all primitive types, except for `object`. How would a controller fallback implementation look like for extensions of object. The only thing I can imagine is a plain JSON string ... Of course this can work, but I wonder if we should promote the use of complex objects, because every new type that inherits from object needs either to be implemented by controllers or to be shown as an ugly JSON string.\n\nI guess you could recursively map the object's properties to primitive types but... do you want that? From the moment a property is an object, perhaps it shouldn't be a property in the first place. At least not (user-)editable."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-05T08:09:59Z",
+        "body": "Notes from OGraf Meeting 2026-03-04:\n\nThere was a discussion on whether adding complex data types (such as objects and arrays) as GDD types creates an unreasonable burden on GUI implementers.\n\nWe ended up deciding that we won't accept this suggestion, and that we'll follow up with another generic discussion on GDD-types (in part handled in https://github.com/ebu/ograf/issues/48)"
+      }
+    ]
+  },
+  {
+    "number": 54,
+    "title": "Requires internet access -flag",
+    "url": "https://github.com/ebu/ograf/issues/54",
+    "closedAt": "2026-03-05",
+    "author": "TuomoKu",
+    "labels": [],
+    "body": "I remember this was discussed at one point, but was it ever decided?\n\nIf a graphic relies on external resources (API's, libraries, assets) it could be benefitial for the Controller in some (offline) environments to notify user of this if no internet access available.\n\nSomething like\n```\nrequireInternet: true\n```",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-04T14:57:00Z",
+        "body": "Yes, this was added in https://github.com/ebu/ograf/pull/11\n\nhere: https://github.com/ebu/ograf/blob/main/v1/specification/json-schemas/graphics/schema.json#L104"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-04T16:56:36Z",
+        "body": "This could be marked as done, right? (I have no permission to close it)"
+      }
+    ]
+  },
+  {
+    "number": 42,
+    "title": "No more frames response on goToTime()",
+    "url": "https://github.com/ebu/ograf/issues/42",
+    "closedAt": "2026-02-19",
+    "author": "didikunz",
+    "labels": [
+      "Idea",
+      "OGraf Graphic"
+    ],
+    "body": "Should we give a different response code, when goToTime() tries to move out of the \"timeline\". I understand it so, that we can define (using setActionsSchedule() ) when the stopAction() should occur. That said, the template would know, when the out-animation is complete and could then send the response code to tell the non-realtime-renderer, that there are no more frames to capture.\n\nOr did I miss something and that is already in the specs somewhere?",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-02-18T15:34:19Z",
+        "body": "Notes from meeting 2026-02-18: This is related to [a discussion back in October](https://github.com/ebu/ograf/issues/26). If we define the times/durations for various actions, that could be used to calculate the times when rendering a graphic."
+      }
+    ]
+  },
+  {
+    "number": 49,
+    "title": "GDD Type \"Masked Text\" input type.",
+    "url": "https://github.com/ebu/ograf/issues/49",
+    "closedAt": "2026-02-16",
+    "author": "didikunz",
+    "labels": [
+      "Idea",
+      "Manifest",
+      "GDD Types"
+    ],
+    "body": "Without fully understand the need and use of [Issue 47](https://github.com/ebu/ograf/issues/47) I would suggest to find a more generic way of doing special data types in GDD. Maybe we could define some kind of \"masked text\" input type, that is actually a text, that has a regular expression defining the format of the allowed input. For multidimensional support, an array of this type could be used. This would also open up a lot of other cases, like ZIP codes, IBAN's, phone numbers etc.",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-02-16T14:01:36Z",
+        "body": "GDD builds upon JSON-schemas and they already allows defining regex patterns, for example you can define a data type as:\n\n```json\n{\n  \"type\": \"string\",\n  \"pattern\": \"^(?:[a-z0-9!#$%&'*+\\x2f=?^_`\\x7b-\\x7d~\\x2d]+(?:\\.[a-z0-9!#$%&'*+\\x2f=?^_`\\x7b-\\x7d~\\x2d]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9\\x2d]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9\\x2d]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9\\x2d]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$\",\n} // regex for email, see https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression\n```"
+      }
+    ]
+  },
+  {
+    "number": 24,
+    "title": "PSA: Moving of GDD info Ograf",
+    "url": "https://github.com/ebu/ograf/issues/24",
+    "closedAt": "2026-02-04",
+    "author": "nytamin",
+    "labels": [
+      "Manifest",
+      "OGraf Graphic",
+      "Data Types",
+      "Concluded"
+    ],
+    "body": "## TLDR;\n\nGDD will be adopted by Ograf and eventually deprecated.\n\n## Background\n\n[GDD (Graphics Data Definition)](https://github.com/SuperFlyTV/GraphicsDataDefinition) is a json-schema data definition for CasparCG Graphics, created by Superfly.tv in 2022.\n\nIt is referenced from the ograf specification, used for defining rich data input types.\n\n## Discussion\n\nAs brought up in #5 and later discussed in the Working Group, if would fit the ograf project well to adopt the GDD rich data inputs definitions, and maintain those discussions.\n\nSuperFly.tv, via Johan Nyman (@nytamin) is open to the idea of moving the GDD definitions and eventually deprecating them in favor of ograf.",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-29T16:41:49Z",
+        "body": "Would it make sense to rename the gdd specific types to something like ograf?\nThis:\n```\n{\n  \"type\": \"string\",\n  \"gddType\": \"file-path\",\n  \"gddOptions\": {\n    \"extensions\": [\"txt\", \"json\"] // [Optional, Array of strings] . Limit which files can be chosen by the user\n  }\n}\n\n```\nwould become this:\n```\n{\n  \"type\": \"string\",\n  \"ografType\": \"file-path\",\n  \"ografOptions\": {\n    \"extensions\": [\"txt\", \"json\"] // [Optional, Array of strings] . Limit which files can be chosen by the user\n  }\n}\n\n```\nOr is this only cosmetics?"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-10-30T05:06:57Z",
+        "body": "Unfortunately that would be a breaking change in the graphics manifest, so we can't do that."
+      }
+    ]
+  },
+  {
+    "number": 41,
+    "title": "Drop-down field type",
+    "url": "https://github.com/ebu/ograf/issues/41",
+    "closedAt": "2025-12-08",
+    "author": "pierrehuguesrouthier-CBC",
+    "labels": [],
+    "body": "Hello,\nWe rely heavily on the drop-down field type in our HTML5 templates at the CBC (see images below).\nDo you think the feature could be added to the specification?  That would facilitate our work with SPX and Stream Shapers (i.e. enable the feature when using Ograf templates).\n\nThank you for your consideration!\n\nCurrent schema under Ograf:\n<img width=\"860\" height=\"272\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/354f851f-36d3-4ad7-b257-b02beb6f3d7e\" />\n\nFerryman in HTML5:\n<img width=\"938\" height=\"198\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4d043c9e-1b95-4826-9bc2-7544f4052143\" />\n\nThanks,\n\nPete",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-11-27T17:58:01Z",
+        "body": "As the schema is based on [GDD](https://github.com/SuperFlyTV/GraphicsDataDefinition) , defined by SuperFlyTV, this type is already available, see the [Select](https://github.com/SuperFlyTV/GraphicsDataDefinition?tab=readme-ov-file#select) type."
+      },
+      {
+        "author": "pierrehuguesrouthier-CBC",
+        "createdAt": "2025-11-27T18:02:07Z",
+        "body": "Thanks! I guess it's just not implemented in the StreamShapers UI - I'll relay the information so we can use it when converting json to Ograf."
+      }
+    ]
+  },
+  {
+    "number": 35,
+    "title": "Correct Timing for playAction() return? ",
+    "url": "https://github.com/ebu/ograf/issues/35",
+    "closedAt": "2025-11-12",
+    "author": "jdoppelp",
+    "labels": [],
+    "body": "```\nasync playAction({ delta: number, goto: number, skipAnimation: boolean }) { // Play the Graphic according to the incoming params return {statusCode: 200, statusMessage: 'OK', currentStep} }\n```\n\nI was wondering if the playAction() should return immediately after start playing or later, when the specific Step fully played? \n\nThis question might be interesting for update and stop action as well? \n    ",
+    "comments": [
+      {
+        "author": "dvdeurse",
+        "createdAt": "2025-10-17T05:49:09Z",
+        "body": "This pull request that adds more clarification for the Web Component Interface should give you the answer: https://github.com/ebu/ograf/pull/34. "
+      },
+      {
+        "author": "jdoppelp",
+        "createdAt": "2025-10-18T18:02:40Z",
+        "body": "Thank you for the fast response - this is exactly what I was thinking about! This clarifies the actions more precisely and  hope it will be merged soon 👍"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-11-12T14:48:05Z",
+        "body": "Closing this, now that https://github.com/ebu/ograf/pull/34 has been merged"
+      }
+    ]
+  },
+  {
+    "number": 29,
+    "title": "Clarify Web component interface",
+    "url": "https://github.com/ebu/ograf/issues/29",
+    "closedAt": "2025-11-07",
+    "author": "dvdeurse",
+    "labels": [
+      "Issue / Bug",
+      "OGraf Graphic"
+    ],
+    "body": "The first implementations of OGrafs from the field showed some similar 'bugs' across implementors, meaning that we could improve our explanation in the specification, potentially with examples to make things more tangible. Issues I've seen:\n- `currentStep` was not provided in the response of the `playAction()` function. Or when provided, it was unclear that the steps were zero-index based.\n- the `load()` function returns a promise that only must resolve when the graphic is fully loaded and can process a `playAction()`. In a couple of cases, the promise was resolved almost immediately without properly waiting for the full initialization of the graphic. \n- the `data` param in the `load()` function was ignored.\n- the`skipAnimation` param in `playAction()` and `stopAction()` functions was ignored.",
+    "comments": []
+  },
+  {
+    "number": 22,
+    "title": "Caution about AdditionalProperties = False",
+    "url": "https://github.com/ebu/ograf/issues/22",
+    "closedAt": "2025-10-29",
+    "author": "adam-gol",
+    "labels": [
+      "Issue / Bug",
+      "Manifest"
+    ],
+    "body": "`v1/specification/json-schemas/graphics/schema.json` limits \"additional properties\" which restricts expansion and user-extensions.  May want to reconsider why additional properties need to be restricted.",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-08-07T04:57:19Z",
+        "body": "Thanks for your input!\n\nI added the AdditionalProperties=false to the schemas in order to enforce the clause about \"Vendor specific fields\": https://ograf.ebu.io/v1/specification/docs/Specification#vendor-specific-fields\n\n>Vendor-specific fields are additional fields that are not part of this specification, but used for vendor-specific means. They can occur in the Manifest file or in the payload of the requests/responses for each of the functions in the Web Component. Every vendor-specific field MUST use the prefix v_. For example, v_editor is a valid vendor-specific field, editor is not a valid field.\n\nBy combining the AdditionalProperties=false and `\"patternProperties\": { \"^v_.*\": {}}`, other properties are allowed, but only if they are prefixes with \"v_\".\n\nFor context, we added the clause on vendor specific fields to the specification to ensure forwards compatibility, as it allows us to add properties in the future without the risk of clashing with any preexisting, vendor specific properties. "
+      }
+    ]
+  },
+  {
+    "number": 36,
+    "title": "Step model vs updateAction",
+    "url": "https://github.com/ebu/ograf/issues/36",
+    "closedAt": "2025-10-27",
+    "author": "didikunz",
+    "labels": [],
+    "body": "Concerning the manifest: While we have a way to tell a controller, that we can have multiple steps, using the step-model of the playAction, we have no way to tell the controller, that the template expects multiple updates to show more data. For instance a ranking in sports may have 10 lines, that show rank 1 to 10 on the first play. To advance to the next page the controller would send an update for rank 11 to 20 and so on. I think it would maybe make sense to have a setting in the manifest, that explains this in a way.\n\nFor instance a boolean called \"multipage\" or so. Maybe somebody has a better idea than that.",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-10-27T14:18:07Z",
+        "body": "I am of the opinion that this should be under \"vendor specific\" functionality and not be included in the specification.\n\nFor example, _in my graphics_, I often send the full list as well as a `page: number` property, so a \"multipage\" with a pre-specified functionality wouldn't work for me."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-27T15:34:01Z",
+        "body": "Good point."
+      },
+      {
+        "author": "Dan-Shields",
+        "createdAt": "2025-10-27T18:40:56Z",
+        "body": "> I often send the full list as well as a page: number property, so a \"multipage\" with a pre-specified functionality wouldn't work for me.\n\nAppreciate this is good practice where possible, but we have lots of \"live\" graphics that need to react to data not available on the first update. (Think lotto draws, gameshows etc).\n\nWe'd need this functionality to use ograf. Maybe this issue isn't the right way to achieve that, but is this a use case that's been thought about already? "
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-28T07:11:17Z",
+        "body": "There is that updateAction available anyway. I guess that is what you need in the use case you mentioned. My case is meant for multi-page templates, and for that it's maybe better to send the whole data at once and build the paging into the template, as Johan (nytamin) recomended."
+      }
+    ]
+  },
+  {
+    "number": 18,
+    "title": "Proposal: Change the manifest file name to \"*.ograf.json\"",
+    "url": "https://github.com/ebu/ograf/issues/18",
+    "closedAt": "2025-07-13",
+    "author": "nytamin",
+    "labels": [
+      "Idea",
+      "OGraf Graphic"
+    ],
+    "body": "This is a follow-up from https://github.com/ebu/ograf/pull/10\n\nWhen we changed the file name of manifest files to \"*.ograf\" if had the consequence that text editors doesn't automatically pick up that the file is a json-file.\n\nThis causes a useability issue, since graphics developers that uses a text-editor with json-schema support (like VSCode) won't get the intellisense automatically.\nOf course, VSCode can be manually configured to accept all *.ograf files as json, but not it being done automatically is a drawback, I think.\n\nTherefore, I propose that we modify the specification to require manifest files to be \"*.ograf.json\" instead of \"*.ograf\".",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-06-18T08:18:56Z",
+        "body": "I think that the small lack of usability does not out weight the gain on simplicity for client programmers and the like. In fact the lack of automatic support can also be a plus, as inexperienced users are scared away by a file extension they don't know, instead of starting to fumble around with something they should not. To them it looks much more important, when it's called .ograf. \n\nWhat do you all think?"
+      },
+      {
+        "author": "Dan-Shields",
+        "createdAt": "2025-06-18T11:12:25Z",
+        "body": "If the file is intended to always be functionally JSON, I'd be strongly against a new file extension for the sake of it. I've seen other projects use the `<name>.<scope>.json` format with no problems. To me new file extensions should be used when a new format is actually being specced, not just to signal importance. That's what good documentation is for."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-07-02T15:00:13Z",
+        "body": "Notes from Working Group meeting 2025-07-02:\n\nConclusion: Yes, let's change it to \".ograf.json\""
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "title": "Preview",
+    "url": "https://github.com/ebu/ograf/issues/9",
+    "closedAt": "2025-07-02",
+    "author": "PeterNicos",
+    "labels": [
+      "Idea",
+      "OGraf Graphic"
+    ],
+    "body": "Does Ograf define a way to realise a preview?\nI was thinking of something like a preview state, that could be used for:\n- a previewchannel before a graphic template is played out live\n- views of many graphics for example in an ograf explorer to have a visual representation of the graphic in addition to e.g. the filename\n\nThat previewstate would not have to be connected to any other state but would be very convenient for a graphics operator or as a default state when filling out graphic templates.\nHave I missed it somewhere or is that something you thought of, but have left open for every vendor to solve on their own on purpose?",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-06-05T04:13:49Z",
+        "body": "In the current draft, the ograf does not specify a specific preview state. The intention with this is to not dictate the inner workings of a graphic, but instead leave it up to vendors to implement.\n\nThere is the `skipAnimation` property, which can be used to to preview a graphic. Currently, it is only present in the playAction and stopAction, but [this PR]( https://github.com/ebu/ograf/pull/8) suggests to add it to all actions.\n\nIf you think this should change and that there should be some type of preview state, feel free to join the [Working group ](https://tech.ebu.ch/groups/html_graphics) (or write in this thread and I'll forward your suggestions at the next meeting). "
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-07-02T14:59:18Z",
+        "body": "**Notes from Working Group meeting 2025-07-02:**\n\nThere was a discussion around this, the general consensus was that we do think it is useful to be able to preview a graphic, but that it should be sufficent to use the existing `skipAnimation` property for this.\n\nIf you want to preview a graphic, you would send a `playAction({ skipAnimation: true })`, and the graphic would display the first step (or equivalent state) instantly.\n"
+      }
+    ]
+  },
+  {
+    "number": 1,
+    "title": "Font handling",
+    "url": "https://github.com/ebu/ograf/issues/1",
+    "closedAt": "2025-05-06",
+    "author": "didikunz",
+    "labels": [
+      "Idea",
+      "OGraf Graphic"
+    ],
+    "body": "I don't know if that is the right place to contribute...\n\nI just recently stumbled upon the [CSS Font Loading API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API). As this is available in the \"document\" object I guess the HTML Element would not have access to it. Would it be possible to add something to the manifest, that allow to demand the loading of fonts using this API? It would then be nice, that the template would be informed, when that has been done, and when it would have a way to tell the host, when these fonts are not needed any more. I hope I made myself clear. \n\nThis would give templates a way to kind of embed fonts into itself. like it was possible with Flash (what was one of the gratest features in my opinion).\n",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-04-30T16:14:17Z",
+        "body": "Another way would be to give the template a way to access the \"document\" object via some API call. That would keep the manifest clean. This could be added as parameter to the Load function or as a request that the template could call."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-05-06T08:59:07Z",
+        "body": "I did a local test, to see if I could get a font loaded in an OGraf in the [DevTool ](https://github.com/SuperFlyTV/ograf-devtool) (which uses shadow-DOM for rendering the WebComponents).\n\nI was able to do so like this:\n\n```javascript\n[...]\nload() {\n  const myFontFace = new FontFace(\"Monsieur La Doulaise\", \"url(https://fonts.gstatic.com/s/monsieurladoulaise/v18/_Xmz-GY4rjmCbQfc-aPRaa4pqV340p7EZm5ZyEA.woff2)\");\n  document.fonts.add(myFontFace);\n  await myFontFace.load()\n\n  myElement.style.fontFamily = myFontFace.family;\n}\n[...]\n```\n\n([example is available here](https://github.com/ebu/ograf/tree/example/font-loading/v1-draft-0/examples/l3rd-name))\n\n![Image](https://github.com/user-attachments/assets/a2fb9d8c-b750-4086-90e6-622c87cd0de2)\n\n\nSince the `document` is a global variable, it should be available to use as-is? Or am I missing something?\n"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-05-06T09:19:00Z",
+        "body": "It seems, that I still think too much in another programming language (VB.NET) to realize, that in JavaScript something can be accessed without having an explicite reference too it. Yes, if that works this way, we can close and forget this issue. Thanks for testing."
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "title": "GDD obsolete?",
+    "url": "https://github.com/ebu/ograf/issues/5",
+    "closedAt": "2025-04-30",
+    "author": "didikunz",
+    "labels": [
+      "Manifest",
+      "Data Types"
+    ],
+    "body": "Will the [GDD metadata format](https://github.com/SuperFlyTV/GraphicsDataDefinition/issues) become obsolete in favor of ograf manifest?",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-04-28T16:10:31Z",
+        "body": "I will bring this up for discussion at the next working group meeting. Currently OGraf uses GDD under the hood for its data schemas, my concerns are whether we should a) reference GDD from OGraf and make it clearer (especially regarding version management and backwards/forwards compatibility), or b) OGraf takes over/absorbs the GDD schemas.\n\nMy personal opinion (as the developer of GDD) is that GDD is a suboptimal specification compared to OGraf. "
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2025-04-28T16:15:22Z",
+        "body": "I would also suggest giving up GDD in favor of OGraf. We need no more standards :)"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "title": "Sample manifest files do not contain mandatory reference to JavaScript implementation",
+    "url": "https://github.com/ebu/ograf/issues/2",
+    "closedAt": "2025-04-23",
+    "author": "mtoweber",
+    "labels": [
+      "Issue / Bug",
+      "Examples"
+    ],
+    "body": "The main: \".....\" reference is present in the readme sample, but there are not references in the samples themselves. ",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-04-23T06:29:41Z",
+        "body": "Good spot! At one stage during the discussions, the `\"main\": string` property was optional, but you're correct in that it is required in the current specification draft.\n\nI'll update the json-schema and examples to match."
+      }
+    ]
+  }
+]

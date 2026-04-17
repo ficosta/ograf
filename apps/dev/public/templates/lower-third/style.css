@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: transparent;
+  overflow: hidden;
+}
+
+.l3rd {
+  position: fixed;
+  bottom: 64px;
+  left: 48px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: flex;
+  align-items: stretch;
+  transform: translateX(-120%);
+  opacity: 0;
+  filter: blur(4px);
+}
+
+.l3rd.visible {
+  transform: translateX(0);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
+
+.l3rd.out {
+  transform: translateX(-120%);
+  opacity: 0;
+  filter: blur(4px);
+  transition:
+    transform 0.5s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.4s ease 0.1s,
+    filter 0.4s ease 0.1s;
+}
+
+/* Blue accent bar on the left */
+.l3rd-accent {
+  width: 5px;
+  background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  border-radius: 3px 0 0 3px;
+  flex-shrink: 0;
+}
+
+/* Main content area */
+.l3rd-content {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 32px 16px 20px;
+  border-radius: 0 6px 6px 0;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.12),
+    0 1px 4px rgba(0, 0, 0, 0.08);
+  min-width: 280px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle blue gradient on top edge */
+.l3rd-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #2563eb 0%, #60a5fa 50%, transparent 100%);
+}
+
+.l3rd-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.l3rd-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2563eb;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  white-space: nowrap;
+}
+
+/* Update animation for text changes */
+.l3rd-name.updating,
+.l3rd-title.updating {
+  animation: textSwap 0.35s ease;
+}
+
+@keyframes textSwap {
+  0% { opacity: 1; transform: translateY(0); }
+  40% { opacity: 0; transform: translateY(-6px); }
+  60% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

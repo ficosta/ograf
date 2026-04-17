@@ -1,0 +1,73 @@
+{
+  "20": {
+    "summary": "Graphics can now declare an optional thumbnail image in their manifest, giving controllers and editors a visual preview of each graphic.",
+    "mergedBy": 57
+  },
+  "25": {
+    "summary": "Manifests can now declare which rendering engine version they require, letting servers reject graphics that target an incompatible runtime.",
+    "mergedBy": 58
+  },
+  "27": {
+    "summary": "Added an optional property-order hint to manifest schemas so UIs can render fields in a predictable, designer-intended order.",
+    "mergedBy": 59
+  },
+  "46": {
+    "summary": "Designers can now mark which manifest fields contribute to a graphic's display name — making instances easier to identify in playlists.",
+    "mergedBy": 56
+  },
+  "63": {
+    "summary": "The OGraf specification is officially licensed under MIT — clearing up any ambiguity about commercial use, forks, and derivative works."
+  },
+  "50": {
+    "summary": "Manifests can now group related schema properties together, so form UIs can render them under labelled sections instead of a flat list."
+  },
+  "47": {
+    "summary": "Added position metadata to GDD types so layout-sensitive graphics (lower thirds, bugs, tickers) carry their intended screen placement."
+  },
+  "54": {
+    "summary": "Graphics that need internet access (live data, remote fonts, external APIs) now declare it up front — letting operators run them in air-gapped environments safely."
+  },
+  "42": {
+    "summary": "Removed the frame-count return from goToTime(). Graphics just seek to the time and return — less ceremony, fewer edge cases."
+  },
+  "49": {
+    "summary": "GDD gained a masked-text input type for sensitive fields like passwords, API keys, or anything that shouldn't show in plain text in the controller UI."
+  },
+  "24": {
+    "summary": "Graphics Data Definition (GDD), previously a separate spec, was merged into OGraf itself — one spec, one source of truth, one place to look things up.",
+    "mergedBy": 40
+  },
+  "41": {
+    "summary": "GDD added a drop-down input type so manifests can constrain fields to a fixed set of choices without custom validation logic."
+  },
+  "35": {
+    "summary": "Clarified exactly when playAction() should resolve its promise — removing ambiguity between 'started playing' and 'finished playing'.",
+    "mergedBy": 38
+  },
+  "29": {
+    "summary": "Tightened the spec around how OGraf graphics expose themselves as Web Components — making implementations more consistent across renderers.",
+    "mergedBy": 34
+  },
+  "22": {
+    "summary": "Documented the implications of AdditionalProperties: false in schemas — it's strict by design, but it bites if you're not expecting it during validation."
+  },
+  "36": {
+    "summary": "Clarified the distinction between step-based graphics (discrete stages) and updateAction-driven graphics (continuous data updates). Two patterns, two use cases."
+  },
+  "18": {
+    "summary": "Manifest files now use the *.ograf.json extension convention — making OGraf graphics instantly recognisable in a filesystem or repo.",
+    "mergedBy": 21
+  },
+  "9": {
+    "summary": "Discussed how graphics should render preview images for controllers and editors — groundwork for the later Thumbnail decision (#20)."
+  },
+  "1": {
+    "summary": "Set the direction for how OGraf graphics should load and reference fonts — recognising fonts as a first-class concern for broadcast-quality typography."
+  },
+  "5": {
+    "summary": "Concluded GDD is still needed — paving the way for its eventual merge into OGraf itself (see #24)."
+  },
+  "2": {
+    "summary": "Fixed the sample manifest files to correctly reference their JavaScript implementations — otherwise the examples wouldn't actually run."
+  }
+}

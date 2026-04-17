@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; }</style>
+</head>
+<body>
+  <ticker-graphic></ticker-graphic>
+  <script type="module">
+    import TickerGraphic from './graphic.mjs';
+    const el = document.querySelector('ticker-graphic');
+    const defaultData = {
+      badge: 'Breaking',
+      items: [
+        'EBU releases OGraf Graphics Definition v1 — the open standard for broadcast graphics',
+        'SPX Graphics Controller adds full OGraf compliance in upcoming v1.4 release',
+        'CasparCG community explores native OGraf renderer integration',
+        'Loopic announces one-click OGraf export for all template projects',
+        'StreamShapers Ferryman now converts Lottie animations to OGraf format'
+      ]
+    };
+    window.addEventListener('message', async (e) => {
+      const { action, data } = e.data || {};
+      if (!action) return;
+      switch (action) {
+        case 'load': await el.load({ data: data || defaultData }); break;
+        case 'play': await el.playAction({}); break;
+        case 'stop': await el.stopAction({}); break;
+        case 'update': await el.updateAction({ data }); break;
+      }
+    });
+    el.load({ data: defaultData, renderType: 'realtime', renderCharacteristics: {} });
+  </script>
+</body>
+</html>
