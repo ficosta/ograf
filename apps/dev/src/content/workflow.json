@@ -1,0 +1,36 @@
+{
+  "title": "How an OGraf graphic flows on-air",
+  "description": "From the designer's text editor to a frame of live broadcast, here's every stage in the OGraf workflow — and where each part of the ecosystem plugs in.",
+  "nodes": [
+    {
+      "id": "designer",
+      "label": "Designer",
+      "description": "Authors the graphic with HTML, CSS, and JavaScript. Can use a visual tool (Loopic, DJ HTML Creator, ograf-editor) or hand-code.",
+      "icon": "PenTool"
+    },
+    {
+      "id": "package",
+      "label": "OGraf Package",
+      "description": "A folder with manifest.ograf.json, index.html, graphic.mjs, style.css. Self-contained, versionable, easy to ship.",
+      "icon": "Package"
+    },
+    {
+      "id": "validator",
+      "label": "Validator",
+      "description": "Checks the package against the spec. Confirms the manifest is valid and the Web Component implements the lifecycle correctly.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "renderer",
+      "label": "Renderer",
+      "description": "SPX Graphics Server, ograf-server, or any compliant engine. Instantiates the Web Component, calls load / play / update / stop.",
+      "icon": "Cpu"
+    },
+    {
+      "id": "playout",
+      "label": "On Air",
+      "description": "The rendered graphic is composited over live video and pushed to transmission — SDI, ST 2110, NDI, or web output.",
+      "icon": "Radio"
+    }
+  ]
+}

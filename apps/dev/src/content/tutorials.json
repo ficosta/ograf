@@ -1,0 +1,236 @@
+[
+  {
+    "slug": "/get-started",
+    "title": "Lower Third",
+    "subtitle": "Name & title overlay",
+    "difficulty": "Beginner",
+    "time": "15 min",
+    "desc": "The most common broadcast graphic. A name and title card that slides in from the left with a clean CBS-inspired design. Learn the full OGraf lifecycle: load, play, update, stop.",
+    "preview": "/templates/previews/lower-third.png",
+    "demo": {
+      "src": "/templates/lower-third/demo.html",
+      "fields": [
+        { "key": "name", "label": "Name", "defaultValue": "Jane Smith" },
+        { "key": "title", "label": "Title", "defaultValue": "Senior Graphics Engineer" }
+      ]
+    },
+    "concepts": ["Web Component basics", "Manifest structure", "CSS transitions", "Lifecycle methods"]
+  },
+  {
+    "slug": "/tutorials/bug",
+    "title": "Bug / LIVE",
+    "subtitle": "Corner indicator with pulse",
+    "difficulty": "Beginner",
+    "time": "10 min",
+    "desc": "A corner bug that pops in with a scale animation and features a pulsing LIVE dot. Typically used for channel branding, LIVE indicators, or event logos. Demonstrates simple animations and minimal data schema.",
+    "preview": "/templates/previews/bug.png",
+    "demo": {
+      "src": "/templates/bug/demo.html",
+      "fields": [
+        { "key": "label", "label": "Label", "defaultValue": "LIVE" },
+        { "key": "sublabel", "label": "Sublabel", "defaultValue": "Breaking News" }
+      ]
+    },
+    "concepts": ["Scale animations", "Corner positioning", "Minimal manifest", "Pulse indicators"]
+  },
+  {
+    "slug": "/tutorials/ticker",
+    "title": "News Ticker",
+    "subtitle": "Scrolling headline crawl",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "A continuous scrolling ticker at the bottom of the screen — the kind you see on CNN or BBC News. Demonstrates infinite CSS animations, dynamic data arrays, and seamless looping.",
+    "preview": "/templates/previews/ticker.png",
+    "demo": {
+      "src": "/templates/ticker/demo.html",
+      "fields": [
+        { "key": "badge", "label": "Badge", "defaultValue": "Breaking" }
+      ]
+    },
+    "concepts": ["CSS keyframe animations", "Dynamic data arrays", "Seamless looping", "Bottom bar layout"]
+  },
+  {
+    "slug": "/tutorials/quote",
+    "title": "Full Page Quote",
+    "subtitle": "Cinematic full-screen typography",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "An elegant full-screen quote card with staggered reveal animations — quote text, divider line, then attribution appear sequentially. Uses Instrument Serif for editorial impact.",
+    "preview": "/templates/previews/quote.png",
+    "demo": {
+      "src": "/templates/quote/demo.html",
+      "fields": [
+        { "key": "text", "label": "Quote", "defaultValue": "Open graphics, open broadcast, open standards. That's the future." },
+        { "key": "author", "label": "Author", "defaultValue": "Demo Quote" },
+        { "key": "role", "label": "Role", "defaultValue": "Sample Credit" }
+      ]
+    },
+    "concepts": ["Staggered animations", "Full-screen layout", "Typography design", "CSS transition delays"]
+  },
+  {
+    "slug": "/tutorials/election-bars",
+    "title": "Election Bars",
+    "subtitle": "Animated percentage chart",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Animated horizontal bar chart for election results. Bars grow with staggered timing, percentages animate in. Teaches data-driven widths, staggered row reveals, and color-coded parties.",
+    "preview": "/templates/previews/election-bars.png",
+    "demo": {
+      "src": "/templates/election-bars/demo.html",
+      "fields": [
+        { "key": "title", "label": "Title", "defaultValue": "General Election 2026" },
+        { "key": "subtitle", "label": "Subtitle", "defaultValue": "78% reporting" },
+        {
+          "key": "parties",
+          "label": "Parties",
+          "type": "json",
+          "defaultValue": [
+            { "name": "Progressives", "pct": 42, "votes": 1284000, "color": "#2563eb" },
+            { "name": "Conservatives", "pct": 35, "votes": 1070000, "color": "#dc2626" },
+            { "name": "Centrists", "pct": 15, "votes": 459000, "color": "#f59e0b" },
+            { "name": "Greens", "pct": 8, "votes": 245000, "color": "#16a34a" }
+          ]
+        }
+      ]
+    },
+    "concepts": ["Data-driven widths", "Staggered row animation", "Color system", "Rolling counters"]
+  },
+  {
+    "slug": "/tutorials/sport-lineup",
+    "title": "Sport Lineup",
+    "subtitle": "Team roster grid",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "A full team lineup card with player numbers, names, and positions in a responsive grid. Cards reveal with staggered animation. Teaches array data, grid layouts, and sequential reveals.",
+    "preview": "/templates/previews/sport-lineup.png",
+    "demo": {
+      "src": "/templates/sport-lineup/demo.html",
+      "fields": [
+        { "key": "team", "label": "Team", "defaultValue": "FC Barcelona" },
+        { "key": "meta", "label": "Match Info", "defaultValue": "La Liga — Matchday 32" },
+        { "key": "formation", "label": "Formation", "defaultValue": "4-3-3" },
+        { "key": "coach", "label": "Coach", "defaultValue": "H. Flick" },
+        {
+          "key": "players",
+          "label": "Players",
+          "type": "json",
+          "defaultValue": [
+            { "number": 1, "name": "ter Stegen", "position": "GK" },
+            { "number": 23, "name": "Koundé", "position": "RB" },
+            { "number": 4, "name": "Araújo", "position": "CB" },
+            { "number": 15, "name": "Christensen", "position": "CB" },
+            { "number": 28, "name": "Baldé", "position": "LB" },
+            { "number": 8, "name": "Pedri", "position": "CM" },
+            { "number": 16, "name": "Fermín", "position": "CM" },
+            { "number": 6, "name": "Gavi", "position": "CM" },
+            { "number": 11, "name": "Yamal", "position": "RW" },
+            { "number": 9, "name": "Lewandowski", "position": "ST" },
+            { "number": 19, "name": "Raphinha", "position": "LW" }
+          ]
+        }
+      ]
+    },
+    "concepts": ["Grid layout", "Array data schema", "Staggered card reveals", "Player number badges"]
+  },
+  {
+    "slug": "/tutorials/score-bug",
+    "title": "Score Bug",
+    "subtitle": "Live match scoreboard",
+    "difficulty": "Advanced",
+    "time": "25 min",
+    "desc": "Persistent on-screen score display with custom actions. The 'goal' action triggers a celebration flash. Teaches customActions — the OGraf feature for graphic-specific operations beyond play/stop.",
+    "preview": "/templates/previews/score-bug.png",
+    "demo": {
+      "src": "/templates/score-bug/demo.html",
+      "fields": [
+        { "key": "home", "label": "Home Team", "defaultValue": "BAR" },
+        { "key": "away", "label": "Away Team", "defaultValue": "RMA" },
+        { "key": "homeScore", "label": "Home Score", "defaultValue": "2" },
+        { "key": "awayScore", "label": "Away Score", "defaultValue": "1" },
+        { "key": "time", "label": "Match Time", "defaultValue": "67:42" },
+        { "key": "period", "label": "Period", "defaultValue": "2nd Half" }
+      ]
+    },
+    "concepts": ["customActions", "Persistent graphics", "Flash animations", "Score state management"]
+  },
+  {
+    "slug": "/tutorials/countdown",
+    "title": "Countdown Timer",
+    "subtitle": "Self-ticking clock",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "A countdown clock that ticks in real-time using setInterval — no updateAction needed from the renderer. Goes red in the last 10 seconds. Teaches self-updating graphics and interval cleanup.",
+    "preview": "/templates/previews/countdown.png",
+    "demo": {
+      "src": "/templates/countdown/demo.html",
+      "fields": [
+        { "key": "label", "label": "Label", "defaultValue": "STARTING IN" },
+        { "key": "seconds", "label": "Seconds", "defaultValue": "120" }
+      ]
+    },
+    "concepts": ["setInterval timing", "Self-updating state", "Cleanup in dispose()", "Urgency states"]
+  },
+  {
+    "slug": "/tutorials/breaking-news",
+    "title": "Breaking News",
+    "subtitle": "Full-screen urgent alert",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "Fire-and-forget full-screen overlay with red BREAKING NEWS badge. Plays in, holds 4 seconds, auto-dismisses. Teaches stepCount: 0 — graphics that run their complete lifecycle automatically.",
+    "preview": "/templates/previews/breaking-news.png",
+    "demo": {
+      "src": "/templates/breaking-news/demo.html",
+      "fields": [
+        { "key": "headline", "label": "Headline", "defaultValue": "EBU announces OGraf v2 roadmap for 2027" }
+      ]
+    },
+    "concepts": ["stepCount: 0", "Fire-and-forget", "Auto-dismiss timing", "Full-screen overlays"]
+  },
+  {
+    "slug": "/tutorials/weather",
+    "title": "Weather Forecast",
+    "subtitle": "Conditions & 3-day outlook",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Weather card with current conditions and a 3-day forecast row. Uses emoji icons, nested data objects, and a compact multi-section layout. Teaches complex schema design.",
+    "preview": "/templates/previews/weather.png",
+    "demo": {
+      "src": "/templates/weather/demo.html",
+      "fields": [
+        { "key": "location", "label": "Location", "defaultValue": "London" },
+        { "key": "temp", "label": "Temperature", "defaultValue": "18°C" },
+        { "key": "condition", "label": "Condition", "defaultValue": "Partly Cloudy" },
+        { "key": "icon", "label": "Icon (emoji)", "defaultValue": "⛅" },
+        {
+          "key": "forecast",
+          "label": "Forecast",
+          "type": "json",
+          "defaultValue": [
+            { "day": "Tue", "temp": "20°C", "icon": "☀️" },
+            { "day": "Wed", "temp": "16°C", "icon": "🌧️" },
+            { "day": "Thu", "temp": "19°C", "icon": "⛅" }
+          ]
+        }
+      ]
+    },
+    "concepts": ["Nested data objects", "Complex schema", "Icon systems", "Multi-section cards"]
+  },
+  {
+    "slug": "/tutorials/social-card",
+    "title": "Social Media Card",
+    "subtitle": "Post overlay with avatar",
+    "difficulty": "Beginner",
+    "time": "10 min",
+    "desc": "A social media post card that slides in from the right. Auto-generates avatar initials from the user name. Teaches right-side positioning, initial generation, and platform badges.",
+    "preview": "/templates/previews/social-card.png",
+    "demo": {
+      "src": "/templates/social-card/demo.html",
+      "fields": [
+        { "key": "user", "label": "User", "defaultValue": "Johan Nyman" },
+        { "key": "handle", "label": "Handle", "defaultValue": "@nytamin" },
+        { "key": "text", "label": "Post", "defaultValue": "Just shipped our first OGraf template to production." }
+      ]
+    },
+    "concepts": ["Right-side slide-in", "Avatar generation", "Platform badges", "Card design"]
+  }
+]

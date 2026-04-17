@@ -1,0 +1,47 @@
+[
+  {
+    "id": "what-is-ograf",
+    "question": "What is OGraf?",
+    "answer": "OGraf is the EBU's open specification for broadcast graphics. Instead of vendor-specific formats, graphics are packaged as standard Web Components with a lightweight manifest, so one package runs on any OGraf-compatible renderer."
+  },
+  {
+    "id": "is-it-stable",
+    "question": "Is OGraf stable enough for production?",
+    "answer": "The Graphics Definition v1 reached stable in September 2025. The Server/Control API is still draft (finalising mid-2026). Early adopters are running live productions with real broadcasters today."
+  },
+  {
+    "id": "who-is-behind",
+    "question": "Who is behind OGraf?",
+    "answer": "The specification is owned by the European Broadcasting Union (EBU) and shaped in the open with vendors like SPX Graphics, Loopic, SuperFlyTV, and StreamShapers, plus broadcasters such as TV2 Denmark."
+  },
+  {
+    "id": "do-i-need-special-tools",
+    "question": "Do I need special tools to build graphics?",
+    "answer": "No. Any text editor and a browser are enough. For a guided workflow, use ograf-devtool, Loopic, or the DJ HTML Creator — all of them export OGraf packages. After Effects users can convert Lottie animations with Ferryman."
+  },
+  {
+    "id": "migration",
+    "question": "Can I migrate our existing CasparCG or Vizrt templates?",
+    "answer": "CasparCG HTML templates port over with modest changes — mainly wrapping in a Web Component and adding a manifest. Vizrt templates require a full rewrite today, but several consultancies (see Ecosystem) specialise in migration."
+  },
+  {
+    "id": "cost",
+    "question": "How much does it cost to adopt OGraf?",
+    "answer": "The specification and most community tooling are free and MIT-licensed. Commercial tools (Loopic, SPX Graphics Server, DJ HTML Creator) have their own pricing. Renderers like ograf-server and CasparCG are open source."
+  },
+  {
+    "id": "hiring",
+    "question": "Can I hire someone to build templates for us?",
+    "answer": "Yes. The Ecosystem page lists consultancies and studios — Xperity and several commercial tool vendors offer template production and migration services. Broadcast web developers can also be hired via standard channels."
+  },
+  {
+    "id": "vendor-lockin",
+    "question": "What happens if a vendor drops OGraf support?",
+    "answer": "Your graphics don't depend on any single vendor. As long as a compliant renderer exists, your packages keep working. The open spec means new renderers can always be built — the risk surface is much smaller than with proprietary formats."
+  },
+  {
+    "id": "contribute",
+    "question": "How can I contribute?",
+    "answer": "Submit a tutorial or ecosystem entry via GitHub PR, report issues against the spec, join the working group through the EBU, or just build something cool and tell us about it."
+  }
+]

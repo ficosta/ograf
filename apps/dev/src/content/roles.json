@@ -1,0 +1,32 @@
+[
+  {
+    "id": "designer",
+    "title": "Designer",
+    "tagline": "Design broadcast graphics with tools you know.",
+    "description": "Build lower thirds, scoreboards, and tickers with HTML, CSS, and JavaScript. No proprietary scripting languages. Your motion design skills translate directly — OGraf graphics are just web pages with a small manifest.",
+    "icon": "PenTool",
+    "cta": "See the tutorials",
+    "ctaLink": "/tutorials",
+    "accent": "blue"
+  },
+  {
+    "id": "developer",
+    "title": "Developer",
+    "tagline": "One format, every playout system.",
+    "description": "Web Components, standard lifecycle methods (load, play, stop, update), JSON Schema–based data definitions. Build once, validate with the official spec, ship to any OGraf-compatible renderer.",
+    "icon": "Code2",
+    "cta": "Read the spec",
+    "ctaLink": "/spec",
+    "accent": "cyan"
+  },
+  {
+    "id": "broadcaster",
+    "title": "Broadcaster",
+    "tagline": "Evaluate OGraf for your pipeline.",
+    "description": "EBU-backed standard. Multiple commercial and open-source renderers. Vendor-independent. Compare it against Vizrt, Chyron, and the rest — see which tools support it today and which are on their way.",
+    "icon": "Radio",
+    "cta": "Explore the ecosystem",
+    "ctaLink": "/ecosystem",
+    "accent": "emerald"
+  }
+]
