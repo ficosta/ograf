@@ -6,22 +6,9 @@ import {
   Timer, Wrench, BookOpen, Map, CheckCircle, Target, ChevronRight,
 } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
-
-function CodeBlock({ code, filename, language }: { code: string; filename?: string; language?: string }) {
-  return (
-    <div className="rounded-xl bg-slate-900 overflow-hidden">
-      {filename && (
-        <div className="flex items-center justify-between px-4 py-2 border-b border-slate-700/50">
-          <span className="text-xs text-slate-400 font-mono">{filename}</span>
-          {language && <span className="text-xs text-slate-500">{language}</span>}
-        </div>
-      )}
-      <pre className="p-4 overflow-x-auto text-sm/6 text-slate-300 font-mono">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
+import { WorkflowDiagram } from "../components/WorkflowDiagram";
+import { CodeBlock } from "../components/CodeBlock";
+import { useMeta } from "../hooks/useMeta";
 
 function Callout({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
@@ -111,6 +98,7 @@ const NAV_ITEMS = [
 ];
 
 export function Spec() {
+  useMeta({ title: "Specification Guide", description: "How OGraf works, explained plainly. Packaging, manifests, the Web Component lifecycle, and data schemas — without jargon." });
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -172,6 +160,10 @@ export function Spec() {
               <Analogy>
                 <p>Think of OGraf like a PDF. A PDF looks the same whether you open it in Adobe Reader, Chrome, or Preview. An OGraf graphic works the same whether it runs on SPX, CasparCG, or any other compatible system. The format is the contract.</p>
               </Analogy>
+
+              <div className="mt-10">
+                <WorkflowDiagram />
+              </div>
             </div>
 
             {/* What's Inside */}

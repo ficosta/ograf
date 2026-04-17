@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowLeftRight, Check, Code2, Minus, Unlock, X } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
+import { RoleCards } from "../components/RoleCards";
+import { useMeta } from "../hooks/useMeta";
 
 const ROTATING_WORDS = ["community", "guide", "hub", "partner", "toolkit", "resource"];
 
@@ -227,6 +229,10 @@ const FAQ_COLUMNS = [
 ];
 
 export function Home() {
+  useMeta({
+    title: "ograf.dev · The missing community for OGraf",
+    description: "Community hub for the OGraf open broadcast graphics standard. Learn, build, test, and connect. Eleven live tutorials, a full ecosystem map, and a plain-language spec guide.",
+  });
   return (
     <>
       {/* Hero */}
@@ -274,6 +280,13 @@ export function Home() {
           </div>
         </div>
       </div>
+
+      {/* Role-based onboarding */}
+      <section className="bg-slate-50 py-20 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <RoleCards />
+        </div>
+      </section>
 
       {/* Features — Why OGraf */}
       <section id="features" className="bg-blue-600 py-20 sm:py-32">
