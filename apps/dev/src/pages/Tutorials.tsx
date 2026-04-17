@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { TemplateDemo } from "../components/TemplateDemo";
 import tutorials from "../content/tutorials.json";
 import type { Tutorial, TutorialDifficulty, TutorialField } from "../content/tutorials.types";
+import { useMeta } from "../hooks/useMeta";
 
 const TUTORIALS = tutorials as readonly Tutorial[];
 
@@ -12,6 +13,7 @@ const DIFFICULTY_STYLES: Record<TutorialDifficulty, string> = {
 };
 
 export function Tutorials() {
+  useMeta({ title: "Tutorials", description: "Learn by building real broadcast graphics. Eleven live interactive demos with source code and step-by-step walkthroughs." });
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

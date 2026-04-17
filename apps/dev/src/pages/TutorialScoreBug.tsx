@@ -2,22 +2,17 @@ import { Link } from "react-router";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
+import { CodeBlock } from "../components/CodeBlock";
+import tutorials from "../content/tutorials.json";
+import { useMeta } from "../hooks/useMeta";
 
-function CodeBlock({ code, filename, language }: { code: string; filename?: string; language?: string }) {
-  return (
-    <div className="rounded-xl bg-slate-900 overflow-hidden">
-      {filename && (
-        <div className="flex items-center justify-between px-4 py-2 border-b border-slate-700/50">
-          <span className="text-xs text-slate-400 font-mono">{filename}</span>
-          {language && <span className="text-xs text-slate-500">{language}</span>}
-        </div>
-      )}
-      <pre className="p-4 overflow-x-auto text-sm/6 text-slate-300 font-mono"><code>{code}</code></pre>
-    </div>
-  );
-}
+const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/score-bug");
 
 export function TutorialScoreBug() {
+  useMeta({
+    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
+    description: TUTORIAL?.desc ?? undefined,
+  });
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

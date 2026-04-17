@@ -26,6 +26,7 @@ import {
   type Presentation,
   type Video,
 } from "../content/news";
+import { useMeta } from "../hooks/useMeta";
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -291,6 +292,7 @@ function PresentationCard({ item }: { item: Presentation }) {
 }
 
 export function News() {
+  useMeta({ title: "News & Events", description: "OGraf news, upcoming events, presentations, videos, and community signals." });
   const { upcoming, past } = partitionEvents(EVENTS);
   const newsByYear = groupNewsByYear(NEWS_ITEMS);
   const newsYears = Object.keys(newsByYear).sort().reverse();

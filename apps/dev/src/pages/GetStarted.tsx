@@ -4,22 +4,8 @@ import {
   Image, ChevronRight, Download, Trash2, Check,
 } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
-
-function CodeBlock({ code, filename, language }: { code: string; filename?: string; language?: string }) {
-  return (
-    <div className="rounded-xl bg-slate-900 overflow-hidden">
-      {filename && (
-        <div className="flex items-center justify-between px-4 py-2 border-b border-slate-700/50">
-          <span className="text-xs text-slate-400 font-mono">{filename}</span>
-          {language && <span className="text-xs text-slate-500">{language}</span>}
-        </div>
-      )}
-      <pre className="p-4 overflow-x-auto text-sm/6 text-slate-300 font-mono">
-        <code>{code}</code>
-      </pre>
-    </div>
-  );
-}
+import { CodeBlock } from "../components/CodeBlock";
+import { useMeta } from "../hooks/useMeta";
 
 function StepHeader({ n, title }: { n: number; title: string }) {
   return (
@@ -294,6 +280,7 @@ const JS_CODE = `export default class LowerThird extends HTMLElement {
 customElements.define('lower-third', LowerThird);`;
 
 export function GetStarted() {
+  useMeta({ title: "Get Started · Lower Third tutorial", description: "Build a CBS-style lower third from scratch. Fifteen minutes from zero to a working OGraf template." });
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
