@@ -24,6 +24,9 @@ export function Navbar() {
               <Link to="/history" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 History
               </Link>
+              <Link to="/news" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+                News
+              </Link>
               <a href="https://ograf.tools" target="_blank" rel="noopener noreferrer" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 Tools
               </a>
@@ -67,6 +70,7 @@ export function Navbar() {
             <Link to="/tutorials" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Tutorials</Link>
             <Link to="/ecosystem" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Ecosystem</Link>
             <Link to="/history" className="block w-full p-2" onClick={() => setMenuOpen(false)}>History</Link>
+            <Link to="/news" className="block w-full p-2" onClick={() => setMenuOpen(false)}>News</Link>
             <a href="https://ograf.tools" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Tools</a>
             <hr className="m-2 border-slate-300/40" />
             <a href="https://github.com/ebu/ograf" className="block w-full p-2" onClick={() => setMenuOpen(false)}>GitHub</a>

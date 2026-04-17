@@ -10,6 +10,7 @@ import { TutorialQuote } from "./pages/TutorialQuote";
 import { Ecosystem } from "./pages/Ecosystem";
 import { About } from "./pages/About";
 import { History } from "./pages/History";
+import { News } from "./pages/News";
 import { Spec } from "./pages/Spec";
 
 export function App() {
@@ -26,6 +27,7 @@ export function App() {
           <Route path="/tutorials/quote" element={<TutorialQuote />} />
           <Route path="/ecosystem" element={<Ecosystem />} />
           <Route path="/history" element={<History />} />
+          <Route path="/news" element={<News />} />
           <Route path="/spec" element={<Spec />} />
           <Route path="/about" element={<About />} />
         </Routes>
