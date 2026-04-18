@@ -1,19 +1,29 @@
-import { Download, FileCode, FileJson, FileType, Package } from "lucide-react";
+import { Download, FileCode, FileJson, FileText, FileType, Package } from "lucide-react";
 
 interface TemplateDownloadProps {
   readonly slug: string;
   readonly title: string;
 }
 
-const FILES = [
-  { icon: FileJson, name: ".ograf.json", desc: "Manifest — id, schema, lifecycle flags" },
-  { icon: FileCode, name: "graphic.mjs", desc: "Web Component with load / play / update / stop" },
-  { icon: FileType, name: "style.css", desc: "Visual styling and keyframes" },
-  { icon: FileCode, name: "demo.html", desc: "Local preview harness" },
-];
+interface PackageFile {
+  readonly icon: typeof FileJson;
+  readonly name: string;
+  readonly desc: string;
+}
+
+function packageFiles(slug: string): readonly PackageFile[] {
+  return [
+    { icon: FileJson, name: `${slug}.ograf.json`, desc: "Manifest — what a renderer reads (id, schema, lifecycle flags)" },
+    { icon: FileCode, name: "graphic.mjs", desc: "Web Component implementing load / play / update / stop / dispose" },
+    { icon: FileType, name: "style.css", desc: "Component styles and keyframes" },
+    { icon: FileCode, name: "preview.html", desc: "Standalone preview — open in a browser to see it play" },
+    { icon: FileText, name: "README.md", desc: "Usage notes and how to load into a renderer" },
+  ];
+}
 
 export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
   const href = `/downloads/${slug}.zip`;
+  const files = packageFiles(slug);
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div className="flex items-start gap-4">
@@ -25,13 +35,13 @@ export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
             Download the full {title} package
           </h3>
           <p className="mt-1 text-sm text-slate-600">
-            A complete OGraf package you can drop into any compliant renderer — SPX-GC, ograf-server, or your own. MIT-licensed, no attribution required.
+            A complete OGraf Graphics Definition v1 package. Load the manifest into any compliant renderer (SPX-GC, ograf-server, CasparCG HTML producer), or open <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">preview.html</code> in a browser to try it locally. MIT-licensed.
           </p>
         </div>
       </div>
 
       <ul className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {FILES.map((f) => (
+        {files.map((f) => (
           <li key={f.name} className="flex items-center gap-3 rounded-lg bg-slate-50 px-3 py-2">
             <f.icon className="h-4 w-4 flex-none text-slate-400" strokeWidth={1.75} />
             <div className="min-w-0">
