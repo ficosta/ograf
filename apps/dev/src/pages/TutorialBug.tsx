@@ -159,14 +159,17 @@ export function TutorialBug() {
     return { statusCode: 200 };
   }
 
+  // Every OGraf graphic must expose customAction(), even without any declared.
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: \`Unknown custom action: \${action ?? ""}\` };
+  }
+
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
 }
 
-// Guard against the module being re-evaluated (devtool reloads, hot reload).
-// An unguarded customElements.define throws on the second call.
-if (!customElements.get('bug-graphic')) {
-  customElements.define('bug-graphic', BugGraphic);
-}`} />
+// Note: do NOT call customElements.define() here. Real OGraf players pick the
+// tag name themselves (e.g. ograf-devtool registers it as graphic-component0,
+// graphic-component1, ...). Just export the class; the renderer handles it.`} />
           </div>
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

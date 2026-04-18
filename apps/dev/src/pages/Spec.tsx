@@ -391,9 +391,15 @@ export function Spec() {
                 <p>OGraf doesn't care <em>how</em> you animate your graphic — CSS transitions, JavaScript, GSAP, Lottie, canvas, SVG — anything works. It only cares <em>when</em> you're done. Signal "I'm ready" and the renderer moves on.</p>
               </Callout>
 
-              <Callout icon={<Wrench className="h-4 w-4" />} title="Guard customElements.define">
+              <Callout icon={<Wrench className="h-4 w-4" />} title="Don't call customElements.define yourself">
                 <p>
-                  Real OGraf players (like <a href="https://ograf-devtool.superfly.tv" target="_blank" rel="noopener noreferrer" className="underline">ograf-devtool</a>) reload <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">graphic.mjs</code> whenever you re-pick a graphic or hit refresh. If you call <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">customElements.define</code> unguarded, the second load throws <em>"the name has already been used with this registry."</em> Wrap the call: <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">{`if (!customElements.get('my-tag')) customElements.define('my-tag', MyClass);`}</code>
+                  A common mistake: ending <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">graphic.mjs</code> with <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">customElements.define('my-tag', MyClass)</code>. Real OGraf players (<a href="https://ograf-devtool.superfly.tv" target="_blank" rel="noopener noreferrer" className="underline">ograf-devtool</a>, ograf-server, SPX-GC) generate their own tag name per instance and register the class themselves. If you've already registered it, their <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">define</code> call throws <em>"this constructor has already been used with this registry"</em> (a class can only be registered once). <strong className="text-blue-900">Just <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">export default class MyGraphic extends HTMLElement</code> and let the renderer handle the tag.</strong>
+                </p>
+              </Callout>
+
+              <Callout icon={<Wrench className="h-4 w-4" />} title="Implement all six lifecycle methods">
+                <p>
+                  OGraf players verify that every graphic exposes <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">load</code>, <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">playAction</code>, <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">updateAction</code>, <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">stopAction</code>, <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">customAction</code>, and <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">dispose</code> — even if your manifest declares no <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">customActions</code>. A no-op stub is fine: return <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">{`{ statusCode: 404, description: "Unknown action" }`}</code>. Omit it and the devtool reports <em>"Graphic does not have a customAction() method."</em>
                 </p>
               </Callout>
             </div>

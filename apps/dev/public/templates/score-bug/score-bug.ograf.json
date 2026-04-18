@@ -53,7 +53,7 @@
   "customActions": [
     {
       "id": "goal",
-      "label": "Goal!",
+      "name": "Goal!",
       "description": "Flash the scoreboard to celebrate a goal.",
       "schema": {
         "type": "object",
