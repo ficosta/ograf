@@ -71,4 +71,6 @@ export default class SportLineup extends HTMLElement {
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
 }
 
-customElements.define('sport-lineup', SportLineup);
+if (!customElements.get('sport-lineup')) {
+  customElements.define('sport-lineup', SportLineup);
+}

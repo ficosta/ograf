@@ -160,4 +160,6 @@ export default class ScoreBug extends HTMLElement {
   }
 }
 
-customElements.define('score-bug', ScoreBug);
+if (!customElements.get('score-bug')) {
+  customElements.define('score-bug', ScoreBug);
+}

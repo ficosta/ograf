@@ -63,4 +63,6 @@ export default class QuoteGraphic extends HTMLElement {
   }
 }
 
-customElements.define('quote-graphic', QuoteGraphic);
+if (!customElements.get('quote-graphic')) {
+  customElements.define('quote-graphic', QuoteGraphic);
+}

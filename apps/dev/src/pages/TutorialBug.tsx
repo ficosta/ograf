@@ -162,7 +162,11 @@ export function TutorialBug() {
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
 }
 
-customElements.define('bug-graphic', BugGraphic);`} />
+// Guard against the module being re-evaluated (devtool reloads, hot reload).
+// An unguarded customElements.define throws on the second call.
+if (!customElements.get('bug-graphic')) {
+  customElements.define('bug-graphic', BugGraphic);
+}`} />
           </div>
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

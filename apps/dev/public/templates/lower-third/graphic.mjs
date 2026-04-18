@@ -126,5 +126,9 @@ export default class LowerThird extends HTMLElement {
   }
 }
 
-// Register the Custom Element
-customElements.define('lower-third', LowerThird);
+// Register the Custom Element -- guarded so devtools and renderers that
+// reload the module don't throw "name has already been used" from the
+// CustomElementRegistry.
+if (!customElements.get('lower-third')) {
+  customElements.define('lower-third', LowerThird);
+}

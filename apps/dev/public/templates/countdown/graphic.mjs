@@ -152,4 +152,6 @@ export default class CountdownTimer extends HTMLElement {
   }
 }
 
-customElements.define('countdown-timer', CountdownTimer);
+if (!customElements.get('countdown-timer')) {
+  customElements.define('countdown-timer', CountdownTimer);
+}

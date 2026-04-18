@@ -148,4 +148,6 @@ export default class ElectionBars extends HTMLElement {
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
 }
 
-customElements.define('election-bars', ElectionBars);
+if (!customElements.get('election-bars')) {
+  customElements.define('election-bars', ElectionBars);
+}

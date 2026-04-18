@@ -390,6 +390,12 @@ export function Spec() {
               <Callout icon={<Target className="h-4 w-4" />} title="The key insight">
                 <p>OGraf doesn't care <em>how</em> you animate your graphic — CSS transitions, JavaScript, GSAP, Lottie, canvas, SVG — anything works. It only cares <em>when</em> you're done. Signal "I'm ready" and the renderer moves on.</p>
               </Callout>
+
+              <Callout icon={<Wrench className="h-4 w-4" />} title="Guard customElements.define">
+                <p>
+                  Real OGraf players (like <a href="https://ograf-devtool.superfly.tv" target="_blank" rel="noopener noreferrer" className="underline">ograf-devtool</a>) reload <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">graphic.mjs</code> whenever you re-pick a graphic or hit refresh. If you call <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">customElements.define</code> unguarded, the second load throws <em>"the name has already been used with this registry."</em> Wrap the call: <code className="font-mono text-xs bg-white/60 px-1 py-0.5 rounded">{`if (!customElements.get('my-tag')) customElements.define('my-tag', MyClass);`}</code>
+                </p>
+              </Callout>
             </div>
 
             {/* Steps */}

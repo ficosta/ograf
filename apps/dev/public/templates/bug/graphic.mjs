@@ -60,4 +60,6 @@ export default class BugGraphic extends HTMLElement {
   }
 }
 
-customElements.define('bug-graphic', BugGraphic);
+if (!customElements.get('bug-graphic')) {
+  customElements.define('bug-graphic', BugGraphic);
+}

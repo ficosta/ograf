@@ -96,4 +96,6 @@ export default class BreakingNews extends HTMLElement {
   }
 }
 
-customElements.define('breaking-news', BreakingNews);
+if (!customElements.get('breaking-news')) {
+  customElements.define('breaking-news', BreakingNews);
+}

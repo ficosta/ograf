@@ -73,4 +73,6 @@ export default class TickerGraphic extends HTMLElement {
   }
 }
 
-customElements.define('ticker-graphic', TickerGraphic);
+if (!customElements.get('ticker-graphic')) {
+  customElements.define('ticker-graphic', TickerGraphic);
+}

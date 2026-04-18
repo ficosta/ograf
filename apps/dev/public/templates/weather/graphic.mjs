@@ -113,4 +113,6 @@ export default class WeatherCard extends HTMLElement {
   }
 }
 
-customElements.define('weather-card', WeatherCard);
+if (!customElements.get('weather-card')) {
+  customElements.define('weather-card', WeatherCard);
+}

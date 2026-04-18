@@ -113,4 +113,6 @@ export default class SocialCard extends HTMLElement {
   }
 }
 
-customElements.define('social-card', SocialCard);
+if (!customElements.get('social-card')) {
+  customElements.define('social-card', SocialCard);
+}
