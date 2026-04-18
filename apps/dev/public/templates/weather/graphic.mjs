@@ -33,8 +33,8 @@ export default class WeatherCard extends HTMLElement {
 
   _renderForecast(forecast) {
     if (!forecast || !Array.isArray(forecast)) return;
-    this._forecast.innerHTML = forecast.map(day => `
-      <div class="weather-forecast-day">
+    this._forecast.innerHTML = forecast.map((day, i) => `
+      <div class="weather-forecast-day" style="transition-delay: ${500 + i * 60}ms">
         <div class="weather-forecast-label">${day.day}</div>
         <div class="weather-forecast-icon">${day.icon}</div>
         <div class="weather-forecast-temp">${day.temp}</div>
