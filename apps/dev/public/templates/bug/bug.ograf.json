@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.bug",
+  "version": "1.0.0",
+  "name": "Corner Bug / LIVE",
+  "description": "Corner indicator that pops in with a scale animation and a pulsing LIVE dot. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "title": "Label",
+        "gddType": "single-line",
+        "default": "LIVE"
+      },
+      "sublabel": {
+        "type": "string",
+        "title": "Sublabel",
+        "gddType": "single-line",
+        "default": "Breaking News"
+      }
+    }
+  }
+}

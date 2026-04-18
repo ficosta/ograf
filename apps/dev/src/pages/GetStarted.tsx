@@ -155,28 +155,45 @@ const MANIFEST_CODE = `{
   }
 }`;
 
-const HTML_CODE = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, height=1080">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <lower-third></lower-third>
-  <script type="module" src="graphic.mjs"></script>
-</body>
-</html>`;
+const FOLDER_TREE = `lower-third/
+├── lower-third.ograf.json
+├── graphic.mjs
+├── style.css
+└── fonts/
+    ├── Inter-Medium.woff2
+    ├── Inter-Bold.woff2
+    └── LICENSE.txt`;
 
-const CSS_CODE = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+const CSS_CODE = `/* style.css -- loaded via <link> injected by graphic.mjs.
+   URLs below resolve relative to this file, so the fonts in ./fonts/ just work. */
 
-body { background: transparent; overflow: hidden; }
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/Inter-Bold.woff2') format('woff2');
+}
+
+.l3rd, .l3rd *, .l3rd *::before, .l3rd *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .l3rd {
-  position: fixed;
+  position: absolute;               /* NOT fixed -- anchor to the renderer's frame */
   bottom: 64px;
   left: 48px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   display: flex;
   transform: translateX(-120%);
   opacity: 0;
@@ -210,7 +227,7 @@ body { background: transparent; overflow: hidden; }
   backdrop-filter: blur(20px);
   padding: 16px 32px 16px 20px;
   border-radius: 0 6px 6px 0;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
 }
 
 .l3rd-name {
@@ -228,56 +245,84 @@ body { background: transparent; overflow: hidden; }
   margin-top: 3px;
 }`;
 
-const JS_CODE = `export default class LowerThird extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = \`
-      <div class="l3rd">
-        <div class="l3rd-accent"></div>
-        <div class="l3rd-content">
-          <div class="l3rd-name"></div>
-          <div class="l3rd-title"></div>
-        </div>
-      </div>
-    \`;
-    this._root = this.querySelector('.l3rd');
-    this._name = this.querySelector('.l3rd-name');
+const JS_CODE = `// Resolve the stylesheet URL relative to this module so it loads no matter
+// where the renderer serves the package from.
+const STYLE_URL = new URL('./style.css', import.meta.url).href;
+
+const TEMPLATE = \`
+  <link rel="stylesheet" href="\${STYLE_URL}">
+  <div class="l3rd">
+    <div class="l3rd-accent"></div>
+    <div class="l3rd-content">
+      <div class="l3rd-name"></div>
+      <div class="l3rd-title"></div>
+    </div>
+  </div>
+\`;
+
+export default class LowerThird extends HTMLElement {
+
+  _initDom() {
+    if (this._initialized) return;                 // idempotent
+    this.innerHTML = TEMPLATE;
+    this._root  = this.querySelector('.l3rd');
+    this._name  = this.querySelector('.l3rd-name');
     this._title = this.querySelector('.l3rd-title');
+    this._initialized = true;
   }
 
-  async load({ data }) {
-    if (data?.name) this._name.textContent = data.name;
+  async load({ data } = {}) {
+    this._initDom();                               // <-- first line of every public method
+    if (data?.name)  this._name.textContent  = data.name;
     if (data?.title) this._title.textContent = data.title;
     return { statusCode: 200 };
   }
 
-  async playAction({ delta = 1 } = {}) {
+  async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
-    void this._root.offsetWidth; // force reflow
+    if (skipAnimation) {
+      this._root.classList.add('visible');
+      return { statusCode: 200, currentStep: 0 };
+    }
+    void this._root.offsetWidth;                   // force reflow before transition
     this._root.classList.add('visible');
     await new Promise(r => setTimeout(r, 700));
     return { statusCode: 200, currentStep: 0 };
   }
 
-  async stopAction() {
+  async stopAction({ skipAnimation } = {}) {
+    this._initDom();
+    if (skipAnimation) {
+      this._root.classList.remove('visible');
+      return { statusCode: 200 };
+    }
     this._root.classList.add('out');
     await new Promise(r => setTimeout(r, 500));
     this._root.classList.remove('visible', 'out');
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
-    if (data?.name) this._name.textContent = data.name;
+  async updateAction({ data } = {}) {
+    this._initDom();
+    if (data?.name)  this._name.textContent  = data.name;
     if (data?.title) this._title.textContent = data.title;
     return { statusCode: 200 };
   }
 
+  // Required on every graphic, even when the manifest declares no customActions.
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: \`Unknown custom action: \${action ?? ""}\` };
+  }
+
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;                     // reset so a re-load re-inits
     return { statusCode: 200 };
   }
 }
 
-customElements.define('lower-third', LowerThird);`;
+// Note the absence of customElements.define() -- the renderer picks the tag.`;
 
 export function GetStarted() {
   useMeta({ title: "Get Started · Lower Third tutorial", description: "Build a CBS-style lower third from scratch. Fifteen minutes from zero to a working OGraf template." });
@@ -377,15 +422,15 @@ export function GetStarted() {
             </div>
           </div>
 
-          {/* Step 3: HTML */}
+          {/* Step 3: Folder structure */}
           <div>
-            <StepHeader n={3} title="Create the HTML entry point" />
+            <StepHeader n={3} title="Assemble the package folder" />
             <p className="text-base text-slate-700 mb-4">
-              The HTML file loads your component and styles. The viewport is set to 1920x1080 — standard broadcast resolution. The body is transparent so the graphic overlays cleanly.
+              An OGraf package is a small folder with a manifest, a JavaScript module, a stylesheet, and any static assets the graphic needs. There is no HTML entry point — the renderer mounts the default-exported class under its own tag, so the module just has to export a class that extends <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">HTMLElement</code>.
             </p>
-            <CodeBlock filename="index.html" language="HTML" code={HTML_CODE} />
+            <CodeBlock filename="lower-third/" language="Text" code={FOLDER_TREE} />
             <p className="mt-4 text-sm text-slate-500">
-              Notice <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">&lt;lower-third&gt;</code> — that's your custom HTML element. The browser doesn't know what it is until your JavaScript registers it.
+              The <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">fonts/</code> folder ships the Inter weights this graphic uses along with their license (SIL OFL) — playout boxes are often offline, so bundling fonts avoids CDN calls that would silently fail.
             </p>
           </div>
 
@@ -411,7 +456,7 @@ export function GetStarted() {
           <div>
             <StepHeader n={5} title="Write the logic — the Web Component" />
             <p className="text-base text-slate-700 mb-4">
-              This is the heart of your OGraf graphic. It's a standard Web Component that the renderer controls by calling five methods in order. Each method returns a Promise — <strong className="text-slate-900">the renderer waits for your animation to finish before doing anything else.</strong>
+              This is the heart of your OGraf graphic. It's a standard Web Component that the renderer controls by calling six methods — five linear lifecycle steps plus <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">customAction</code> for graphic-specific extras. Each returns a Promise: <strong className="text-slate-900">the renderer waits for your animation to finish before doing anything else.</strong>
             </p>
 
             {/* Visual lifecycle flow */}
@@ -441,11 +486,13 @@ export function GetStarted() {
                 <Settings className="h-4 w-4" /> How it works
               </p>
               <div className="mt-2 text-sm text-blue-800 space-y-2">
+                <p><strong>_initDom()</strong> — A private helper, idempotent. The first public method to run calls it to set <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">innerHTML</code> + grab element refs. This way the graphic works whether the renderer inserts the element before or after calling <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">load()</code>.</p>
                 <p><strong>load()</strong> — Receives the operator's data (name + title) and puts it in the DOM. No animation yet.</p>
                 <p><strong>playAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.visible</code> CSS class, which triggers the slide-in transition. Waits 700ms for it to finish, then tells the renderer "I'm ready."</p>
                 <p><strong>updateAction()</strong> — Swaps the text content. In production you'd add a smooth text-swap animation.</p>
                 <p><strong>stopAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.out</code> class for the exit animation. Waits 500ms, then cleans up.</p>
-                <p><strong>dispose()</strong> — Clears the DOM. Called when the graphic is removed from the renderer entirely.</p>
+                <p><strong>customAction()</strong> — OGraf requires every graphic to expose this, even without any declared in the manifest. A no-op that returns <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">statusCode: 404</code> for unknown actions is the correct default.</p>
+                <p><strong>dispose()</strong> — Clears the DOM and resets <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">_initialized</code> so a re-load rebuilds cleanly. Called when the graphic is removed from the renderer entirely.</p>
               </div>
             </div>
           </div>

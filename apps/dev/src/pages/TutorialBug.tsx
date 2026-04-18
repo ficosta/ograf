@@ -52,15 +52,15 @@ export function TutorialBug() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Position</p>
-                <p className="text-sm text-slate-600 mt-1">Top-right corner instead of bottom-left. Uses <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">position: fixed; top; right</code>.</p>
+                <p className="text-sm text-slate-600 mt-1">Top-right corner. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">position: absolute; top: 40px; right: 40px</code> — never <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">fixed</code>, which would escape to the viewport instead of the 1920×1080 render area.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Animation</p>
-                <p className="text-sm text-slate-600 mt-1">Scale from 50% + blur instead of slide. Creates a "pop in from nowhere" effect.</p>
+                <p className="text-sm text-slate-600 mt-1">Scale from 50% + blur instead of slide. A "materializing" effect — less intrusive than a slide for something that stays on screen.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">Size</p>
-                <p className="text-sm text-slate-600 mt-1">Small and compact. Designed to stay on screen without distracting from the content.</p>
+                <p className="text-sm font-semibold text-slate-900">Pulsing LIVE dot</p>
+                <p className="text-sm text-slate-600 mt-1">A CSS <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">@keyframes</code> pulse on an absolutely-positioned sibling creates the broadcast-style LIVE ping without any JavaScript.</p>
               </div>
             </div>
           </div>
@@ -102,25 +102,25 @@ export function TutorialBug() {
               Instead of sliding in, the bug <strong className="text-slate-900">scales up from 50% with a blur</strong>. This creates a subtle "materializing" effect that's less intrusive than a slide — perfect for something that sits in the corner.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.bug {
-  position: fixed;
+  position: absolute;           /* Anchors to the renderer's frame, not the viewport */
   top: 40px;
   right: 40px;
-  transform: scale(0.5);      /* Start small */
+  transform: scale(0.5);        /* Start small */
   opacity: 0;
-  filter: blur(8px);           /* Start blurred */
+  filter: blur(8px);            /* Start blurred */
 }
 
 .bug.visible {
-  transform: scale(1);         /* Scale to full size */
+  transform: scale(1);          /* Scale to full size */
   opacity: 1;
-  filter: blur(0);             /* Sharpen */
+  filter: blur(0);              /* Sharpen */
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.4s ease,
               filter 0.4s ease;
 }
 
 .bug.out {
-  transform: scale(0.8);       /* Shrink slightly on exit */
+  transform: scale(0.8);        /* Shrink slightly on exit */
   opacity: 0;
   filter: blur(8px);
 }`} />
@@ -135,59 +135,86 @@ export function TutorialBug() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The Web Component</h2>
             <p className="text-base text-slate-700 mb-4">
-              Nearly identical to the lower third — same lifecycle methods, same pattern. The only difference is the HTML structure (icon + label instead of name + title).
+              Same shape as the lower third: a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">&lt;link&gt;</code> to the stylesheet (absolute URL via <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">import.meta.url</code>), a lazy <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_initDom()</code>, and all six lifecycle methods. No module-level <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customElements.define()</code> — the renderer picks the tag.
             </p>
-            <CodeBlock filename="graphic.mjs" language="JavaScript" code={`export default class BugGraphic extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = \`
-      <div class="bug">
-        <div class="bug-container">
-          <div class="bug-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
-          </div>
-          <div>
-            <div class="bug-label"></div>
-            <div class="bug-sublabel"></div>
-          </div>
-        </div>
+            <CodeBlock filename="graphic.mjs" language="JavaScript" code={`const STYLE_URL = new URL('./style.css', import.meta.url).href;
+
+const TEMPLATE = \`
+  <link rel="stylesheet" href="\${STYLE_URL}">
+  <div class="bug">
+    <div class="bug-container">
+      <div class="bug-live">
+        <div class="bug-live-ping"></div>
+        <div class="bug-live-dot"></div>
       </div>
-    \`;
-    this._root = this.querySelector('.bug');
-    this._label = this.querySelector('.bug-label');
+      <div class="bug-text">
+        <div class="bug-label"></div>
+        <div class="bug-sublabel"></div>
+      </div>
+    </div>
+  </div>
+\`;
+
+export default class BugGraphic extends HTMLElement {
+
+  _initDom() {
+    if (this._initialized) return;
+    this.innerHTML = TEMPLATE;
+    this._root     = this.querySelector('.bug');
+    this._label    = this.querySelector('.bug-label');
     this._sublabel = this.querySelector('.bug-sublabel');
+    this._initialized = true;
   }
 
-  async load({ data }) {
-    if (data?.label) this._label.textContent = data.label;
+  async load({ data } = {}) {
+    this._initDom();
+    if (data?.label)    this._label.textContent    = data.label;
     if (data?.sublabel) this._sublabel.textContent = data.sublabel;
     return { statusCode: 200 };
   }
 
-  async playAction() {
+  async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
+    if (skipAnimation) {
+      this._root.classList.add('visible');
+      return { statusCode: 200, currentStep: 0 };
+    }
     void this._root.offsetWidth;
     this._root.classList.add('visible');
     await new Promise(r => setTimeout(r, 600));
     return { statusCode: 200, currentStep: 0 };
   }
 
-  async stopAction() {
+  async stopAction({ skipAnimation } = {}) {
+    this._initDom();
+    if (skipAnimation) {
+      this._root.classList.remove('visible');
+      return { statusCode: 200 };
+    }
     this._root.classList.add('out');
     await new Promise(r => setTimeout(r, 400));
     this._root.classList.remove('visible', 'out');
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
-    if (data?.label) this._label.textContent = data.label;
+  async updateAction({ data } = {}) {
+    this._initDom();
+    if (data?.label)    this._label.textContent    = data.label;
     if (data?.sublabel) this._sublabel.textContent = data.sublabel;
     return { statusCode: 200 };
   }
 
-  async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
-}
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: \`Unknown custom action: \${action ?? ""}\` };
+  }
 
-customElements.define('bug-graphic', BugGraphic);`} />
+  async dispose() {
+    this.innerHTML = '';
+    this._initialized = false;
+    return { statusCode: 200 };
+  }
+}`} />
           </div>
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

@@ -1,18 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* OGraf Lower Third — clean slide-in name/title card.
+ * Loaded via <link rel="stylesheet"> from graphic.mjs. @font-face URLs
+ * resolve relative to this file, so the woff2s in ./fonts/ just work. */
 
-*, *::before, *::after {
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/Inter-Bold.woff2') format('woff2');
+}
+
+.l3rd, .l3rd *, .l3rd *::before, .l3rd *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  background: transparent;
-  overflow: hidden;
-}
-
 .l3rd {
-  position: fixed;
+  position: absolute;
   bottom: 64px;
   left: 48px;
   font-family: 'Inter', system-ui, sans-serif;
