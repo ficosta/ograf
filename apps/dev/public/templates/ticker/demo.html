@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <style>body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); min-height: 100vh; }</style>
+  <!-- graphic.mjs injects its own <link rel="stylesheet"> when load() runs. -->
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+  </style>
 </head>
 <body>
   <ticker-graphic></ticker-graphic>
   <script type="module">
     import TickerGraphic from './graphic.mjs';
+    customElements.define('ticker-graphic', TickerGraphic);
     const el = document.querySelector('ticker-graphic');
     const defaultData = {
       badge: 'Breaking',
@@ -25,9 +33,9 @@
       const { action, data } = e.data || {};
       if (!action) return;
       switch (action) {
-        case 'load': await el.load({ data: data || defaultData }); break;
-        case 'play': await el.playAction({}); break;
-        case 'stop': await el.stopAction({}); break;
+        case 'load':   await el.load({ data: data || defaultData }); break;
+        case 'play':   await el.playAction({}); break;
+        case 'stop':   await el.stopAction({}); break;
         case 'update': await el.updateAction({ data }); break;
       }
     });

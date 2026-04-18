@@ -1,14 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap');
+/* OGraf News Ticker — scrolling headline crawl.
+ * Loaded via <link rel="stylesheet"> from graphic.mjs. @font-face URLs
+ * resolve relative to this file, so the woff2s in ./fonts/ just work. */
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: transparent; overflow: hidden; }
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/Inter-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/Inter-Bold.woff2') format('woff2');
+}
+
+.ticker, .ticker *, .ticker *::before, .ticker *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .ticker {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   transform: translateY(100%);
   opacity: 0;
 }
@@ -96,6 +117,6 @@ body { background: transparent; overflow: hidden; }
 }
 
 @keyframes scroll {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
