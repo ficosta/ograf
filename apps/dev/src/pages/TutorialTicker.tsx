@@ -3,8 +3,12 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/ticker/ticker.ograf.json";
 import { useMeta } from "../hooks/useMeta";
+
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/ticker");
 
@@ -119,32 +123,12 @@ export function TutorialTicker() {
             </div>
           </div>
 
-          <div>
-            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The manifest — array schema</h2>
-            <p className="text-base text-slate-700 mb-4">
-              Notice the schema uses an <strong className="text-slate-900">array of strings</strong> for headlines, not a single text field. Controllers will render this as a list where the operator can add, remove, and reorder items.
-            </p>
-            <CodeBlock filename="ticker.ograf.json (schema)" language="JSON" code={`"schema": {
-  "type": "object",
-  "properties": {
-    "badge": {
-      "type": "string",
-      "title": "Badge Text",
-      "default": "Breaking"
-    },
-    "items": {
-      "type": "array",
-      "title": "Headlines",
-      "items": { "type": "string" },
-      "default": [
-        "EBU releases OGraf Graphics Definition v1",
-        "SPX Graphics adds full OGraf compliance",
-        "CasparCG explores native OGraf renderer"
-      ]
-    }
-  }
-}`} />
-          </div>
+          <TutorialManifest
+            slug="ticker"
+            title="News Ticker"
+            manifest={MANIFEST}
+            intro="Notice the schema uses an array of strings for headlines, not a single text field. Controllers will render this as a list where the operator can add, remove, and reorder items."
+          />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

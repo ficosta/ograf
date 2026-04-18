@@ -5,7 +5,11 @@ import {
 } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
+import manifestJson from "../../public/templates/lower-third/lower-third.ograf.json";
 import { useMeta } from "../hooks/useMeta";
+
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 function StepHeader({ n, title }: { n: number; title: string }) {
   return (
@@ -489,6 +493,8 @@ export function GetStarted() {
               ))}
             </div>
           </div>
+
+          <TutorialManifest slug="lower-third" title="Lower Third" manifest={MANIFEST} />
 
           {/* Done */}
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

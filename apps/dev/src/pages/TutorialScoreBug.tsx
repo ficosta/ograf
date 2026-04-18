@@ -3,8 +3,12 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/score-bug/score-bug.ograf.json";
 import { useMeta } from "../hooks/useMeta";
+
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/score-bug");
 
@@ -176,6 +180,8 @@ export function TutorialScoreBug() {
               </p>
             </div>
           </div>
+
+          <TutorialManifest slug="score-bug" title="Score Bug" manifest={MANIFEST} />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />
