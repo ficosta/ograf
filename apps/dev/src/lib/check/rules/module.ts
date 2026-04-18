@@ -170,5 +170,27 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
     });
   }
 
+  // C-08: Shadow-DOM portability — relative href/src inside innerHTML
+  // template literals resolve against the document, not the module. Only safe
+  // in an iframe mount where the document IS the graphic. Flag anything like
+  //   <link rel="stylesheet" href="./style.css">
+  //   <img src="./foo.png">
+  // unless it's clearly using an interpolated absolute URL (${SOMETHING}).
+  const relativeInTemplate = Array.from(
+    source.matchAll(/(href|src)\s*=\s*['"`](\.\/|[^'"`${/][^'"`]*\.(?:css|woff2?|ttf|otf|png|jpe?g|webp|svg))['"`]/g)
+  );
+  if (relativeInTemplate.length > 0) {
+    findings.push({
+      id: "C-08",
+      category: "module",
+      severity: "warning",
+      title: "Relative asset URL inside innerHTML",
+      message:
+        "Relative URLs inside an injected `<link>` or template-literal `<style>` resolve against the renderer's document, not your module. That works in an iframe mount but 404s inside a Shadow DOM. Build the URL with `new URL('./path', import.meta.url).href` and interpolate it instead.",
+      path: mainPath,
+      specRef: "/spec#lifecycle",
+    });
+  }
+
   return findings;
 }

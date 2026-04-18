@@ -8,14 +8,8 @@
     "items": [
       {
         "name": "ograf.dev",
-        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, and everything else the community needs to ship OGraf graphics.",
+        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, plus in-browser tools (Package Checker today, more coming) under /tools.",
         "url": "https://ograf.dev",
-        "type": "oss"
-      },
-      {
-        "name": "ograf.tools",
-        "desc": "Our companion workbench. Browser-based validator, live preview sandbox, schema explorer, and template generator. Zero install.",
-        "url": "https://ograf.tools",
         "type": "oss"
       }
     ]

@@ -118,7 +118,7 @@ export function checkStyling(pkg: Pkg): readonly Finding[] {
       });
     }
 
-    // X-07: position: fixed is flagged, but also note if nothing explicitly positions content
+    // X-07: no explicit positioning at all
     if (!/position\s*:\s*(absolute|relative|fixed)/i.test(css)) {
       findings.push({
         id: "X-07",
@@ -127,6 +127,35 @@ export function checkStyling(pkg: Pkg): readonly Finding[] {
         title: "No positioned elements",
         message:
           "The stylesheet declares no `position` on any element. Most broadcast graphics want `position: absolute` on their root so they anchor predictably inside the renderer's container.",
+        path,
+      });
+    }
+
+    // X-08: @font-face portability (Shadow DOM quirk)
+    // Declaring @font-face inside a stylesheet that gets injected into a
+    // Shadow DOM is browser-inconsistent. A graphic that looks fine in an
+    // iframe can fail to load the font inside Shadow DOM.
+    if (/@font-face\s*\{/i.test(css)) {
+      findings.push({
+        id: "X-08",
+        category: "styling",
+        severity: "info",
+        title: "@font-face portability across mount models",
+        message:
+          "`@font-face` works reliably in an iframe-mounted graphic but is known to be cross-browser flaky inside Shadow DOM (Chrome/Firefox/Safari implement scoping differently). If portability matters, load the font via a `<link rel=\"stylesheet\">` to a separate CSS file, or inject the `@font-face` rule into `document.head` from your module so it lives in global scope.",
+        path,
+      });
+    }
+
+    // X-09: relative @import — resolves differently depending on the mount
+    if (/@import\s+(?:url\(\s*)?['"]\.\//i.test(css)) {
+      findings.push({
+        id: "X-09",
+        category: "styling",
+        severity: "info",
+        title: "Relative @import in CSS",
+        message:
+          "A relative `@import` resolves against the importing stylesheet's URL. That works if the stylesheet was loaded via `<link>` but not if its contents were inlined into a Shadow DOM. Safer to inline all rules in a single stylesheet or use absolute URLs.",
         path,
       });
     }

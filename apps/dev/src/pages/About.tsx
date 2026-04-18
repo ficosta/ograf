@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useMeta } from "../hooks/useMeta";
 
 export function About() {
@@ -25,20 +26,19 @@ export function About() {
           </p>
 
           <p>
-            Our companion site{" "}
-            <a href="https://ograf.tools" className="text-white font-medium underline underline-offset-4 decoration-mist-600 hover:decoration-white">
-              ograf.tools
-            </a>{" "}
-            provides interactive developer tools: a package validator, live preview sandbox, schema explorer, and template generator — all running in your browser with zero install.
+            Browser-based developer tools live at{" "}
+            <Link to="/tools" className="text-white font-medium underline underline-offset-4 decoration-mist-600 hover:decoration-white">
+              /tools
+            </Link>
+            : a package checker today, a runtime harness and schema explorer next — all running in your browser with zero install.
           </p>
 
           <div className="flex flex-col gap-4 py-8">
-            <h2 className="font-display text-[2rem]/10 tracking-tight text-white">Three sites, three roles.</h2>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 mt-4">
+            <h2 className="font-display text-[2rem]/10 tracking-tight text-white">Two sites, two roles.</h2>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 mt-4">
               {[
                 { name: "ograf.ebu.io", role: "The Standard", desc: "Normative specification, JSON schemas, governance, working group." },
-                { name: "ograf.dev", role: "The Community", desc: "Tutorials, ecosystem map, migration guides, showcase, blog." },
-                { name: "ograf.tools", role: "The Workbench", desc: "Validator, playground, schema explorer, template generator." },
+                { name: "ograf.dev", role: "The Community & Workbench", desc: "Tutorials, ecosystem map, migration guides, plus the Package Checker and other developer tools." },
               ].map((site) => (
                 <div key={site.name} className="rounded-md bg-white/5 p-5">
                   <p className="font-mono text-sm font-semibold text-white">{site.name}</p>

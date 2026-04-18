@@ -542,12 +542,12 @@ export function Spec() {
                   <p className="mt-2 text-sm text-slate-500 flex-1">Discover editors, renderers, controllers, and tools that support OGraf.</p>
                   <p className="mt-4 text-sm font-medium text-blue-600">See all tools &rarr;</p>
                 </Link>
-                <a href="https://ograf.tools/validate" target="_blank" rel="noopener noreferrer" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
+                <Link to="/check" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><CheckCircle className="h-5 w-5 text-blue-600" /></div>
-                  <p className="font-display text-lg text-slate-900">Validate your manifest</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">Paste your .ograf.json and check it against the spec instantly.</p>
-                  <p className="mt-4 text-sm font-medium text-blue-600">Open validator &rarr;</p>
-                </a>
+                  <p className="font-display text-lg text-slate-900">Check your package</p>
+                  <p className="mt-2 text-sm text-slate-500 flex-1">Drop a .zip and get a structured report against 30+ rules and the live EBU schema.</p>
+                  <p className="mt-4 text-sm font-medium text-blue-600">Open the checker &rarr;</p>
+                </Link>
               </div>
             </div>
 

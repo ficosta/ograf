@@ -26,6 +26,7 @@ const History = lazy(() => import("./pages/History").then((m) => ({ default: m.H
 const News = lazy(() => import("./pages/News").then((m) => ({ default: m.News })));
 const Spec = lazy(() => import("./pages/Spec").then((m) => ({ default: m.Spec })));
 const Check = lazy(() => import("./pages/Check").then((m) => ({ default: m.Check })));
+const Tools = lazy(() => import("./pages/Tools").then((m) => ({ default: m.Tools })));
 const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 function RouteFallback() {
@@ -66,6 +67,7 @@ export function App() {
             <Route path="/history" element={<History />} />
             <Route path="/news" element={<News />} />
             <Route path="/spec" element={<Spec />} />
+            <Route path="/tools" element={<Tools />} />
             <Route path="/check" element={<Check />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />

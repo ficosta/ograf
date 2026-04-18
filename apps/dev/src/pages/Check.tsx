@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
-import { FileJson, FileCode, FileType, Files, Image, Box } from "lucide-react";
+import { Link } from "react-router";
+import { FileJson, FileCode, FileType, Files, Image, Box, ChevronRight } from "lucide-react";
 import { useMeta } from "../hooks/useMeta";
 import { DropZone } from "../components/check/DropZone";
 import { CheckerSummary } from "../components/check/CheckerSummary";
@@ -55,6 +56,11 @@ export function Check() {
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <Link to="/tools" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
+            <ChevronRight className="h-3 w-3 rotate-180" /> All tools
+          </Link>
+        </div>
         <div className="mb-12 text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-2">Tool</p>
           <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
@@ -90,11 +96,11 @@ export function Check() {
 
 function WhatGetsChecked() {
   const categories = [
-    { Icon: FileJson, label: "Manifest", desc: "10 rules · validated against the live EBU schema, customActions shape, required fields, main pointer, $schema freshness." },
-    { Icon: Files, label: "Package structure", desc: "9 rules · single top-level folder, README / LICENSE / preview image present, no OS junk, no huge unused binaries." },
-    { Icon: FileCode, label: "Graphic module", desc: "7 rules · default-export class, six lifecycle methods, no self-registered customElements.define, no top-level document access." },
-    { Icon: FileType, label: "Styling", desc: "7 rules · position: fixed catch, remote @import / @font-face warnings, font-family fallback, `body { }` selector flag." },
-    { Icon: Image, label: "Assets", desc: "5 rules · preview image 16:9, fonts shipped with licence, oversized images, unknown extensions." },
+    { Icon: FileJson, label: "Manifest", desc: "10 rules · validated against the live EBU schema (draft-2020-12), customActions shape (no `label`!), main pointer exists, $schema freshness, semver." },
+    { Icon: Files, label: "Package structure", desc: "9 rules · single top-level folder, README / LICENSE / preview present, no OS junk, large-file warnings." },
+    { Icon: FileCode, label: "Graphic module", desc: "8 rules · default-export HTMLElement class, six lifecycle methods, no self-registered `customElements.define`, no top-level `document`, Shadow-DOM-safe relative URLs." },
+    { Icon: FileType, label: "Styling", desc: "9 rules · `position: fixed` catch, remote `@import` / `@font-face`, `body` selector flag, font-family fallback, Shadow-DOM portability hints." },
+    { Icon: Image, label: "Assets", desc: "5 rules · preview image 16:9 (decoded from raw bytes), fonts shipped with licence, oversized images, unknown extensions." },
   ];
   return (
     <div className="mt-10">

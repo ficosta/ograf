@@ -17,8 +17,8 @@ export function Footer() {
               <Link to="/ecosystem" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Ecosystem</Link>
               <Link to="/news" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">News</Link>
               <Link to="/history" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">History</Link>
+              <Link to="/tools" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Tools</Link>
               <Link to="/about" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">About</Link>
-              <a href="https://ograf.tools" target="_blank" rel="noopener noreferrer" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Tools</a>
             </div>
           </nav>
         </div>
