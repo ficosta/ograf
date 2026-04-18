@@ -157,24 +157,33 @@ const NAV_ITEMS = [
 export function Spec() {
   useMeta({ title: "Specification Guide", description: "How OGraf works, explained plainly. Packaging, manifests, the Web Component lifecycle, and data schemas — without jargon." });
   return (
-    <section className="py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="xl:grid xl:grid-cols-[1fr_220px] xl:gap-12">
-          <div className="max-w-3xl">
+    <>
+      {/* Hero — centered, same pattern as Home/News/Ecosystem/History */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
+        <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">
+          Specification Guide
+        </p>
+        <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-6xl">
+          How OGraf works — explained simply.
+        </h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
+          Whether you're a designer, developer, or broadcaster, this guide explains the OGraf format in plain language with real examples. No prior experience needed. For the full technical specification, see the{" "}
+          <a
+            href="https://ograf.ebu.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 font-medium underline underline-offset-4 decoration-blue-200 hover:decoration-blue-600"
+          >
+            official EBU documentation
+          </a>
+          .
+        </p>
+      </div>
 
-            {/* Header */}
-            <div className="mb-16">
-              <p className="text-sm font-semibold text-blue-600 mb-2">Specification Guide</p>
-              <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
-                How OGraf works — explained simply.
-              </h1>
-              <p className="mt-6 text-lg tracking-tight text-slate-700">
-                Whether you're a designer, developer, or broadcaster, this guide explains the OGraf format in plain language with real examples. No prior experience needed. For the full technical specification, see the{" "}
-                <a href="https://ograf.ebu.io" target="_blank" rel="noopener noreferrer" className="text-blue-600 font-medium underline underline-offset-4 decoration-blue-200 hover:decoration-blue-600">
-                  official EBU documentation
-                </a>.
-              </p>
-            </div>
+      <section className="pb-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="xl:grid xl:grid-cols-[1fr_220px] xl:gap-12">
+            <div className="max-w-3xl mx-auto xl:mx-0">
 
             <MobileSectionNav items={NAV_ITEMS} />
 
@@ -579,37 +588,6 @@ export function Spec() {
               </div>
             </div>
 
-            {/* Next Steps */}
-            <div id="next" className="mb-16 scroll-mt-24">
-              <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-6">Next steps</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Link to="/get-started" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><Wrench className="h-5 w-5 text-blue-600" /></div>
-                  <p className="font-display text-lg text-slate-900">Build your first template</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">Hands-on tutorial. Zero to a working lower third in 15 minutes.</p>
-                  <p className="mt-4 text-sm font-medium text-blue-600">Start building &rarr;</p>
-                </Link>
-                <a href="https://ograf.ebu.io" target="_blank" rel="noopener noreferrer" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><BookOpen className="h-5 w-5 text-blue-600" /></div>
-                  <p className="font-display text-lg text-slate-900">Official EBU specification</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">The full technical specification with JSON schemas and TypeScript types.</p>
-                  <p className="mt-4 text-sm font-medium text-blue-600">Read the spec &rarr;</p>
-                </a>
-                <Link to="/ecosystem" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><Map className="h-5 w-5 text-blue-600" /></div>
-                  <p className="font-display text-lg text-slate-900">Explore the ecosystem</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">Discover editors, renderers, controllers, and tools that support OGraf.</p>
-                  <p className="mt-4 text-sm font-medium text-blue-600">See all tools &rarr;</p>
-                </Link>
-                <a href="https://ograf.tools/validate" target="_blank" rel="noopener noreferrer" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><CheckCircle className="h-5 w-5 text-blue-600" /></div>
-                  <p className="font-display text-lg text-slate-900">Validate your manifest</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">Paste your .ograf.json and check it against the spec instantly.</p>
-                  <p className="mt-4 text-sm font-medium text-blue-600">Open validator &rarr;</p>
-                </a>
-              </div>
-            </div>
-
           </div>
 
           {/* Side nav */}
@@ -619,5 +597,46 @@ export function Spec() {
         </div>
       </div>
     </section>
+
+    {/* Next Steps — full-width CTA section, matches Home/News/History rhythm */}
+    <section id="next" className="bg-slate-50 py-20 sm:py-24 scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+            Next steps
+          </h2>
+          <p className="mt-3 text-slate-700">
+            Pick where to go from here — build, read deeper, explore, or validate what you've made.
+          </p>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link to="/get-started" className="flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 hover:shadow-md transition-shadow">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><Wrench className="h-5 w-5 text-blue-600" /></div>
+            <p className="font-display text-lg text-slate-900">Build your first template</p>
+            <p className="mt-2 text-sm text-slate-500 flex-1">Hands-on tutorial. Zero to a working lower third in 15 minutes.</p>
+            <p className="mt-4 text-sm font-medium text-blue-600">Start building &rarr;</p>
+          </Link>
+          <a href="https://ograf.ebu.io" target="_blank" rel="noopener noreferrer" className="flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 hover:shadow-md transition-shadow">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><BookOpen className="h-5 w-5 text-blue-600" /></div>
+            <p className="font-display text-lg text-slate-900">Official EBU specification</p>
+            <p className="mt-2 text-sm text-slate-500 flex-1">The full technical specification with JSON schemas and TypeScript types.</p>
+            <p className="mt-4 text-sm font-medium text-blue-600">Read the spec &rarr;</p>
+          </a>
+          <Link to="/ecosystem" className="flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 hover:shadow-md transition-shadow">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><Map className="h-5 w-5 text-blue-600" /></div>
+            <p className="font-display text-lg text-slate-900">Explore the ecosystem</p>
+            <p className="mt-2 text-sm text-slate-500 flex-1">Discover editors, renderers, controllers, and tools that support OGraf.</p>
+            <p className="mt-4 text-sm font-medium text-blue-600">See all tools &rarr;</p>
+          </Link>
+          <a href="https://ograf.tools/validate" target="_blank" rel="noopener noreferrer" className="flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 hover:shadow-md transition-shadow">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><CheckCircle className="h-5 w-5 text-blue-600" /></div>
+            <p className="font-display text-lg text-slate-900">Validate your manifest</p>
+            <p className="mt-2 text-sm text-slate-500 flex-1">Paste your .ograf.json and check it against the spec instantly.</p>
+            <p className="mt-4 text-sm font-medium text-blue-600">Open validator &rarr;</p>
+          </a>
+        </div>
+      </div>
+    </section>
+    </>
   );
 }
