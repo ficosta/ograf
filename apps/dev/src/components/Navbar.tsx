@@ -18,6 +18,9 @@ export function Navbar() {
               <Link to="/tutorials" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 Tutorials
               </Link>
+              <Link to="/check" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+                Check
+              </Link>
               <Link to="/ecosystem" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 Ecosystem
               </Link>
@@ -68,6 +71,7 @@ export function Navbar() {
         {menuOpen && (
           <div className="absolute inset-x-4 top-24 z-50 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5">
             <Link to="/tutorials" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Tutorials</Link>
+            <Link to="/check" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Check</Link>
             <Link to="/spec" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Spec</Link>
             <Link to="/ecosystem" className="block w-full p-2" onClick={() => setMenuOpen(false)}>Ecosystem</Link>
             <Link to="/news" className="block w-full p-2" onClick={() => setMenuOpen(false)}>News</Link>
