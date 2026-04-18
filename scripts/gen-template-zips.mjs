@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 // Packages each tutorial template directory into a downloadable OGraf .zip.
-// The zip is a complete OGraf package that a compliant renderer can load.
+// The zip is a real OGraf Graphics Definition v1 package -- nothing more.
+// A real OGraf player (ograf-devtool, ograf-server, SPX-GC, CasparCG) reads
+// the manifest and drives the lifecycle; we don't ship a bespoke preview.
 //
 // Each archive contains:
 //   <slug>/
 //     <slug>.ograf.json   the manifest
 //     graphic.mjs         the Web Component
 //     style.css           component styles
-//     preview.html        standalone preview (open in a browser to try it)
-//     README.md           usage notes
+//     README.md           usage notes + pointers to real players
 //
 // Excluded: demo.html (tutorial-page harness, not part of the package),
-// index.html (tutorial-only), .DS_Store.
+// preview.html (bespoke runtime that bypasses the manifest and hid real
+// bugs such as the unguarded customElements.define crash), index.html
+// (tutorial-only), .DS_Store.
 
 import { execFileSync } from "node:child_process";
 import { readdirSync, mkdirSync, rmSync, statSync, readFileSync, writeFileSync, cpSync } from "node:fs";
@@ -25,7 +28,7 @@ const outDir = join(repoRoot, "apps/dev/public/downloads");
 
 mkdirSync(outDir, { recursive: true });
 
-const PACKAGE_FILES = ["graphic.mjs", "style.css", "preview.html"];
+const PACKAGE_FILES = ["graphic.mjs", "style.css"];
 
 const entries = readdirSync(templatesDir, { withFileTypes: true })
   .filter((e) => e.isDirectory() && e.name !== "previews")
@@ -87,6 +90,7 @@ ${description}
 
 - **Package id:** \`${id}\`
 - **Version:** ${version}
+- **License:** MIT
 
 ## What's inside
 
@@ -95,33 +99,38 @@ ${description}
 | \`${slug}.ograf.json\` | Manifest -- what a renderer reads. Declares id, schema, lifecycle flags. |
 | \`graphic.mjs\` | Web Component implementing \`load\`, \`playAction\`, \`updateAction\`, \`stopAction\`, \`dispose\`. |
 | \`style.css\` | Styles and keyframes. |
-| \`preview.html\` | Standalone preview. Open it in a browser to see the graphic play with default data. |
+| \`README.md\` | This file. |
 
-## Run locally (no renderer needed)
+That's a complete **OGraf Graphics Definition v1** package. A compliant
+player reads the manifest and drives the lifecycle itself -- there is
+no bespoke preview page in this archive, on purpose. A manifest-aware
+player catches real bugs that a single-load preview would miss.
 
-Open \`preview.html\` in a browser. The page imports \`graphic.mjs\`, seeds it
-with default data, and plays the graphic immediately. Useful for quick
-iteration or showing the graphic to a non-technical stakeholder.
+## Try this package
 
-> Some browsers block ES module imports from \`file://\` URLs. If
-> \`preview.html\` shows a blank page, serve the folder instead:
->
-> \`\`\`bash
-> npx http-server . -p 8080
-> # then open http://localhost:8080/preview.html
-> \`\`\`
+The fastest way to see it run is the SuperFly devtool:
 
-## Load into an OGraf-compatible renderer
+1. Open **[ograf-devtool.superfly.tv](https://ograf-devtool.superfly.tv)**.
+2. Point it at this unzipped folder.
+3. The devtool reads \`${slug}.ograf.json\`, validates it, runs
+   the lifecycle, and exposes RealTime and Non-RealTime controls so you
+   can call \`playAction\`, \`updateAction\`, \`stopAction\`, and any
+   declared \`customActions\`.
 
-This package is an OGraf Graphics Definition v1 archive. To run it on
-an OGraf-compatible renderer:
+The devtool is MIT-licensed and open source:
+<https://github.com/SuperFlyTV/ograf-devtool>.
 
-1. Zip this folder (or keep it zipped).
-2. Point your renderer at the manifest. The exact steps depend on the
-   renderer -- see:
-   - SPX-GC: https://github.com/TuomoKu/SPX-GC
-   - ograf-server: https://github.com/SuperFlyTV/ograf-server
-   - CasparCG HTML producer: https://github.com/CasparCG
+## Deploy to a real renderer
+
+This package is renderer-agnostic. Point any OGraf-compliant system at the
+manifest:
+
+- **ograf-server** -- reference renderer with upload and control APIs, self-host.
+  <https://github.com/SuperFlyTV/ograf-server>
+- **SPX-GC** -- professional browser-based graphics controller with OGraf support.
+  <https://github.com/TuomoKu/SPX-GC>
+- **CasparCG** -- open-source playout server; renders OGraf via the HTML producer.
+  <https://github.com/CasparCG/server>
 
 The renderer will read \`${slug}.ograf.json\`, present the schema
 fields to the operator, and call \`graphic.mjs\` through the OGraf
