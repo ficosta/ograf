@@ -12,10 +12,10 @@ export { CATEGORY_LABEL, CATEGORY_ORDER } from "./types";
 export { unpack } from "./unpack";
 export { toMarkdown } from "./report";
 
-export async function runChecks(file: File): Promise<Report> {
+export async function runChecks(input: File | Pkg): Promise<{ report: Report; pkg: Pkg }> {
   const started = performance.now();
 
-  const pkg = await unpack(file);
+  const pkg = isPkg(input) ? input : await unpack(input);
 
   const manifestFindings = await checkManifest(pkg);
   const structureFindings = checkStructure(pkg);
@@ -33,7 +33,14 @@ export async function runChecks(file: File): Promise<Report> {
 
   const schema = await getSchemaValidator();
 
-  return buildReport(pkg, findings, schema.source, performance.now() - started);
+  return {
+    report: buildReport(pkg, findings, schema.source, performance.now() - started),
+    pkg,
+  };
+}
+
+function isPkg(x: File | Pkg): x is Pkg {
+  return typeof x === "object" && x !== null && "files" in x && x.files instanceof Map;
 }
 
 function buildReport(

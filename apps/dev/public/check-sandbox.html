@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>OGraf checker sandbox</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+    body {
+      position: relative;
+    }
+    .ograf-host {
+      position: absolute;
+      inset: 0;
+    }
+  </style>
+</head>
+<body>
+  <script type="module">
+    // This file runs inside the sandboxed iframe on /check. It:
+    //  1. Forwards any console/error output to the parent page.
+    //  2. Dynamically imports the graphic module served by the
+    //     /check-sw.js service worker at /check/sandbox/<id>/<path>.
+    //  3. Registers the module's default export under a unique tag,
+    //     mounts one instance, and listens for lifecycle requests
+    //     from the parent via window.postMessage.
+
+    const PARENT_ORIGIN = location.origin;
+    const params = new URLSearchParams(location.search);
+    const session = params.get("session");
+    const main = params.get("main");
+
+    const forward = (payload) => parent.postMessage(payload, PARENT_ORIGIN);
+
+    // Console capture — send every console.log/warn/error to the parent.
+    for (const level of ["log", "warn", "error", "info", "debug"]) {
+      const orig = console[level];
+      console[level] = (...args) => {
+        try {
+          forward({
+            type: "console",
+            level,
+            args: args.map((a) => {
+              try {
+                if (a instanceof Error) return `${a.name}: ${a.message}`;
+                if (typeof a === "object" && a !== null) return JSON.stringify(a);
+                return String(a);
+              } catch {
+                return String(a);
+              }
+            }),
+            ts: Date.now(),
+          });
+        } catch {
+          /* ignore forward failures */
+        }
+        orig.apply(console, args);
+      };
+    }
+
+    window.addEventListener("error", (e) =>
+      forward({ type: "error", message: e.message, stack: e.error?.stack, source: "window" })
+    );
+    window.addEventListener("unhandledrejection", (e) => {
+      const reason = e.reason;
+      forward({
+        type: "error",
+        message: reason instanceof Error ? reason.message : String(reason),
+        stack: reason instanceof Error ? reason.stack : undefined,
+        source: "promise",
+      });
+    });
+
+    if (!session || !main) {
+      forward({ type: "error", message: "Sandbox opened without session or main param", source: "window" });
+      forward({ type: "ready", tag: null, error: "missing params" });
+    } else {
+      const host = document.createElement("div");
+      host.className = "ograf-host";
+      document.body.appendChild(host);
+
+      const mainUrl = `/check/sandbox/${session}/${main}`;
+      let tag = null;
+      let el = null;
+      let importError = null;
+
+      try {
+        const mod = await import(mainUrl);
+        const Graphic = mod && mod.default;
+        if (typeof Graphic !== "function") {
+          throw new Error("graphic.mjs must default-export a class extending HTMLElement");
+        }
+        tag = "ograf-" + Math.random().toString(36).slice(2, 10);
+        customElements.define(tag, Graphic);
+        el = document.createElement(tag);
+        host.appendChild(el);
+      } catch (err) {
+        importError = err instanceof Error ? err.message : String(err);
+        forward({
+          type: "error",
+          message: `Failed to import main module: ${importError}`,
+          stack: err instanceof Error ? err.stack : undefined,
+          source: "window",
+        });
+      }
+
+      window.addEventListener("message", async (e) => {
+        if (e.source !== parent) return;
+        const msg = e.data;
+        if (!msg || typeof msg !== "object" || typeof msg.id !== "string") return;
+        if (!el) {
+          forward({
+            type: "reply",
+            id: msg.id,
+            error: importError ?? "graphic not initialised",
+            durationMs: 0,
+          });
+          return;
+        }
+        const t0 = performance.now();
+        let result;
+        let error;
+        try {
+          switch (msg.action) {
+            case "load":
+              result = await el.load({
+                data: msg.data,
+                renderType: "realtime",
+                renderCharacteristics: {},
+              });
+              break;
+            case "playAction":
+              result = await el.playAction(msg.payload ?? {});
+              break;
+            case "updateAction":
+              result = await el.updateAction({ data: msg.data });
+              break;
+            case "stopAction":
+              result = await el.stopAction(msg.payload ?? {});
+              break;
+            case "customAction":
+              result = await el.customAction(msg.payload ?? {});
+              break;
+            case "dispose":
+              result = await el.dispose();
+              break;
+            default:
+              error = `unknown action: ${msg.action}`;
+          }
+        } catch (err) {
+          error = err instanceof Error ? err.message : String(err);
+        }
+        forward({
+          type: "reply",
+          id: msg.id,
+          result,
+          error,
+          durationMs: performance.now() - t0,
+        });
+      });
+
+      forward({ type: "ready", tag });
+    }
+  </script>
+</body>
+</html>

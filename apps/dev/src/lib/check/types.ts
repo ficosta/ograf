@@ -1,6 +1,6 @@
 export type Severity = "error" | "warning" | "info" | "pass";
 
-export type Category = "manifest" | "structure" | "module" | "styling" | "assets";
+export type Category = "manifest" | "structure" | "module" | "styling" | "assets" | "runtime";
 
 export interface Finding {
   readonly id: string;
@@ -53,6 +53,7 @@ export const CATEGORY_LABEL: Readonly<Record<Category, string>> = {
   module: "Graphic module",
   styling: "Styling",
   assets: "Assets",
+  runtime: "Runtime",
 };
 
 export const CATEGORY_ORDER: readonly Category[] = [
@@ -61,4 +62,5 @@ export const CATEGORY_ORDER: readonly Category[] = [
   "module",
   "styling",
   "assets",
+  "runtime",
 ];
