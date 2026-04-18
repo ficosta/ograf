@@ -1,10 +1,15 @@
-import Ajv, { type ErrorObject, type ValidateFunction } from "ajv";
+import Ajv2020 from "ajv/dist/2020";
+import AjvDraft07 from "ajv";
+import type { ErrorObject, ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
 import { OGRAF_MANIFEST_SCHEMA } from "@ograf/validator";
 import type { SchemaSource } from "./types";
 
 export const LIVE_SCHEMA_URL =
   "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json";
+
+const FETCH_TIMEOUT_MS = 4000;
+const TOTAL_TIMEOUT_MS = 8000;
 
 export interface CompiledSchema {
   readonly validate: ValidateFunction;
@@ -17,18 +22,21 @@ let cached: CompiledSchema | null = null;
  * Fetches the canonical EBU OGraf schema and all its $refs, compiles it
  * with Ajv, and caches the validator for the rest of the session.
  * Falls back to the bundled snapshot in @ograf/validator if the fetch
- * fails (CORS, offline, 404). Either way returns a working validator.
+ * fails or hangs (CORS, offline, slow network). Either way returns a
+ * working validator within ~8 seconds.
  */
 export async function getSchemaValidator(): Promise<CompiledSchema> {
   if (cached) return cached;
 
-  // Try the live schema first.
   try {
-    const compiled = await compileLive();
+    const compiled = await withTimeout(compileLive(), TOTAL_TIMEOUT_MS, "live-schema compile");
     cached = compiled;
     return compiled;
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
+    // Surface it once in the console so developers can tell why fallback kicked in.
+    // eslint-disable-next-line no-console
+    console.info(`[check] falling back to bundled schema: ${reason}`);
     cached = compileBundled(`Live schema unreachable (${reason}); used bundled snapshot.`);
     return cached;
   }
@@ -53,21 +61,18 @@ export function normaliseErrors(errors: readonly ErrorObject[] | null | undefine
 }
 
 async function compileLive(): Promise<CompiledSchema> {
-  const ajv = new Ajv({
+  // The live EBU schema declares $schema: draft/2020-12 — use the 2020 Ajv variant.
+  const ajv = new Ajv2020({
     allErrors: true,
     strict: false,
-    loadSchema: async (uri: string) => {
-      const res = await fetch(uri, { cache: "force-cache" });
-      if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${uri}`);
-      return (await res.json()) as Record<string, unknown>;
-    },
+    loadSchema: (uri: string) => fetchJson(uri),
   });
   addFormats(ajv);
 
-  const res = await fetch(LIVE_SCHEMA_URL, { cache: "force-cache" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const schema = (await res.json()) as Record<string, unknown>;
+  const schema = await fetchJson(LIVE_SCHEMA_URL);
 
+  // compileAsync resolves $refs by calling loadSchema; wrap it too so a stuck
+  // sub-request cannot hang the promise.
   const validate = await ajv.compileAsync(schema);
 
   return {
@@ -81,7 +86,8 @@ async function compileLive(): Promise<CompiledSchema> {
 }
 
 function compileBundled(note: string): CompiledSchema {
-  const ajv = new Ajv({ allErrors: true, strict: false });
+  // Bundled snapshot is draft-07.
+  const ajv = new AjvDraft07({ allErrors: true, strict: false });
   addFormats(ajv);
   const validate = ajv.compile(OGRAF_MANIFEST_SCHEMA as object);
   return {
@@ -93,4 +99,25 @@ function compileBundled(note: string): CompiledSchema {
       note,
     },
   };
+}
+
+async function fetchJson(url: string): Promise<Record<string, unknown>> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
+    return (await res.json()) as Record<string, unknown>;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+    promise
+      .then((v) => { clearTimeout(timer); resolve(v); })
+      .catch((e) => { clearTimeout(timer); reject(e); });
+  });
 }

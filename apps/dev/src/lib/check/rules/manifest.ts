@@ -163,14 +163,17 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
     });
   }
 
-  // M-07: recommended fields
+  // M-07: optional-but-recommended fields. The EBU schema only requires
+  // $schema, id, name, main, supportsRealTime, supportsNonRealTime -- everything
+  // below is a best-practice hint, not a spec violation. Info-level only.
   if (typeof manifest.description !== "string" || manifest.description.length === 0) {
     findings.push({
       id: "M-07",
       category: "manifest",
-      severity: "warning",
-      title: "Missing description",
-      message: "Add a short description so controllers and catalogues can present your graphic with context.",
+      severity: "info",
+      title: "Optional — no description",
+      message:
+        "Optional. Adding a short `description` helps controllers and catalogues present your graphic with context.",
       path: `${pkg.manifestPath}/description`,
       specRef: SPEC_GRAPHICS,
     });
@@ -179,9 +182,10 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
     findings.push({
       id: "M-07",
       category: "manifest",
-      severity: "warning",
-      title: "Missing author",
-      message: "Add an `author` object with at least `name` so users know who to contact.",
+      severity: "info",
+      title: "Optional — no author",
+      message:
+        "Optional. Adding an `author` object with at least a `name` gives downstream users a contact point.",
       path: `${pkg.manifestPath}/author`,
       specRef: SPEC_GRAPHICS,
     });
@@ -190,10 +194,10 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
     findings.push({
       id: "M-07",
       category: "manifest",
-      severity: "warning",
-      title: "No thumbnails declared",
+      severity: "info",
+      title: "Optional — no thumbnails declared",
       message:
-        "`thumbnails` lets a gallery show a preview without running the graphic. Provide at least one 16:9 image reference inside the package.",
+        "Optional. `thumbnails` lets a gallery show a preview without running the graphic. A 16:9 image reference inside the package is ideal.",
       path: `${pkg.manifestPath}/thumbnails`,
       specRef: SPEC_GRAPHICS,
     });
@@ -203,8 +207,9 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
       id: "M-07",
       category: "manifest",
       severity: "info",
-      title: "License not declared",
-      message: "Declare a license (SPDX identifier recommended, e.g. `MIT`) so distributors know what they may do with the package.",
+      title: "Optional — no license declared",
+      message:
+        "Optional. Declaring a `license` (SPDX identifier recommended, e.g. `MIT`) reduces ambiguity for distributors.",
       path: `${pkg.manifestPath}/license`,
     });
   }
@@ -231,8 +236,10 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
     }
   }
 
-  // M-09: semver version
-  if (typeof manifest.version === "string") {
+  // M-09: version is optional in the EBU schema. If declared, the spec says
+  // it SHOULD be alphabetically sortable -- semver is a clean way to achieve
+  // that. Missing → info, non-semver → info (both hints, not violations).
+  if (typeof manifest.version === "string" && manifest.version.length > 0) {
     if (SEMVER.test(manifest.version)) {
       findings.push({
         id: "M-09",
@@ -245,9 +252,9 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
       findings.push({
         id: "M-09",
         category: "manifest",
-        severity: "warning",
-        title: "Version is not a valid semver",
-        message: `"${manifest.version}" is not a semver string (e.g. 1.2.3). Consumers rely on semver for ordering; consider using it.`,
+        severity: "info",
+        title: "Version is not semver",
+        message: `"${manifest.version}" is not a semver string (e.g. 1.2.3). The spec only asks for an alphabetically sortable version, but semver is the common choice.`,
         path: `${pkg.manifestPath}/version`,
       });
     }

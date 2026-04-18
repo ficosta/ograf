@@ -123,15 +123,16 @@ export function checkStructure(pkg: Pkg): readonly Finding[] {
     });
   }
 
-  // S-06: thumbnail/preview image
+  // S-06: thumbnail/preview image (optional — purely a nice-to-have)
   const preview = hasAny(pkg.files, PREVIEW_CANDIDATES);
   if (!preview) {
     findings.push({
       id: "S-06",
       category: "structure",
-      severity: "warning",
-      title: "No preview image",
-      message: "Ship a `preview.png` or `preview.webp` (16:9) alongside the manifest so galleries can show a static preview.",
+      severity: "info",
+      title: "Optional — no preview image",
+      message:
+        "Optional. Shipping a `preview.png` or `preview.webp` (16:9) alongside the manifest lets galleries show a static preview without running the graphic.",
     });
   } else {
     findings.push({
