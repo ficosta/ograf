@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.countdown",
+  "version": "1.0.0",
+  "name": "Countdown Timer",
+  "description": "Self-ticking countdown clock that turns red in the final 10 seconds. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "title": "Label",
+        "gddType": "single-line",
+        "default": "STARTING IN"
+      },
+      "seconds": {
+        "type": "integer",
+        "title": "Seconds",
+        "minimum": 0,
+        "maximum": 3599,
+        "default": 120
+      }
+    }
+  }
+}

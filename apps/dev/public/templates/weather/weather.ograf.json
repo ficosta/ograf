@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.weather",
+  "version": "1.0.0",
+  "name": "Weather Forecast",
+  "description": "Weather card with current conditions and a 3-day forecast. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "location": {
+        "type": "string",
+        "title": "Location",
+        "gddType": "single-line",
+        "default": "London"
+      },
+      "temp": {
+        "type": "string",
+        "title": "Temperature",
+        "gddType": "single-line",
+        "default": "18°C"
+      },
+      "condition": {
+        "type": "string",
+        "title": "Condition",
+        "gddType": "single-line",
+        "default": "Partly Cloudy"
+      },
+      "icon": {
+        "type": "string",
+        "title": "Icon (emoji)",
+        "gddType": "single-line",
+        "default": "⛅"
+      },
+      "forecast": {
+        "type": "array",
+        "title": "3-Day Forecast",
+        "items": {
+          "type": "object",
+          "properties": {
+            "day": { "type": "string", "title": "Day", "gddType": "single-line" },
+            "temp": { "type": "string", "title": "Temp", "gddType": "single-line" },
+            "icon": { "type": "string", "title": "Icon", "gddType": "single-line" }
+          },
+          "required": ["day", "temp", "icon"]
+        },
+        "default": [
+          { "day": "Tue", "temp": "20°C", "icon": "☀️" },
+          { "day": "Wed", "temp": "16°C", "icon": "🌧️" },
+          { "day": "Thu", "temp": "19°C", "icon": "⛅" }
+        ]
+      }
+    }
+  }
+}

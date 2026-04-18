@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.ticker",
+  "version": "1.0.0",
+  "name": "News Ticker",
+  "description": "Scrolling headline crawl with an infinite CSS loop. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "badge": {
+        "type": "string",
+        "title": "Badge Text",
+        "gddType": "single-line",
+        "default": "Breaking"
+      },
+      "items": {
+        "type": "array",
+        "title": "Headlines",
+        "items": { "type": "string", "gddType": "single-line" },
+        "default": [
+          "EBU releases OGraf Graphics Definition v1",
+          "SPX Graphics adds full OGraf compliance",
+          "CasparCG explores native OGraf renderer"
+        ]
+      }
+    }
+  }
+}

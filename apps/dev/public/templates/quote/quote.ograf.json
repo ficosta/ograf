@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.quote",
+  "version": "1.0.0",
+  "name": "Full Page Quote",
+  "description": "Cinematic full-screen quote card with staggered reveal. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "title": "Quote",
+        "gddType": "multi-line",
+        "default": "Open graphics, open broadcast, open standards. That's the future."
+      },
+      "author": {
+        "type": "string",
+        "title": "Author",
+        "gddType": "single-line",
+        "default": "Demo Quote"
+      },
+      "role": {
+        "type": "string",
+        "title": "Role",
+        "gddType": "single-line",
+        "default": "Sample Credit"
+      }
+    }
+  }
+}

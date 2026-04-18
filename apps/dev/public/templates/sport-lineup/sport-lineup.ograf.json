@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.sport-lineup",
+  "version": "1.0.0",
+  "name": "Sport Lineup",
+  "description": "Team roster grid with staggered card reveal. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "team": {
+        "type": "string",
+        "title": "Team",
+        "gddType": "single-line",
+        "default": "FC Barcelona"
+      },
+      "meta": {
+        "type": "string",
+        "title": "Match Info",
+        "gddType": "single-line",
+        "default": "La Liga — Matchday 32"
+      },
+      "formation": {
+        "type": "string",
+        "title": "Formation",
+        "gddType": "single-line",
+        "default": "4-3-3"
+      },
+      "coach": {
+        "type": "string",
+        "title": "Coach",
+        "gddType": "single-line",
+        "default": "H. Flick"
+      },
+      "players": {
+        "type": "array",
+        "title": "Players",
+        "items": {
+          "type": "object",
+          "properties": {
+            "number": { "type": "integer", "title": "Number", "minimum": 0, "maximum": 99 },
+            "name": { "type": "string", "title": "Name", "gddType": "single-line" },
+            "position": { "type": "string", "title": "Position", "gddType": "single-line" }
+          },
+          "required": ["number", "name", "position"]
+        }
+      }
+    }
+  }
+}

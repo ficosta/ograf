@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.breaking-news",
+  "version": "1.0.0",
+  "name": "Breaking News",
+  "description": "Full-screen urgent alert that plays in, holds, and auto-dismisses. Fire-and-forget lifecycle. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 0,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "headline": {
+        "type": "string",
+        "title": "Headline",
+        "gddType": "multi-line",
+        "default": "EBU announces OGraf v2 roadmap for 2027"
+      }
+    }
+  }
+}
