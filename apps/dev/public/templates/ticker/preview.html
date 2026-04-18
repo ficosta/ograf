@@ -10,6 +10,7 @@
   <ticker-graphic></ticker-graphic>
   <script type="module">
     import TickerGraphic from './graphic.mjs';
+    customElements.define('ticker-graphic', TickerGraphic);
     const el = document.querySelector('ticker-graphic');
     await el.load({ data: { badge: 'Breaking', items: ['EBU releases OGraf v1 — the open standard for broadcast graphics', 'SPX Graphics adds full OGraf compliance in v1.4', 'CasparCG community explores native OGraf integration', 'Loopic announces one-click OGraf export'] }, renderType: 'realtime', renderCharacteristics: {} });
     await el.playAction({});

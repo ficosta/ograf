@@ -10,6 +10,7 @@
   <sport-lineup></sport-lineup>
   <script type="module">
     import SportLineup from './graphic.mjs';
+    customElements.define('sport-lineup', SportLineup);
     const el = document.querySelector('sport-lineup');
     const defaultData = {
       team: 'FC Barcelona',

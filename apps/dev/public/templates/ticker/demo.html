@@ -10,6 +10,7 @@
   <ticker-graphic></ticker-graphic>
   <script type="module">
     import TickerGraphic from './graphic.mjs';
+    customElements.define('ticker-graphic', TickerGraphic);
     const el = document.querySelector('ticker-graphic');
     const defaultData = {
       badge: 'Breaking',

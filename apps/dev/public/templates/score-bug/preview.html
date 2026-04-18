@@ -10,6 +10,7 @@
   <score-bug></score-bug>
   <script type="module">
     import ScoreBug from './graphic.mjs';
+    customElements.define('score-bug', ScoreBug);
     const el = document.querySelector('score-bug');
     await el.load({ data: { home: 'BAR', away: 'RMA', homeScore: 2, awayScore: 1, time: '67:42', period: '2nd Half' }, renderType: 'realtime', renderCharacteristics: {} });
     await el.playAction({ delta: 1 });

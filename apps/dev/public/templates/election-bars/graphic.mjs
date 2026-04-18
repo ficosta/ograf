@@ -144,10 +144,15 @@ export default class ElectionBars extends HTMLElement {
     }
     return { statusCode: 200 };
   }
+  /**
+   * customAction() — No customActions are declared in the manifest for this
+   * graphic, but every OGraf graphic must implement this method. It's a no-op
+   * that reports the action as unknown.
+   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
+
 
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
-}
-
-if (!customElements.get('election-bars')) {
-  customElements.define('election-bars', ElectionBars);
 }

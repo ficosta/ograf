@@ -10,6 +10,7 @@
   <lower-third></lower-third>
   <script type="module">
     import LowerThird from './graphic.mjs';
+    customElements.define('lower-third', LowerThird);
     const el = document.querySelector('lower-third');
     await el.load({ data: { name: 'Jane Smith', title: 'Senior Graphics Engineer' }, renderType: 'realtime', renderCharacteristics: {} });
     await el.playAction({ delta: 1 });

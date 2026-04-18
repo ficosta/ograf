@@ -16,6 +16,7 @@
   <countdown-timer></countdown-timer>
   <script type="module">
     import CountdownTimer from './graphic.mjs';
+    customElements.define('countdown-timer', CountdownTimer);
 
     const el = document.querySelector('countdown-timer');
 

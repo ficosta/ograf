@@ -16,6 +16,7 @@
   <weather-card></weather-card>
   <script type="module">
     import WeatherCard from './graphic.mjs';
+    customElements.define('weather-card', WeatherCard);
 
     const el = document.querySelector('weather-card');
 

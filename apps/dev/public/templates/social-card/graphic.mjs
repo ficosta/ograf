@@ -1,3 +1,12 @@
+
+  /**
+   * customAction() — No customActions are declared in the manifest for this
+   * graphic, but every OGraf graphic must implement this method. It's a no-op
+   * that reports the action as unknown.
+   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
 /**
  * OGraf Social Media Card — CBS-inspired social post display
  *
@@ -111,8 +120,4 @@ export default class SocialCard extends HTMLElement {
     this.innerHTML = '';
     return { statusCode: 200 };
   }
-}
-
-if (!customElements.get('social-card')) {
-  customElements.define('social-card', SocialCard);
 }

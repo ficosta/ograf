@@ -1,3 +1,12 @@
+
+  /**
+   * customAction() — No customActions are declared in the manifest for this
+   * graphic, but every OGraf graphic must implement this method. It's a no-op
+   * that reports the action as unknown.
+   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
 /**
  * OGraf Breaking News Alert — Full-screen urgent overlay
  *
@@ -94,8 +103,4 @@ export default class BreakingNews extends HTMLElement {
     this.innerHTML = '';
     return { statusCode: 200 };
   }
-}
-
-if (!customElements.get('breaking-news')) {
-  customElements.define('breaking-news', BreakingNews);
 }

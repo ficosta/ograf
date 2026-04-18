@@ -10,6 +10,7 @@
   <countdown-timer></countdown-timer>
   <script type="module">
     import CountdownTimer from './graphic.mjs';
+    customElements.define('countdown-timer', CountdownTimer);
     const el = document.querySelector('countdown-timer');
     await el.load({ data: { label: 'STARTING IN', seconds: 120 }, renderType: 'realtime', renderCharacteristics: {} });
     await el.playAction({ delta: 1 });

@@ -10,6 +10,7 @@
   <bug-graphic></bug-graphic>
   <script type="module">
     import BugGraphic from './graphic.mjs';
+    customElements.define('bug-graphic', BugGraphic);
     const el = document.querySelector('bug-graphic');
     await el.load({ data: { label: 'LIVE', sublabel: 'Breaking News' }, renderType: 'realtime', renderCharacteristics: {} });
     await el.playAction({});

@@ -1,3 +1,12 @@
+
+  /**
+   * customAction() — No customActions are declared in the manifest for this
+   * graphic, but every OGraf graphic must implement this method. It's a no-op
+   * that reports the action as unknown.
+   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
 /**
  * OGraf Lower Third — CBS-inspired clean design
  *
@@ -124,11 +133,4 @@ export default class LowerThird extends HTMLElement {
     this.innerHTML = '';
     return { statusCode: 200 };
   }
-}
-
-// Register the Custom Element -- guarded so devtools and renderers that
-// reload the module don't throw "name has already been used" from the
-// CustomElementRegistry.
-if (!customElements.get('lower-third')) {
-  customElements.define('lower-third', LowerThird);
 }

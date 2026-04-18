@@ -159,7 +159,3 @@ export default class ScoreBug extends HTMLElement {
     return { statusCode: 200 };
   }
 }
-
-if (!customElements.get('score-bug')) {
-  customElements.define('score-bug', ScoreBug);
-}
