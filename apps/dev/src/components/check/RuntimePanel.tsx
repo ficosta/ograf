@@ -28,8 +28,12 @@ const INITIAL_SESSION: RuntimeSession = {
   tag: null,
 };
 
+const SANDBOX_WIDTH = 1920;
+const SANDBOX_HEIGHT = 1080;
+
 export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
   const harnessRef = useRef<Harness | null>(null);
   const sessionIdRef = useRef<string | null>(null);
 
@@ -37,6 +41,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
   const [state, setState] = useState<RuntimeSession>(INITIAL_SESSION);
   const [busy, setBusy] = useState<"booting" | "running" | null>("booting");
   const [fatal, setFatal] = useState<string | null>(null);
+  const [stageScale, setStageScale] = useState(1);
 
   const defaultData = useMemo(() => extractDefaultData(pkg.manifest), [pkg.manifest]);
   const customActions = useMemo(() => extractCustomActions(pkg.manifest), [pkg.manifest]);
@@ -168,6 +173,21 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iframeSrc, pushConsole, pushError]);
 
+  // Track the container width and derive a CSS scale so the 1920x1080 iframe
+  // fits the available space without distorting aspect ratio.
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const update = () => {
+      const w = el.clientWidth;
+      if (w > 0) setStageScale(w / SANDBOX_WIDTH);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   const recordCall = useCallback((call: RuntimeCall) => {
     setState((prev) => ({ ...prev, calls: [...prev.calls, call] }));
   }, []);
@@ -271,14 +291,30 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         {/* Left column: live preview + controls */}
         <div className="space-y-3">
-          <div className="relative aspect-video overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+          <div
+            ref={stageRef}
+            className="relative aspect-video overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+          >
             {iframeSrc ? (
+              // The iframe renders at the true broadcast resolution (1920x1080)
+              // and we CSS-scale it down to fit the preview container. This is
+              // the standard pattern for broadcast-graphics previews: the
+              // graphic's CSS uses absolute pixel values sized for 1080p, so
+              // the preview must render at 1080p and scale visually, not
+              // squeeze the iframe's viewport to 480x270.
               <iframe
                 ref={iframeRef}
                 title="OGraf runtime sandbox"
                 src={iframeSrc}
                 sandbox="allow-scripts allow-same-origin"
-                className="absolute inset-0 h-full w-full border-0"
+                style={{
+                  width: `${SANDBOX_WIDTH}px`,
+                  height: `${SANDBOX_HEIGHT}px`,
+                  transform: `scale(${stageScale})`,
+                  transformOrigin: "top left",
+                  border: 0,
+                }}
+                className="absolute left-0 top-0"
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">
@@ -286,7 +322,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               </div>
             )}
             <div className="pointer-events-none absolute bottom-2 right-3 font-mono text-[10px] text-white/50">
-              1920 × 1080
+              1920 × 1080 · {(stageScale * 100).toFixed(0)}%
             </div>
           </div>
 
