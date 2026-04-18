@@ -2,6 +2,7 @@
   "name": "@ograf/dev",
   "version": "0.1.0",
   "private": true,
+  "license": "PolyForm-Internal-Use-1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,6 +14,10 @@
   },
   "dependencies": {
     "@ograf/ui": "workspace:*",
+    "@ograf/validator": "workspace:*",
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
+    "jszip": "^3.10.1",
     "lucide-react": "^1.8.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

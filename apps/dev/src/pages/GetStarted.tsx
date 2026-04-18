@@ -463,9 +463,9 @@ export function GetStarted() {
                   desc: "Scroll up — the interactive preview at the top of this page is running the exact same code. Click Play, change the text, click Update, click Stop.",
                 },
                 {
-                  title: "Option B: Validate the manifest",
-                  desc: "Paste your .ograf.json into the ograf.tools validator to check it against the EBU specification.",
-                  link: { href: "https://ograf.tools/validate", label: "Open validator" },
+                  title: "Option B: Check your package",
+                  desc: "Zip your folder and drop it on /check. You'll get a structured report against 30+ rules and the live EBU schema.",
+                  link: { href: "/check", label: "Open checker" },
                 },
                 {
                   title: "Option C: Load it in ograf-devtool",
