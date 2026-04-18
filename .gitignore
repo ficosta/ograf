@@ -6,6 +6,9 @@ dist/
 .env
 .env.local
 
+# Generated at build time by scripts/gen-template-zips.mjs
+apps/dev/public/downloads/
+
 # Local planning docs — not for the repo
 plan.html
 .claude/

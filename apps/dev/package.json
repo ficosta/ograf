@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node ../../scripts/gen-sitemap.mjs",
+    "prebuild": "node ../../scripts/gen-template-zips.mjs && node ../../scripts/gen-sitemap.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
