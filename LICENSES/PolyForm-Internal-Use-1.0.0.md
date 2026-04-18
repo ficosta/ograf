@@ -94,12 +94,3 @@ software under these terms.
 
 **Use** means anything you do with the software requiring one
 of your licenses.
-
----
-
-Copyright (c) 2026 Felipe Iasi de Barros Costa and ograf.dev contributors.
-
-This LICENSE applies to the source code in this repository EXCEPT where
-explicitly overridden. See LICENSING.md for the per-directory breakdown:
-templates and tutorials are MIT, editorial content is CC BY 4.0, the
-broader site code is PolyForm Internal Use 1.0.0 (this file).

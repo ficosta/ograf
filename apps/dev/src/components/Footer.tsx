@@ -33,7 +33,16 @@ export function Footer() {
           <div className="mt-6 text-center text-sm text-slate-500 sm:mt-0 sm:text-left">
             <p>Curated by Felipe Iasi with the OGraf community.</p>
             <p className="mt-1">
-              Not affiliated with the EBU · MIT licensed · Spotted something off?{" "}
+              Not affiliated with the EBU · Source available — see{" "}
+              <a
+                href="https://github.com/ficosta/ograf/blob/main/LICENSING.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-blue-600 hover:decoration-blue-400"
+              >
+                LICENSING
+              </a>
+              {" "}· Spotted something off?{" "}
               <a
                 href="https://github.com/ficosta/ograf/issues/new"
                 target="_blank"

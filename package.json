@@ -1,6 +1,7 @@
 {
   "name": "ograf",
   "private": true,
+  "license": "SEE LICENSING.md",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "turbo dev",

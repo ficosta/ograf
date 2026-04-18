@@ -60,9 +60,13 @@ export function About() {
           </div>
 
           <div className="flex flex-col gap-4 py-8">
-            <h2 className="font-display text-[2rem]/10 tracking-tight text-white">Open source.</h2>
+            <h2 className="font-display text-[2rem]/10 tracking-tight text-white">Source available.</h2>
             <p>
-              This entire project is open source under the MIT license. The codebase, the validator, the tools — everything is available on GitHub. We welcome contributions: documentation, templates, tools, translations, or feedback.
+              This project uses a layered licensing model: the OGraf templates and tutorials are MIT — use them in production however you want. The site code itself is PolyForm Internal Use 1.0.0, so companies can fork and run it internally but not resell it. Editorial text is CC BY 4.0 (attribute us). See{" "}
+              <a href="https://github.com/ficosta/ograf/blob/main/LICENSING.md" target="_blank" rel="noopener noreferrer" className="text-white font-medium underline underline-offset-4 decoration-mist-600 hover:decoration-white">
+                LICENSING.md
+              </a>
+              {" "}for the per-directory breakdown. Contributions in any area — documentation, templates, tools, translations, feedback — are welcome.
             </p>
           </div>
         </div>
