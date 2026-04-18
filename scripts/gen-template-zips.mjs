@@ -29,6 +29,7 @@ const outDir = join(repoRoot, "apps/dev/public/downloads");
 mkdirSync(outDir, { recursive: true });
 
 const PACKAGE_FILES = ["graphic.mjs", "style.css"];
+const PACKAGE_DIRS = ["fonts", "assets"];
 
 const entries = readdirSync(templatesDir, { withFileTypes: true })
   .filter((e) => e.isDirectory() && e.name !== "previews")
@@ -61,6 +62,15 @@ for (const slug of entries) {
       cpSync(src, join(pkgDir, file));
     } catch {
       // File absent; skip silently (some templates may not need every file).
+    }
+  }
+  for (const dir of PACKAGE_DIRS) {
+    const src = join(srcDir, dir);
+    try {
+      const s = statSync(src);
+      if (s.isDirectory()) cpSync(src, join(pkgDir, dir), { recursive: true });
+    } catch {
+      // Directory absent; skip.
     }
   }
 
