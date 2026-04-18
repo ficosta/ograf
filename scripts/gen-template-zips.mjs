@@ -107,33 +107,23 @@ ${description}
 | File | Purpose |
 | --- | --- |
 | \`${slug}.ograf.json\` | Manifest -- what a renderer reads. Declares id, schema, lifecycle flags. |
-| \`graphic.mjs\` | Web Component implementing \`load\`, \`playAction\`, \`updateAction\`, \`stopAction\`, \`dispose\`. |
-| \`style.css\` | Styles and keyframes. |
+| \`graphic.mjs\` | Web Component implementing \`load\`, \`playAction\`, \`updateAction\`, \`stopAction\`, \`customAction\`, \`dispose\`. |
+| \`style.css\` | Stylesheet. Loaded from \`graphic.mjs\` via a \`<link>\` tag. |
 | \`README.md\` | This file. |
 
-That's a complete **OGraf Graphics Definition v1** package. A compliant
-player reads the manifest and drives the lifecycle itself -- there is
-no bespoke preview page in this archive, on purpose. A manifest-aware
-player catches real bugs that a single-load preview would miss.
+Depending on the template, the package may also include a \`fonts/\`
+directory with local font files and their licence. All URLs inside
+\`style.css\` are relative to \`style.css\` itself, so those resources
+load regardless of where the renderer serves the package from.
 
-## Try this package
+That's a complete **OGraf Graphics Definition v1** package — the
+manifest, a single JS entry point, its stylesheet, and any static
+resources. A compliant renderer reads the manifest and drives the
+graphic through its lifecycle.
 
-The fastest way to see it run is the SuperFly devtool:
+## Deploy to a compliant OGraf renderer
 
-1. Open **[ograf-devtool.superfly.tv](https://ograf-devtool.superfly.tv)**.
-2. Point it at this unzipped folder.
-3. The devtool reads \`${slug}.ograf.json\`, validates it, runs
-   the lifecycle, and exposes RealTime and Non-RealTime controls so you
-   can call \`playAction\`, \`updateAction\`, \`stopAction\`, and any
-   declared \`customActions\`.
-
-The devtool is MIT-licensed and open source:
-<https://github.com/SuperFlyTV/ograf-devtool>.
-
-## Deploy to a real renderer
-
-This package is renderer-agnostic. Point any OGraf-compliant system at the
-manifest:
+Point any OGraf-compliant system at the manifest:
 
 - **ograf-server** -- reference renderer with upload and control APIs, self-host.
   <https://github.com/SuperFlyTV/ograf-server>
@@ -143,13 +133,14 @@ manifest:
   <https://github.com/CasparCG/server>
 
 The renderer will read \`${slug}.ograf.json\`, present the schema
-fields to the operator, and call \`graphic.mjs\` through the OGraf
+fields to the operator, and drive \`graphic.mjs\` through the OGraf
 lifecycle.
 
 ## License
 
 MIT. Use it, modify it, ship it on air. Attribution appreciated but
-not required.
+not required. If the package contains a \`fonts/\` directory, each font
+carries its own licence -- see \`fonts/LICENSE.txt\`.
 
 ---
 
