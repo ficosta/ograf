@@ -1,5 +1,13 @@
+/**
+ * OGraf Election Bars — animated horizontal bar chart with rolling counters.
+ *
+ * DOM init is lazy (see _initDom). Do NOT call customElements.define() here;
+ * the renderer picks the tag.
+ */
 export default class ElectionBars extends HTMLElement {
-  connectedCallback() {
+
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="election">
         <div class="election-container">
@@ -16,7 +24,7 @@ export default class ElectionBars extends HTMLElement {
     this._subtitle = this.querySelector('.election-subtitle');
     this._barsContainer = this.querySelector('.election-bars');
     this._step = undefined;
-    this._counters = [];
+    this._initialized = true;
   }
 
   _renderBars(parties) {
@@ -38,21 +46,14 @@ export default class ElectionBars extends HTMLElement {
     `).join('');
   }
 
-  /**
-   * Animate the number from 0 to target with easing
-   */
   _countUp(el, target, duration) {
     const start = performance.now();
     const update = (now) => {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(eased * target);
-      el.textContent = current + '%';
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
+      el.textContent = Math.round(eased * target) + '%';
+      if (progress < 1) requestAnimationFrame(update);
     };
     requestAnimationFrame(update);
   }
@@ -62,41 +63,39 @@ export default class ElectionBars extends HTMLElement {
     const fills = this._barsContainer.querySelectorAll('.election-bar-fill');
     const pctLabels = this._barsContainer.querySelectorAll('.election-pct');
 
-    // Show rows with stagger
     rows.forEach((row, i) => {
       setTimeout(() => row.classList.add('show'), i * 120);
     });
 
-    // Animate bar widths + move labels + count up numbers
     setTimeout(() => {
       fills.forEach((fill, i) => {
         const pct = Number(fill.dataset.pct);
         fill.style.width = pct + '%';
-
-        // Move the label to stick to the bar edge
         const label = pctLabels[i];
         if (label) {
           label.style.left = pct + '%';
-
-          // Count up the number
           const valueEl = label.querySelector('.election-pct-value');
-          if (valueEl) {
-            // Delay count-up slightly so bar is visible first
-            setTimeout(() => this._countUp(valueEl, pct, 900), 150);
-          }
+          if (valueEl) setTimeout(() => this._countUp(valueEl, pct, 900), 150);
         }
       });
     }, 200);
   }
 
-  async load({ data }) {
-    if (data?.title) this._title.textContent = data.title;
-    if (data?.subtitle) this._subtitle.textContent = data.subtitle;
-    if (data?.parties) this._renderBars(data.parties);
+  _applyData(data) {
+    if (!data) return;
+    if (data.title) this._title.textContent = data.title;
+    if (data.subtitle) this._subtitle.textContent = data.subtitle;
+    if (data.parties) this._renderBars(data.parties);
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
   async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
     void this._root.offsetWidth;
     this._root.classList.add('visible');
@@ -128,6 +127,7 @@ export default class ElectionBars extends HTMLElement {
   }
 
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.add('out');
     if (!skipAnimation) await new Promise(r => setTimeout(r, 400));
     this._root.classList.remove('visible', 'out');
@@ -135,7 +135,8 @@ export default class ElectionBars extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
+  async updateAction({ data } = {}) {
+    this._initDom();
     if (data?.title) this._title.textContent = data.title;
     if (data?.subtitle) this._subtitle.textContent = data.subtitle;
     if (data?.parties) {
@@ -144,15 +145,14 @@ export default class ElectionBars extends HTMLElement {
     }
     return { statusCode: 200 };
   }
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
+
   async customAction({ action } = {}) {
     return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-
-  async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
+  async dispose() {
+    this.innerHTML = '';
+    this._initialized = false;
+    return { statusCode: 200 };
+  }
 }

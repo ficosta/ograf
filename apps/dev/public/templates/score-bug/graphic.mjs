@@ -1,13 +1,13 @@
 /**
- * OGraf Score Bug — CBS-inspired persistent sports score display
+ * OGraf Score Bug — persistent sports score display with a `goal` customAction.
  *
- * A production-ready score bug graphic implementing
- * the full OGraf Web Component lifecycle.
- * Supports customActions: "goal" (flash animation).
+ * DOM init is lazy (see _initDom). Do NOT call customElements.define() here;
+ * the renderer picks the tag.
  */
 export default class ScoreBug extends HTMLElement {
 
-  connectedCallback() {
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="score-bug">
         <div class="score-bug-inner">
@@ -33,40 +33,39 @@ export default class ScoreBug extends HTMLElement {
     this._awayScore = this.querySelector('.away-score');
     this._time = this.querySelector('.score-time');
     this._period = this.querySelector('.score-period');
+    this._homeTeam = this.querySelector('.home');
+    this._awayTeam = this.querySelector('.away');
     this._step = undefined;
-  }
-
-  /**
-   * load() — Receive initial data and render context.
-   */
-  async load({ data }) {
-    if (data?.home) this._homeName.textContent = data.home;
-    if (data?.away) this._awayName.textContent = data.away;
-    if (data?.homeScore !== undefined) this._homeScore.textContent = data.homeScore;
-    if (data?.awayScore !== undefined) this._awayScore.textContent = data.awayScore;
-    if (data?.time) this._time.textContent = data.time;
-    if (data?.period) this._period.textContent = data.period;
-
-    this._updateActiveTeam(data);
-    return { statusCode: 200 };
+    this._initialized = true;
   }
 
   _updateActiveTeam(data) {
-    const homeTeam = this.querySelector('.home');
-    const awayTeam = this.querySelector('.away');
-    homeTeam.classList.remove('active');
-    awayTeam.classList.remove('active');
-    if (data?.homeScore > data?.awayScore) {
-      homeTeam.classList.add('active');
-    } else if (data?.awayScore > data?.homeScore) {
-      awayTeam.classList.add('active');
-    }
+    if (!data) return;
+    this._homeTeam.classList.remove('active');
+    this._awayTeam.classList.remove('active');
+    if (data.homeScore > data.awayScore) this._homeTeam.classList.add('active');
+    else if (data.awayScore > data.homeScore) this._awayTeam.classList.add('active');
   }
 
-  /**
-   * playAction() — Animate the score bug onto screen.
-   */
+  _applyData(data) {
+    if (!data) return;
+    if (data.home) this._homeName.textContent = data.home;
+    if (data.away) this._awayName.textContent = data.away;
+    if (data.homeScore !== undefined) this._homeScore.textContent = data.homeScore;
+    if (data.awayScore !== undefined) this._awayScore.textContent = data.awayScore;
+    if (data.time) this._time.textContent = data.time;
+    if (data.period) this._period.textContent = data.period;
+    this._updateActiveTeam(data);
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
+    return { statusCode: 200 };
+  }
+
   async playAction({ delta = 1, goto, skipAnimation } = {}) {
+    this._initDom();
     const target = goto !== undefined ? goto : (this._step === undefined ? -1 : this._step) + delta;
     this._step = target;
 
@@ -79,21 +78,17 @@ export default class ScoreBug extends HTMLElement {
 
     void this._root.offsetWidth;
     this._root.classList.add('visible');
-
     await new Promise(resolve => setTimeout(resolve, 600));
     return { statusCode: 200, currentStep: this._step };
   }
 
-  /**
-   * stopAction() — Animate the score bug off screen.
-   */
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       this._step = undefined;
       return { statusCode: 200 };
     }
-
     this._root.classList.add('out');
     await new Promise(resolve => setTimeout(resolve, 400));
     this._root.classList.remove('visible', 'out');
@@ -101,22 +96,13 @@ export default class ScoreBug extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * updateAction() — Update score data while on-air.
-   */
   async updateAction({ data, skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
-      if (data?.home) this._homeName.textContent = data.home;
-      if (data?.away) this._awayName.textContent = data.away;
-      if (data?.homeScore !== undefined) this._homeScore.textContent = data.homeScore;
-      if (data?.awayScore !== undefined) this._awayScore.textContent = data.awayScore;
-      if (data?.time) this._time.textContent = data.time;
-      if (data?.period) this._period.textContent = data.period;
-      this._updateActiveTeam(data);
+      this._applyData(data);
       return { statusCode: 200 };
     }
 
-    // Animate score changes
     if (data?.homeScore !== undefined && String(data.homeScore) !== this._homeScore.textContent) {
       this._homeScore.classList.add('updating');
       setTimeout(() => { this._homeScore.textContent = data.homeScore; }, 140);
@@ -139,23 +125,20 @@ export default class ScoreBug extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * customAction() — Handle custom actions like "goal".
-   */
   async customAction({ action } = {}) {
+    this._initDom();
     if (action === 'goal') {
       this._root.classList.add('goal');
       await new Promise(resolve => setTimeout(resolve, 800));
       this._root.classList.remove('goal');
+      return { statusCode: 200 };
     }
-    return { statusCode: 200 };
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-  /**
-   * dispose() — Clean up resources.
-   */
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

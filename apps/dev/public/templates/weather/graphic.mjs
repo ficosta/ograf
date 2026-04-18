@@ -1,21 +1,14 @@
-
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
-  }
 /**
- * OGraf Weather Forecast — CBS-inspired weather card
+ * OGraf Weather Forecast — current conditions + 3-day outlook.
  *
- * A production-ready weather card showing current conditions
- * and a 3-day forecast. Implements the full OGraf Web Component lifecycle.
+ * DOM init happens lazily in _initDom(). Real OGraf players drive the
+ * lifecycle on detached elements — connectedCallback does not fire. Do NOT
+ * call customElements.define() here; the renderer picks the tag.
  */
 export default class WeatherCard extends HTMLElement {
 
-  connectedCallback() {
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="weather">
         <div class="weather-card">
@@ -38,6 +31,7 @@ export default class WeatherCard extends HTMLElement {
     this._condition = this.querySelector('.weather-condition');
     this._forecast = this.querySelector('.weather-forecast');
     this._step = undefined;
+    this._initialized = true;
   }
 
   _renderForecast(forecast) {
@@ -51,22 +45,23 @@ export default class WeatherCard extends HTMLElement {
     `).join('');
   }
 
-  /**
-   * load() — Receive initial data and render context.
-   */
-  async load({ data }) {
-    if (data?.location) this._location.textContent = data.location;
-    if (data?.temp) this._temp.textContent = data.temp;
-    if (data?.condition) this._condition.textContent = data.condition;
-    if (data?.icon) this._icon.textContent = data.icon;
-    if (data?.forecast) this._renderForecast(data.forecast);
+  _applyData(data) {
+    if (!data) return;
+    if (data.location) this._location.textContent = data.location;
+    if (data.temp) this._temp.textContent = data.temp;
+    if (data.condition) this._condition.textContent = data.condition;
+    if (data.icon) this._icon.textContent = data.icon;
+    if (data.forecast) this._renderForecast(data.forecast);
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
-  /**
-   * playAction() — Slide the weather card onto screen.
-   */
   async playAction({ delta = 1, goto, skipAnimation } = {}) {
+    this._initDom();
     const target = goto !== undefined ? goto : (this._step === undefined ? -1 : this._step) + delta;
     this._step = target;
 
@@ -79,21 +74,17 @@ export default class WeatherCard extends HTMLElement {
 
     void this._root.offsetWidth;
     this._root.classList.add('visible');
-
     await new Promise(resolve => setTimeout(resolve, 700));
     return { statusCode: 200, currentStep: this._step };
   }
 
-  /**
-   * stopAction() — Slide the weather card off screen.
-   */
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       this._step = undefined;
       return { statusCode: 200 };
     }
-
     this._root.classList.add('out');
     await new Promise(resolve => setTimeout(resolve, 500));
     this._root.classList.remove('visible', 'out');
@@ -101,23 +92,19 @@ export default class WeatherCard extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * updateAction() — Update weather data while on-air.
-   */
-  async updateAction({ data }) {
-    if (data?.location) this._location.textContent = data.location;
-    if (data?.temp) this._temp.textContent = data.temp;
-    if (data?.condition) this._condition.textContent = data.condition;
-    if (data?.icon) this._icon.textContent = data.icon;
-    if (data?.forecast) this._renderForecast(data.forecast);
+  async updateAction({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
-  /**
-   * dispose() — Clean up resources.
-   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
+
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

@@ -1,5 +1,13 @@
+/**
+ * OGraf News Ticker — scrolling headline crawl with seamless infinite loop.
+ *
+ * DOM init is lazy (see _initDom). Do NOT call customElements.define() here;
+ * the renderer picks the tag.
+ */
 export default class TickerGraphic extends HTMLElement {
-  connectedCallback() {
+
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="ticker">
         <div class="ticker-bar">
@@ -13,10 +21,10 @@ export default class TickerGraphic extends HTMLElement {
     this._root = this.querySelector('.ticker');
     this._badge = this.querySelector('.ticker-badge');
     this._content = this.querySelector('.ticker-content');
+    this._initialized = true;
   }
 
   _renderItems(items) {
-    // Duplicate items for seamless loop
     const allItems = [...items, ...items];
     this._content.innerHTML = allItems.map((item, i) =>
       `<span class="ticker-item"><span class="ticker-dot"></span>${item}</span>` +
@@ -30,14 +38,21 @@ export default class TickerGraphic extends HTMLElement {
     this._content.style.animationFillMode = loop === false ? 'forwards' : '';
   }
 
-  async load({ data }) {
-    if (data?.badge) this._badge.textContent = data.badge;
-    if (data?.items) this._renderItems(data.items);
-    this._applyPlayMode(data?.loop);
+  _applyData(data) {
+    if (!data) return;
+    if (data.badge) this._badge.textContent = data.badge;
+    if (data.items) this._renderItems(data.items);
+    if ('loop' in data) this._applyPlayMode(data.loop);
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
   async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
     if (skipAnimation) {
       this._root.classList.add('visible');
@@ -50,6 +65,7 @@ export default class TickerGraphic extends HTMLElement {
   }
 
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       return { statusCode: 200 };
@@ -60,24 +76,19 @@ export default class TickerGraphic extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
-    if (data?.badge) this._badge.textContent = data.badge;
-    if (data?.items) this._renderItems(data.items);
-    if (data && 'loop' in data) this._applyPlayMode(data.loop);
+  async updateAction({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
+
   async customAction({ action } = {}) {
     return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

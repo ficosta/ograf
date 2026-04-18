@@ -1,5 +1,13 @@
+/**
+ * OGraf Full Page Quote — cinematic full-screen quote card.
+ *
+ * DOM init is lazy (see _initDom). Do NOT call customElements.define() here;
+ * the renderer picks the tag.
+ */
 export default class QuoteGraphic extends HTMLElement {
-  connectedCallback() {
+
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="quote">
         <div class="quote-bg"></div>
@@ -18,16 +26,24 @@ export default class QuoteGraphic extends HTMLElement {
     this._text = this.querySelector('.quote-text');
     this._author = this.querySelector('.quote-author');
     this._role = this.querySelector('.quote-role');
+    this._initialized = true;
   }
 
-  async load({ data }) {
-    if (data?.text) this._text.textContent = data.text;
-    if (data?.author) this._author.textContent = data.author;
-    if (data?.role) this._role.textContent = data.role;
+  _applyData(data) {
+    if (!data) return;
+    if (data.text) this._text.textContent = data.text;
+    if (data.author) this._author.textContent = data.author;
+    if (data.role) this._role.textContent = data.role;
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
   async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
     if (skipAnimation) {
       this._root.classList.add('visible');
@@ -40,6 +56,7 @@ export default class QuoteGraphic extends HTMLElement {
   }
 
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       return { statusCode: 200 };
@@ -50,24 +67,19 @@ export default class QuoteGraphic extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
-    if (data?.text) this._text.textContent = data.text;
-    if (data?.author) this._author.textContent = data.author;
-    if (data?.role) this._role.textContent = data.role;
+  async updateAction({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
+
   async customAction({ action } = {}) {
     return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

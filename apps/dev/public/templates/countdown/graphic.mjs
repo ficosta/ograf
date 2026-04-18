@@ -1,21 +1,14 @@
-
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
-  }
 /**
- * OGraf Countdown Timer — CBS-inspired centered countdown
+ * OGraf Countdown Timer — self-ticking clock with urgency state.
  *
- * A production-ready countdown timer that ticks in real-time
- * using setInterval, implementing the full OGraf Web Component lifecycle.
+ * DOM init happens in _initDom() (lazy, idempotent) so the element works
+ * whether connectedCallback fires or not. Real OGraf players drive the
+ * lifecycle on detached elements. Do NOT call customElements.define() here.
  */
 export default class CountdownTimer extends HTMLElement {
 
-  connectedCallback() {
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="countdown">
         <div class="countdown-card">
@@ -34,25 +27,18 @@ export default class CountdownTimer extends HTMLElement {
     this._interval = null;
     this._remaining = 0;
     this._step = undefined;
+    this._initialized = true;
   }
 
   _paintTime(totalSeconds, { animate } = {}) {
     const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
     const secs = String(totalSeconds % 60).padStart(2, '0');
-
-    if (this._mins.textContent !== mins) {
-      this._swap(this._mins, mins, animate);
-    }
-    if (this._secs.textContent !== secs) {
-      this._swap(this._secs, secs, animate);
-    }
+    if (this._mins.textContent !== mins) this._swap(this._mins, mins, animate);
+    if (this._secs.textContent !== secs) this._swap(this._secs, secs, animate);
   }
 
   _swap(el, next, animate) {
-    if (!animate) {
-      el.textContent = next;
-      return;
-    }
+    if (!animate) { el.textContent = next; return; }
     el.classList.remove('tick');
     void el.offsetWidth;
     el.textContent = next;
@@ -62,18 +48,11 @@ export default class CountdownTimer extends HTMLElement {
   _startTicking() {
     this._stopTicking();
     this._interval = setInterval(() => {
-      if (this._remaining <= 0) {
-        this._stopTicking();
-        return;
-      }
+      if (this._remaining <= 0) { this._stopTicking(); return; }
       this._remaining--;
       this._paintTime(this._remaining, { animate: true });
-
-      if (this._remaining <= 10) {
-        this._root.classList.add('urgent');
-      } else {
-        this._root.classList.remove('urgent');
-      }
+      if (this._remaining <= 10) this._root.classList.add('urgent');
+      else this._root.classList.remove('urgent');
     }, 1000);
   }
 
@@ -84,10 +63,8 @@ export default class CountdownTimer extends HTMLElement {
     }
   }
 
-  /**
-   * load() — Receive initial data and render context.
-   */
-  async load({ data }) {
+  async load({ data } = {}) {
+    this._initDom();
     if (data?.label) this._label.textContent = data.label;
     if (data?.seconds !== undefined) {
       this._remaining = data.seconds;
@@ -96,10 +73,8 @@ export default class CountdownTimer extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * playAction() — Animate the countdown onto screen and start ticking.
-   */
   async playAction({ delta = 1, goto, skipAnimation } = {}) {
+    this._initDom();
     const target = goto !== undefined ? goto : (this._step === undefined ? -1 : this._step) + delta;
     this._step = target;
 
@@ -119,10 +94,8 @@ export default class CountdownTimer extends HTMLElement {
     return { statusCode: 200, currentStep: this._step };
   }
 
-  /**
-   * stopAction() — Stop ticking and animate the countdown off screen.
-   */
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     this._stopTicking();
 
     if (skipAnimation) {
@@ -138,10 +111,8 @@ export default class CountdownTimer extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * updateAction() — Update data while on-air (e.g., reset time).
-   */
-  async updateAction({ data }) {
+  async updateAction({ data } = {}) {
+    this._initDom();
     if (data?.label) this._label.textContent = data.label;
     if (data?.seconds !== undefined) {
       this._remaining = data.seconds;
@@ -151,12 +122,14 @@ export default class CountdownTimer extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * dispose() — Clean up resources.
-   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
+
   async dispose() {
     this._stopTicking();
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

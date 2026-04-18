@@ -1,21 +1,16 @@
-
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
-  }
 /**
- * OGraf Breaking News Alert — Full-screen urgent overlay
+ * OGraf Breaking News Alert — Full-screen urgent overlay.
  *
- * A fire-and-forget breaking news alert that auto-dismisses
- * after a hold period. Implements the full OGraf Web Component lifecycle.
+ * Fire-and-forget: plays in, holds, and auto-dismisses.
+ * Implements the full OGraf v1 Web Component lifecycle with DOM init in
+ * load() so detached-element tests from a real player (ograf-devtool etc.)
+ * succeed. Do NOT call customElements.define() here; the renderer picks
+ * the tag.
  */
 export default class BreakingNews extends HTMLElement {
 
-  connectedCallback() {
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="breaking">
         <div class="breaking-overlay"></div>
@@ -32,20 +27,17 @@ export default class BreakingNews extends HTMLElement {
     this._root = this.querySelector('.breaking');
     this._headline = this.querySelector('.breaking-headline');
     this._step = undefined;
+    this._initialized = true;
   }
 
-  /**
-   * load() — Receive initial data.
-   */
-  async load({ data }) {
+  async load({ data } = {}) {
+    this._initDom();
     if (data?.headline) this._headline.textContent = data.headline;
     return { statusCode: 200 };
   }
 
-  /**
-   * playAction() — Animate in, hold for 4 seconds, then auto-dismiss.
-   */
   async playAction({ delta = 1, goto, skipAnimation } = {}) {
+    this._initDom();
     const target = goto !== undefined ? goto : (this._step === undefined ? -1 : this._step) + delta;
     this._step = target;
 
@@ -71,16 +63,13 @@ export default class BreakingNews extends HTMLElement {
     return { statusCode: 200, currentStep: 0 };
   }
 
-  /**
-   * stopAction() — Force stop the alert early.
-   */
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       this._step = undefined;
       return { statusCode: 200 };
     }
-
     this._root.classList.add('out');
     await new Promise(resolve => setTimeout(resolve, 600));
     this._root.classList.remove('visible', 'out');
@@ -88,19 +77,19 @@ export default class BreakingNews extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  /**
-   * updateAction() — Update headline text.
-   */
-  async updateAction({ data }) {
+  async updateAction({ data } = {}) {
+    this._initDom();
     if (data?.headline) this._headline.textContent = data.headline;
     return { statusCode: 200 };
   }
 
-  /**
-   * dispose() — Clean up resources.
-   */
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  }
+
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }

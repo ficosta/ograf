@@ -1,5 +1,15 @@
+/**
+ * OGraf Bug / LIVE — corner indicator with a pulsing dot.
+ *
+ * DOM init happens in load() because OGraf players create the element via
+ * document.createElement() and drive the lifecycle directly — connectedCallback
+ * never fires in that path. Do NOT call customElements.define() from this
+ * module; the renderer picks the tag.
+ */
 export default class BugGraphic extends HTMLElement {
-  connectedCallback() {
+
+  _initDom() {
+    if (this._initialized) return;
     this.innerHTML = `
       <div class="bug">
         <div class="bug-container">
@@ -17,15 +27,18 @@ export default class BugGraphic extends HTMLElement {
     this._root = this.querySelector('.bug');
     this._label = this.querySelector('.bug-label');
     this._sublabel = this.querySelector('.bug-sublabel');
+    this._initialized = true;
   }
 
-  async load({ data }) {
+  async load({ data } = {}) {
+    this._initDom();
     if (data?.label) this._label.textContent = data.label;
     if (data?.sublabel) this._sublabel.textContent = data.sublabel;
     return { statusCode: 200 };
   }
 
   async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
     if (skipAnimation) {
       this._root.classList.add('visible');
@@ -38,6 +51,7 @@ export default class BugGraphic extends HTMLElement {
   }
 
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
       return { statusCode: 200 };
@@ -48,23 +62,20 @@ export default class BugGraphic extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async updateAction({ data }) {
+  async updateAction({ data } = {}) {
+    this._initDom();
     if (data?.label) this._label.textContent = data.label;
     if (data?.sublabel) this._sublabel.textContent = data.sublabel;
     return { statusCode: 200 };
   }
-  /**
-   * customAction() — No customActions are declared in the manifest for this
-   * graphic, but every OGraf graphic must implement this method. It's a no-op
-   * that reports the action as unknown.
-   */
+
   async customAction({ action } = {}) {
     return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }
