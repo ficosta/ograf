@@ -82,6 +82,20 @@ body {
   letter-spacing: -0.02em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.countdown-mins,
+.countdown-secs {
+  display: inline-block;
+  min-width: 1.1ch;
+  text-align: center;
+}
+
+.countdown-sep {
+  display: inline-block;
+  padding: 0 0.05em;
 }
 
 /* Pulse animation for last 10 seconds */
@@ -96,13 +110,14 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Digit change animation */
-.countdown-time.tick {
-  animation: digitTick 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Digit swap: old slides up and fades, new slides in from below */
+.countdown-mins.tick,
+.countdown-secs.tick {
+  animation: digitSwap 0.36s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes digitTick {
-  0% { transform: translateY(0); }
-  30% { transform: translateY(-3px); }
-  100% { transform: translateY(0); }
+@keyframes digitSwap {
+  0%   { transform: translateY(0.55em); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
 }

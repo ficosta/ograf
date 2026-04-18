@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { ArrowLeftRight, Check, Code2, Minus, Unlock, X } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
 import { RoleCards } from "../components/RoleCards";
 import { useMeta } from "../hooks/useMeta";
+import faqData from "../content/faq.json";
 
 const ROTATING_WORDS = ["community", "guide", "hub", "partner", "toolkit", "resource"];
 
@@ -183,56 +184,29 @@ function ComparisonCell({ state }: { state: CellState }) {
   );
 }
 
-const FAQ_COLUMNS = [
-  [
-    {
-      q: "What is OGraf?",
-      a: "An open specification from the European Broadcasting Union (EBU) for HTML-based broadcast graphics. Graphics are packaged as Web Components with a standard lifecycle, so one package runs on any compliant renderer.",
-    },
-    {
-      q: "Is this the official OGraf website?",
-      a: "No. The official specification lives at ograf.ebu.io. This portal is community-run — a hub for tutorials, tools, and ecosystem mapping to help people actually adopt OGraf.",
-    },
-    {
-      q: "Is OGraf production-ready?",
-      a: "Graphics Definition v1 has been stable since September 2025 and is already running in live productions. The Server/Control API is still in draft, with v1 expected mid-2026.",
-    },
-  ],
-  [
-    {
-      q: "What renderers support OGraf?",
-      a: "ograf-server is the reference implementation. SPX-GC is shipping full OGraf compliance. CasparCG renders OGraf via its HTML producer. Loopic exports OGraf natively from its no-code editor.",
-    },
-    {
-      q: "Can I migrate existing templates?",
-      a: "Yes. Because OGraf is just HTML, CasparCG templates port over by wrapping them as Web Components and adding a manifest. Proprietary formats (Vizrt, Chyron) need a rebuild, but the underlying assets usually transfer.",
-    },
-    {
-      q: "What does OGraf cost?",
-      a: "Nothing. The specification is free, the reference renderers are MIT-licensed open source, and the graphics you build belong to you. No per-seat fees, no runtime licenses.",
-    },
-  ],
-  [
-    {
-      q: "Do you have developer tools?",
-      a: "Yes — head to /tools on this site. The first tool is the Package Checker (drop a .zip, get a structured report against 30+ rules and the live EBU schema). A runtime harness, schema explorer, and template generator are in the works.",
-    },
-    {
-      q: "How do I contribute?",
-      a: "Everything here is MIT-licensed and open. Templates, documentation, translations, tools — all contributions welcome. Start with the GitHub repos linked in the footer.",
-    },
-    {
-      q: "Where can I ask questions?",
-      a: "A Discord server is in the works. For now, the CasparCG Community Forum has active OGraf threads, and spec discussions happen on the official ebu/ograf GitHub Discussions.",
-    },
-  ],
-];
+interface FaqEntry {
+  readonly id: string;
+  readonly question: string;
+  readonly answer: string;
+}
+
+function splitIntoColumns<T>(items: readonly T[], columns: number): T[][] {
+  const result: T[][] = Array.from({ length: columns }, () => []);
+  items.forEach((item, i) => {
+    result[i % columns].push(item);
+  });
+  return result;
+}
 
 export function Home() {
   useMeta({
     title: "ograf.dev · The missing community for OGraf",
     description: "Community hub for the OGraf open broadcast graphics standard. Learn, build, test, and connect. Eleven live tutorials, a full ecosystem map, and a plain-language spec guide.",
   });
+  const faqColumns = useMemo(
+    () => splitIntoColumns<FaqEntry>(faqData as readonly FaqEntry[], 3),
+    []
+  );
   return (
     <>
       {/* Hero */}
@@ -269,12 +243,12 @@ export function Home() {
             Built on the ecosystem of these projects
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-            <img src="/img/logos/ebu.svg" alt="EBU" className="h-7 w-auto opacity-70" />
-            <img src="/img/logos/superflytv.svg" alt="SuperFlyTV" className="h-5 w-auto opacity-70" />
-            <img src="/img/logos/spx.svg" alt="SPX Graphics" className="h-5 w-auto opacity-70" />
-            <img src="/img/logos/casparcg.svg" alt="CasparCG" className="h-6 w-auto opacity-70" />
-            <img src="/img/logos/loopic.svg" alt="Loopic" className="h-6 w-auto opacity-70" />
-            <img src="/img/logos/streamshapers.svg" alt="StreamShapers" className="h-5 w-auto opacity-70" />
+            <img src="/img/logos/ebu.svg" alt="EBU" loading="lazy" decoding="async" className="h-7 w-auto opacity-70" />
+            <img src="/img/logos/superflytv.svg" alt="SuperFlyTV" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
+            <img src="/img/logos/spx.svg" alt="SPX Graphics" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
+            <img src="/img/logos/casparcg.svg" alt="CasparCG" loading="lazy" decoding="async" className="h-6 w-auto opacity-70" />
+            <img src="/img/logos/loopic.svg" alt="Loopic" loading="lazy" decoding="async" className="h-6 w-auto opacity-70" />
+            <img src="/img/logos/streamshapers.svg" alt="StreamShapers" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
           </div>
         </div>
       </div>
@@ -406,7 +380,7 @@ export function Home() {
                 className="flex flex-col rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 hover:shadow-slate-900/20 transition-shadow"
               >
                 <div className="flex items-center justify-between">
-                  <img src={tool.logo} alt={tool.name} className={`${tool.logoClass} w-auto grayscale opacity-70`} />
+                  <img src={tool.logo} alt={tool.name} loading="lazy" decoding="async" className={`${tool.logoClass} w-auto grayscale opacity-70`} />
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
                     {tool.cat}
                     {tool.stars && (
@@ -480,12 +454,12 @@ export function Home() {
             </h2>
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">
-            {FAQ_COLUMNS.map((column, i) => (
+            {faqColumns.map((column, i) => (
               <div key={i} className="space-y-8">
                 {column.map((faq) => (
-                  <div key={faq.q}>
-                    <h3 className="font-display text-lg/7 text-slate-900">{faq.q}</h3>
-                    <p className="mt-4 text-sm text-slate-700">{faq.a}</p>
+                  <div key={faq.id}>
+                    <h3 className="font-display text-lg/7 text-slate-900">{faq.question}</h3>
+                    <p className="mt-4 text-sm text-slate-700">{faq.answer}</p>
                   </div>
                 ))}
               </div>
