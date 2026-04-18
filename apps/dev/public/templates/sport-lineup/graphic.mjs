@@ -25,7 +25,7 @@ export default class SportLineup extends HTMLElement {
 
   _renderPlayers(players) {
     this._grid.innerHTML = players.map((p, i) => `
-      <div class="lineup-card" style="transition-delay: ${i * 60}ms">
+      <div class="lineup-card" style="transition-delay: ${300 + i * 60}ms">
         <div class="lineup-number">${p.number}</div>
         <div class="lineup-player-name">${p.name}</div>
         <div class="lineup-position">${p.position}</div>
@@ -48,15 +48,8 @@ export default class SportLineup extends HTMLElement {
     this._root.classList.add('visible');
 
     if (!skipAnimation) {
-      await new Promise(r => setTimeout(r, 300));
       const cards = this._grid.querySelectorAll('.lineup-card');
-      cards.forEach((card, i) => {
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, i * 60);
-      });
-      await new Promise(r => setTimeout(r, cards.length * 60 + 500));
+      await new Promise(r => setTimeout(r, 300 + cards.length * 60 + 500));
     }
 
     return { statusCode: 200, currentStep: 0 };

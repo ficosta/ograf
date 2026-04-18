@@ -38,12 +38,12 @@ const TOOLS: readonly Tool[] = [
   {
     name: "Schema Explorer",
     slug: "schema",
-    tagline: "Browse the OGraf manifest schema interactively.",
+    tagline: "Browse the OGraf manifest schema in plain language.",
     description:
-      "The live EBU schema rendered as browsable docs — every field, every enum, every $ref linked to examples from our shipped tutorials. Compose a manifest with autocomplete and inline errors.",
+      "Every top-level field of an .ograf.json manifest, grouped into five designer-friendly clusters, plus a visual catalogue of every operator-input type. Sourced live from the EBU schema with a bundled fallback.",
     icon: FileSearch,
-    href: "#",
-    status: "coming-soon",
+    href: "/tools/schema-explorer",
+    status: "available",
   },
   {
     name: "Template Generator",

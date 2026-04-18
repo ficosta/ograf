@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   BookOpen,
@@ -76,6 +77,37 @@ const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length
 
 export function Ecosystem() {
   useMeta({ title: "Ecosystem", description: "Every OGraf-compatible tool, editor, renderer, and resource worth knowing about." });
+  const [activeId, setActiveId] = useState<string>(CATEGORIES[0]?.id ?? "");
+  const navRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const sections = CATEGORIES.map((c) => document.getElementById(c.id)).filter(
+      (el): el is HTMLElement => el !== null,
+    );
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveId(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const pill = nav.querySelector<HTMLAnchorElement>(`a[href="#${activeId}"]`);
+    if (pill) pill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeId]);
+
   return (
     <>
       {/* Hero */}
@@ -122,18 +154,26 @@ export function Ecosystem() {
 
       {/* Sticky category nav */}
       <div className="sticky top-0 z-40 border-y border-slate-200 bg-white/90 backdrop-blur">
-        <nav className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
-          {CATEGORIES.map((c) => (
-            <a
-              key={c.id}
-              href={`#${c.id}`}
-              className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900"
-            >
-              <c.icon className="h-3.5 w-3.5" strokeWidth={2} />
-              {c.name}
-              <span className="text-xs text-slate-400">{c.items.length}</span>
-            </a>
-          ))}
+        <nav ref={navRef} className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+          {CATEGORIES.map((c) => {
+            const active = c.id === activeId;
+            return (
+              <a
+                key={c.id}
+                href={`#${c.id}`}
+                aria-current={active ? "true" : undefined}
+                className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
+                  active
+                    ? "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                }`}
+              >
+                <c.icon className="h-3.5 w-3.5" strokeWidth={2} />
+                {c.name}
+                <span className={`text-xs ${active ? "text-blue-500" : "text-slate-400"}`}>{c.items.length}</span>
+              </a>
+            );
+          })}
         </nav>
       </div>
 

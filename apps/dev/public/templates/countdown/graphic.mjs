@@ -11,22 +11,43 @@ export default class CountdownTimer extends HTMLElement {
       <div class="countdown">
         <div class="countdown-card">
           <div class="countdown-label"></div>
-          <div class="countdown-time"></div>
+          <div class="countdown-time">
+            <span class="countdown-mins"></span><span class="countdown-sep">:</span><span class="countdown-secs"></span>
+          </div>
         </div>
       </div>
     `;
     this._root = this.querySelector('.countdown');
     this._label = this.querySelector('.countdown-label');
     this._time = this.querySelector('.countdown-time');
+    this._mins = this.querySelector('.countdown-mins');
+    this._secs = this.querySelector('.countdown-secs');
     this._interval = null;
     this._remaining = 0;
     this._step = undefined;
   }
 
-  _formatTime(totalSeconds) {
-    const mins = Math.floor(totalSeconds / 60);
-    const secs = totalSeconds % 60;
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  _paintTime(totalSeconds, { animate } = {}) {
+    const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const secs = String(totalSeconds % 60).padStart(2, '0');
+
+    if (this._mins.textContent !== mins) {
+      this._swap(this._mins, mins, animate);
+    }
+    if (this._secs.textContent !== secs) {
+      this._swap(this._secs, secs, animate);
+    }
+  }
+
+  _swap(el, next, animate) {
+    if (!animate) {
+      el.textContent = next;
+      return;
+    }
+    el.classList.remove('tick');
+    void el.offsetWidth;
+    el.textContent = next;
+    el.classList.add('tick');
   }
 
   _startTicking() {
@@ -37,14 +58,8 @@ export default class CountdownTimer extends HTMLElement {
         return;
       }
       this._remaining--;
-      this._time.textContent = this._formatTime(this._remaining);
+      this._paintTime(this._remaining, { animate: true });
 
-      // Tick animation
-      this._time.classList.remove('tick');
-      void this._time.offsetWidth;
-      this._time.classList.add('tick');
-
-      // Urgent mode for last 10 seconds
       if (this._remaining <= 10) {
         this._root.classList.add('urgent');
       } else {
@@ -67,7 +82,7 @@ export default class CountdownTimer extends HTMLElement {
     if (data?.label) this._label.textContent = data.label;
     if (data?.seconds !== undefined) {
       this._remaining = data.seconds;
-      this._time.textContent = this._formatTime(this._remaining);
+      this._paintTime(this._remaining);
     }
     return { statusCode: 200 };
   }
@@ -121,7 +136,7 @@ export default class CountdownTimer extends HTMLElement {
     if (data?.label) this._label.textContent = data.label;
     if (data?.seconds !== undefined) {
       this._remaining = data.seconds;
-      this._time.textContent = this._formatTime(this._remaining);
+      this._paintTime(this._remaining);
       this._root.classList.remove('urgent');
     }
     return { statusCode: 200 };

@@ -6,7 +6,7 @@
     "difficulty": "Beginner",
     "time": "15 min",
     "desc": "The most common broadcast graphic. A name and title card that slides in from the left with a clean CBS-inspired design. Learn the full OGraf lifecycle: load, play, update, stop.",
-    "preview": "/templates/previews/lower-third.png",
+    "preview": "/templates/previews/lower-third.webp",
     "demo": {
       "src": "/templates/lower-third/demo.html",
       "fields": [
@@ -23,7 +23,7 @@
     "difficulty": "Beginner",
     "time": "10 min",
     "desc": "A corner bug that pops in with a scale animation and features a pulsing LIVE dot. Typically used for channel branding, LIVE indicators, or event logos. Demonstrates simple animations and minimal data schema.",
-    "preview": "/templates/previews/bug.png",
+    "preview": "/templates/previews/bug.webp",
     "demo": {
       "src": "/templates/bug/demo.html",
       "fields": [
@@ -40,7 +40,7 @@
     "difficulty": "Intermediate",
     "time": "20 min",
     "desc": "A continuous scrolling ticker at the bottom of the screen — the kind you see on CNN or BBC News. Demonstrates infinite CSS animations, dynamic data arrays, and seamless looping.",
-    "preview": "/templates/previews/ticker.png",
+    "preview": "/templates/previews/ticker.webp",
     "demo": {
       "src": "/templates/ticker/demo.html",
       "fields": [
@@ -56,7 +56,7 @@
     "difficulty": "Intermediate",
     "time": "15 min",
     "desc": "An elegant full-screen quote card with staggered reveal animations — quote text, divider line, then attribution appear sequentially. Uses Instrument Serif for editorial impact.",
-    "preview": "/templates/previews/quote.png",
+    "preview": "/templates/previews/quote.webp",
     "demo": {
       "src": "/templates/quote/demo.html",
       "fields": [
@@ -74,7 +74,7 @@
     "difficulty": "Intermediate",
     "time": "20 min",
     "desc": "Animated horizontal bar chart for election results. Bars grow with staggered timing, percentages animate in. Teaches data-driven widths, staggered row reveals, and color-coded parties.",
-    "preview": "/templates/previews/election-bars.png",
+    "preview": "/templates/previews/election-bars.webp",
     "demo": {
       "src": "/templates/election-bars/demo.html",
       "fields": [
@@ -102,7 +102,7 @@
     "difficulty": "Intermediate",
     "time": "20 min",
     "desc": "A full team lineup card with player numbers, names, and positions in a responsive grid. Cards reveal with staggered animation. Teaches array data, grid layouts, and sequential reveals.",
-    "preview": "/templates/previews/sport-lineup.png",
+    "preview": "/templates/previews/sport-lineup.webp",
     "demo": {
       "src": "/templates/sport-lineup/demo.html",
       "fields": [
@@ -139,7 +139,7 @@
     "difficulty": "Advanced",
     "time": "25 min",
     "desc": "Persistent on-screen score display with custom actions. The 'goal' action triggers a celebration flash. Teaches customActions — the OGraf feature for graphic-specific operations beyond play/stop.",
-    "preview": "/templates/previews/score-bug.png",
+    "preview": "/templates/previews/score-bug.webp",
     "demo": {
       "src": "/templates/score-bug/demo.html",
       "fields": [
@@ -160,7 +160,7 @@
     "difficulty": "Intermediate",
     "time": "15 min",
     "desc": "A countdown clock that ticks in real-time using setInterval — no updateAction needed from the renderer. Goes red in the last 10 seconds. Teaches self-updating graphics and interval cleanup.",
-    "preview": "/templates/previews/countdown.png",
+    "preview": "/templates/previews/countdown.webp",
     "demo": {
       "src": "/templates/countdown/demo.html",
       "fields": [
@@ -177,7 +177,7 @@
     "difficulty": "Intermediate",
     "time": "15 min",
     "desc": "Fire-and-forget full-screen overlay with red BREAKING NEWS badge. Plays in, holds 4 seconds, auto-dismisses. Teaches stepCount: 0 — graphics that run their complete lifecycle automatically.",
-    "preview": "/templates/previews/breaking-news.png",
+    "preview": "/templates/previews/breaking-news.webp",
     "demo": {
       "src": "/templates/breaking-news/demo.html",
       "fields": [
@@ -193,7 +193,7 @@
     "difficulty": "Intermediate",
     "time": "20 min",
     "desc": "Weather card with current conditions and a 3-day forecast row. Uses emoji icons, nested data objects, and a compact multi-section layout. Teaches complex schema design.",
-    "preview": "/templates/previews/weather.png",
+    "preview": "/templates/previews/weather.webp",
     "demo": {
       "src": "/templates/weather/demo.html",
       "fields": [
@@ -222,7 +222,7 @@
     "difficulty": "Beginner",
     "time": "10 min",
     "desc": "A social media post card that slides in from the right. Auto-generates avatar initials from the user name. Teaches right-side positioning, initial generation, and platform badges.",
-    "preview": "/templates/previews/social-card.png",
+    "preview": "/templates/previews/social-card.webp",
     "demo": {
       "src": "/templates/social-card/demo.html",
       "fields": [

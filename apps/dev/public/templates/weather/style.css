@@ -117,6 +117,14 @@ body {
   flex: 1;
   text-align: center;
   position: relative;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.weather.visible .weather-forecast-day {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .weather-forecast-day + .weather-forecast-day::before {

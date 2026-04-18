@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import {
   Lightbulb, Palette, Package, Tv, Download, Play, RefreshCw, Square, Trash2,
@@ -63,6 +63,63 @@ function SectionNav({ items }: { items: { id: string; label: string }[] }) {
   );
 }
 
+function MobileSectionNav({ items }: { items: { id: string; label: string }[] }) {
+  const [activeId, setActiveId] = useState<string>(items[0]?.id ?? "");
+  const navRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") return;
+    const sections = items
+      .map((i) => document.getElementById(i.id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveId(visible.target.id);
+      },
+      { rootMargin: "-15% 0px -65% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [items]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const pill = nav.querySelector<HTMLAnchorElement>(`a[href="#${activeId}"]`);
+    if (pill) pill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  }, [activeId]);
+
+  return (
+    <div className="sticky top-0 z-30 -mx-4 mb-10 border-y border-slate-200 bg-white/90 backdrop-blur xl:hidden sm:-mx-6 lg:-mx-8">
+      <nav ref={navRef} className="flex gap-1 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+        {items.map((item) => {
+          const active = item.id === activeId;
+          return (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              aria-current={active ? "true" : undefined}
+              className={`inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-3 py-1.5 text-sm transition-colors ${
+                active
+                  ? "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
+
 function Accordion({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
@@ -118,6 +175,8 @@ export function Spec() {
                 </a>.
               </p>
             </div>
+
+            <MobileSectionNav items={NAV_ITEMS} />
 
             {/* Big Picture */}
             <div id="big-picture" className="mb-20 scroll-mt-24">
