@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="OGraf">
+  <g fill="currentColor">
+    <path d="M152 256c0-48 34-84 80-84s80 36 80 84-34 84-80 84-80-36-80-84Zm80-44c-23 0-38 18-38 44s15 44 38 44 38-18 38-44-15-44-38-44Z"/>
+    <rect x="340" y="196" width="24" height="120" rx="6"/>
+    <rect x="378" y="220" width="24" height="72" rx="6" opacity="0.7"/>
+    <rect x="416" y="236" width="24" height="40" rx="6" opacity="0.45"/>
+  </g>
+</svg>

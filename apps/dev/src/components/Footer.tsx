@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { openConsentPreferences } from "../lib/consent";
 
 export function Footer() {
   return (
@@ -19,6 +20,7 @@ export function Footer() {
               <Link to="/history" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">History</Link>
               <Link to="/tools" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Tools</Link>
               <Link to="/about" className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">About</Link>
+              <button type="button" onClick={openConsentPreferences} className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900">Cookie preferences</button>
             </div>
           </nav>
         </div>

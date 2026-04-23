@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2563eb" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#2563eb" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Icon tile top-left -->
+  <g transform="translate(80,80)">
+    <rect width="88" height="88" rx="20" fill="#2563eb"/>
+    <g transform="translate(0,0) scale(0.172)" fill="#ffffff">
+      <path d="M152 256c0-48 34-84 80-84s80 36 80 84-34 84-80 84-80-36-80-84Zm80-44c-23 0-38 18-38 44s15 44 38 44 38-18 38-44-15-44-38-44Z"/>
+      <rect x="340" y="196" width="24" height="120" rx="6"/>
+      <rect x="378" y="220" width="24" height="72" rx="6" opacity="0.7"/>
+      <rect x="416" y="236" width="24" height="40" rx="6" opacity="0.45"/>
+    </g>
+  </g>
+
+  <!-- Brand mark: wordmark -->
+  <text x="192" y="144" font-family="Lexend, Inter, system-ui, sans-serif" font-size="44" font-weight="600" fill="#f8fafc" letter-spacing="-0.5">ograf.dev</text>
+
+  <!-- Headline -->
+  <text x="80" y="340" font-family="Lexend, Inter, system-ui, sans-serif" font-size="84" font-weight="500" fill="#ffffff" letter-spacing="-2">The community hub</text>
+  <text x="80" y="430" font-family="Lexend, Inter, system-ui, sans-serif" font-size="84" font-weight="500" fill="#ffffff" letter-spacing="-2">for open broadcast graphics.</text>
+
+  <!-- Subline -->
+  <text x="80" y="510" font-family="Inter, system-ui, sans-serif" font-size="30" fill="#94a3b8" letter-spacing="-0.3">Tutorials · Ecosystem · Validator · Spec guide</text>
+
+  <!-- Accent bar -->
+  <rect x="80" y="550" width="120" height="4" rx="2" fill="#2563eb"/>
+</svg>

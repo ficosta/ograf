@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { App } from "./App";
+import { initConsent } from "./lib/consent";
 import "./globals.css";
 
 const root = document.getElementById("root");
@@ -14,3 +15,5 @@ createRoot(root).render(
     </BrowserRouter>
   </StrictMode>
 );
+
+initConsent();
