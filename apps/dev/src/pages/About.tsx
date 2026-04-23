@@ -52,7 +52,7 @@ export function About() {
           <div className="flex flex-col gap-4 py-8">
             <h2 className="font-display text-[2rem]/10 tracking-tight text-white">Our mission.</h2>
             <p>
-              The broadcast graphics industry has been locked into proprietary solutions for decades. Systems from Vizrt, Ross Video, and Chyron cost tens to hundreds of thousands of dollars. OGraf, backed by the European Broadcasting Union, is changing that with an open standard built on web technologies that everyone already knows.
+              The broadcast graphics industry has long relied on proprietary solutions. Systems from Vizrt, Ross Video, and Chyron typically require significant licensing and hardware investment. OGraf, backed by the European Broadcasting Union, adds an open layer built on web technologies that everyone already knows.
             </p>
             <p>
               We believe this ecosystem needs a strong community layer to accelerate adoption. Better documentation. Better tooling. A central place to discover what exists. That is what we are building.

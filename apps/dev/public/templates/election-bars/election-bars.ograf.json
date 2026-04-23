@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.election-bars",
+  "version": "1.0.0",
+  "name": "Election Bars",
+  "description": "Animated horizontal bar chart for election results with data-driven widths and color-coded parties. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "title": "Title",
+        "gddType": "single-line",
+        "default": "General Election 2026"
+      },
+      "subtitle": {
+        "type": "string",
+        "title": "Subtitle",
+        "gddType": "single-line",
+        "default": "78% reporting"
+      },
+      "parties": {
+        "type": "array",
+        "title": "Parties",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name":  { "type": "string",  "title": "Name",       "gddType": "single-line" },
+            "pct":   { "type": "number",  "title": "Percentage", "minimum": 0, "maximum": 100 },
+            "votes": { "type": "integer", "title": "Votes",      "minimum": 0 },
+            "color": { "type": "string",  "title": "Color",      "gddType": "color" }
+          },
+          "required": ["name", "pct", "color"]
+        },
+        "default": [
+          { "name": "Progressives",  "pct": 42, "votes": 1284000, "color": "#2563eb" },
+          { "name": "Conservatives", "pct": 35, "votes": 1070000, "color": "#dc2626" },
+          { "name": "Centrists",     "pct": 15, "votes": 459000,  "color": "#f59e0b" },
+          { "name": "Greens",        "pct": 8,  "votes": 245000,  "color": "#16a34a" }
+        ]
+      }
+    }
+  }
+}

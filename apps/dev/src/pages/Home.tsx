@@ -111,15 +111,6 @@ const ECOSYSTEM_TOOLS = [
     logo: "/img/logos/loopic.svg",
     logoClass: "h-7",
   },
-  {
-    name: "ograf-devtool",
-    desc: "Developer tool for building and validating OGraf graphics with compliance checks.",
-    cat: "DevTool",
-    stars: "18",
-    url: "https://github.com/SuperFlyTV/ograf-devtool",
-    logo: "/img/logos/superflytv.svg",
-    logoClass: "h-5",
-  },
 ];
 
 const FEATURES = [
@@ -217,7 +208,7 @@ export function Home() {
           for OGraf.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          OGraf is the new revolutionary open format for broadcast graphics. No vendor lock-in, no proprietary runtimes, one package that plays on any compatible system.
+          OGraf is a new open format for broadcast graphics. No vendor lock-in, no proprietary runtimes, one package that plays on any compatible system.
         </p>
         <div className="mt-10 flex justify-center gap-x-6">
           <Link
@@ -268,7 +259,7 @@ export function Home() {
               Why OGraf matters.
             </h2>
             <p className="mt-4 text-lg tracking-tight text-blue-100">
-              The broadcast graphics market has been ruled by closed, costly, vendor-locked systems. OGraf rewrites the rules with an open, web-native format that anyone can render, control, and ship.
+              The broadcast graphics market has long relied on closed, vendor-specific systems. OGraf adds an open, web-native layer that anyone can render, control, and ship.
             </p>
           </div>
           <div className="mt-16 grid grid-cols-1 gap-y-10 gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -416,13 +407,13 @@ export function Home() {
               OGraf by the numbers.
             </h2>
             <p className="mt-4 text-lg tracking-tight text-slate-700">
-              The EBU-backed standard is gaining traction across the broadcast graphics industry.
+              The EBU-backed standard is in active use across the broadcast graphics industry.
             </p>
           </div>
           <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3">
             {[
-              { stat: "70+", label: "GitHub stars on the official EBU specification" },
-              { stat: "v1 Stable", label: "Graphics Definition production-ready since Sept 2025" },
+              { stat: "EBU", label: "Working group maintains the specification on GitHub" },
+              { stat: "v1 Stable", label: "Graphics Definition stable since September 2025" },
               { stat: "10+", label: "Tools and renderers supporting the OGraf standard" },
             ].map((s) => (
               <div key={s.stat} className="text-center">

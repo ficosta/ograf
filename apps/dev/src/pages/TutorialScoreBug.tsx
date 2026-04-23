@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/score-bug/score-bug.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/score-bug");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialScoreBug() {
   useMeta({
@@ -172,10 +175,12 @@ export function TutorialScoreBug() {
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">
-                Highlight the team currently in possession by adding a subtle <code className="font-mono text-xs bg-amber-200 px-1 py-0.5 rounded">team-active</code> background class. This tiny detail — used by ESPN and Sky Sports — gives viewers a subconscious sense of momentum without being distracting.
+                Highlight the team currently in possession by adding a subtle <code className="font-mono text-xs bg-amber-200 px-1 py-0.5 rounded">team-active</code> background class. This tiny detail — common in premium sports broadcasts — gives viewers a subconscious sense of momentum without being distracting.
               </p>
             </div>
           </div>
+
+          <TutorialManifest slug="score-bug" title="Score Bug" manifest={MANIFEST} intro="Notice the customActions array — that's how OGraf declares graphic-specific operations beyond play/stop. The graphic must return statusCode 404 for anything not listed." />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

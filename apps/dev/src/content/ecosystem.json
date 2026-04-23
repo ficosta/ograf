@@ -125,13 +125,6 @@
     "description": "Validate, inspect, test, and generate OGraf assets while you build.",
     "items": [
       {
-        "name": "ograf-devtool",
-        "desc": "Developer tool for building and validating OGraf graphics with compliance checks and control GUIs.",
-        "url": "https://github.com/SuperFlyTV/ograf-devtool",
-        "type": "oss",
-        "stars": "18"
-      },
-      {
         "name": "ograf-form",
         "desc": "Web Component that auto-generates input forms from OGraf/GDD schemas.",
         "url": "https://github.com/SuperFlyTV/ograf-form",

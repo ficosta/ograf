@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.sport-lineup",
+  "version": "1.0.0",
+  "name": "Sport Lineup",
+  "description": "Team roster grid with numbered player cards and staggered reveal. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "team":      { "type": "string", "title": "Team",       "gddType": "single-line", "default": "FC Barcelona" },
+      "meta":      { "type": "string", "title": "Match Info", "gddType": "single-line", "default": "La Liga — Matchday 32" },
+      "formation": { "type": "string", "title": "Formation",  "gddType": "single-line", "default": "4-3-3" },
+      "coach":     { "type": "string", "title": "Coach",      "gddType": "single-line", "default": "H. Flick" },
+      "players": {
+        "type": "array",
+        "title": "Players",
+        "items": {
+          "type": "object",
+          "properties": {
+            "number":   { "type": "integer", "title": "Number",   "minimum": 0 },
+            "name":     { "type": "string",  "title": "Name",     "gddType": "single-line" },
+            "position": { "type": "string",  "title": "Position", "gddType": "single-line" }
+          },
+          "required": ["number", "name", "position"]
+        },
+        "default": [
+          { "number": 1,  "name": "ter Stegen",   "position": "GK" },
+          { "number": 23, "name": "Koundé",       "position": "RB" },
+          { "number": 4,  "name": "Araújo",       "position": "CB" },
+          { "number": 15, "name": "Christensen",  "position": "CB" },
+          { "number": 28, "name": "Baldé",        "position": "LB" },
+          { "number": 8,  "name": "Pedri",        "position": "CM" },
+          { "number": 16, "name": "Fermín",       "position": "CM" },
+          { "number": 6,  "name": "Gavi",         "position": "CM" },
+          { "number": 11, "name": "Yamal",        "position": "RW" },
+          { "number": 9,  "name": "Lewandowski",  "position": "ST" },
+          { "number": 19, "name": "Raphinha",     "position": "LW" }
+        ]
+      }
+    }
+  }
+}

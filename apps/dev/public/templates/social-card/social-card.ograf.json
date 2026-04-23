@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.social-card",
+  "version": "1.0.0",
+  "name": "Social Media Card",
+  "description": "Social post overlay that slides in from the right with an auto-generated avatar from the user's initials. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "user":   { "type": "string", "title": "User",   "gddType": "single-line", "default": "Johan Nyman" },
+      "handle": { "type": "string", "title": "Handle", "gddType": "single-line", "default": "@nytamin" },
+      "text":   { "type": "string", "title": "Post",   "gddType": "multi-line",  "default": "Just shipped our first OGraf template to production." }
+    }
+  }
+}

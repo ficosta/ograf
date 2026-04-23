@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/countdown/countdown.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/countdown");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialCountdown() {
   useMeta({
@@ -186,6 +189,8 @@ async dispose() {
   animation: none;
 }`} />
           </div>
+
+          <TutorialManifest slug="countdown" title="Countdown Timer" manifest={MANIFEST} />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

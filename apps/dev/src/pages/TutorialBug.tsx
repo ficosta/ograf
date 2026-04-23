@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/bug/bug.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/bug");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialBug() {
   useMeta({
@@ -65,36 +68,7 @@ export function TutorialBug() {
             </div>
           </div>
 
-          <div>
-            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The manifest</h2>
-            <CodeBlock filename="bug.ograf.json" language="JSON" code={`{
-  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
-  "id": "dev.ograf.tutorial.bug",
-  "version": "1.0.0",
-  "name": "Corner Bug",
-  "main": "graphic.mjs",
-  "stepCount": 1,
-  "supportsRealTime": true,
-  "supportsNonRealTime": false,
-  "schema": {
-    "type": "object",
-    "properties": {
-      "label": {
-        "type": "string",
-        "title": "Label",
-        "gddType": "single-line",
-        "default": "LIVE"
-      },
-      "sublabel": {
-        "type": "string",
-        "title": "Sublabel",
-        "gddType": "single-line",
-        "default": "Breaking News"
-      }
-    }
-  }
-}`} />
-          </div>
+          <TutorialManifest slug="bug" title="Corner Bug" manifest={MANIFEST} />
 
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The key CSS — scale + blur animation</h2>

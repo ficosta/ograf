@@ -1,116 +1,120 @@
 /**
- * OGraf Weather Forecast — CBS-inspired weather card
+ * OGraf Weather Forecast — current conditions + 3-day forecast row.
  *
- * A production-ready weather card showing current conditions
- * and a 3-day forecast. Implements the full OGraf Web Component lifecycle.
+ * Designed for the OGraf iframe mount model: loads its stylesheet via a
+ * <link rel="stylesheet"> tag whose URL is computed from import.meta.url,
+ * so it resolves wherever the renderer serves the package from.
+ *
+ * DOM init is lazy (see _initDom). Do NOT call customElements.define()
+ * here — the renderer picks the tag.
  */
-export default class WeatherCard extends HTMLElement {
 
-  connectedCallback() {
-    this.innerHTML = `
-      <div class="weather">
-        <div class="weather-card">
-          <div class="weather-main">
-            <div class="weather-icon"></div>
-            <div class="weather-info">
-              <div class="weather-location"></div>
-              <div class="weather-temp"></div>
-              <div class="weather-condition"></div>
-            </div>
-          </div>
-          <div class="weather-forecast"></div>
+const STYLE_URL = new URL('./style.css', import.meta.url).href;
+
+const TEMPLATE = `
+  <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="weather">
+    <div class="weather-card">
+      <div class="weather-main">
+        <div class="weather-icon"></div>
+        <div class="weather-info">
+          <div class="weather-location"></div>
+          <div class="weather-temp"></div>
+          <div class="weather-condition"></div>
         </div>
       </div>
-    `;
+      <div class="weather-forecast"></div>
+    </div>
+  </div>
+`;
+
+export default class WeatherGraphic extends HTMLElement {
+
+  _initDom() {
+    if (this._initialized) return;
+    this.innerHTML = TEMPLATE;
     this._root = this.querySelector('.weather');
     this._icon = this.querySelector('.weather-icon');
     this._location = this.querySelector('.weather-location');
     this._temp = this.querySelector('.weather-temp');
     this._condition = this.querySelector('.weather-condition');
     this._forecast = this.querySelector('.weather-forecast');
-    this._step = undefined;
+    this._initialized = true;
   }
 
   _renderForecast(forecast) {
-    if (!forecast || !Array.isArray(forecast)) return;
+    if (!Array.isArray(forecast)) return;
     this._forecast.innerHTML = forecast.map((day, i) => `
       <div class="weather-forecast-day" style="transition-delay: ${500 + i * 60}ms">
-        <div class="weather-forecast-label">${day.day}</div>
-        <div class="weather-forecast-icon">${day.icon}</div>
-        <div class="weather-forecast-temp">${day.temp}</div>
+        <div class="weather-forecast-label">${escapeHtml(day.day)}</div>
+        <div class="weather-forecast-icon">${escapeHtml(day.icon)}</div>
+        <div class="weather-forecast-temp">${escapeHtml(day.temp)}</div>
       </div>
     `).join('');
   }
 
-  /**
-   * load() — Receive initial data and render context.
-   */
-  async load({ data }) {
-    if (data?.location) this._location.textContent = data.location;
-    if (data?.temp) this._temp.textContent = data.temp;
-    if (data?.condition) this._condition.textContent = data.condition;
-    if (data?.icon) this._icon.textContent = data.icon;
-    if (data?.forecast) this._renderForecast(data.forecast);
+  _applyData(data) {
+    if (!data) return;
+    if (data.location) this._location.textContent = data.location;
+    if (data.temp) this._temp.textContent = data.temp;
+    if (data.condition) this._condition.textContent = data.condition;
+    if (data.icon) this._icon.textContent = data.icon;
+    if (data.forecast) this._renderForecast(data.forecast);
+  }
+
+  async load({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
     return { statusCode: 200 };
   }
 
-  /**
-   * playAction() — Slide the weather card onto screen.
-   */
-  async playAction({ delta = 1, goto, skipAnimation } = {}) {
-    const target = goto !== undefined ? goto : (this._step === undefined ? -1 : this._step) + delta;
-    this._step = target;
-
+  async playAction({ skipAnimation } = {}) {
+    this._initDom();
     this._root.classList.remove('out');
-
     if (skipAnimation) {
       this._root.classList.add('visible');
-      return { statusCode: 200, currentStep: this._step };
+      return { statusCode: 200, currentStep: 0 };
     }
-
     void this._root.offsetWidth;
     this._root.classList.add('visible');
-
-    await new Promise(resolve => setTimeout(resolve, 700));
-    return { statusCode: 200, currentStep: this._step };
+    await new Promise(r => setTimeout(r, 1000));
+    return { statusCode: 200, currentStep: 0 };
   }
 
-  /**
-   * stopAction() — Slide the weather card off screen.
-   */
+  async updateAction({ data } = {}) {
+    this._initDom();
+    this._applyData(data);
+    return { statusCode: 200 };
+  }
+
   async stopAction({ skipAnimation } = {}) {
+    this._initDom();
     if (skipAnimation) {
       this._root.classList.remove('visible');
-      this._step = undefined;
       return { statusCode: 200 };
     }
-
     this._root.classList.add('out');
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(r => setTimeout(r, 500));
     this._root.classList.remove('visible', 'out');
-    this._step = undefined;
     return { statusCode: 200 };
   }
 
-  /**
-   * updateAction() — Update weather data while on-air.
-   */
-  async updateAction({ data }) {
-    if (data?.location) this._location.textContent = data.location;
-    if (data?.temp) this._temp.textContent = data.temp;
-    if (data?.condition) this._condition.textContent = data.condition;
-    if (data?.icon) this._icon.textContent = data.icon;
-    if (data?.forecast) this._renderForecast(data.forecast);
-    return { statusCode: 200 };
+  async customAction({ action } = {}) {
+    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
   }
 
-  /**
-   * dispose() — Clean up resources.
-   */
   async dispose() {
     this.innerHTML = '';
+    this._initialized = false;
     return { statusCode: 200 };
   }
 }
 
-customElements.define('weather-card', WeatherCard);
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}

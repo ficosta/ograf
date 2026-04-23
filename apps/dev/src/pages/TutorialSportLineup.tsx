@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/sport-lineup/sport-lineup.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/sport-lineup");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialSportLineup() {
   useMeta({
@@ -184,6 +187,8 @@ async playAction() {
               </p>
             </div>
           </div>
+
+          <TutorialManifest slug="sport-lineup" title="Sport Lineup" manifest={MANIFEST} intro="The players field is a typed array — items.type is object with required number, name, and position. A controller can add, remove, and reorder rows automatically." />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

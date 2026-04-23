@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
+  "id": "dev.ograf.tutorial.score-bug",
+  "version": "1.0.0",
+  "name": "Score Bug",
+  "description": "Persistent on-screen scoreboard with a goal customAction that flashes the bug when a team scores. Tutorial from ograf.dev.",
+  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "main": "graphic.mjs",
+  "stepCount": 1,
+  "supportsRealTime": true,
+  "supportsNonRealTime": false,
+  "customActions": [
+    {
+      "id": "goal",
+      "title": "Goal",
+      "description": "Flash the scoreboard to celebrate a goal."
+    }
+  ],
+  "schema": {
+    "type": "object",
+    "properties": {
+      "home":      { "type": "string",  "title": "Home Team",  "gddType": "single-line", "default": "BAR" },
+      "away":      { "type": "string",  "title": "Away Team",  "gddType": "single-line", "default": "RMA" },
+      "homeScore": { "type": "integer", "title": "Home Score", "minimum": 0, "default": 2 },
+      "awayScore": { "type": "integer", "title": "Away Score", "minimum": 0, "default": 1 },
+      "time":      { "type": "string",  "title": "Match Time", "gddType": "single-line", "default": "67:42" },
+      "period":    { "type": "string",  "title": "Period",     "gddType": "single-line", "default": "2nd Half" }
+    }
+  }
+}

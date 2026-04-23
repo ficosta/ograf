@@ -1,11 +1,16 @@
-import { useRef, useState, useCallback } from "react";
+import { Link } from "react-router";
 import {
   Play, Square, RefreshCw, FolderOpen, FileJson, Settings, Palette,
   Image, ChevronRight, Download, Trash2, Check,
 } from "lucide-react";
+import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TemplateDownload } from "../components/TemplateDownload";
+import manifestJson from "../../public/templates/lower-third/lower-third.ograf.json";
 import { useMeta } from "../hooks/useMeta";
+
+const MANIFEST_JSON_FROM_DISK = JSON.stringify(manifestJson, null, 2);
 
 function StepHeader({ n, title }: { n: number; title: string }) {
   return (
@@ -17,143 +22,6 @@ function StepHeader({ n, title }: { n: number; title: string }) {
     </div>
   );
 }
-
-function LiveDemo() {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [name, setName] = useState("Jane Smith");
-  const [title, setTitle] = useState("Senior Graphics Engineer");
-
-  const send = useCallback((action: string, data?: Record<string, string>) => {
-    iframeRef.current?.contentWindow?.postMessage({ action, data }, "*");
-  }, []);
-
-  const handlePlay = () => {
-    if (!isPlaying) {
-      send("load", { name, title });
-      setTimeout(() => send("play"), 100);
-      setIsPlaying(true);
-    }
-  };
-
-  const handleStop = () => {
-    send("stop");
-    setIsPlaying(false);
-  };
-
-  const handleUpdate = () => {
-    send("update", { name, title });
-  };
-
-  return (
-    <div className="rounded-2xl ring-1 ring-slate-200 overflow-hidden shadow-xl shadow-slate-900/10">
-      {/* Preview area */}
-      <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div className="absolute top-3 left-4 flex items-center gap-1.5">
-          <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <div className="h-2.5 w-2.5 rounded-full bg-white/20" />
-        </div>
-        <div className="absolute top-3 right-4 flex items-center gap-2">
-          <span className="text-[10px] font-mono text-white/30">1920 x 1080</span>
-          <div className={`h-2 w-2 rounded-full ${isPlaying ? "bg-emerald-400 animate-pulse" : "bg-white/20"}`} />
-        </div>
-        <iframe
-          ref={iframeRef}
-          src="/templates/lower-third/demo.html"
-          className="w-full aspect-video border-0"
-          sandbox="allow-scripts allow-same-origin"
-          title="OGraf Lower Third Preview"
-        />
-      </div>
-
-      {/* Controls */}
-      <div className="bg-white p-4 border-t border-slate-200">
-        <div className="flex flex-col sm:flex-row gap-4">
-          {/* Data inputs */}
-          <div className="flex-1 grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">Title</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-
-          {/* Action buttons */}
-          <div className="flex items-end gap-2">
-            <button
-              onClick={handlePlay}
-              disabled={isPlaying}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              <Play className="h-3.5 w-3.5" /> Play
-            </button>
-            <button
-              onClick={handleUpdate}
-              disabled={!isPlaying}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              <RefreshCw className="h-3.5 w-3.5" /> Update
-            </button>
-            <button
-              onClick={handleStop}
-              disabled={!isPlaying}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              <Square className="h-3.5 w-3.5" /> Stop
-            </button>
-          </div>
-        </div>
-        <p className="mt-3 text-xs text-slate-400">
-          Try it: type a new name, click <strong>Play</strong> to animate in, change the text and click <strong>Update</strong>, then click <strong>Stop</strong> to animate out.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-const MANIFEST_CODE = `{
-  "$schema": "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json",
-  "id": "dev.ograf.tutorial.lower-third",
-  "version": "1.0.0",
-  "name": "CBS-Style Lower Third",
-  "description": "Clean white and blue lower third with slide-in animation",
-  "author": { "name": "Your Name" },
-  "main": "graphic.mjs",
-  "stepCount": 1,
-  "supportsRealTime": true,
-  "supportsNonRealTime": false,
-  "schema": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "title": "Name",
-        "gddType": "single-line",
-        "default": "Jane Smith"
-      },
-      "title": {
-        "type": "string",
-        "title": "Title",
-        "gddType": "single-line",
-        "default": "Senior Graphics Engineer"
-      }
-    }
-  }
-}`;
 
 const FOLDER_TREE = `lower-third/
 ├── lower-third.ograf.json
@@ -330,24 +198,32 @@ export function GetStarted() {
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
+        <div className="mb-4">
+          <Link to="/tutorials" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
+            <ChevronRight className="h-3 w-3 rotate-180" /> All tutorials
+          </Link>
+        </div>
+
         <div className="mb-12">
-          <p className="text-sm font-semibold text-blue-600 mb-2">Tutorial</p>
-          <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
-            Build your first OGraf template.
-          </h1>
+          <div className="flex items-center gap-3 mb-2">
+            <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Beginner</span>
+            <span className="text-xs text-slate-400">15 min</span>
+          </div>
+          <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">Build your first OGraf template.</h1>
           <p className="mt-6 text-lg tracking-tight text-slate-700">
             In this tutorial you'll build a production-quality lower third graphic from scratch — the same kind you see on CBS, BBC, or any news broadcast. It slides in, displays a name and title, updates live, and slides out.
           </p>
         </div>
 
-        {/* Live Demo — the result */}
         <div className="mb-16">
-          <div className="flex items-center gap-2 mb-4">
-            <Check className="h-5 w-5 text-emerald-500" />
-            <h2 className="font-display text-lg text-slate-900">What you'll build — try it live</h2>
-          </div>
-          <LiveDemo />
+          <TemplateDemo
+            src="/templates/lower-third/demo.html"
+            fields={[
+              { key: "name", label: "Name", defaultValue: "Jane Smith" },
+              { key: "title", label: "Title", defaultValue: "Senior Graphics Engineer" },
+            ]}
+            title="Lower Third — OGraf Template"
+          />
         </div>
 
         {/* Prerequisites */}
@@ -401,7 +277,7 @@ export function GetStarted() {
             <p className="text-base text-slate-700 mb-4">
               The manifest tells every OGraf system who your graphic is and what it needs. When an operator loads your graphic in SPX or any controller, <strong className="text-slate-900">this file is the first thing it reads</strong>. It auto-generates the data form you saw in the demo above.
             </p>
-            <CodeBlock filename="lower-third.ograf.json" language="JSON" code={MANIFEST_CODE} />
+            <CodeBlock filename="lower-third.ograf.json" language="JSON" code={MANIFEST_JSON_FROM_DISK} />
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="rounded-lg bg-slate-50 p-4">
                 <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Identity</p>
@@ -515,13 +391,8 @@ export function GetStarted() {
                   link: { href: "/check", label: "Open checker" },
                 },
                 {
-                  title: "Option C: Load it in ograf-devtool",
-                  desc: "Clone SuperFlyTV/ograf-devtool for a local development server with compliance checks and control GUIs.",
-                  link: { href: "https://github.com/SuperFlyTV/ograf-devtool", label: "View on GitHub" },
-                },
-                {
-                  title: "Option D: Open index.html in a browser",
-                  desc: "Open the file directly in Chrome. Open DevTools console and call the lifecycle methods manually on the element.",
+                  title: "Option C: Load it in an OGraf renderer",
+                  desc: "Deploy to a compliant renderer: ograf-server (self-hosted reference), SPX-GC (browser controller), or CasparCG (via the HTML producer). Links are on the download card below.",
                 },
               ].map((opt) => (
                 <div key={opt.title} className="rounded-xl ring-1 ring-slate-200 p-5">
@@ -536,6 +407,9 @@ export function GetStarted() {
               ))}
             </div>
           </div>
+
+          {/* Download the full package */}
+          <TemplateDownload slug="lower-third" title="CBS-Style Lower Third" />
 
           {/* Done */}
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

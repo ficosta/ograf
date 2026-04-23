@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/election-bars/election-bars.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/election-bars");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialElectionBars() {
   useMeta({
@@ -187,6 +190,8 @@ votes.textContent = party.votes.toLocaleString();
 // de-DE: "13.966.454"
 // fr-FR: "13 966 454"`} />
           </div>
+
+          <TutorialManifest slug="election-bars" title="Election Bars" manifest={MANIFEST} intro="The parties field is a typed array — items.type is object with required name, pct, and color. That's how OGraf declares structured repeating data." />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

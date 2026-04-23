@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/weather/weather.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/weather");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialWeather() {
   useMeta({
@@ -200,6 +203,8 @@ async playAction() {
               </p>
             </div>
           </div>
+
+          <TutorialManifest slug="weather" title="Weather Forecast" manifest={MANIFEST} intro="The forecast field mixes scalar props with a typed array — that's how OGraf handles multi-section data in a single schema." />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

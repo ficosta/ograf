@@ -3,10 +3,13 @@ import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
+import { TutorialManifest } from "../components/TutorialManifest";
 import tutorials from "../content/tutorials.json";
+import manifestJson from "../../public/templates/social-card/social-card.ograf.json";
 import { useMeta } from "../hooks/useMeta";
 
 const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/social-card");
+const MANIFEST = JSON.stringify(manifestJson, null, 2);
 
 export function TutorialSocialCard() {
   useMeta({
@@ -194,6 +197,8 @@ async stopAction() {
               </p>
             </div>
           </div>
+
+          <TutorialManifest slug="social-card" title="Social Media Card" manifest={MANIFEST} />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

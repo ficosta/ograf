@@ -17,7 +17,7 @@
   {
     "id": "do-i-need-special-tools",
     "question": "Do I need special tools to build graphics?",
-    "answer": "No. Any text editor and a browser are enough. For a guided workflow, use ograf-devtool, Loopic, or the DJ HTML Creator — all of them export OGraf packages. After Effects users can convert Lottie animations with Ferryman."
+    "answer": "No. Any text editor and a browser are enough. For a guided workflow, use Loopic or the DJ HTML Creator — both export OGraf packages. After Effects users can convert Lottie animations with Ferryman. Drop your .zip on ograf.dev/check to validate it against the live EBU schema."
   },
   {
     "id": "migration",
