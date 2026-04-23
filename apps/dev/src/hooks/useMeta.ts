@@ -10,7 +10,7 @@ interface UseMetaOptions {
 const SITE_NAME = "ograf.dev";
 const DEFAULT_DESCRIPTION =
   "Community hub for the OGraf open broadcast graphics standard. Tutorials, ecosystem directory, specification guide, and live interactive demos.";
-const DEFAULT_OG_IMAGE = "https://ograf.dev/og-image.png";
+const DEFAULT_OG_IMAGE = "https://ograf.dev/og-image.jpg";
 
 /**
  * Set the document title and common meta tags for the current route.
