@@ -10,6 +10,7 @@
   <election-bars></election-bars>
   <script type="module">
     import ElectionBars from './graphic.mjs';
+    customElements.define('election-bars', ElectionBars);
     const el = document.querySelector('election-bars');
     const defaultData = {
       title: 'General Election 2026',

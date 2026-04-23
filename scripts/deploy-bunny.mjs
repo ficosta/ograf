@@ -22,8 +22,44 @@
  */
 
 import { readdirSync, readFileSync } from "node:fs";
-import { join, posix, sep } from "node:path";
+import { extname, join, posix, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+
+// Critical: Bunny Storage doesn't set Content-Type from extension on its own,
+// so if we send application/octet-stream the CDN serves .mjs / .json / .css
+// with the wrong MIME and browsers refuse to execute them (especially ES
+// modules under strict MIME type checking).
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "application/javascript; charset=utf-8",
+  ".mjs": "application/javascript; charset=utf-8",
+  ".map": "application/json; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".ograf": "application/json; charset=utf-8",
+  ".webmanifest": "application/manifest+json; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".ico": "image/x-icon",
+  ".woff": "font/woff",
+  ".woff2": "font/woff2",
+  ".ttf": "font/ttf",
+  ".otf": "font/otf",
+  ".txt": "text/plain; charset=utf-8",
+  ".xml": "application/xml; charset=utf-8",
+  ".md": "text/markdown; charset=utf-8",
+  ".zip": "application/zip",
+  ".pdf": "application/pdf",
+  ".wasm": "application/wasm",
+};
+
+function contentTypeFor(path) {
+  return MIME[extname(path).toLowerCase()] ?? "application/octet-stream";
+}
 
 const {
   BUNNY_STORAGE_ZONE,
@@ -69,7 +105,7 @@ async function storagePut(rel, buf) {
     method: "PUT",
     headers: {
       AccessKey: BUNNY_STORAGE_PASSWORD,
-      "Content-Type": "application/octet-stream",
+      "Content-Type": contentTypeFor(rel),
     },
     body: buf,
   });

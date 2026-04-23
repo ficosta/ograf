@@ -10,6 +10,7 @@
   <quote-graphic></quote-graphic>
   <script type="module">
     import QuoteGraphic from './graphic.mjs';
+    customElements.define('quote-graphic', QuoteGraphic);
     const el = document.querySelector('quote-graphic');
     const defaultData = {
       text: "Open graphics, open broadcast, open standards. That's the future.",
