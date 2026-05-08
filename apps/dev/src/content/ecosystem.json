@@ -115,6 +115,13 @@
         "desc": "Dedicated commercial server with full OGraf + SPX template support and ServerAPI for automated playout.",
         "url": "https://www.spx.graphics",
         "type": "commercial"
+      },
+      {
+        "name": "gstcefsrc",
+        "desc": "GStreamer source element wrapping Chromium Embedded Framework — renders any HTML/JS page (including OGraf packages) as a video + audio source for a GStreamer pipeline.",
+        "url": "https://github.com/centricular/gstcefsrc",
+        "type": "oss",
+        "stars": "210"
       }
     ]
   },
