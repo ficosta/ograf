@@ -118,7 +118,7 @@
       },
       {
         "name": "gstcefsrc",
-        "desc": "GStreamer source element wrapping Chromium Embedded Framework — renders any HTML/JS page (including OGraf packages) as a video + audio source for a GStreamer pipeline.",
+        "desc": "GStreamer source element wrapping Chromium Embedded Framework — renders any HTML/JS page as a video + audio source for a GStreamer pipeline. Not an OGraf server, but useful as a building block for HTML GFX into SDI/NDI/file output.",
         "url": "https://github.com/centricular/gstcefsrc",
         "type": "oss",
         "stars": "210"
