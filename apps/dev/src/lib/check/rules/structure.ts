@@ -1,4 +1,5 @@
 import type { Finding, Pkg } from "../types";
+import { stripComments } from "./strip-comments";
 
 const PREVIEW_CANDIDATES = [
   "preview.png", "preview.webp", "preview.jpg", "preview.jpeg",
@@ -74,10 +75,15 @@ export function checkStructure(pkg: Pkg): readonly Finding[] {
 
   // S-03: if graphic.mjs links to a stylesheet via relative path, the file should exist
   if (mainPath && pkg.texts.has(mainPath)) {
-    const moduleText = pkg.texts.get(mainPath) ?? "";
-    const relLinks = Array.from(moduleText.matchAll(/(?:href|from|url)\(?['"`]\s*\.\/([^'"`)]+)/g))
-      .map((m) => m[1])
-      .filter((p) => /\.(css|woff2?|ttf|otf|png|jpe?g|webp|svg|mp4|webm)$/i.test(p));
+    // Comments are blanked so an asset named only in prose is not "referenced".
+    const moduleText = stripComments(pkg.texts.get(mainPath) ?? "");
+    // Match any quoted "./…" that looks like an asset, whatever precedes it.
+    // The previous pattern required a lowercase href/from/url, so it missed
+    // `new URL('./style.css', import.meta.url)` — the very form C-06 tells
+    // authors to use — and a missing asset went unreported.
+    const relLinks = Array.from(
+      moduleText.matchAll(/['"`]\s*\.\/([^'"`)\n]+?\.(?:css|woff2?|ttf|otf|png|jpe?g|webp|svg|mp4|webm))\s*['"`]/gi),
+    ).map((m) => m[1]);
     const missing = Array.from(new Set(relLinks)).filter((p) => !pkg.files.has(p));
     if (missing.length > 0) {
       findings.push({

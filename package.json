@@ -12,13 +12,16 @@
     "typecheck": "turbo typecheck",
     "clean": "turbo clean",
     "setup:hooks": "git config core.hooksPath .githooks",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "prepare": "git config core.hooksPath .githooks || true",
+    "check:selftest": "node scripts/check-selftest.mjs"
   },
   "devDependencies": {
     "turbo": "^2.5.0",
     "typescript": "^5.8.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
