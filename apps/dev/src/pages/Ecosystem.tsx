@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   BookOpen,
   Briefcase,
+  Clapperboard,
   ExternalLink,
   FileCode2,
   Gamepad2,
@@ -41,6 +42,7 @@ interface Category extends Omit<CategoryJson, "icon"> {
 const ICON_MAP: Readonly<Record<string, LucideIcon>> = {
   BookOpen,
   Briefcase,
+  Clapperboard,
   FileCode2,
   Gamepad2,
   Heart,

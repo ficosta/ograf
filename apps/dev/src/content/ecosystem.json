@@ -66,6 +66,18 @@
         "url": "https://ferryman.streamshapers.com",
         "type": "oss",
         "stars": "30"
+      },
+      {
+        "name": "everviz",
+        "desc": "Browser-based interactive maps and charts. Exports OGraf packages using the standard .ograf.json manifest, so one map plays on any compliant renderer.",
+        "url": "https://www.everviz.com",
+        "type": "commercial"
+      },
+      {
+        "name": "StreamShapers OGraf Export",
+        "desc": "After Effects extension that exports OGraf without leaving the app — preflight check and an embedded Ferryman config panel sit inside AE.",
+        "url": "https://www.streamshapers.com/ae-extension/",
+        "type": "commercial"
       }
     ]
   },
@@ -87,6 +99,12 @@
         "desc": "Cross-platform playout client controlling CasparCG, ATEM, OBS, vMix, and HTTP devices.",
         "url": "https://github.com/SuperFlyTV/SuperConductor",
         "type": "oss"
+      },
+      {
+        "name": "coralPlay",
+        "desc": "coralbay.tv's playout automation. Plays Loopic-authored OGraf graphics natively, as overlays or as DVE layouts.",
+        "url": "https://coralbay.tv/products/",
+        "type": "commercial"
       }
     ]
   },
@@ -122,6 +140,38 @@
         "url": "https://github.com/centricular/gstcefsrc",
         "type": "oss",
         "stars": "210"
+      },
+      {
+        "name": "Erizos Studio",
+        "desc": "OGraf ships as an alternative HTML rendering mode in Composer since v3.4, sharing the same LOAD/IN/OUT/SET commands as native projects.",
+        "url": "https://erizos.tv",
+        "type": "commercial"
+      },
+      {
+        "name": "LiveOS",
+        "desc": "NetOn.Live's local, remote and decentralised live production platform, with full OGraf support. NetOn.Live is a founding member of the EBU HTML graphics working group.",
+        "url": "https://www.neton.live",
+        "type": "commercial"
+      },
+      {
+        "name": "BBright Integrated Playout",
+        "desc": "Software playout for UHD and SMPTE ST 2110 with a graphics engine that renders animated OGraf templates directly inside the playout workflow.",
+        "url": "https://www.bbright.com/product/integrated-playout/",
+        "type": "commercial"
+      }
+    ]
+  },
+  {
+    "id": "post",
+    "name": "Post & NLE",
+    "icon": "Clapperboard",
+    "description": "Bring OGraf packages into an edit timeline — the non-live half of the spec.",
+    "items": [
+      {
+        "name": "DaVinci Resolve",
+        "desc": "Native OGraf import since Resolve 21 — drop .json / .lottie into the media pool and they behave like fully rendered animation clips, alpha channel recognised.",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+        "type": "commercial"
       }
     ]
   },
