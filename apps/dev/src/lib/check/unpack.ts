@@ -43,22 +43,54 @@ export async function unpack(file: File): Promise<Pkg> {
   const zip = await JSZip.loadAsync(buf);
 
   const entries = Object.values(zip.files).filter((e) => !e.dir);
-  const allPaths = entries.map((e) => e.name);
-  const rootFolder = detectRootFolder(allPaths);
+  const raw: RawEntry[] = [];
+  for (const entry of entries) {
+    raw.push({ path: entry.name, bytes: () => entry.async("uint8array").then((b) => new Uint8Array(b)) });
+  }
+  return buildPkg(raw, file.name, file.size);
+}
+
+/**
+ * Build a package from a folder the user picked, rather than a zip.
+ *
+ * StreamShapers' validator can only do this in Chromium, because it uses the
+ * File System Access API. `webkitdirectory` is older, uglier and works
+ * everywhere, which matters more for a tool whose whole point is that anyone
+ * can check a package.
+ */
+export async function unpackFiles(fileList: readonly File[]): Promise<Pkg> {
+  const raw: RawEntry[] = fileList.map((f) => ({
+    // webkitRelativePath is "<picked folder>/a/b.css"; plain drops have none.
+    path: (f as File & { webkitRelativePath?: string }).webkitRelativePath || f.name,
+    bytes: async () => new Uint8Array(await f.arrayBuffer()),
+  }));
+  const total = fileList.reduce((n, f) => n + f.size, 0);
+  const name = raw[0]?.path.split("/")[0] ?? "folder";
+  return buildPkg(raw, name, total);
+}
+
+interface RawEntry {
+  readonly path: string;
+  readonly bytes: () => Promise<Uint8Array>;
+}
+
+/** Shared by both entry points, so a folder and a zip are checked identically. */
+async function buildPkg(entries: readonly RawEntry[], sourceName: string, sourceSize: number): Promise<Pkg> {
+  const rootFolder = detectRootFolder(entries.map((e) => e.path));
 
   const files = new Map<string, Uint8Array>();
   const texts = new Map<string, string>();
   let hasHiddenFiles = false;
 
   for (const entry of entries) {
-    if (isHidden(entry.name)) {
+    if (isHidden(entry.path)) {
       hasHiddenFiles = true;
       continue;
     }
-    const relPath = stripRoot(entry.name, rootFolder);
+    const relPath = stripRoot(entry.path, rootFolder);
     if (!relPath) continue;
 
-    const bytes = new Uint8Array(await entry.async("uint8array"));
+    const bytes = await entry.bytes();
     files.set(relPath, bytes);
 
     if (TEXT_EXTENSIONS.has(extension(relPath)) && bytes.byteLength < 1_000_000) {
@@ -84,8 +116,8 @@ export async function unpack(file: File): Promise<Pkg> {
       : null;
 
   return {
-    zipName: file.name,
-    zipSize: file.size,
+    zipName: sourceName,
+    zipSize: sourceSize,
     rootFolder,
     files,
     texts,

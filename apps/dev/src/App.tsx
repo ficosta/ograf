@@ -25,6 +25,7 @@ const About = lazy(() => import("./pages/About").then((m) => ({ default: m.About
 const History = lazy(() => import("./pages/History").then((m) => ({ default: m.History })));
 const News = lazy(() => import("./pages/News").then((m) => ({ default: m.News })));
 const Spec = lazy(() => import("./pages/Spec").then((m) => ({ default: m.Spec })));
+const CheckRules = lazy(() => import("./pages/CheckRules").then((m) => ({ default: m.CheckRules })));
 const Check = lazy(() => import("./pages/Check").then((m) => ({ default: m.Check })));
 const Tools = lazy(() => import("./pages/Tools").then((m) => ({ default: m.Tools })));
 const SchemaExplorer = lazy(() => import("./pages/SchemaExplorer").then((m) => ({ default: m.SchemaExplorer })));
@@ -70,7 +71,8 @@ export function App() {
             <Route path="/spec" element={<Spec />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/tools/schema-explorer" element={<SchemaExplorer />} />
-            <Route path="/check" element={<Check />} />
+            <Route path="/check/rules" element={<CheckRules />} />
+        <Route path="/check" element={<Check />} />
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

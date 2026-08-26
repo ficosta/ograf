@@ -43,6 +43,7 @@ const STATIC_ROUTES = [
   { path: "/tools", priority: "0.8", changefreq: "monthly", sources: [`${SRC}/pages/Tools.tsx`] },
   { path: "/tools/schema-explorer", priority: "0.7", changefreq: "monthly", sources: [`${SRC}/pages/SchemaExplorer.tsx`, `${SRC}/lib/schema`] },
   { path: "/check", priority: "0.8", changefreq: "monthly", sources: [`${SRC}/pages/Check.tsx`, `${SRC}/lib/check`, `${SRC}/components/check`, `${CONTENT}/check-rules.json`] },
+  { path: "/check/rules", priority: "0.6", changefreq: "monthly", sources: [`${SRC}/pages/CheckRules.tsx`, `${CONTENT}/check-rules.json`] },
   { path: "/about", priority: "0.5", changefreq: "yearly", sources: [`${SRC}/pages/About.tsx`] },
 ];
 

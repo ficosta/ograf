@@ -46,6 +46,7 @@ const STATIC_ROUTES = [
   { path: "/tools", title: "Tools", description: "OGraf developer tools on ograf.dev — a client-side package checker with a runtime sandbox, plus a schema explorer. All browser-based, no upload." },
   { path: "/tools/schema-explorer", title: "Schema Explorer", description: "Browse the OGraf manifest schema interactively, in plain language, with every operator-input type catalogued." },
   { path: "/check", title: "OGraf Package Checker", description: "A comprehensive in-browser validator for OGraf Graphics packages. Drop a .zip and get a structured report — nothing is uploaded." },
+  { path: "/check/rules", title: "Package Checker rules", description: "Every rule the OGraf Package Checker applies, listed by id across seven categories." },
   { path: "/about", title: "About", description: "About ograf.dev — a community-driven portal for the OGraf open broadcast graphics standard." },
 ];
 

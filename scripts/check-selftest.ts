@@ -214,6 +214,9 @@ const CASES: [
     f["graphic.mjs"] = GOOD_MODULE.replace("./style.css", "./missing.css");
   }],
   ["S-04", "no README", (f) => { delete f["README.md"]; }],
+  ["S-10", "two manifests in one package", (f) => {
+    f["second.ograf.json"] = f["selftest.ograf.json"];
+  }],
 
   ["C-09", "declares non-real-time support without the methods for it", (f) => mutate(f, (m) => {
     m.supportsNonRealTime = true;

@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "total": 82,
+  "total": 83,
   "categories": {
     "manifest": {
       "count": 19,
@@ -24,6 +24,84 @@
         "M-17",
         "M-18",
         "M-19"
+      ],
+      "rules": [
+        {
+          "id": "M-01",
+          "title": "Missing manifest"
+        },
+        {
+          "id": "M-02",
+          "title": "Manifest is not valid JSON"
+        },
+        {
+          "id": "M-03",
+          "title": "Schema violation"
+        },
+        {
+          "id": "M-04",
+          "title": "customAction missing `name`"
+        },
+        {
+          "id": "M-05",
+          "title": "Duplicate customAction id"
+        },
+        {
+          "id": "M-06",
+          "title": "customAction has no schema"
+        },
+        {
+          "id": "M-07",
+          "title": "Optional — no description"
+        },
+        {
+          "id": "M-08",
+          "title": "`main` file not found in package"
+        },
+        {
+          "id": "M-09",
+          "title": "Valid semver version"
+        },
+        {
+          "id": "M-10",
+          "title": "`$schema` is not the current EBU URL"
+        },
+        {
+          "id": "M-11",
+          "title": "Graphic declares no supported render mode"
+        },
+        {
+          "id": "M-12",
+          "title": "`id` contains a slash"
+        },
+        {
+          "id": "M-13",
+          "title": "`main` is not a .js or .mjs file"
+        },
+        {
+          "id": "M-14",
+          "title": "`stepCount` is below the allowed minimum"
+        },
+        {
+          "id": "M-15",
+          "title": "`author` has no `name`"
+        },
+        {
+          "id": "M-16",
+          "title": "Duplicate actionDuration for \\"
+        },
+        {
+          "id": "M-17",
+          "title": "Unsatisfiable requirement on \\"
+        },
+        {
+          "id": "M-18",
+          "title": "Thumbnail is not a PNG, JPG, GIF or webp"
+        },
+        {
+          "id": "M-19",
+          "title": "Manifest filename does not end in `.ograf.json`"
+        }
       ]
     },
     "gdd": {
@@ -45,10 +123,76 @@
         "G-13",
         "G-14",
         "G-15"
+      ],
+      "rules": [
+        {
+          "id": "G-00",
+          "title": "GDD schema is well-formed"
+        },
+        {
+          "id": "G-01",
+          "title": "… schema is not an object"
+        },
+        {
+          "id": "G-02",
+          "title": "GDD field has no `type`"
+        },
+        {
+          "id": "G-03",
+          "title": "`gddType` is not a string"
+        },
+        {
+          "id": "G-04",
+          "title": null
+        },
+        {
+          "id": "G-05",
+          "title": null
+        },
+        {
+          "id": "G-06",
+          "title": null
+        },
+        {
+          "id": "G-07",
+          "title": null
+        },
+        {
+          "id": "G-08",
+          "title": "Not every option has a label"
+        },
+        {
+          "id": "G-09",
+          "title": "Array field has no `items`"
+        },
+        {
+          "id": "G-10",
+          "title": "`default` does not match the field type"
+        },
+        {
+          "id": "G-11",
+          "title": "`default` is not one of the allowed values"
+        },
+        {
+          "id": "G-12",
+          "title": "`pattern` is not a valid regular expression"
+        },
+        {
+          "id": "G-13",
+          "title": "… schema root must be \\"
+        },
+        {
+          "id": "G-14",
+          "title": "GDD schema is cyclic or extremely deep"
+        },
+        {
+          "id": "G-15",
+          "title": "file-path default is not in the package"
+        }
       ]
     },
     "structure": {
-      "count": 9,
+      "count": 10,
       "ids": [
         "S-01",
         "S-02",
@@ -58,7 +202,50 @@
         "S-06",
         "S-07",
         "S-08",
-        "S-09"
+        "S-09",
+        "S-10"
+      ],
+      "rules": [
+        {
+          "id": "S-01",
+          "title": "No single top-level folder"
+        },
+        {
+          "id": "S-02",
+          "title": "Main module not declared"
+        },
+        {
+          "id": "S-03",
+          "title": "Referenced asset not in package"
+        },
+        {
+          "id": "S-04",
+          "title": "README present"
+        },
+        {
+          "id": "S-05",
+          "title": "No LICENSE file at root"
+        },
+        {
+          "id": "S-06",
+          "title": "Optional — no preview image"
+        },
+        {
+          "id": "S-07",
+          "title": "Fonts shipped without a licence file"
+        },
+        {
+          "id": "S-08",
+          "title": "OS-generated files inside the zip"
+        },
+        {
+          "id": "S-09",
+          "title": "Large file: …"
+        },
+        {
+          "id": "S-10",
+          "title": "Package contains … manifests"
+        }
       ]
     },
     "module": {
@@ -73,6 +260,44 @@
         "C-07",
         "C-08",
         "C-09"
+      ],
+      "rules": [
+        {
+          "id": "C-01",
+          "title": "Default export is a class extending HTMLElement"
+        },
+        {
+          "id": "C-02",
+          "title": "All six lifecycle methods present"
+        },
+        {
+          "id": "C-03",
+          "title": "Module self-registers with customElements.define"
+        },
+        {
+          "id": "C-04",
+          "title": "Non-async lifecycle method…: …"
+        },
+        {
+          "id": "C-05",
+          "title": "Top-level access to document/window"
+        },
+        {
+          "id": "C-06",
+          "title": "Asset URLs computed from import.meta.url"
+        },
+        {
+          "id": "C-07",
+          "title": "External / bare-module imports"
+        },
+        {
+          "id": "C-08",
+          "title": "Relative asset URL inside innerHTML"
+        },
+        {
+          "id": "C-09",
+          "title": "Non-real-time method… missing: …"
+        }
       ]
     },
     "styling": {
@@ -88,6 +313,48 @@
         "X-07",
         "X-08",
         "X-09"
+      ],
+      "rules": [
+        {
+          "id": "X-00",
+          "title": "No stylesheet found"
+        },
+        {
+          "id": "X-01",
+          "title": "`position: fixed` used"
+        },
+        {
+          "id": "X-02",
+          "title": "Remote @import in CSS"
+        },
+        {
+          "id": "X-03",
+          "title": "Remote font loaded in @font-face"
+        },
+        {
+          "id": "X-04",
+          "title": "`body` selector in stylesheet"
+        },
+        {
+          "id": "X-05",
+          "title": "font-family without a generic fallback"
+        },
+        {
+          "id": "X-06",
+          "title": "`!important` used in stylesheet"
+        },
+        {
+          "id": "X-07",
+          "title": "No positioned elements"
+        },
+        {
+          "id": "X-08",
+          "title": "@font-face portability across mount models"
+        },
+        {
+          "id": "X-09",
+          "title": "Relative @import in CSS"
+        }
       ]
     },
     "assets": {
@@ -98,6 +365,28 @@
         "A-03",
         "A-04",
         "A-05"
+      ],
+      "rules": [
+        {
+          "id": "A-01",
+          "title": "Preview image is not 16:9"
+        },
+        {
+          "id": "A-02",
+          "title": "Preview image larger than 500 KB"
+        },
+        {
+          "id": "A-03",
+          "title": "Shipped font has no licence file"
+        },
+        {
+          "id": "A-04",
+          "title": "Consider WebP for the preview"
+        },
+        {
+          "id": "A-05",
+          "title": "Unrecognised file extension: .…"
+        }
       ]
     },
     "runtime": {
@@ -117,6 +406,64 @@
         "R-12",
         "R-13",
         "R-14"
+      ],
+      "rules": [
+        {
+          "id": "R-01",
+          "title": "Module did not import"
+        },
+        {
+          "id": "R-02",
+          "title": null
+        },
+        {
+          "id": "R-03",
+          "title": null
+        },
+        {
+          "id": "R-04",
+          "title": null
+        },
+        {
+          "id": "R-05",
+          "title": null
+        },
+        {
+          "id": "R-06",
+          "title": null
+        },
+        {
+          "id": "R-07",
+          "title": null
+        },
+        {
+          "id": "R-08",
+          "title": "Uncaught error… during the run"
+        },
+        {
+          "id": "R-09",
+          "title": "Unhandled promise rejection… during the run"
+        },
+        {
+          "id": "R-10",
+          "title": null
+        },
+        {
+          "id": "R-11",
+          "title": "… took longer than … ms"
+        },
+        {
+          "id": "R-12",
+          "title": null
+        },
+        {
+          "id": "R-13",
+          "title": null
+        },
+        {
+          "id": "R-14",
+          "title": null
+        }
       ]
     }
   }

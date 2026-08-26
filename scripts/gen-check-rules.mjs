@@ -33,8 +33,14 @@ const MODULES = {
 };
 
 const RULE_ID = /"([A-Z]-\d{2})"/g;
+/** id → the human title the rule reports, so the rules page needs no second source. */
+const TITLED = /id:\s*"([A-Z]-\d{2})"[\s\S]{0,400}?title:\s*(?:`([^`]*)`|"([^"]*)")/g;
+/** Rules raised through a helper, where severity sits in the call not the object. */
+const PUSHED = /push\(\s*ctx\s*,\s*"([A-Z]-\d{2})"\s*,\s*"(\w+)"\s*,\s*"([^"]*)"/g;
+const ADDED = /add\(\s*"([A-Z]-\d{2})"\s*,\s*"(\w+)"\s*,\s*(?:`([^`]*)`|"([^"]*)")/g;
 
 const byCategory = new Map();
+const titles = new Map();
 for (const [file, category] of Object.entries(MODULES)) {
   const src = readFileSync(resolve(repoRoot, file), "utf8");
   const ids = [...src.matchAll(RULE_ID)].map((m) => m[1]);
@@ -43,6 +49,22 @@ for (const [file, category] of Object.entries(MODULES)) {
   }
   if (!byCategory.has(category)) byCategory.set(category, new Set());
   for (const id of ids) byCategory.get(category).add(id);
+
+  // Titles are best-effort: a rule that reports several different titles keeps
+  // the first, which is enough for an index. The page links to the spec, not to
+  // an exhaustive restatement of every message.
+  for (const re of [TITLED, PUSHED, ADDED]) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(src))) {
+      const id = m[1];
+      const title = (m[4] ?? m[3] ?? m[2] ?? "").trim();
+      // Titles built from template literals carry ${…} interpolations; strip
+      // them rather than printing the source of a message on a reference page.
+      const clean = title.replace(/\$\{[^}]*\}/g, "…").replace(/\s+/g, " ").trim();
+      if (clean && !/^(error|warning|info|pass)$/.test(clean) && !titles.has(id)) titles.set(id, clean);
+    }
+  }
 }
 
 const out = {
@@ -50,7 +72,14 @@ const out = {
   generated: true,
   total: [...byCategory.values()].reduce((n, s) => n + s.size, 0),
   categories: Object.fromEntries(
-    [...byCategory].map(([category, ids]) => [category, { count: ids.size, ids: [...ids].sort() }]),
+    [...byCategory].map(([category, ids]) => [
+      category,
+      {
+        count: ids.size,
+        ids: [...ids].sort(),
+        rules: [...ids].sort().map((id) => ({ id, title: titles.get(id) ?? null })),
+      },
+    ]),
   ),
 };
 

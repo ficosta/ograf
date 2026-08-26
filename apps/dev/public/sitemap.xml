@@ -55,6 +55,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://ograf.dev/check/rules</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://ograf.dev/about</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>yearly</changefreq>

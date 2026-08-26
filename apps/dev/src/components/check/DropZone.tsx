@@ -3,12 +3,15 @@ import { Upload, FileArchive } from "lucide-react";
 
 interface DropZoneProps {
   readonly onFile: (file: File) => void;
+  /** A whole unzipped package folder, for people checking work in progress. */
+  readonly onFolder?: (files: readonly File[]) => void;
   readonly busy: boolean;
 }
 
-export function DropZone({ onFile, busy }: DropZoneProps) {
+export function DropZone({ onFile, onFolder, busy }: DropZoneProps) {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const folderRef = useRef<HTMLInputElement | null>(null);
 
   const accept = useCallback(
     (file: File) => {
@@ -54,8 +57,23 @@ export function DropZone({ onFile, busy }: DropZoneProps) {
       </p>
       <p className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">
         <FileArchive className="h-3.5 w-3.5" strokeWidth={2} />
-        .zip only · stays in your browser · no upload
+        stays in your browser · no upload
       </p>
+      {onFolder && (
+        <button
+          type="button"
+          disabled={busy}
+          onClick={(e) => {
+            // The zone is a <label>, so a click here would open the file picker.
+            e.preventDefault();
+            e.stopPropagation();
+            folderRef.current?.click();
+          }}
+          className="mt-3 text-xs font-medium text-blue-600 underline-offset-2 hover:underline disabled:opacity-50"
+        >
+          or check an unzipped folder
+        </button>
+      )}
       <input
         id="check-dropzone"
         ref={inputRef}
@@ -69,6 +87,23 @@ export function DropZone({ onFile, busy }: DropZoneProps) {
         }}
         className="sr-only"
       />
+      {onFolder && (
+        <input
+          ref={folderRef}
+          type="file"
+          // Non-standard but supported everywhere that matters, including
+          // Firefox and Safari — unlike the File System Access API.
+          {...{ webkitdirectory: "", directory: "" }}
+          multiple
+          disabled={busy}
+          onChange={(e) => {
+            const picked = Array.from(e.currentTarget.files ?? []);
+            if (picked.length > 0) onFolder(picked);
+            if (folderRef.current) folderRef.current.value = "";
+          }}
+          className="sr-only"
+        />
+      )}
     </label>
   );
 }

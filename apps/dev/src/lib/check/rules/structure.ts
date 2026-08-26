@@ -73,6 +73,25 @@ export function checkStructure(pkg: Pkg): readonly Finding[] {
     });
   }
 
+  // S-10: more than one manifest in a package. The checker reports on the first
+  // one it finds, and a renderer picks by its own rule — so which graphic you
+  // get depends on whose code is loading it, which is not a thing to leave to
+  // chance in a package you are about to ship.
+  const manifests = [...pkg.texts.keys()].filter((p) => p.endsWith(".ograf.json"));
+  if (manifests.length > 1) {
+    findings.push({
+      id: "S-10",
+      category: "structure",
+      severity: "warning",
+      title: `Package contains ${manifests.length} manifests`,
+      message:
+        `Found ${manifests.map((m) => `\`${m}\``).join(", ")}. This report covers ` +
+        `\`${pkg.manifestPath ?? manifests[0]}\`. Ship one graphic per package, or be explicit ` +
+        "about which manifest a renderer is meant to load.",
+      path: pkg.manifestPath ?? manifests[0],
+    });
+  }
+
   // S-03: if graphic.mjs links to a stylesheet via relative path, the file should exist
   if (mainPath && pkg.texts.has(mainPath)) {
     // Comments are blanked so an asset named only in prose is not "referenced".

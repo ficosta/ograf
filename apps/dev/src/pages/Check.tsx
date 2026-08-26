@@ -1,13 +1,15 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { Braces, FileJson, FileCode, FileType, Files, Image, Box, ChevronRight, Play, ShieldAlert } from "lucide-react";
 import { useMeta } from "../hooks/useMeta";
+import { ConfirmDialog } from "../components/ConfirmDialog";
+import { canShare, decodeReport, encodeReport } from "../lib/check/share";
 import CHECK_RULES from "../content/check-rules.json";
 import { DropZone } from "../components/check/DropZone";
 import { CheckerSummary } from "../components/check/CheckerSummary";
 import { CheckerResults } from "../components/check/CheckerResults";
 import { RuntimePanel } from "../components/check/RuntimePanel";
-import { runChecks, toMarkdown } from "../lib/check";
+import { runChecks, toMarkdown, unpackFiles } from "../lib/check";
 import type { Finding, Pkg, Report } from "../lib/check";
 import type { RuntimeSession } from "../lib/check/runtime/types";
 import { buildRuntimeFindings } from "../lib/check/runtime/rules";
@@ -26,6 +28,10 @@ export function Check() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [runtimeOn, setRuntimeOn] = useState(false);
+  const [consentOpen, setConsentOpen] = useState(false);
+  const [shareState, setShareState] = useState<"idle" | "copied" | "too-large">("idle");
+  /** A report opened from a shared link: read-only, no package behind it. */
+  const [sharedReport, setSharedReport] = useState<Report | null>(null);
   const [runtimeSession, setRuntimeSession] = useState<RuntimeSession | null>(null);
 
   const handleFile = useCallback(async (file: File) => {
@@ -47,12 +53,34 @@ export function Check() {
     }
   }, []);
 
+  const handleFolder = useCallback(async (files: readonly File[]) => {
+    setBusy(true);
+    setError(null);
+    setReport(null);
+    setPkg(null);
+    setRuntimeOn(false);
+    setRuntimeSession(null);
+    setSharedReport(null);
+    try {
+      const p = await unpackFiles(files);
+      const { report: r } = await runChecks(p);
+      setReport(r);
+      setPkg(p);
+    } catch (err) {
+      console.error(err);
+      setError(err instanceof Error ? err.message : "Failed to check the folder.");
+    } finally {
+      setBusy(false);
+    }
+  }, []);
+
   const runtimeFindings = useMemo<readonly Finding[]>(() => {
     if (!runtimeSession || !pkg) return [];
     return buildRuntimeFindings(runtimeSession, pkg.manifest);
   }, [runtimeSession, pkg]);
 
   const combinedReport = useMemo<Report | null>(() => {
+    if (sharedReport) return sharedReport;
     if (!report) return null;
     if (runtimeFindings.length === 0) return report;
     return {
@@ -65,7 +93,7 @@ export function Check() {
         passes: report.findings.concat(runtimeFindings).filter((f) => f.severity === "pass").length,
       },
     };
-  }, [report, runtimeFindings]);
+  }, [report, runtimeFindings, sharedReport]);
 
   const downloadReport = useCallback(() => {
     if (!combinedReport) return;
@@ -87,25 +115,86 @@ export function Check() {
     setError(null);
     setRuntimeOn(false);
     setRuntimeSession(null);
+    setSharedReport(null);
+    if (window.location.hash) window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
-  const startRuntime = useCallback(() => {
-    if (typeof window !== "undefined" && !window.localStorage.getItem(RUNTIME_CONSENT_KEY)) {
-      const ok = window.confirm(
-        "The runtime sandbox will execute the code inside the .zip you dropped, in a sandboxed iframe on this page. It still doesn't leave your browser.\n\nProceed?"
-      );
-      if (!ok) return;
-      try {
-        window.localStorage.setItem(RUNTIME_CONSENT_KEY, "1");
-      } catch {
-        /* private mode etc. — ignore */
-      }
+  // A /check#r=… link carries a whole report. Decode it once on mount so the
+  // recipient sees the same findings without needing the .zip.
+  useEffect(() => {
+    if (!window.location.hash.startsWith("#r=")) return;
+    let cancelled = false;
+    void decodeReport(window.location.hash).then((r) => {
+      if (!cancelled && r) setSharedReport(r);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const shareReport = useCallback(async () => {
+    if (!combinedReport) return;
+    const fragment = await encodeReport(combinedReport);
+    if (!fragment) {
+      setShareState("too-large");
+      return;
     }
+    const url = `${window.location.origin}/check#${fragment}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState("copied");
+    } catch {
+      // Clipboard denied (insecure context, permissions): put it in the URL bar
+      // instead, so the link is still one keystroke away.
+      window.location.hash = fragment;
+      setShareState("copied");
+    }
+    setTimeout(() => setShareState("idle"), 2500);
+  }, [combinedReport]);
+
+  const startRuntime = useCallback(() => {
+    let consented = false;
+    try {
+      consented = Boolean(window.localStorage.getItem(RUNTIME_CONSENT_KEY));
+    } catch {
+      /* private mode: treat as not consented and ask again */
+    }
+    if (!consented) {
+      setConsentOpen(true);
+      return;
+    }
+    setRuntimeOn(true);
+  }, []);
+
+  const acceptConsent = useCallback(() => {
+    try {
+      window.localStorage.setItem(RUNTIME_CONSENT_KEY, "1");
+    } catch {
+      /* private mode etc. — the sandbox still runs, we just ask again next time */
+    }
+    setConsentOpen(false);
     setRuntimeOn(true);
   }, []);
 
   return (
     <section className="py-16">
+      <ConfirmDialog
+        open={consentOpen}
+        title="Run the graphic in a sandbox?"
+        confirmLabel="Run it"
+        cancelLabel="Not now"
+        onConfirm={acceptConsent}
+        onCancel={() => setConsentOpen(false)}
+      >
+        <p>
+          This executes the JavaScript inside the .zip you dropped, in a sandboxed iframe on this
+          page. Only do it with a package you trust.
+        </p>
+        <p>
+          Nothing is uploaded — the code runs in your browser and the results stay there. We&rsquo;ll
+          remember this choice on this device.
+        </p>
+      </ConfirmDialog>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Link to="/tools" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
@@ -122,9 +211,9 @@ export function Check() {
           </p>
         </div>
 
-        {!report && (
+        {!report && !sharedReport && (
           <>
-            <DropZone onFile={handleFile} busy={busy} />
+            <DropZone onFile={handleFile} onFolder={handleFolder} busy={busy} />
             {error && (
               <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
                 {error}
@@ -134,11 +223,17 @@ export function Check() {
           </>
         )}
 
-        {combinedReport && pkg && (
+        {combinedReport && (pkg || sharedReport) && (
           <div className="space-y-6">
-            <CheckerSummary report={combinedReport} onReset={reset} onDownload={downloadReport} />
+            <CheckerSummary
+              report={combinedReport}
+              onReset={reset}
+              onDownload={downloadReport}
+              onShare={canShare() ? shareReport : undefined}
+              shareState={shareState}
+            />
 
-            {!runtimeOn && (
+            {!runtimeOn && pkg && (
               <button
                 type="button"
                 onClick={startRuntime}
@@ -159,7 +254,7 @@ export function Check() {
               </button>
             )}
 
-            {runtimeOn && (
+            {runtimeOn && pkg && (
               <RuntimePanel key={pkg.zipName} pkg={pkg} onSessionChange={setRuntimeSession} />
             )}
 
@@ -187,7 +282,12 @@ function WhatGetsChecked() {
   ];
   return (
     <div className="mt-10">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">What gets checked</p>
+      <div className="mb-3 flex items-baseline justify-between gap-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">What gets checked</p>
+        <Link to="/check/rules" className="text-xs font-medium text-blue-600 hover:underline">
+          All {CHECK_RULES.total} rules by id →
+        </Link>
+      </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {categories.map((c) => (
           <li key={c.label} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-3">

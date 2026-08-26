@@ -11,7 +11,7 @@ import type { Finding, Pkg, Report, SchemaSource } from "./types";
 
 export type { Finding, Pkg, Report, SchemaSource, Severity, Category } from "./types";
 export { CATEGORY_LABEL, CATEGORY_ORDER } from "./types";
-export { unpack } from "./unpack";
+export { unpack, unpackFiles } from "./unpack";
 export { toMarkdown } from "./report";
 
 export async function runChecks(input: File | Pkg): Promise<{ report: Report; pkg: Pkg }> {

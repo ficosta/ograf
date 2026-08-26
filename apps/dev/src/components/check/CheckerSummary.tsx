@@ -1,4 +1,4 @@
-import { Download, RotateCcw } from "lucide-react";
+import { Download, Link2, RotateCcw } from "lucide-react";
 import type { Report } from "../../lib/check/types";
 import { SchemaBadge } from "./SchemaBadge";
 
@@ -6,9 +6,12 @@ interface CheckerSummaryProps {
   readonly report: Report;
   readonly onReset: () => void;
   readonly onDownload: () => void;
+  /** Absent when the browser cannot compress, or the report is too large for a URL. */
+  readonly onShare?: () => void;
+  readonly shareState?: "idle" | "copied" | "too-large";
 }
 
-export function CheckerSummary({ report, onReset, onDownload }: CheckerSummaryProps) {
+export function CheckerSummary({ report, onReset, onDownload, onShare, shareState = "idle" }: CheckerSummaryProps) {
   const { pkgName, pkgSize, summary, durationMs } = report;
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -20,6 +23,17 @@ export function CheckerSummary({ report, onReset, onDownload }: CheckerSummaryPr
           </p>
         </div>
         <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
+          {onShare && (
+            <button
+              type="button"
+              onClick={onShare}
+              title="Copy a link that carries this whole report. Nothing is uploaded — the report travels inside the URL fragment."
+              className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200"
+            >
+              <Link2 className="h-3.5 w-3.5" strokeWidth={2} />
+              {shareState === "copied" ? "Link copied" : shareState === "too-large" ? "Too big to link" : "Copy link"}
+            </button>
+          )}
           <button
             type="button"
             onClick={onDownload}
