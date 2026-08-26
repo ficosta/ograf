@@ -13,6 +13,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="election-bars-root">
   <div class="election">
     <div class="election-container">
       <div class="election-header">
@@ -21,6 +22,7 @@ const TEMPLATE = `
       </div>
       <div class="election-bars"></div>
     </div>
+  </div>
   </div>
 `;
 

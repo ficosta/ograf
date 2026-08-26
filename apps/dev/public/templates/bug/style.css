@@ -1,21 +1,13 @@
-/* OGraf Bug / LIVE — corner indicator with a pulsing dot.
- * Loaded via <link rel="stylesheet"> from graphic.mjs. @font-face URLs
- * resolve relative to this file, so the woff2s in ./fonts/ just work. */
+/* Fonts are bundled in ./fonts/ and referenced relatively: @font-face URLs
+ * resolve against this stylesheet, so the package renders identically on an
+ * air-gapped playout box — no network at render time. Licence in fonts/. */
 
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/Inter-SemiBold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('./fonts/Inter-ExtraBold.woff2') format('woff2');
+  font-weight: 100 900;          /* variable axis — one file covers every weight */
+  font-display: block;           /* block, not swap: never flash a fallback on air */
+  src: url('./fonts/Inter-Variable.woff2') format('woff2-variations');
 }
 
 .bug, .bug *, .bug *::before, .bug *::after {

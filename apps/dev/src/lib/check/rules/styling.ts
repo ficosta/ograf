@@ -1,4 +1,5 @@
 import type { Finding, Pkg } from "../types";
+import { stripCssComments } from "./strip-comments";
 
 const STYLE_EXTENSIONS = ["css"];
 
@@ -33,7 +34,10 @@ export function checkStyling(pkg: Pkg): readonly Finding[] {
     return findings;
   }
 
-  for (const [path, css] of styleEntries) {
+  for (const [path, rawCss] of styleEntries) {
+    // Scan declarations, not prose: a comment explaining why the sheet avoids
+    // `position: fixed` must not be reported as using it.
+    const css = stripCssComments(rawCss);
     // X-01: position: fixed
     if (/\bposition\s*:\s*fixed\b/i.test(css)) {
       findings.push({
@@ -89,8 +93,11 @@ export function checkStyling(pkg: Pkg): readonly Finding[] {
       });
     }
 
-    // X-05: font-family fallback
-    const fontFamilies = Array.from(css.matchAll(/font-family\s*:\s*([^;]+);/gi)).map((m) => m[1].trim());
+    // X-05: font-family fallback.
+    // @font-face blocks are excluded: there `font-family` names the family
+    // being defined, and a generic fallback would be meaningless (and invalid).
+    const cssOutsideFontFace = css.replace(/@font-face\s*\{[^}]*\}/gi, "");
+    const fontFamilies = Array.from(cssOutsideFontFace.matchAll(/font-family\s*:\s*([^;]+);/gi)).map((m) => m[1].trim());
     for (const decl of fontFamilies) {
       if (!/(sans-serif|serif|monospace|system-ui|ui-sans-serif|ui-serif|ui-monospace)\s*;?\s*$/i.test(decl + ";")) {
         findings.push({

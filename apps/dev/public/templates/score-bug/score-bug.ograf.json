@@ -16,7 +16,8 @@
     {
       "id": "goal",
       "name": "Goal",
-      "description": "Flash the scoreboard to celebrate a goal."
+      "description": "Flash the scoreboard to celebrate a goal.",
+      "schema": null
     }
   ],
   "schema": {

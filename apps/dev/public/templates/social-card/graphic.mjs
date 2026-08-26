@@ -13,6 +13,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="social-card-root">
   <div class="social">
     <div class="social-card">
       <div class="social-header">
@@ -27,6 +28,7 @@ const TEMPLATE = `
       </div>
       <div class="social-text"></div>
     </div>
+  </div>
   </div>
 `;
 

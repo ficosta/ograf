@@ -1,10 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+/* Fonts are bundled in ./fonts/ and referenced relatively: @font-face URLs
+ * resolve against this stylesheet, so the package renders identically on an
+ * air-gapped playout box — no network at render time. Licence in fonts/. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;          /* variable axis — one file covers every weight */
+  font-display: block;           /* block, not swap: never flash a fallback on air */
+  src: url('./fonts/Inter-Variable.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+  src: url('./fonts/InstrumentSerif-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('./fonts/InstrumentSerif-Regular.woff2') format('woff2');
+}
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: transparent; overflow: hidden; }
+
+/* The graphic's own root. `position: absolute; inset: 0` fills whatever box the
+ * renderer hands us: in an iframe mount that is the frame, and inside a shadow
+ * root or a positioned container it is that container. `position: fixed` would
+ * escape to the browser viewport in the second case. The package never styles
+ * `body` — the renderer owns the document, not the graphic. */
+.quote-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
 
 .quote {
-  position: fixed;
+  position: absolute;
   inset: 0;
   display: flex;
   align-items: center;

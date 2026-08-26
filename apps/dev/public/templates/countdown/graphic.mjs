@@ -15,6 +15,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="countdown-root">
   <div class="countdown">
     <div class="countdown-card">
       <div class="countdown-label"></div>
@@ -22,6 +23,7 @@ const TEMPLATE = `
         <span class="countdown-mins"></span><span class="countdown-sep">:</span><span class="countdown-secs"></span>
       </div>
     </div>
+  </div>
   </div>
 `;
 

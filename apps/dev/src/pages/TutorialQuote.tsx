@@ -74,8 +74,8 @@ export function TutorialQuote() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS — staggered transitions</h2>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.quote {
-  position: fixed;
-  inset: 0;            /* Full screen */
+  position: absolute;   /* against the graphic's root, not the viewport */
+  inset: 0;            /* fills the render area */
   opacity: 0;
 }
 

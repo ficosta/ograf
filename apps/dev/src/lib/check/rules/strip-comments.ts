@@ -117,3 +117,43 @@ export function stripComments(source: string): string {
 
   return out.join("");
 }
+
+/**
+ * Blank out CSS comments, preserving offsets and newlines like stripComments().
+ *
+ * CSS has only block comments, and they cannot nest. Strings are skipped so a
+ * `content: "/*"` declaration or a url() containing `/*` survives intact.
+ */
+export function stripCssComments(source: string): string {
+  const out = source.split("");
+  const n = source.length;
+  let i = 0;
+
+  while (i < n) {
+    const c = source[i];
+
+    if (c === "/" && source[i + 1] === "*") {
+      let j = i + 2;
+      while (j < n && !(source[j] === "*" && source[j + 1] === "/")) j++;
+      const end = Math.min(j + 2, n);
+      for (let k = i; k < end; k++) if (out[k] !== "\n") out[k] = " ";
+      i = end;
+      continue;
+    }
+
+    if (c === '"' || c === "'") {
+      let j = i + 1;
+      while (j < n && source[j] !== c) {
+        if (source[j] === "\\") j++;
+        else if (source[j] === "\n") break;
+        j++;
+      }
+      i = j + 1;
+      continue;
+    }
+
+    i++;
+  }
+
+  return out.join("");
+}

@@ -123,7 +123,7 @@ async load({ data }) {
               The breaking news alert uses a dark semi-transparent backdrop, a bold red badge, and a pulsing red dot to convey urgency. The staggered reveal uses increasing <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">transition-delay</code> values for each element.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.breaking-overlay {
-  position: fixed;
+  position: absolute;   /* against the graphic's root, not the viewport */
   inset: 0;
   background: rgba(10, 10, 15, 0.85);
   display: flex;

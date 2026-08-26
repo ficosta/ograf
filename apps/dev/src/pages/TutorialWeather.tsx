@@ -131,7 +131,7 @@ async playAction() {
               The weather card uses a two-part vertical layout. The main section holds the current conditions large and prominent, while the forecast row is compact with evenly-spaced day cards.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.weather-card {
-  position: fixed;
+  position: absolute;   /* against the graphic's root, not the viewport */
   bottom: 60px;
   left: 48px;
   width: 380px;

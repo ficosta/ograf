@@ -126,7 +126,7 @@ export function TutorialScoreBug() {
               The goal flash is a full-width overlay that pulses with the scoring team's color. The score number itself also scales up briefly with a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">pulse</code> class.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.score-bug {
-  position: fixed;
+  position: absolute;   /* against the graphic's root, not the viewport */
   top: 32px;
   left: 48px;
   background: rgba(15, 15, 25, 0.92);

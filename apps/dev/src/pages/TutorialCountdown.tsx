@@ -144,7 +144,7 @@ async dispose() {
               Each second tick gets a subtle scale animation on the digits. When urgency kicks in, the entire timer shifts to red with a pulsing glow.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.countdown {
-  position: fixed;
+  position: absolute;   /* against the graphic's root, not the viewport */
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%) scale(0.9);

@@ -13,6 +13,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="sport-lineup-root">
   <div class="lineup">
     <div class="lineup-container">
       <div class="lineup-header">
@@ -25,6 +26,7 @@ const TEMPLATE = `
         <span class="lineup-coach"></span>
       </div>
     </div>
+  </div>
   </div>
 `;
 

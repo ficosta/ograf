@@ -17,6 +17,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="score-bug-root">
   <div class="score-bug">
     <div class="score-bug-inner">
       <div class="score-team home">
@@ -32,6 +33,7 @@ const TEMPLATE = `
         <span class="score-team-name away-name"></span>
       </div>
     </div>
+  </div>
   </div>
 `;
 

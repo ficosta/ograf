@@ -119,7 +119,7 @@ async stopAction() {
               The card slides in from the right edge with a blue left-border accent. The avatar circle uses a gradient background that gives each card a unique but consistent feel.
             </p>
             <CodeBlock filename="style.css (key parts)" language="CSS" code={`.social-card {
-  position: fixed;
+  position: absolute;   /* against the graphic's root, not the viewport */
   top: 50%;
   right: 48px;
   transform: translateY(-50%) translateX(30px);

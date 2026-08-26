@@ -15,6 +15,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="quote-root">
   <div class="quote">
     <div class="quote-bg"></div>
     <div class="quote-content">
@@ -26,6 +27,7 @@ const TEMPLATE = `
         <div class="quote-role"></div>
       </div>
     </div>
+  </div>
   </div>
 `;
 

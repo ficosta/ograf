@@ -13,6 +13,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="weather-root">
   <div class="weather">
     <div class="weather-card">
       <div class="weather-main">
@@ -25,6 +26,7 @@ const TEMPLATE = `
       </div>
       <div class="weather-forecast"></div>
     </div>
+  </div>
   </div>
 `;
 

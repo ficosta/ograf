@@ -20,6 +20,7 @@ const STYLE_URL = new URL('./style.css', import.meta.url).href;
 
 const TEMPLATE = `
   <link rel="stylesheet" href="${STYLE_URL}">
+  <div class="breaking-news-root">
   <div class="breaking">
     <div class="breaking-overlay"></div>
     <div class="breaking-content">
@@ -30,6 +31,7 @@ const TEMPLATE = `
       <div class="breaking-headline"></div>
       <div class="breaking-line"></div>
     </div>
+  </div>
   </div>
 `;
 
