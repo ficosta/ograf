@@ -1,6 +1,7 @@
-import Ajv from "ajv";
+import Ajv2020 from "ajv/dist/2020";
+import type { ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
-import { OGRAF_MANIFEST_SCHEMA } from "./schema";
+import { OGRAF_SCHEMAS, OGRAF_SCHEMA_ROOT_ID } from "./schema";
 
 export interface ValidationIssue {
   readonly severity: "error" | "warning" | "info";
@@ -14,10 +15,24 @@ export interface ValidationResult {
   readonly issues: readonly ValidationIssue[];
 }
 
-const ajv = new Ajv({ allErrors: true, verbose: true });
-addFormats(ajv);
+/**
+ * The vendored spec schemas are 2020-12 and reference each other by $id, so
+ * every sibling is registered before the root is compiled — that keeps the
+ * whole thing offline. Compilation is lazy so importing this module can never
+ * throw at load time.
+ */
+let compiled: ValidateFunction | null = null;
 
-const validateSchema = ajv.compile(OGRAF_MANIFEST_SCHEMA);
+function getValidator(): ValidateFunction {
+  if (compiled) return compiled;
+  const ajv = new Ajv2020({ allErrors: true, verbose: true, strict: false, validateSchema: false });
+  addFormats(ajv);
+  for (const [id, schema] of Object.entries(OGRAF_SCHEMAS)) {
+    if (id !== OGRAF_SCHEMA_ROOT_ID) ajv.addSchema(schema as object, id);
+  }
+  compiled = ajv.compile(OGRAF_SCHEMAS[OGRAF_SCHEMA_ROOT_ID] as object);
+  return compiled;
+}
 
 function createBestPracticeWarnings(
   manifest: Record<string, unknown>
@@ -89,12 +104,13 @@ export function validate(input: string): ValidationResult {
     };
   }
 
-  const schemaValid = validateSchema(manifest);
+  const validateFn = getValidator();
+  const schemaValid = validateFn(manifest);
 
   const issues: ValidationIssue[] = [];
 
-  if (!schemaValid && validateSchema.errors) {
-    for (const err of validateSchema.errors) {
+  if (!schemaValid && validateFn.errors) {
+    for (const err of validateFn.errors) {
       issues.push({
         severity: "error",
         message: err.message ?? "Schema validation error",

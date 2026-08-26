@@ -1,8 +1,7 @@
 import Ajv2020 from "ajv/dist/2020";
-import AjvDraft07 from "ajv";
 import type { ErrorObject, ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
-import { OGRAF_MANIFEST_SCHEMA } from "@ograf/validator";
+import { OGRAF_SCHEMAS, OGRAF_SCHEMA_ROOT_ID, PINNED_COMMIT } from "@ograf/validator";
 import type { SchemaSource } from "./types";
 
 export const LIVE_SCHEMA_URL =
@@ -86,15 +85,24 @@ async function compileLive(): Promise<CompiledSchema> {
 }
 
 function compileBundled(note: string): CompiledSchema {
-  // Bundled snapshot is draft-07.
-  const ajv = new AjvDraft07({ allErrors: true, strict: false });
+  // The vendored snapshot is the official 2020-12 schema set, so it compiles
+  // with the same Ajv variant as the live path — an offline run and an online
+  // run apply identical rules.
+  // validateSchema:false — the snapshot comes from the spec repo at a pinned
+  // commit, and checking it against the 2020-12 meta-schema would need the very
+  // network this path exists to do without.
+  const ajv = new Ajv2020({ allErrors: true, strict: false, validateSchema: false });
   addFormats(ajv);
-  const validate = ajv.compile(OGRAF_MANIFEST_SCHEMA as object);
+  // Register every $ref target up front so compile() needs no network.
+  for (const [id, schema] of Object.entries(OGRAF_SCHEMAS)) {
+    if (id !== OGRAF_SCHEMA_ROOT_ID) ajv.addSchema(schema as object, id);
+  }
+  const validate = ajv.compile(OGRAF_SCHEMAS[OGRAF_SCHEMA_ROOT_ID] as object);
   return {
     validate,
     source: {
       kind: "bundled",
-      url: "@ograf/validator (bundled snapshot)",
+      url: `ebu/ograf@${PINNED_COMMIT.slice(0, 9)} (vendored snapshot)`,
       fetchedAt: new Date().toISOString(),
       note,
     },

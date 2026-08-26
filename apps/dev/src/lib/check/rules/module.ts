@@ -1,4 +1,5 @@
 import type { Finding, Pkg } from "../types";
+import { stripComments } from "./strip-comments";
 
 const LIFECYCLE_METHODS = ["load", "playAction", "updateAction", "stopAction", "customAction", "dispose"] as const;
 
@@ -16,7 +17,10 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
     // M-08 / S-02 will already have surfaced this; skip here.
     return findings;
   }
-  const source = pkg.texts.get(mainPath) ?? "";
+  const raw = pkg.texts.get(mainPath) ?? "";
+  // Comments are blanked (offsets preserved) so a doc comment that merely
+  // names a lifecycle method can't be mistaken for a declaration.
+  const source = stripComments(raw);
 
   // C-01: default export class extending HTMLElement
   const hasClassDefault = /export\s+default\s+class\s+\w+\s+extends\s+HTMLElement/.test(source);
@@ -96,12 +100,16 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
     });
   }
 
-  // C-04: lifecycle methods are async
+  // C-04: lifecycle methods are async.
+  // Every occurrence is considered, not just the first: a class can declare
+  // the method well after some other reference to it, and only a declaration
+  // that is actually `async` counts as compliant.
   const nonAsync: string[] = [];
   for (const method of LIFECYCLE_METHODS) {
-    const decl = new RegExp(`(?:^|[\\s{;])(async\\s+)?${method}\\s*\\(`);
-    const m = decl.exec(source);
-    if (m && !m[1]) nonAsync.push(method);
+    const decl = new RegExp(`(?:^|[\\s{;])(async\\s+)?${method}\\s*\\(`, "g");
+    const hits = Array.from(source.matchAll(decl));
+    if (hits.length === 0) continue;
+    if (!hits.some((h) => Boolean(h[1]))) nonAsync.push(method);
   }
   if (nonAsync.length > 0) {
     findings.push({
