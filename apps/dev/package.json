@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node ../../scripts/gen-check-rules.mjs && node ../../scripts/gen-template-zips.mjs && node ../../scripts/gen-sitemap.mjs",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node ../../scripts/prerender.mjs && node ../../scripts/gen-llms-txt.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/"

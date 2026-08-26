@@ -2,3 +2,9 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ograf.dev/sitemap.xml
+
+# Plain-text summary of this site for AI agents, so they do not have to
+# execute JavaScript or crawl the nav to find out what OGraf is.
+# https://llmstxt.org/
+# /llms.txt       — what the site is, plus an annotated link index
+# /llms-full.txt  — the same plus ecosystem, events, FAQ and checker rules

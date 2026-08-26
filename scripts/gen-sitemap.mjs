@@ -29,6 +29,7 @@ const STATIC_ROUTES = [
   { path: "/history", priority: "0.6", changefreq: "monthly" },
   { path: "/news", priority: "0.7", changefreq: "weekly" },
   { path: "/tools", priority: "0.8", changefreq: "monthly" },
+  { path: "/tools/schema-explorer", priority: "0.7", changefreq: "monthly" },
   { path: "/check", priority: "0.8", changefreq: "monthly" },
   { path: "/about", priority: "0.5", changefreq: "yearly" },
 ];
