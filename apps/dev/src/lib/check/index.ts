@@ -1,6 +1,7 @@
 import { unpack } from "./unpack";
 import { getSchemaValidator } from "./remote-schema";
 import { checkManifest } from "./rules/manifest";
+import { checkManifestCross } from "./rules/manifest-cross";
 import { checkGdd } from "./rules/gdd";
 import { checkStructure } from "./rules/structure";
 import { checkModule } from "./rules/module";
@@ -19,6 +20,7 @@ export async function runChecks(input: File | Pkg): Promise<{ report: Report; pk
   const pkg = isPkg(input) ? input : await unpack(input);
 
   const manifestFindings = await checkManifest(pkg);
+  const crossFindings = checkManifestCross(pkg);
   const gddFindings = checkGdd(pkg);
   const structureFindings = checkStructure(pkg);
   const moduleFindings = checkModule(pkg);
@@ -27,6 +29,7 @@ export async function runChecks(input: File | Pkg): Promise<{ report: Report; pk
 
   const findings: Finding[] = [
     ...manifestFindings,
+    ...crossFindings,
     ...gddFindings,
     ...structureFindings,
     ...moduleFindings,

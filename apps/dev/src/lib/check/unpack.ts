@@ -106,5 +106,28 @@ function findManifestPath(texts: ReadonlyMap<string, string>): string | null {
   for (const path of texts.keys()) {
     if (path.endsWith(".ograf.json")) return path;
   }
+  // Last resort: a JSON file that looks like an OGraf manifest but is named
+  // wrongly. Reporting "rename this to <name>.ograf.json" is far more use to
+  // the author than "no manifest found", which is what they used to get.
+  for (const [path, text] of texts) {
+    if (!path.endsWith(".json")) continue;
+    if (looksLikeManifest(text)) return path;
+  }
   return null;
+}
+
+/** Cheap structural sniff — enough to tell a manifest from any other JSON. */
+function looksLikeManifest(text: string): boolean {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    return false;
+  }
+  if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) return false;
+  const o = parsed as Record<string, unknown>;
+  const schemaLooksOgraf = typeof o.$schema === "string" && o.$schema.includes("ograf");
+  const hasCoreFields =
+    typeof o.id === "string" && typeof o.name === "string" && typeof o.main === "string";
+  return schemaLooksOgraf || hasCoreFields;
 }

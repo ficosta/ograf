@@ -129,6 +129,13 @@ async function idsFor(files: Files, rootFolder: string | null = "selftest"): Pro
   );
 }
 
+/** Apply a mutation to the parsed manifest and write it back. */
+function mutate(f: Files, fn: (m: Record<string, unknown>) => void): void {
+  const m = JSON.parse(f["selftest.ograf.json"]);
+  fn(m);
+  f["selftest.ograf.json"] = JSON.stringify(m);
+}
+
 /** Replace manifest.schema's properties with one hand-crafted field map. */
 function setSchema(f: Files, properties: Record<string, unknown>): void {
   const m = JSON.parse(f["selftest.ograf.json"]);
@@ -137,7 +144,12 @@ function setSchema(f: Files, properties: Record<string, unknown>): void {
 }
 
 /** Each case mutates the baseline in one way and names the rule that must fire. */
-const CASES: [rule: string, what: string, mutate: (f: Files) => void][] = [
+const CASES: [
+  rule: string,
+  what: string,
+  mutate: (f: Files) => void,
+  opts?: { alsoFiles?: (f: Files) => void },
+][] = [
   ["M-01", "no manifest at all", (f) => { delete f["selftest.ograf.json"]; }],
   ["M-02", "manifest is not valid JSON", (f) => { f["selftest.ograf.json"] = "{ nope"; }],
   ["M-03", "manifest missing required supportsRealTime", (f) => {
@@ -203,6 +215,38 @@ const CASES: [rule: string, what: string, mutate: (f: Files) => void][] = [
   }],
   ["S-04", "no README", (f) => { delete f["README.md"]; }],
 
+  // --- cross-field manifest ---
+  ["M-11", "supports neither render mode", (f) => mutate(f, (m) => {
+    m.supportsRealTime = false; m.supportsNonRealTime = false;
+  })],
+  ["M-12", "id contains a slash", (f) => mutate(f, (m) => { m.id = "dev/selftest"; })],
+  ["M-13", "main is not a .js or .mjs file", (f) => mutate(f, (m) => {
+    m.main = "graphic.txt";
+  }), { alsoFiles: (f) => { f["graphic.txt"] = f["graphic.mjs"]; delete f["graphic.mjs"]; } }],
+  ["M-14", "stepCount below the allowed minimum", (f) => mutate(f, (m) => { m.stepCount = -5; })],
+  ["M-15", "author object without a name", (f) => mutate(f, (m) => {
+    m.author = { url: "https://ograf.dev" };
+  })],
+  ["M-16", "actionDuration points at an undeclared customAction", (f) => mutate(f, (m) => {
+    m.actionDurations = [{ type: "customAction", customActionId: "nope", duration: 500 }];
+  })],
+  ["M-16", "two durations for the same action", (f) => mutate(f, (m) => {
+    m.actionDurations = [{ type: "playAction", duration: 500 }, { type: "playAction", duration: 900 }];
+  })],
+  ["M-17", "resolution requirement with min above max", (f) => mutate(f, (m) => {
+    m.renderRequirements = [{ resolution: { width: { min: 1920, max: 1280 } } }];
+  })],
+  ["M-18", "thumbnail file missing from the package", (f) => mutate(f, (m) => {
+    m.thumbnails = [{ file: "nope.png" }];
+  })],
+  ["M-18", "thumbnail in a format the spec does not name", (f) => mutate(f, (m) => {
+    m.thumbnails = [{ file: "preview.bmp" }];
+  }), { alsoFiles: (f) => { f["preview.bmp"] = f["preview.png"]; } }],
+  ["M-19", "manifest filename does not end in .ograf.json", (f) => {
+    f["manifest.json"] = f["selftest.ograf.json"];
+    delete f["selftest.ograf.json"];
+  }],
+
   // --- GDD (Graphics Data Definition) ---
   ["G-02", "field with no type", (f) => setSchema(f, { headline: { title: "H" } })],
   ["G-02", "field with a type outside the six allowed", (f) => setSchema(f, { headline: { type: "text" } })],
@@ -265,9 +309,10 @@ async function main() {
   }
 
   console.log("\nnegative cases (each mutation must make its rule fire)");
-  for (const [rule, what, mutate] of CASES) {
+  for (const [rule, what, mutateCase, opts] of CASES) {
     const files = baseline();
-    mutate(files);
+    opts?.alsoFiles?.(files);
+    mutateCase(files);
     let fired: Set<string>;
     try {
       fired = await idsFor(files);
