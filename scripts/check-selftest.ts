@@ -15,6 +15,8 @@
 
 import JSZip from "jszip";
 import { runChecks } from "../apps/dev/src/lib/check/index";
+import { buildRuntimeFindings } from "../apps/dev/src/lib/check/runtime/rules";
+import type { RuntimeSession } from "../apps/dev/src/lib/check/runtime/types";
 import type { Finding } from "../apps/dev/src/lib/check/types";
 
 type Files = Record<string, string>;
@@ -305,6 +307,82 @@ const CASES: [
 /** Rules that must NOT fire on the baseline — guards against false positives. */
 const MUST_BE_CLEAN = true;
 
+/**
+ * The runtime rules are a pure function of a session, so they can be tested here
+ * even though capturing a real session needs a browser. These were the last
+ * rules with no coverage at all.
+ */
+const OK = { statusCode: 200 };
+
+function session(over: Partial<RuntimeSession> = {}): RuntimeSession {
+  return {
+    calls: [],
+    consoleLines: [],
+    errors: [],
+    status: "done",
+    tag: "test-graphic",
+    ...over,
+  };
+}
+
+const call = (action: string, over: Record<string, unknown> = {}) =>
+  ({ action, label: `${action}()`, startedAt: 0, durationMs: 5, result: OK, ...over }) as never;
+
+const HEALTHY = session({
+  calls: [
+    call("load"),
+    call("playAction", { result: { statusCode: 200, currentStep: 0 } }),
+    call("updateAction"),
+    call("stopAction"),
+    call("dispose"),
+  ],
+});
+
+const RUNTIME_CASES: [rule: string, what: string, s: RuntimeSession][] = [
+  ["R-01", "module never imported", session({ status: "failed", failureReason: "SyntaxError" })],
+  ["R-08", "uncaught window error during the run", session({
+    ...HEALTHY,
+    errors: [{ message: "boom", source: "window" }] as never,
+  })],
+  ["R-09", "unhandled promise rejection during the run", session({
+    ...HEALTHY,
+    errors: [{ message: "nope", source: "promise" }] as never,
+  })],
+  ["R-11", "a lifecycle call blowing its time budget", session({
+    calls: [call("load", { durationMs: 9_000 }), ...HEALTHY.calls.slice(1)],
+  })],
+];
+
+function runRuntimeCases(): number {
+  console.log("\nruntime rules (pure function over a synthetic session)");
+  let failures = 0;
+  const cleanIds = new Set(
+    buildRuntimeFindings(HEALTHY, { supportsNonRealTime: false })
+      .filter((f) => f.severity === "error" || f.severity === "warning")
+      .map((f) => f.id),
+  );
+  if (cleanIds.size > 0) {
+    failures++;
+    console.log(`  FAIL healthy session fired: ${[...cleanIds].join(", ")}`);
+  } else {
+    console.log("  ok   healthy session is clean");
+  }
+  for (const [rule, what, sess] of RUNTIME_CASES) {
+    const fired = new Set(
+      buildRuntimeFindings(sess, { supportsNonRealTime: false })
+        .filter((f) => f.severity === "error" || f.severity === "warning")
+        .map((f) => f.id),
+    );
+    const ok = fired.has(rule);
+    if (!ok) failures++;
+    console.log(
+      `  ${ok ? "ok  " : "FAIL"} ${rule.padEnd(5)} ${what}` +
+        (ok ? "" : `   got: ${[...fired].join(", ") || "nothing"}`),
+    );
+  }
+  return failures;
+}
+
 async function main() {
   const clean = await idsFor(baseline());
   let failures = 0;
@@ -348,7 +426,9 @@ async function main() {
       (ok ? "" : `   got: ${[...fired].sort().join(", ") || "nothing"}`));
   }
 
-  const total = CASES.length + 2;
+  failures += runRuntimeCases();
+
+  const total = CASES.length + 2 + RUNTIME_CASES.length + 1;
   console.log(`\n${total - failures}/${total} passed`);
   if (failures > 0) process.exitCode = 1;
 }

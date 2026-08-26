@@ -12,6 +12,7 @@ import type {
 } from "../../lib/check/runtime/types";
 import { LifecycleTimeline } from "./LifecycleTimeline";
 import { ConsoleCapture } from "./ConsoleCapture";
+import { DataForm } from "./DataForm";
 
 interface RuntimePanelProps {
   readonly pkg: Pkg;
@@ -44,6 +45,17 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
   const [stageScale, setStageScale] = useState(1);
 
   const defaultData = useMemo(() => extractDefaultData(pkg.manifest), [pkg.manifest]);
+  /**
+   * What the lifecycle calls actually send. Seeded from the manifest defaults,
+   * then whatever the user types — that is the point: a defaults-only run tells
+   * you the graphic starts, not that it survives real copy.
+   */
+  const [formData, setFormData] = useState<Record<string, unknown>>(defaultData);
+  useEffect(() => setFormData(defaultData), [defaultData]);
+  const dataSchema = useMemo(() => {
+    const m = pkg.manifest;
+    return m && typeof m === "object" ? (m as { schema?: unknown }).schema : undefined;
+  }, [pkg.manifest]);
   const customActions = useMemo(() => extractCustomActions(pkg.manifest), [pkg.manifest]);
   /** Only drive goToTime / setActionsSchedule when the graphic advertises them. */
   const supportsNonRealTime = useMemo(() => {
@@ -239,10 +251,10 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
       setState((s) => ({ ...s, status: "running" }));
       setBusy("running");
       try {
-        await callAction(harness, "load", "load({ data })", { data: defaultData });
+        await callAction(harness, "load", "load({ data })", { data: formData });
         await callAction(harness, "playAction", "playAction({})", { payload: {} });
         await new Promise((r) => setTimeout(r, 600));
-        await callAction(harness, "updateAction", "updateAction({ data })", { data: defaultData });
+        await callAction(harness, "updateAction", "updateAction({ data })", { data: formData });
         await callAction(harness, "stopAction", "stopAction({})", { payload: {} });
         await callAction(harness, "customAction", `customAction("${UNKNOWN_ACTION}")`, {
           payload: { action: UNKNOWN_ACTION },
@@ -272,7 +284,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
         setBusy(null);
       }
     },
-    [callAction, customActions, defaultData, supportsNonRealTime]
+    [callAction, customActions, formData, supportsNonRealTime]
   );
 
   // Manual controls
@@ -354,13 +366,23 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               </div>
             </div>
           ) : (
+            <div className="space-y-4">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+              <DataForm
+                schema={dataSchema}
+                value={formData}
+                onChange={setFormData}
+                onReset={() => setFormData(defaultData)}
+                disabled={busy !== null}
+              />
+            </div>
             <div className="flex flex-wrap gap-1.5">
               <ControlButton
                 icon={RefreshCw}
                 label="load"
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
-                  manual((h) => callAction(h, "load", "load({ data })", { data: defaultData }))
+                  manual((h) => callAction(h, "load", "load({ data })", { data: formData }))
                 }
               />
               <ControlButton
@@ -377,7 +399,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
                   manual((h) =>
-                    callAction(h, "updateAction", "updateAction({ data })", { data: defaultData })
+                    callAction(h, "updateAction", "updateAction({ data })", { data: formData })
                   )
                 }
               />
@@ -410,6 +432,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() => manual((h) => callAction(h, "dispose", "dispose()", {}))}
               />
+            </div>
             </div>
           )}
         </div>
