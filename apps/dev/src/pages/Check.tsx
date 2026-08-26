@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router";
-import { FileJson, FileCode, FileType, Files, Image, Box, ChevronRight, Play, ShieldAlert } from "lucide-react";
+import { Braces, FileJson, FileCode, FileType, Files, Image, Box, ChevronRight, Play, ShieldAlert } from "lucide-react";
 import { useMeta } from "../hooks/useMeta";
+import CHECK_RULES from "../content/check-rules.json";
 import { DropZone } from "../components/check/DropZone";
 import { CheckerSummary } from "../components/check/CheckerSummary";
 import { CheckerResults } from "../components/check/CheckerResults";
@@ -171,13 +172,18 @@ export function Check() {
 }
 
 function WhatGetsChecked() {
+  // Counts come from check-rules.json, regenerated from the rule modules at
+  // build time. They were hand-typed once and drifted twice — the page claimed
+  // 53 rules when there were 82, and never mentioned the GDD category at all.
+  const n = (key: keyof typeof CHECK_RULES.categories) => CHECK_RULES.categories[key]?.count ?? 0;
   const categories = [
-    { Icon: FileJson, label: "Manifest", desc: "10 rules · validated against the live EBU schema (draft-2020-12), customActions shape (no `label`!), main pointer exists, $schema freshness, semver." },
-    { Icon: Files, label: "Package structure", desc: "9 rules · single top-level folder, README / LICENSE / preview present, no OS junk, large-file warnings." },
-    { Icon: FileCode, label: "Graphic module", desc: "8 rules · default-export HTMLElement class, six lifecycle methods, no self-registered `customElements.define`, no top-level `document`, Shadow-DOM-safe relative URLs." },
-    { Icon: FileType, label: "Styling", desc: "9 rules · `position: fixed` catch, remote `@import` / `@font-face`, `body` selector flag, font-family fallback, Shadow-DOM portability hints." },
-    { Icon: Image, label: "Assets", desc: "5 rules · preview image 16:9 (decoded from raw bytes), fonts shipped with licence, oversized images, unknown extensions." },
-    { Icon: Play, label: "Runtime (optional)", desc: "12 checks · mounts the graphic in a sandboxed iframe, drives the full OGraf lifecycle, captures timings, return values, console, uncaught errors." },
+    { Icon: FileJson, label: "Manifest", count: n("manifest"), desc: "Validated against the live EBU schema (draft-2020-12), customActions shape, `main` pointer, $schema freshness, semver — plus cross-field checks a per-field schema cannot make: durations naming an undeclared customAction, unsatisfiable render requirements, missing thumbnails." },
+    { Icon: Braces, label: "Data schema (GDD)", count: n("gdd"), desc: "Field types and gddType constraints, required gddOptions, the patterns the spec pins for colours, labels covering every select option, and defaults that match their own field's type, enum, bounds and pattern." },
+    { Icon: Files, label: "Package structure", count: n("structure"), desc: "Single top-level folder, README / LICENSE / preview present, referenced assets shipped, no OS junk, large-file warnings." },
+    { Icon: FileCode, label: "Graphic module", count: n("module"), desc: "Default-export HTMLElement class, six lifecycle methods, the non-real-time pair when the manifest declares it, no self-registered `customElements.define`, no top-level `document`, Shadow-DOM-safe relative URLs." },
+    { Icon: FileType, label: "Styling", count: n("styling"), desc: "`position: fixed` catch, remote `@import` / `@font-face`, `body` selector flag, font-family fallback, Shadow-DOM portability hints." },
+    { Icon: Image, label: "Assets", count: n("assets"), desc: "Preview image 16:9 (decoded from raw bytes), fonts shipped with a licence, oversized images, unknown extensions." },
+    { Icon: Play, label: "Runtime (optional)", count: n("runtime"), desc: "Mounts the graphic in a sandboxed iframe, drives the full OGraf lifecycle including goToTime and setActionsSchedule where declared, captures timings, return values, console and uncaught errors." },
   ];
   return (
     <div className="mt-10">
@@ -189,7 +195,9 @@ function WhatGetsChecked() {
               <c.Icon className="h-4 w-4" strokeWidth={1.75} />
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-900">{c.label}</p>
+              <p className="text-sm font-semibold text-slate-900">
+                {c.label} <span className="font-normal text-slate-400">· {c.count} rules</span>
+              </p>
               <p className="text-[12px] text-slate-600">{c.desc}</p>
             </div>
           </li>

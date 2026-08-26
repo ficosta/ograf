@@ -8,7 +8,7 @@
     "items": [
       {
         "name": "ograf.dev",
-        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, plus in-browser tools (Package Checker today, more coming) under /tools.",
+        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, plus in-browser tools under /tools: an 82-rule Package Checker with a runtime sandbox, and a Schema Explorer.",
         "url": "https://ograf.dev",
         "type": "oss"
       }

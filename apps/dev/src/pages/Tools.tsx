@@ -19,7 +19,7 @@ const TOOLS: readonly Tool[] = [
     slug: "check",
     tagline: "Validate a .zip before you ship.",
     description:
-      "Drop any OGraf package and get a structured report against 30+ rules across manifest, structure, module, styling, and assets. Validates against the live EBU schema. Runs entirely in your browser — no upload.",
+      "Drop any OGraf package and get a structured report against 82 rules across manifest, data schema (GDD), structure, module, styling, assets and runtime. Validates against the official EBU schema — live, with a pinned offline snapshot as fallback. Runs entirely in your browser — no upload.",
     icon: ShieldCheck,
     href: "/check",
     status: "available",
@@ -30,10 +30,10 @@ const TOOLS: readonly Tool[] = [
     slug: "runtime",
     tagline: "Load your package and drive the lifecycle.",
     description:
-      "Mount a package in a sandboxed iframe and call load / playAction / updateAction / stopAction / customAction / dispose for real. Captures timings, return values, console output, and a live preview.",
+      "Mount a package in a sandboxed iframe and call load / playAction / updateAction / stopAction / customAction / dispose for real — plus goToTime and setActionsSchedule when the manifest declares non-real-time support. Captures timings, return values, console output and a live preview, and adds 14 runtime checks to the report. Built into the Package Checker.",
     icon: Play,
-    href: "#",
-    status: "coming-soon",
+    href: "/check",
+    status: "available",
   },
   {
     name: "Schema Explorer",
@@ -61,7 +61,7 @@ export function Tools() {
   useMeta({
     title: "Tools",
     description:
-      "OGraf developer tools on ograf.dev — a client-side package checker today, with a runtime harness, schema explorer, and template generator next. All browser-based, no upload.",
+      "OGraf developer tools on ograf.dev — a client-side package checker with 82 rules and a runtime sandbox, plus a schema explorer. All browser-based, no upload.",
   });
   return (
     <section className="py-16">
