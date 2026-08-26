@@ -1,6 +1,6 @@
 export type Severity = "error" | "warning" | "info" | "pass";
 
-export type Category = "manifest" | "structure" | "module" | "styling" | "assets" | "runtime";
+export type Category = "manifest" | "gdd" | "structure" | "module" | "styling" | "assets" | "runtime";
 
 export interface Finding {
   readonly id: string;
@@ -48,6 +48,7 @@ export interface Report {
 }
 
 export const CATEGORY_LABEL: Readonly<Record<Category, string>> = {
+  gdd: "Data schema (GDD)",
   manifest: "Manifest",
   structure: "Package structure",
   module: "Graphic module",
@@ -58,6 +59,7 @@ export const CATEGORY_LABEL: Readonly<Record<Category, string>> = {
 
 export const CATEGORY_ORDER: readonly Category[] = [
   "manifest",
+  "gdd",
   "structure",
   "module",
   "styling",

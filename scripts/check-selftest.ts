@@ -129,6 +129,13 @@ async function idsFor(files: Files, rootFolder: string | null = "selftest"): Pro
   );
 }
 
+/** Replace manifest.schema's properties with one hand-crafted field map. */
+function setSchema(f: Files, properties: Record<string, unknown>): void {
+  const m = JSON.parse(f["selftest.ograf.json"]);
+  m.schema = { type: "object", properties };
+  f["selftest.ograf.json"] = JSON.stringify(m);
+}
+
 /** Each case mutates the baseline in one way and names the rule that must fire. */
 const CASES: [rule: string, what: string, mutate: (f: Files) => void][] = [
   ["M-01", "no manifest at all", (f) => { delete f["selftest.ograf.json"]; }],
@@ -195,6 +202,48 @@ const CASES: [rule: string, what: string, mutate: (f: Files) => void][] = [
     f["graphic.mjs"] = GOOD_MODULE.replace("./style.css", "./missing.css");
   }],
   ["S-04", "no README", (f) => { delete f["README.md"]; }],
+
+  // --- GDD (Graphics Data Definition) ---
+  ["G-02", "field with no type", (f) => setSchema(f, { headline: { title: "H" } })],
+  ["G-02", "field with a type outside the six allowed", (f) => setSchema(f, { headline: { type: "text" } })],
+  ["G-04", "gddType single-line on a number field", (f) =>
+    setSchema(f, { n: { type: "number", gddType: "single-line" } })],
+  ["G-05", "select without an enum", (f) =>
+    setSchema(f, { pick: { type: "string", gddType: "select", gddOptions: { labels: {} } } })],
+  ["G-06", "select without gddOptions.labels", (f) =>
+    setSchema(f, { pick: { type: "string", gddType: "select", enum: ["a"], gddOptions: {} } })],
+  ["G-07", "color-rrggbb without the pattern the spec pins", (f) =>
+    setSchema(f, { c: { type: "string", gddType: "color-rrggbb" } })],
+  ["G-08", "select enum value with no label", (f) =>
+    setSchema(f, { pick: { type: "string", gddType: "select", enum: ["a", "b"], gddOptions: { labels: { a: "A" } } } })],
+  ["G-09", "array field without items", (f) => setSchema(f, { rows: { type: "array" } })],
+  ["G-09", "object field without properties", (f) => setSchema(f, { grp: { type: "object" } })],
+  ["G-10", "default of the wrong type", (f) =>
+    setSchema(f, { n: { type: "integer", default: "twelve" } })],
+  ["G-11", "default outside the declared enum", (f) =>
+    setSchema(f, { pick: { type: "string", enum: ["a", "b"], default: "c" } })],
+  ["G-11", "default above maximum", (f) =>
+    setSchema(f, { n: { type: "number", maximum: 10, default: 99 } })],
+  ["G-11", "default that fails the field pattern", (f) =>
+    setSchema(f, { c: { type: "string", gddType: "color-rrggbb", pattern: "^#[0-9a-f]{6}$", default: "red" } })],
+  ["G-13", "schema root that is not type object", (f) => {
+    const m = JSON.parse(f["selftest.ograf.json"]);
+    m.schema = { type: "string" };
+    f["selftest.ograf.json"] = JSON.stringify(m);
+  }],
+  ["G-02", "customAction schema with a broken field", (f) => {
+    const m = JSON.parse(f["selftest.ograf.json"]);
+    m.customActions = [{ id: "flash", name: "Flash",
+      schema: { type: "object", properties: { speed: { title: "Speed" } } } }];
+    f["selftest.ograf.json"] = JSON.stringify(m);
+  }],
+  ["G-14", "schema nested far beyond any real form", (f) => {
+    const m = JSON.parse(f["selftest.ograf.json"]);
+    let deep: Record<string, unknown> = { type: "string" };
+    for (let i = 0; i < 150; i++) deep = { type: "object", properties: { next: deep } };
+    m.schema = { type: "object", properties: { deep } };
+    f["selftest.ograf.json"] = JSON.stringify(m);
+  }],
   ["C-08", "relative asset URL hard-coded inside innerHTML", (f) => {
     f["graphic.mjs"] = GOOD_MODULE.replace('href="${STYLE_URL}"', 'href="./style.css"');
   }],

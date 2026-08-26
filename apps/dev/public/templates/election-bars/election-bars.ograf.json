@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "name": "Election Bars",
   "description": "Animated horizontal bar chart for election results with data-driven widths and color-coded parties. Tutorial from ograf.dev.",
-  "author": { "name": "ograf.dev", "url": "https://ograf.dev" },
+  "author": {
+    "name": "ograf.dev",
+    "url": "https://ograf.dev"
+  },
   "main": "graphic.mjs",
   "stepCount": 1,
   "supportsRealTime": true,
@@ -30,18 +33,60 @@
         "items": {
           "type": "object",
           "properties": {
-            "name":  { "type": "string",  "title": "Name",       "gddType": "single-line" },
-            "pct":   { "type": "number",  "title": "Percentage", "minimum": 0, "maximum": 100 },
-            "votes": { "type": "integer", "title": "Votes",      "minimum": 0 },
-            "color": { "type": "string",  "title": "Color",      "gddType": "color" }
+            "name": {
+              "type": "string",
+              "title": "Name",
+              "gddType": "single-line"
+            },
+            "pct": {
+              "type": "number",
+              "title": "Percentage",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "votes": {
+              "type": "integer",
+              "title": "Votes",
+              "minimum": 0
+            },
+            "color": {
+              "type": "string",
+              "title": "Color",
+              "gddType": "color-rrggbb",
+              "pattern": "^#[0-9a-f]{6}$"
+            }
           },
-          "required": ["name", "pct", "color"]
+          "required": [
+            "name",
+            "pct",
+            "color"
+          ]
         },
         "default": [
-          { "name": "Progressives",  "pct": 42, "votes": 1284000, "color": "#2563eb" },
-          { "name": "Conservatives", "pct": 35, "votes": 1070000, "color": "#dc2626" },
-          { "name": "Centrists",     "pct": 15, "votes": 459000,  "color": "#f59e0b" },
-          { "name": "Greens",        "pct": 8,  "votes": 245000,  "color": "#16a34a" }
+          {
+            "name": "Progressives",
+            "pct": 42,
+            "votes": 1284000,
+            "color": "#2563eb"
+          },
+          {
+            "name": "Conservatives",
+            "pct": 35,
+            "votes": 1070000,
+            "color": "#dc2626"
+          },
+          {
+            "name": "Centrists",
+            "pct": 15,
+            "votes": 459000,
+            "color": "#f59e0b"
+          },
+          {
+            "name": "Greens",
+            "pct": 8,
+            "votes": 245000,
+            "color": "#16a34a"
+          }
         ]
       }
     }
