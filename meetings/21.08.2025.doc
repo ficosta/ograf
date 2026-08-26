@@ -1,0 +1,320 @@
+Date: Wed, 26 Aug 2026 09:28:26 +0000 (UTC)
+Message-ID: <1902473458.5088.1787736506078@[10.246.80.104]>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_5087_1076652867.1787736506076"
+
+------=_Part_5087_1076652867.1787736506076
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>21.08.2025</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-link-pressed, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>21.08.2025</h1>
+    <div class=3D"Section1">
+        <p>Attendees: Niels Borg (chair), Didi Kunz, Davy Van Deursen, Pete=
+rs Jan-Philipp, Nico Peters, Johan Nyman, Tuomo Kulomaa, Thomas Probst, Mat=
+t Starzak, Christian Gogstad Eide, Ivan Maretic, Markus Nygard, Bruce Beauv=
+illain, Colin Buchtmann, Mike James Knight, Vincent Trussart, Jason MacNama=
+ra, Victoria Nece, Stian Kongsvik, Petri Karlsson, Ryan MacKenna, Ben Shepp=
+ard, Paola Sunna</p>
+<p><br></p>
+<p>Agenda:</p>
+<ol>
+ <li>Post-summer status&nbsp;</li>
+ <li>Spec release&nbsp;</li>
+ <li>API - where are we?&nbsp;</li>
+ <li>IBC Booth=20
+  <ol>
+   <li>Who can demo?&nbsp;</li>
+   <li>Collateral - what do we need?</li>
+  </ol></li>
+</ol>
+<p>Meeting Notes:</p>
+<ul>
+ <li><span data-teams=3D"true">SRG (newcomer) interested in OGraf </span></=
+li>
+ <li><span data-teams=3D"true">TV2.DK, high interest from many vendors&nbsp=
+;</span></li>
+ <li><span data-teams=3D"true"><span data-teams=3D"true">GV is considering =
+the integration of OGraf in GV AMPP, waiting to get a more consolidated ver=
+sion of the API&nbsp;</span></span></li>
+ <li><span data-teams=3D"true">Preview/Thumbnails will be added to the mani=
+fest as optional; default standards supported (GIF, jpeg,webp, png); more c=
+omplex format will be handled using the vendor's&nbsp; features;; thumbnail=
+s could be generated on the fly but this could have an impact on the render=
+er performances </span></li>
+ <li><span data-teams=3D"true">Vers1 of the spec will be ready in time for =
+IBC</span></li>
+ <li><span data-teams=3D"true">Work on API (controller) will be resumed aft=
+er IBC; a draft (unstable) version available on github branch; currently ba=
+sed on REST API (no web socket)</span></li>
+ <li><span data-teams=3D"true">To be sent via the mailing list by Paola and=
+ Niels: updated demo workflow, rota_demopod at the EBU booth, EBU booth/dme=
+o pod layout</span></li>
+ <li><span data-teams=3D"true">Demo: editing to be removed;"import" require=
+s efforts to be implemented; (Loopic) can import Lottie files;OGraf goal: g=
+raphics definition -&gt; renderer and less interoperability among creators;=
+ OGraf/Claude AI from BBC to be added</span></li>
+ <li><span data-teams=3D"true">No need to print the spec, QR to point to th=
+e spec</span></li>
+ <li><span data-teams=3D"true">Ideally it would be good to cover different =
+genres (e.g., elections, news, sport) in the demo</span></li>
+ <li><span data-teams=3D"true">Graphics packages for the demo to be sent to=
+ Niels and Paola by Wednesday next week; demo script will be built around t=
+hem<br></span></li>
+ <li><span data-teams=3D"true">GDD integration will be included in vers 1.1=
+; no time now; Superfly will open it as "issue" in github; this transition =
+shouldn't break anything, technically feasible but not time currently.</spa=
+n></li>
+ <li><span data-teams=3D"true"><a href=3D"http://Softpix.io" class=3D"exter=
+nal-link" rel=3D"nofollow">Softpix.io</a>: soon in their blog, articles abo=
+ut HTML graphics generation and integration in NRCS will be posted</span></=
+li>
+ <li><span data-teams=3D"true">Still some issues on github that will be add=
+ressed in v1.1</span></li>
+ <li><span data-teams=3D"true">Open source meetup at the EBU booth, Niel's =
+presentation (<a class=3D"external-link" href=3D"https://tech.ebu.ch/events=
+/2025/open-source-meetup-ebu-ibc-2025" rel=3D"nofollow">https://tech.ebu.ch=
+/events/2025/open-source-meetup-ebu-ibc-2025</a>)</span></li>
+</ul>
+<p><br></p>
+<p><span data-teams=3D"true">Actions:</span></p>
+<ul style=3D"list-style-type: square;">
+ <li><span data-teams=3D"true">To be sent via the mailing list by Paola and=
+ Niels: updated demo workflow, rota_demopod at the EBU booth, EBU booth/dem=
+o pod layout</span></li>
+ <li><span data-teams=3D"true">All: Graphics packages for the demo to be se=
+nt to Niels and Paola by Wednesday next week; demo script will be built aro=
+und them</span></li>
+ <li><span data-teams=3D"true">Niels: Demo: editing to be removed;"import" =
+requires efforts to be implemented; (Loopic) can import Lottie files;OGraf =
+goal: graphics definition -&gt; renderer and less interoperability among cr=
+eators; OGraf/Claude AI from BBC to be added</span></li>
+ <li><span data-teams=3D"true">Ben to send the Claude demo details to Niels=
+</span></li>
+</ul>
+    </div>
+</body>
+</html>
+------=_Part_5087_1076652867.1787736506076--

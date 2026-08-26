@@ -1,55 +1,113 @@
 [
   {
+    "date": "2026-09-12",
+    "title": "OGraf — Making Broadcast Graphics Open and Accessible",
+    "location": "IBC 2026, Amsterdam · Room E102 · 16:10–16:50",
+    "speaker": "Niels Borg (TV 2 Danmark) & Paola Sunna (EBU)",
+    "url": "https://show.ibc.org/ibc2026/ograf-making-broadcast-graphics-open-and-accessible",
+    "summary": "OGraf's dedicated conference session at IBC 2026, part of the Owner & Partners Programme and SMPTE's \"Future of Media Infrastructure\" roadshow day. How designing once and playing anywhere works in practice, and what it means for vendors and production teams."
+  },
+  {
     "date": "2026-09-11",
     "endDate": "2026-09-14",
-    "title": "IBC 2026",
-    "location": "Amsterdam, RAI",
-    "url": "https://show.ibc.org/",
-    "summary": "Europe's flagship broadcast-industry show. Expect OGraf demos and presentations across multiple vendor stands — monitor the show page as sessions are announced."
+    "title": "OGraf showcase at IBC 2026 — EBU stand 10.D21",
+    "location": "Amsterdam, RAI · Hall 10, stand 10.D21",
+    "url": "https://tech.ebu.ch/events/ebu_at_ibc2026",
+    "summary": "OGraf runs from a dedicated demo pod on the EBU stand across all four days, showing one package travelling from creation to live and on to post: CBC and Adobe/StreamShapers coming out of After Effects, Everviz animated maps, TV 2 Danmark on DaVinci Resolve for non-linear, SPX Graphics on touchscreen and Unreal Engine, plus Loopic, Erizos and LiveOS. The EBU stand also hosts the Open Source Meetup (Sat 12 Sep, 16:00)."
+  },
+  {
+    "date": "2026-06-09",
+    "title": "Open Graphics for Live Media: OGraf Proven in a National Election",
+    "location": "EBU Network Technology Seminar 2026, Geneva · 17:35–18:00",
+    "speaker": "Niels Borg, TV 2 Danmark",
+    "url": "https://tech.ebu.ch/publications/presentations/2026/nts2026/open-graphics-for-live-media-ograf-proven-in-a-national-election",
+    "summary": "The first big production case study: TV 2 Danmark ran OGraf graphics through its national election coverage, letting the anchor walk through results interactively. Slides available as PDF from the EBU."
+  },
+  {
+    "date": "2026-05-21",
+    "title": "OGraf Explained: Open, Interoperable Broadcast Graphics",
+    "location": "Streaming Tech Sweden 2026 · Hotel At Six, Stockholm · 10:05",
+    "speaker": "Niels Borg (TV 2 Danmark) & Tuomo Kulomaa (SPX Graphics)",
+    "url": "https://www.streamingtech.se/",
+    "summary": "OGraf's first appearance at a streaming-side conference rather than a broadcast one — why vendor-neutral graphics workflows matter, pitched to an audience of players, DRM, ad-tech and live-production people."
   },
   {
     "date": "2026-04-18",
     "title": "SMPTE VIBE: OGraf — Making Broadcast Graphics Open and Interoperable",
-    "location": "NAB Show, Las Vegas · N259LMR · 2:20–2:35 p.m.",
+    "location": "NAB Show 2026, Las Vegas · Room N259 · 2:20–2:35 p.m. PDT",
     "speaker": "Willem Vermost, EBU",
-    "url": "https://nab26.mapyourshow.com/8_0/sessions/session-details.cfm?scheduleid=250",
-    "summary": "The EBU's Willem Vermost introduces OGraf at SMPTE's VIBE conference — how one graphic package runs across mixed vendor stacks, covering live broadcast, streaming, and post-production."
+    "url": "https://www.smpte.org/blog/smpte-unveils-2026-nab-show-educational-presentations",
+    "summary": "OGraf's NAB debut, in SMPTE's VIBE conference track: how an OGraf graphic is structured, how the Control API works, and what the spec changes for broadcast graphics workflows."
+  },
+  {
+    "date": "2026-03-25",
+    "endDate": "2026-03-26",
+    "title": "OGraf at MediaTech Festival 2026",
+    "location": "G.A.S.A, Odense, Denmark",
+    "url": "https://www.futuremediahubs.com/future-media-hubs/events/mediatech-festival-2026",
+    "summary": "The OGraf working group took the standard to Odense with a joint presentation and the launch of the OGraf explainer video led by the BBC. HTML graphics ran through the whole festival: the BBC made the case on stage and SPX Graphics called 2026 the biggest year yet for the technology.",
+    "speaker": "Ben Sheppard & Ryan MacKenna (BBC) with Niels Borg (TV 2 Danmark)"
+  },
+  {
+    "date": "2026-01-27",
+    "endDate": "2026-01-29",
+    "title": "OGraf demo at EBU Production Technology Seminar 2026",
+    "location": "EBU, Geneva",
+    "speaker": "Niels Borg, TV 2 Danmark",
+    "url": "https://tech.ebu.ch/events/pts2026",
+    "summary": "A hands-on OGraf demo running through PTS, built from templates contributed by the working group. Not a programme session — it lived on the floor, which is why it doesn't show up in the published agenda."
   },
   {
     "date": "2025-09-13",
-    "title": "OGraf at Open Source Meetup · IBC 2025",
-    "location": "IBC 2025, Amsterdam",
-    "speaker": "Niels Borg",
+    "title": "OGraf — Open HTML standard for broadcast graphics · Open Source Meetup, IBC 2025",
+    "location": "IBC 2025, Amsterdam · EBU stand 10.D21 · 15:00",
+    "speaker": "Niels Borg, TV 2 Danmark",
     "url": "https://tech.ebu.ch/publications/presentations/2025/ibc25_opensource_meetup/ograf-open-html-standard-for-broadcast-graphics",
-    "summary": "Niels Borg's OGraf talk at the Open Source Meetup during IBC 2025 — part of a broader open-source-in-broadcast session."
+    "summary": "Niels Borg's OGraf pitch at the EBU Open Source Meetup — how the open specification for HTML graphics in live TV and post came together, days before the v1 Graphics spec was published."
+  },
+  {
+    "date": "2025-09-12",
+    "endDate": "2025-09-15",
+    "title": "OGraf showcase at IBC 2025 — EBU stand 10.D21",
+    "location": "Amsterdam, RAI · Hall 10, stand 10.D21",
+    "url": "https://tech.ebu.ch/events/ebu_at_ibc2025",
+    "summary": "The show where OGraf went public. Demonstrated on the EBU stand as \"specification and implementations that facilitate use and management of on-screen graphics across platforms,\" with Loopic, SPX Graphics and coralbay.tv running OGraf on their own stands. The v1 Graphics specification was published days later, on 17 Sep 2025."
   },
   {
     "date": "2025-06-18",
     "title": "OGraf: A new HTML standard — EBU Network Technology Seminar 2025",
-    "location": "EBU NTS 2025",
-    "speaker": "Niels Borg",
+    "location": "EBU NTS 2025, Geneva",
+    "speaker": "Niels Borg, TV 2 Danmark",
     "url": "https://tech.ebu.ch/publications/presentations/2025/nts2025/ograf-a-new-html-standard",
     "summary": "Technical deep-dive presentation at the EBU Network Technology Seminar covering OGraf's architecture, manifest format, and server API direction."
   },
   {
     "date": "2025-04-28",
     "title": "HTML graphics in broadcast applications with EBU's OGraf spec",
-    "location": "EBU webinar",
+    "location": "EBU webinar (online) · 16:00–17:00 CEST",
     "url": "https://tech.ebu.ch/events/2025/html-graphics-in-broadcast-applications-with-ebu-s-ograf-spec",
-    "summary": "Public EBU webinar walking through OGraf's role in practical broadcast applications and the problem space it addresses."
+    "summary": "The spec's first session open to everyone, industry included, after the members-only preview in March. A technical overview of the draft's features and OGraf's role in practical broadcast applications. Slides and recording are on the EBU site."
   },
   {
     "date": "2025-03-27",
     "title": "EBU's Open Standard for HTML Graphics in the Broadcast Industry",
-    "location": "EBU roundtable",
+    "location": "EBU Members session (online) · 15:00 CET",
     "url": "https://tech.ebu.ch/events/2025/ebus-open-standard-for-html-graphics-in-the-broadcast-industry",
-    "summary": "Early public session introducing the draft HTML graphics spec that became OGraf."
+    "summary": "The first outing for the draft spec, presented to EBU Members only. The open-to-industry version followed a month later — this is where the HTML graphics specification that became OGraf was first shown outside the working group."
+  },
+  {
+    "date": "2025-02-12",
+    "title": "Accelerator Kickstart Day 2025 — Evolution of the Control Room wins Project of the Year",
+    "location": "BBC Broadcasting House, London",
+    "url": "https://www.ibc.org/accelerating-innovation/news/kickstart-day-2025-evolution-of-the-control-room-wins-project-of-the-year/21655",
+    "summary": "The IBC Accelerator project carrying the HTML-based graphics workstream — the one that fed into OGraf — was named Project of the Year at Kickstart Day, hosted by the BBC. Public recognition for the work weeks before the first OGraf roundtable."
   },
   {
     "date": "2024-09-13",
+    "endDate": "2024-09-16",
     "title": "Evolution of the Control Room — IBC 2024 Accelerator",
     "location": "IBC 2024, Amsterdam",
-    "url": "https://show.ibc.org/accelerator-project-evolution-control-room",
-    "summary": "Pre-OGraf context: the IBC Accelerator project that included HTML-based graphics as a workstream and helped seed the case for an open standard."
+    "url": "https://www.ibc.org/immersive-tech/features/ibc2024-accelerator-project-evolution-of-the-control-room/21308",
+    "summary": "Pre-OGraf context: the IBC Accelerator project championed by TRANSMIXR, ITN, the BBC and TV 2 Danmark, whose second R&D stream — modular, cross-vendor HTML-based graphics, with SPX Graphics taking part — helped seed the case for an open standard."
   }
 ]

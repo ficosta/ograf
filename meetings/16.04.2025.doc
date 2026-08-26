@@ -1,0 +1,317 @@
+Date: Wed, 26 Aug 2026 09:28:41 +0000 (UTC)
+Message-ID: <2039543175.5092.1787736521924@[10.246.80.104]>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_5091_240581587.1787736521922"
+
+------=_Part_5091_240581587.1787736521922
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>16.04.2025</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-link-pressed, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>16.04.2025</h1>
+    <div class=3D"Section1">
+        <p><br></p>
+<p>Issues collected from github</p>
+<p>*&nbsp;Font handling</p>
+<p>&nbsp; <a href=3D"https://github.com/ebu/ograf/issues/1" class=3D"extern=
+al-link" rel=3D"nofollow">https://github.com/ebu/ograf/issues/1</a></p>
+<p>* Not allowed to load local resource</p>
+<p>&nbsp; <a href=3D"https://github.com/SuperFlyTV/ograf-devtool/issues/2" =
+class=3D"external-link" rel=3D"nofollow">https://github.com/SuperFlyTV/ogra=
+f-devtool/issues/2</a></p>
+<p>* data with playaction and load action also</p>
+<p>&nbsp; <a href=3D"https://github.com/SuperFlyTV/ograf-devtool/issues/3" =
+class=3D"external-link" rel=3D"nofollow">https://github.com/SuperFlyTV/ogra=
+f-devtool/issues/3</a></p>
+<p>* Possible issue using Shadow DOM</p>
+<p><br></p>
+<p>Action:</p>
+<ul style=3D"list-style-type: square;">
+ <li>Johan will work on potential solutions that will be presented to the o=
+thers during the next call</li>
+</ul>
+<p>Note from Ben:&nbsp; how he implement the font handling in &nbsp;DevTool=
+</p>
+<p>&nbsp;&nbsp;&nbsp; const yleNextFont =3D new FontFace("YleNext",`url(${i=
+mport.meta.resolve("./fonts/YleNext-Regular.woff2")}) format("woff2")`);<br=
+>
+  &nbsp;&nbsp;&nbsp; await yleNextFont.load();<br>
+  &nbsp;&nbsp;&nbsp; document.fonts.add(yleNextFont);<br>
+  &nbsp;&nbsp;&nbsp; container.style.fontFamily =3D "YleNext, Roboto, sans-=
+serif";</p>
+<p>const reithSansExtraBoldItalic =3D new FontFace(<br>
+  &nbsp;&nbsp;&nbsp; 'ReithSans',<br>
+  &nbsp;&nbsp;&nbsp; `url(./fonts/Reith/BBCReithSans_W_ExBdIt.woff2) format=
+('woff2'), url(./fonts/Reith/BBCReithSans_W_ExBdIt.woff) format('woff')`,<b=
+r>
+  &nbsp;&nbsp;&nbsp; { weight: '800', style: 'italic', display: 'swap' }<br=
+>
+  );</p>
+<p>const reithSerifRegular =3D new FontFace(<br>
+  &nbsp;&nbsp;&nbsp; 'ReithSerif',<br>
+  &nbsp;&nbsp;&nbsp; `url(./fonts/ReithSerif/BBCReithSerif_W_Rg.woff2) form=
+at('woff2'), url(./fonts/ReithSerif/BBCReithSerif_W_Rg.woff) format('woff')=
+`,<br>
+  &nbsp;&nbsp;&nbsp; { weight: 'normal', style: 'normal', display: 'swap' }=
+<br>
+  );</p>
+<p>export const loadFonts =3D () =3D&gt; {<br>
+  &nbsp;&nbsp;&nbsp; Promise.all([<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reithSansExtraBold.load(),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reithSansBold.load(),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reithSansMedium.load(),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reithSansRegular.load(),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reithSerifRegular.load(),<br>
+  &nbsp;&nbsp;&nbsp; ])<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .then((fonts) =3D&gt; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fonts.=
+forEach((font) =3D&gt; document.fonts.add(font));<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }).finally(() =3D&gt; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a hre=
+f=3D"http://console.info" class=3D"external-link" rel=3D"nofollow">console.=
+info</a>('All loaded fonts:', [...document.fonts]);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; })<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .catch((err) =3D&gt; console.e=
+rror('font error ', err));<br>
+  }</p>
+<p><br></p>
+<p>NOTE from Ben on&nbsp;locally loading things - It is something to be con=
+sidered for things like outside broadcast trucks.&nbsp;</p>
+<p><br></p>
+<p>Agreed in the meeting:</p>
+<ul style=3D"list-style-type: square;">
+ <li>to add frame rate, resoultion and color space in the manifest</li>
+</ul>
+<p><br></p>
+<p>Actions:</p>
+<ul style=3D"list-style-type: square;">
+ <li>Niels to setup a call with Tuomo, Davy and Johan to start the work on =
+the server API</li>
+ <li>Niels to have a call with the speakers before the webinar</li>
+</ul>
+    </div>
+</body>
+</html>
+------=_Part_5091_240581587.1787736521922--

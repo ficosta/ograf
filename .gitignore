@@ -5,6 +5,7 @@ dist/
 .DS_Store
 .env
 .env.local
+.env.*.local
 
 # Local planning docs — not for the repo
 plan.html

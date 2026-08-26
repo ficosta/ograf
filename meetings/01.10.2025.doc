@@ -1,0 +1,336 @@
+Date: Wed, 26 Aug 2026 09:28:19 +0000 (UTC)
+Message-ID: <235789451.5086.1787736499245@[10.246.80.104]>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_5085_1436972460.1787736499242"
+
+------=_Part_5085_1436972460.1787736499242
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>01.10.2025</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-link-pressed, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>01.10.2025</h1>
+    <div class=3D"Section1">
+        <p>Apologies: Niels Borg (chair)</p>
+<p>Participants: Johan N. (chair for this online meeting), Davy VD., Roland=
+ W., Didi K., Thoman P., Jan P., Orkun D., Christian G., Nico P., Vincent T=
+., Victoria N., Lukas H., Felipe I., Torsten B., Markus N., Gerry B., Tuomo=
+ K., Andrew W., Ivan N., Markus N., Stian K., Stein-Roger K.</p>
+<p><br></p>
+<p>Agenda:</p>
+<ul>
+ <li data-uuid=3D"f3a99323-a4ba-4141-86eb-4863949f350a">IBC 2025</li>
+ <li data-uuid=3D"b853a950-eecf-441f-81dd-a4486a53c035">Introduction to Git=
+Hub</li>
+ <li data-uuid=3D"a56b6f54-44fb-4c85-864d-c0707e59af34">Control API: introd=
+uction</li>
+ <li data-uuid=3D"91627d65-2a19-48b9-b2f9-61bfa750474b">Graphics spec: chan=
+ges</li>
+ <li data-uuid=3D"62e49a55-0703-45a1-a6c6-e4c442a455e4">Meeting frequency (=
+input from the group)</li>
+ <li data-uuid=3D"da14fea8-29e4-4e36-8372-b3e26393b2c9">Future roadmap for =
+the spec (input from the group)</li>
+</ul>
+<p><br></p>
+<p>Meeting notes/Action</p>
+<ul>
+ <li data-uuid=3D"e112490a-3867-4945-8f21-e541f5a000d3">IBC 2025 =E2=80=93 =
+Ograf got a lot of traction. Many people came to see the demo. Follow-up ca=
+lls organized with those interested in Ograf.</li>
+ <li data-uuid=3D"95f379b3-afb8-43cd-b840-f16de2a558ac">Intro to GitHub: Jo=
+han N. suggested to use GitHub to share comments on the ongoing work via =
+=E2=80=9CIssues=E2=80=9D, =E2=80=9CPull requests=E2=80=9D are <em>proposal =
+to merge a set of changes from one branch into another.</em></li>
+ <li data-uuid=3D"56335bd8-40f1-4f55-a5c5-8b54292776d0">Control API introdu=
+ction: Johan N. and Davy VD. have worked on the draft API (HTTP REST) avail=
+able in a separate branch on GitHub. OpenAPI specification was used, capabl=
+e to autogenerate documentation, server and client APIs interfaces</li>
+ <ul>
+  <li data-uuid=3D"9c48ab59-70b7-41d0-9142-5f6c4170f0fb">Johan went trough =
+the API in the draft. <em>Upload </em>not defined but left to be vendor=E2=
+=80=99s implementation. With respect to the target, Renderer and Renderer T=
+arget defined. Renderer is the channel in CasparCG; Renderer Target is the =
+layer in Caspar CG but it has been defined to be generic (e.g., layer, surf=
+ace in 3D, portion of the screen, etc. CustomAction (not only for the Graph=
+ics) but also for the renderer (e.g., clear all, rearrange graphics, etc.) =
+to accommodate vendor specific actions</li>
+  <li data-uuid=3D"e7350ac2-872a-4074-978d-fa4214fa87ac">Pull request on Gi=
+t: after the graphic is loaded by the renderer in the renderer target, it c=
+an be addressed using both ID and Instance ID: the request was to use only =
+the Instance ID to manage multiple graphics per target</li>
+  <ul>
+   <li data-uuid=3D"bf52d36f-6dbe-4871-ad96-a8601fd1f1d9">Discussion on how=
+ renderers deal with graphics (e.g., one graphic per layer, what about tran=
+sitions); discussion will continue during the next meeting</li>
+  </ul>
+  <li data-uuid=3D"9d870b17-b6ed-4b4c-bb94-a470752fcecc">Question on how th=
+e spec address replacement of graphics; Answer: through the manifest</li>
+  <li data-uuid=3D"83f835f2-b734-4944-a60b-97265f6aeb5f">The group agreed t=
+o publish the draft of the API after the next meeting</li>
+  <li data-uuid=3D"9cf6e58a-3092-49fc-b44f-40ed7ef2050f">Question about add=
+ressing security, authentication; Answer: these considerations will not be =
+considered for now; Action: issue to be posted on Git with list of spec tha=
+t can be used to address the problem (e.g. NMOS IS-04 and IS-10)</li>
+  <li data-uuid=3D"bf15f3c2-9cf7-4028-ad52-16a8bb95f347">Meeting frequency:=
+ the group agreed to keep meeting every two weeks</li>
+  <li data-uuid=3D"3dbbea88-f99b-4033-93b8-0ce291feee39">The group agreed n=
+ot to commit in advance to a future specification but to add the changes to=
+ the current one keeping it backward compatible</li>
+  <li data-uuid=3D"319bd2c4-3b84-4ae8-bb92-da876eba05f5">Timeline for relea=
+sing the API (currently end of 2025/Q1 2026) to be revised depending on how=
+ the discussion goes. Potential events to present the API: EBU PTS and NAB<=
+/li>
+  <li data-uuid=3D"7853f215-9faf-4dcd-95f6-5ded32b3810a">Roland and Victori=
+a N. will work together to create an overview of what Ograf is about (not e=
+asy to explain what Ograf is and how it fits in the pipeline)</li>
+ </ul>
+</ul>
+<p><br></p>
+<p>Links useful for the discussion</p>
+<ul>
+ <li data-uuid=3D"2efe684b-0f77-4f40-8d36-b8764c942aa4"><a href=3D"https://=
+github.com/ebu/ograf/issues?q=3Dsort%3Acreated-asc%20%20is%3Aopen%20-label%=
+3A%22Concluded%20-%20waiting%20for%20implementation%22" class=3D"external-l=
+ink" rel=3D"nofollow">Link: Issues &amp; PRs on Github, used as basis for d=
+iscussions</a>&nbsp;</li>
+ <li data-uuid=3D"61903f97-8ada-481f-b9b7-17a544756730"><em><a data-href=3D=
+"https://html-preview.github.io/?url=3Dhttps://github.com/ebu/ograf/blob/fe=
+at/server-api/v1/specification/open-api/docs/index.html" href=3D"https://ht=
+ml-preview.github.io/?url=3Dhttps://github.com/ebu/ograf/blob/feat/server-a=
+pi/v1/specification/open-api/docs/index.html" class=3D"external-link" rel=
+=3D"nofollow">Link to WIP Server-API docs</a></em></li>
+ <li data-uuid=3D"a007c4ba-d9f2-40ca-b5a3-c88a8be4006b"><em><a href=3D"http=
+s://github.com/ebu/ograf/tree/feat/server-api" data-href=3D"https://github.=
+com/ebu/ograf/tree/feat/server-api" class=3D"external-link" rel=3D"nofollow=
+">Link to github: feat/server-api branch</a></em></li>
+</ul>
+<p><em>Notes on github on the Render Target: </em><span style=3D"color:#000=
+000;">&nbsp;<a href=3D"https://github.com/ebu/ograf/pull/12#issuecomment-33=
+59283606" class=3D"external-link" rel=3D"nofollow">https://github.com/ebu/o=
+graf/pull/12#issuecomment-3359283606</a></span></p>
+<p><br></p>
+    </div>
+</body>
+</html>
+------=_Part_5085_1436972460.1787736499242--

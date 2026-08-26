@@ -1,0 +1,309 @@
+Date: Wed, 26 Aug 2026 09:29:21 +0000 (UTC)
+Message-ID: <1583319750.5102.1787736561379@[10.246.80.104]>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_5101_1482004093.1787736561377"
+
+------=_Part_5101_1482004093.1787736561377
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>15.04.2026</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-link-pressed, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>15.04.2026</h1>
+    <div class=3D"Section1">
+        <p>Attendees: Niels B. (chair), Johan N., Didi K., Victoria N., Sti=
+an K., Georgely K., Pierre H. R., Markus N., Jan-Philipp P., Christian E., =
+Martin H., Jeff H., Frederik, Justus K., Ivan M., Andreas J., Nico P., Chri=
+s S.</p>
+<p><br></p>
+<p>Agenda:</p>
+<ol>
+ <li data-uuid=3D"1d752f91-5830-4572-8aa3-297af5b1ee4b">Welcome</li>
+ <li data-uuid=3D"21f89b44-9490-42fc-bd1c-58e88b50269c">Change requests&nbs=
+p;</li>
+ <li data-uuid=3D"e5a984aa-c029-4d5e-805c-4b38717b70ba">New adoptions</li>
+ <ol data-editing-info=3D"{&quot;applyListStyleFromLevel&quot;:true}">
+  <li data-uuid=3D"e1711160-cab1-4aed-a804-4aa63f30682a">Erizos - <a href=
+=3D"https://email.mg.ebu.ch/c/eJxUyr1uwyAQAOCngRHdHdiEgcGxSqdKVYeqa2yIYtXlL=
+H489Okrdcv4SV_0a9L2IpNHa0d0zuEgH_5uIg4Gb24xeL8gWpf0Cg4X69YFxig3__r59f4B9HZF=
+hJGmYOk6B5yDhnnUU6DJvMw0kDDwPFXq5SgRSB2Fo-LeduZvtfKP3P2jtaMKPQkKgkIq2y9X1c5=
+_all87TnfhIHUC59b3TirnJo8Pf0FAAD__1xZOiU" class=3D"external-link" rel=3D"no=
+follow">https://erizos.tv/#</a></li>
+  <li data-uuid=3D"ff9ebc90-292e-48ef-851b-d683f9bb4158">Everviz - <a href=
+=3D"https://email.mg.ebu.ch/c/eJxUyj1PxCAYAOBfAyN5eaF8DAy9RpxMjINx7RWaa6zQU=
+KCJv9443vw8wS1RaEOj41orbq3lA304gajMYgMYKQ1oCWrQYV3v82r4HO6Wbu718-v9A_Dtxjko=
+HL3G2-T55AVMSoweR_ky4YBEwvNksZWjBEB2lBxYbnXP-Zst-Yfu7lHrcRIxEvQE_XVdLPZY-vb=
+77wQ9Le5sKc1EQmwl9-3ccmIpVtod_gUAAP__Jis7_g" class=3D"external-link" rel=3D=
+"nofollow">https://www.everviz.com/</a></li>
+  <li data-uuid=3D"488f943d-a8ec-450a-a5b4-d5a3ee94db4a">Pixotope - <a href=
+=3D"https://email.mg.ebu.ch/c/eJxUyjFPxCAUAOBfAyOBB5RjYOg14mRiHIyrV15zxJNHK=
+LT-fOPo_qWwonYXjkE5NynvvbL8HpJH3DAphJvZ4Gb9BnpL2qJ15uLXlefw_P7x-ibh5aqUnGCO=
+Dq5LVEvUcpn0HGE2TwtYYEb-lwJHqy1JELVREjT6g-hLrPTNH-Hee92ZnhlEBvE8T1HzD3Wq-Ac=
+YRN7CPkr5ZEbiaHTkPVMRBTs_AvwGAAD__xs1PWQ" class=3D"external-link" rel=3D"no=
+follow">https://www.pixotope.com/</a></li>
+  <li data-uuid=3D"07bfdf69-4d80-44fc-9565-6435524c6aae">Davinci Resolve - =
+<a href=3D"https://email.mg.ebu.ch/c/eJxUy7tuwyAUANCvgRFxr20wA4NjlU6Vqg5VVw=
+o0QXHA4mH_fpUx-zleuzDImQYNUgpQSsFEbzrAPA9cIs4KAFAJsFYo-Bsnh2pyjkb9_v3z-cXx4=
+wLABS5G4mU1sJqBr2JYDC7j24oTkpG_ShZ62YvnyPaSPcu9bTnfmcsPuulba3slw0LQEDTnebLf=
+zbr7w16j86HGa3pCguZ5u2uVoPH2iMnFEmrejkCLrj0lS0YeeslHrDEnlkKjh8b_AAAA__-VCki=
+S" class=3D"external-link" rel=3D"nofollow">https://www.blackmagicdesign.co=
+m/products/davinciresolve</a>=E2=80=82=E2=80=82=E2=80=82=E2=80=82<a href=3D=
+"https://email.mg.ebu.ch/c/eJxUyr1uwyAQAOCngRFxBwYzMDhu6VQ1zdCf0TZIsZpyFj-R=
+-vads3_Rb0nZkScP1hpwzsHAr35EZ_So7bDFNCzj6oxyetn0AgYdxJXv_uXj63yR-HoCkAanYPE=
+0B5iDkrNRU8BJP884INPyUYrUy1GiRHEUioJ6uxH9iI1--c1fWzsqUxPDwDD8UW9drIlhuLyfpa=
+k5f759MxUaU0_WguTF157zwrRMvdB9rztlkVPjd4__AQAA__9sVD8o" class=3D"external-l=
+ink" rel=3D"nofollow">https://youtu.be/RQP06snnWOY?t=3D7710</a></li>
+ </ol>
+ <li data-uuid=3D"3ed4292c-7a7e-485f-931a-6872639f2c06">After Effects Plug-=
+in from StreamShapers</li>
+ <li data-uuid=3D"58988ef1-ba13-4b0d-bb97-57e8ecaef8c5">Upcoming promotiona=
+l events:</li>
+</ol>
+<ol data-editing-info=3D"{&quot;applyListStyleFromLevel&quot;:true}">
+ <ol>
+  <li data-uuid=3D"a690d8ef-8f2e-4bd9-9c93-18bda5645e6f">SMPTE VIBE @ NAB -=
+ Willem Vermost</li>
+  <li data-uuid=3D"ed341d1c-729b-4233-a891-177d0914dc52">Streaming Tech Swe=
+den - Tuomo Kulomaa &amp; Niels Borg</li>
+  <li data-uuid=3D"62eb5a4f-e6c2-4f09-a480-56ec4be6ca62">NTS 2026 ?</li>
+  <li data-uuid=3D"4301cf7d-88f7-4913-a277-c220f0d52ada">Online seminars&nb=
+sp;</li>
+ </ol>
+</ol>
+<p>The group went through the issues <a href=3D"https://github.com/ebu/ogra=
+f/issues" class=3D"external-link" rel=3D"nofollow">https://github.com/ebu/o=
+graf/issues</a></p>
+<p>The group agreed to adopt the MIT licence; superfly will add the license=
+ to the repository</p>
+<p>StreamShapers demonstrated OGraf plugin in After Effects.&nbsp;</p>
+<p>Black Magic integration of OGraf: issues still pending; work in progress=
+</p>
+<p>Roadmap will be discussed in the next meeting.</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+</body>
+</html>
+------=_Part_5101_1482004093.1787736561377--

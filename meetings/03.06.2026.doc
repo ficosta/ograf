@@ -1,0 +1,277 @@
+Date: Wed, 26 Aug 2026 09:29:09 +0000 (UTC)
+Message-ID: <1621867453.5098.1787736549266@[10.246.80.104]>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_5097_237302474.1787736549265"
+
+------=_Part_5097_237302474.1787736549265
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>03.06.2026</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-link-pressed, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>03.06.2026</h1>
+    <div class=3D"Section1">
+        <p>Attendees: Niels B. (chair), Christian S., Johan N., Pierre H. R=
+., Pierre M., Richard W., Jeff H., Davy Van D., Thomas L., Mike J.K., Garet=
+h Q., Andrew W., Nico P., Jason Mac N., Han, Victoria N., Gergely K., Didi =
+K., Martin S., Roland W., Thomas, Ivan M. Daniel B., Marco F., Paola S.</p>
+<p>Agenda:</p>
+<ul>
+ <li data-uuid=3D"45dd21c7-312f-49de-9590-678c537b2c1a">Incoming change req=
+uests</li>
+ <li data-uuid=3D"2e699099-c44a-4af4-a44e-95c7b7d9a560">Events - passed and=
+ coming</li>
+ <ul>
+  <li data-uuid=3D"c2903ac9-daed-4d13-98a8-ce22ed534c25">Streaming Tech Swe=
+den</li>
+  <li data-uuid=3D"7d9637b4-9d5e-4fde-bdf7-5b1fb6e27de7">Network Technology=
+ Seminar</li>
+  <li data-uuid=3D"93ddb9b3-afcb-4c8e-98ab-5a900cdb1243">IBC</li>
+ </ul>
+ <li data-uuid=3D"9b18eb66-3938-41d6-91ef-ae65ae9da742">Online seminars</li=
+>
+ <li data-uuid=3D"7d7ed375-23b4-4a53-9fdc-c69aa62a4268">Meeting frequency</=
+li>
+ <li data-uuid=3D"b478227f-9ea6-4800-b85c-e0e6d22a7690">Q&amp;A</li>
+</ul>
+<p>Meeting notes:</p>
+<ul style=3D"list-style-type: square;">
+ <li data-uuid=3D"e76a4622-a742-4784-9aec-6e49f13e2bf4">OGraf was presented=
+ by Niels and Tuomo (softpix.io) at the Streaming Tech Sweden and will be p=
+resented at the EBU NTS (<a class=3D"external-link" href=3D"https://tech.eb=
+u.ch/events/nts2026" rel=3D"nofollow">https://tech.ebu.ch/events/nts2026</a=
+>) next wee</li>
+ <li data-uuid=3D"18b57f80-c522-4136-8819-95e599d991d2">the group went thro=
+ugh the issues on github</li>
+ <li data-uuid=3D"0450a774-523c-4ba1-afc6-0b0026828cf9">the group agreed to=
+ keep the meetings every two weeks</li>
+ <li data-uuid=3D"234c681e-5652-4c70-bbbc-cb0f3dd71fbb">3 small working gro=
+ups will be created to address: online seminars, non real time rendering &a=
+mp; IBC demo.</li>
+</ul>
+<p><br></p>
+    </div>
+</body>
+</html>
+------=_Part_5097_237302474.1787736549265--
