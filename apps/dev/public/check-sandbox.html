@@ -148,6 +148,14 @@
             case "customAction":
               result = await el.customAction(msg.payload ?? {});
               break;
+            case "goToTime":
+              // Non-real-time: scrub the graphic to an absolute timestamp.
+              result = await el.goToTime(msg.payload ?? { timestamp: 0 });
+              break;
+            case "setActionsSchedule":
+              // Non-real-time: hand the graphic its whole action timeline.
+              result = await el.setActionsSchedule(msg.payload ?? { schedule: [] });
+              break;
             case "dispose":
               result = await el.dispose();
               break;

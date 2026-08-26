@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle2, Play, Square, RefreshCw, Trash2, Zap, Clock } from "lucide-react";
+import { AlertCircle, CalendarClock, CheckCircle2, Clock, Play, RefreshCw, Rewind, Square, Trash2, Zap } from "lucide-react";
 import type { RuntimeCall } from "../../lib/check/runtime/types";
 
 const ICONS = {
@@ -7,6 +7,8 @@ const ICONS = {
   updateAction: RefreshCw,
   stopAction: Square,
   customAction: Zap,
+  goToTime: Rewind,
+  setActionsSchedule: CalendarClock,
   dispose: Trash2,
 } as const;
 

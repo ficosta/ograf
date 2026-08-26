@@ -150,7 +150,7 @@ export function Check() {
                   <div>
                     <p className="font-display text-base tracking-tight text-slate-900">Run in sandbox</p>
                     <p className="mt-0.5 text-xs text-slate-600">
-                      Mount the graphic in a sandboxed iframe and exercise load / play / update / stop / customAction / dispose. Adds runtime findings to the report.
+                      Mount the graphic in a sandboxed iframe and exercise load / play / update / stop / customAction / dispose — plus goToTime and setActionsSchedule when the manifest declares non-real-time support. Adds runtime findings to the report.
                     </p>
                   </div>
                 </div>

@@ -9,6 +9,12 @@ export type HarnessRequest =
       readonly action: "customAction";
       readonly payload: { readonly action: string; readonly data?: unknown };
     }
+  | { readonly id: string; readonly action: "goToTime"; readonly payload: { readonly timestamp: number } }
+  | {
+      readonly id: string;
+      readonly action: "setActionsSchedule";
+      readonly payload: { readonly schedule: readonly unknown[] };
+    }
   | { readonly id: string; readonly action: "dispose" };
 
 /** Iframe → parent events. */

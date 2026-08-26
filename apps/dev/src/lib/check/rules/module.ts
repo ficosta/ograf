@@ -3,6 +3,13 @@ import { stripComments } from "./strip-comments";
 
 const LIFECYCLE_METHODS = ["load", "playAction", "updateAction", "stopAction", "customAction", "dispose"] as const;
 
+/**
+ * Extra methods a non-real-time graphic must implement. The spec: "In case of a
+ * non-real-time Graphic, there are two additional functions that need to be
+ * implemented by the Graphic: goToTime() and setActionsSchedule()."
+ */
+const NON_REALTIME_METHODS = ["goToTime", "setActionsSchedule"] as const;
+
 function lineOf(source: string, needle: RegExp): number | null {
   const m = needle.exec(source);
   if (!m) return null;
@@ -121,6 +128,37 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
         "Every OGraf lifecycle method is expected to return a Promise. Declare them `async` so the renderer can `await` them without surprises.",
       path: mainPath,
     });
+  }
+
+  // C-09: a graphic that advertises non-real-time rendering must implement the
+  // two methods an NLE needs to scrub it. Without them the manifest promises a
+  // capability the module cannot deliver.
+  const manifest = pkg.manifest as { supportsNonRealTime?: unknown } | null;
+  if (manifest && typeof manifest === "object" && manifest.supportsNonRealTime === true) {
+    const missingNrt = NON_REALTIME_METHODS.filter(
+      (method) => !new RegExp(`\\b${method}\\s*\\(`).test(source),
+    );
+    if (missingNrt.length > 0) {
+      findings.push({
+        id: "C-09",
+        category: "module",
+        severity: "error",
+        title: `Non-real-time method${missingNrt.length > 1 ? "s" : ""} missing: ${missingNrt.join(", ")}`,
+        message:
+          "The manifest sets `supportsNonRealTime: true`, so the graphic must implement `goToTime({ timestamp })` and `setActionsSchedule({ schedule })`. An editor that tries to scrub this graphic will fail.",
+        path: mainPath,
+        specRef: "https://ograf.ebu.io/v1/specification/docs/Specification.html",
+      });
+    } else {
+      findings.push({
+        id: "C-09",
+        category: "module",
+        severity: "pass",
+        title: "Non-real-time methods present",
+        message: "goToTime and setActionsSchedule are both declared, as non-real-time rendering requires.",
+        path: mainPath,
+      });
+    }
   }
 
   // C-05: no top-level document./window. access

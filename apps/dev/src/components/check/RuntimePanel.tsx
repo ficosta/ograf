@@ -45,6 +45,11 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
 
   const defaultData = useMemo(() => extractDefaultData(pkg.manifest), [pkg.manifest]);
   const customActions = useMemo(() => extractCustomActions(pkg.manifest), [pkg.manifest]);
+  /** Only drive goToTime / setActionsSchedule when the graphic advertises them. */
+  const supportsNonRealTime = useMemo(() => {
+    const m = pkg.manifest;
+    return typeof m === "object" && m !== null && (m as { supportsNonRealTime?: unknown }).supportsNonRealTime === true;
+  }, [pkg.manifest]);
 
   // Keep parent in sync whenever our session changes.
   useEffect(() => {
@@ -247,13 +252,27 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
             payload: { action: action.id, data: action.defaultData },
           });
         }
+        if (supportsNonRealTime) {
+          // Non-real-time graphics get scrubbed and scheduled by an NLE, so the
+          // smoke run has to exercise that path too — it is the half of the
+          // spec a real-time-only harness never touches.
+          await callAction(harness, "setActionsSchedule", "setActionsSchedule({ schedule: [] })", {
+            payload: { schedule: [] },
+          });
+          await callAction(harness, "goToTime", "goToTime({ timestamp: 0 })", {
+            payload: { timestamp: 0 },
+          });
+          await callAction(harness, "goToTime", "goToTime({ timestamp: 1000 })", {
+            payload: { timestamp: 1000 },
+          });
+        }
         await callAction(harness, "dispose", "dispose()", {});
         setState((s) => ({ ...s, status: "done" }));
       } finally {
         setBusy(null);
       }
     },
-    [callAction, customActions, defaultData]
+    [callAction, customActions, defaultData, supportsNonRealTime]
   );
 
   // Manual controls

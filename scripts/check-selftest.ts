@@ -215,6 +215,10 @@ const CASES: [
   }],
   ["S-04", "no README", (f) => { delete f["README.md"]; }],
 
+  ["C-09", "declares non-real-time support without the methods for it", (f) => mutate(f, (m) => {
+    m.supportsNonRealTime = true;
+  })],
+
   // --- cross-field manifest ---
   ["M-11", "supports neither render mode", (f) => mutate(f, (m) => {
     m.supportsRealTime = false; m.supportsNonRealTime = false;

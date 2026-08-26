@@ -20,6 +20,10 @@ export function buildRuntimeFindings(
   manifest: unknown
 ): readonly Finding[] {
   const findings: Finding[] = [];
+  const declaresNonRealTime =
+    typeof manifest === "object" &&
+    manifest !== null &&
+    (manifest as { supportsNonRealTime?: unknown }).supportsNonRealTime === true;
 
   if (session.status === "failed") {
     findings.push({
@@ -52,6 +56,13 @@ export function buildRuntimeFindings(
   addLifecycleFinding(findings, byAction.get("updateAction"), "R-04", "updateAction");
   addLifecycleFinding(findings, byAction.get("stopAction"), "R-05", "stopAction");
   addLifecycleFinding(findings, byAction.get("dispose"), "R-07", "dispose");
+
+  // R-13 / R-14: the non-real-time pair, asserted only when the manifest says
+  // the graphic supports it — a real-time-only graphic is right not to have them.
+  if (declaresNonRealTime) {
+    addLifecycleFinding(findings, byAction.get("setActionsSchedule"), "R-13", "setActionsSchedule");
+    addLifecycleFinding(findings, byAction.get("goToTime"), "R-14", "goToTime");
+  }
 
   // R-06: unknown customAction should return a 404-class statusCode.
   const customUnknown = session.calls.find(
