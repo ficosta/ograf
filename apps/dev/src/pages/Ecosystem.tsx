@@ -24,6 +24,10 @@ interface EcoItem {
   readonly url: string;
   readonly type: "oss" | "commercial" | "official";
   readonly stars?: string;
+  /** Path under /logos/. Falls back to a monogram tile when absent. */
+  readonly logo?: string;
+  /** Support announced or being evaluated, but not shipping yet. */
+  readonly status?: "soon" | "exploring";
 }
 
 interface CategoryJson {
@@ -71,6 +75,23 @@ const TYPE_LABELS: Record<EcoItem["type"], string> = {
   commercial: "commercial",
   official: "official",
 };
+
+const STATUS_STYLES: Record<NonNullable<EcoItem["status"]>, string> = {
+  soon: "bg-violet-50 text-violet-700 ring-violet-600/20",
+  exploring: "bg-slate-100 text-slate-600 ring-slate-500/20",
+};
+
+const STATUS_LABELS: Record<NonNullable<EcoItem["status"]>, string> = {
+  soon: "coming soon",
+  exploring: "exploring",
+};
+
+/** Initials for the fallback tile — most vendors publish no SVG logo. */
+function monogram(name: string): string {
+  const words = name.split(/[\s-]+/).filter(Boolean);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
 
 const ALL_ITEMS = CATEGORIES.flatMap((c) => c.items);
 const TOTAL = ALL_ITEMS.length;
@@ -225,11 +246,35 @@ export function Ecosystem() {
                     className={`group flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 transition-all hover:-translate-y-0.5 hover:shadow-md ${cardHover.split(" ")[0]}`}
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <h3
-                        className={`font-display text-lg text-slate-900 transition-colors ${cardHover.split(" ")[1]}`}
-                      >
-                        {item.name}
-                      </h3>
+                      <div className="flex min-w-0 items-center gap-3">
+                        {item.logo ? (
+                          // Vendor logos are wordmarks, so the logo carries the
+                          // name and the heading stays for screen readers only.
+                          <>
+                            <img
+                              src={item.logo}
+                              alt={item.name}
+                              loading="lazy"
+                              className="h-6 w-auto max-w-[10rem] object-contain object-left"
+                            />
+                            <h3 className="sr-only">{item.name}</h3>
+                          </>
+                        ) : (
+                          <>
+                            <span
+                              aria-hidden="true"
+                              className="flex h-8 w-8 flex-none items-center justify-center rounded-lg bg-slate-100 text-[11px] font-semibold tracking-tight text-slate-500 ring-1 ring-slate-900/5"
+                            >
+                              {monogram(item.name)}
+                            </span>
+                            <h3
+                              className={`truncate font-display text-lg text-slate-900 transition-colors ${cardHover.split(" ")[1]}`}
+                            >
+                              {item.name}
+                            </h3>
+                          </>
+                        )}
+                      </div>
                       <ExternalLink
                         className={`h-4 w-4 flex-none text-slate-300 transition-colors ${category.featured ? "group-hover:text-rose-600" : "group-hover:text-blue-600"}`}
                         strokeWidth={2}
@@ -241,6 +286,13 @@ export function Ecosystem() {
                       >
                         {TYPE_LABELS[item.type]}
                       </span>
+                      {item.status && (
+                        <span
+                          className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${STATUS_STYLES[item.status]}`}
+                        >
+                          {STATUS_LABELS[item.status]}
+                        </span>
+                      )}
                       {item.stars && (
                         <span className="inline-flex items-center gap-1 text-xs text-slate-400">
                           <Star className="h-3 w-3 fill-slate-400 text-slate-400" />
