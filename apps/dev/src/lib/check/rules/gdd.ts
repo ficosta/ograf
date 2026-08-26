@@ -81,7 +81,14 @@ interface Ctx {
   readonly findings: Finding[];
   readonly manifestPath: string;
   readonly seen: WeakSet<object>;
+  /** Package contents, so file-path defaults can be resolved. */
+  readonly files: ReadonlySet<string>;
   truncated: boolean;
+}
+
+/** Can this default be looked for inside the package? URLs and absolutes cannot. */
+function isPackageRelative(p: string): boolean {
+  return !/^([a-z][a-z0-9+.-]*:)?\/\//i.test(p) && !p.startsWith("/") && !p.startsWith("data:");
 }
 
 function push(
@@ -212,6 +219,24 @@ function walk(node: unknown, path: string, ctx: Ctx, depth: number): void {
       `The field is \`${type}\` but its default is ${typeOfValue(node.default)}. Controllers pre-fill forms from defaults, so this breaks the form before an operator touches it.`,
       `${path}/default`);
   }
+  // G-15: a file-path default should point at something the package ships.
+  // Warning rather than error: the spec allows absolute paths and URLs, and a
+  // renderer may resolve the value against its own media store.
+  if (
+    typeof gddType === "string" &&
+    (gddType === "file-path" || gddType === "file-path/image-path") &&
+    typeof node.default === "string" &&
+    node.default.length > 0 &&
+    isPackageRelative(node.default)
+  ) {
+    const normalised = node.default.replace(/^\.\//, "");
+    if (!ctx.files.has(normalised)) {
+      push(ctx, "G-15", "warning", "file-path default is not in the package",
+        `The field defaults to \`${node.default}\`, which is not among the package's files. Unless the renderer resolves it from its own media store, the graphic opens with a broken reference.`,
+        `${path}/default`);
+    }
+  }
+
   // G-11: a default must also satisfy the field's own enum / bounds.
   if (node.default !== undefined) {
     if (Array.isArray(node.enum) && !node.enum.some((v) => v === node.default)) {
@@ -245,8 +270,8 @@ function walk(node: unknown, path: string, ctx: Ctx, depth: number): void {
 }
 
 /** Validate one GDD root (manifest.schema or a customAction schema). */
-function checkRoot(root: unknown, label: string, path: string, findings: Finding[]): void {
-  const ctx: Ctx = { findings, manifestPath: path, seen: new WeakSet(), truncated: false };
+function checkRoot(root: unknown, label: string, path: string, findings: Finding[], files: ReadonlySet<string>): void {
+  const ctx: Ctx = { findings, manifestPath: path, seen: new WeakSet(), files, truncated: false };
 
   if (!isObject(root)) {
     findings.push({
@@ -292,9 +317,10 @@ export function checkGdd(pkg: Pkg): readonly Finding[] {
   if (!isObject(manifest)) return findings;
 
   const base = pkg.manifestPath ?? "manifest";
+  const files = new Set(pkg.files.keys());
 
   if (manifest.schema !== undefined) {
-    checkRoot(manifest.schema, "Graphic data", `${base}/schema`, findings);
+    checkRoot(manifest.schema, "Graphic data", `${base}/schema`, findings, files);
   }
 
   const actions = manifest.customActions;
@@ -304,7 +330,7 @@ export function checkGdd(pkg: Pkg): readonly Finding[] {
       // `schema: null` is how the spec says "this action takes no parameters".
       if (action.schema === undefined || action.schema === null) return;
       const id = typeof action.id === "string" ? action.id : `#${i}`;
-      checkRoot(action.schema, `customAction "${id}"`, `${base}/customActions/${i}/schema`, findings);
+      checkRoot(action.schema, `customAction "${id}"`, `${base}/customActions/${i}/schema`, findings, files);
     });
   }
 

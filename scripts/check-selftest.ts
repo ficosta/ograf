@@ -248,6 +248,8 @@ const CASES: [
   }],
 
   // --- GDD (Graphics Data Definition) ---
+  ["G-15", "file-path default that the package does not ship", (f) =>
+    setSchema(f, { logo: { type: "string", gddType: "file-path/image-path", default: "./assets/logo.png" } })],
   ["G-02", "field with no type", (f) => setSchema(f, { headline: { title: "H" } })],
   ["G-02", "field with a type outside the six allowed", (f) => setSchema(f, { headline: { type: "text" } })],
   ["G-04", "gddType single-line on a number field", (f) =>
