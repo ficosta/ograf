@@ -67,10 +67,13 @@ function formatEventDate(start: string, end?: string): string {
   const e = new Date(end);
   const sameMonth = s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear();
   if (sameMonth) {
-    return `${s.toLocaleDateString(undefined, { month: "short", day: "numeric" })} – ${e.toLocaleDateString(
-      undefined,
-      { day: "numeric", year: "numeric" },
-    )}`;
+    // Ask the formatter only for combinations it renders idiomatically. A bare
+    // { day, year } is not one: Chrome emits "2026 (day: 14)" for it, which is
+    // how "Sep 11 – 2026 (day: 14)" used to reach the page.
+    const startPart = s.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    const endDay = e.toLocaleDateString(undefined, { day: "numeric" });
+    const year = e.toLocaleDateString(undefined, { year: "numeric" });
+    return `${startPart} – ${endDay}, ${year}`;
   }
   return `${sFormatted} – ${e.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`;
 }

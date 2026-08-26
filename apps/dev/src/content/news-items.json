@@ -1,5 +1,21 @@
 [
   {
+    "date": "2026-08-13",
+    "title": "OGraf Server API v1 published — the spec is complete",
+    "source": "EBU",
+    "url": "https://ograf.ebu.io/",
+    "type": "announcement",
+    "summary": "The second half of OGraf v1 is out. With the Server API published, a controller can drive any compliant renderer over a defined interface — the Graphics spec said what a graphic is, this says how to play it. Both halves are now marked stable and production ready, with future changes backwards-compatible or optional."
+  },
+  {
+    "date": "2026-08-12",
+    "title": "BBright adds EBU OGraf support to its UHD and ST 2110 playout platform",
+    "source": "Sports Video Group",
+    "url": "https://www.sportsvideo.org/2026/08/12/ibc-2026-bbright-adds-ebu-ograf-graphics-support-to-uhd-and-st-2110-playout-platform/",
+    "type": "announcement",
+    "summary": "A new graphics engine renders animated OGraf templates directly inside BBright's software playout, covering Ultra HD and SMPTE ST 2110 including ST 2110-41 metadata and 2110-43 timed text. OGraf reaching the playout tier, not just the graphics tier."
+  },
+  {
     "date": "2026-04-13",
     "title": "Maps Without Borders: Everviz joins the OGraf revolution",
     "source": "Everviz",
@@ -14,6 +30,14 @@
     "url": "https://mediatailor.fi/blog/from-html-graphics-to-agile-storytelling-key-insights-from-the-mediatech-festival-2026/",
     "type": "article",
     "summary": "Takeaways from MediaTech Festival 2026. Media Tailor frames OGraf as the industry's open answer to decades of vendor lock-in and details their investment in SPX Graphics to accelerate Nordic adoption."
+  },
+  {
+    "date": "2026-03-31",
+    "title": "The rise, fall and rise again of open-source solutions in broadcasting",
+    "source": "EBU Technology & Innovation",
+    "url": "https://tech.ebu.ch/news/2026/the-rise-fall-and-rise-again-of-open-source-solutions-in-broadcasting",
+    "type": "article",
+    "summary": "Frans de Jong on how open source came back around in broadcast, with OGraf cited as a project that started the moment its specification existed — a counterpoint to the 'code before spec' pattern he sees emerging elsewhere."
   },
   {
     "date": "2025-11-01",

@@ -22,16 +22,16 @@
     "items": [
       {
         "name": "OGraf Specification",
-        "desc": "The EBU OGraf open graphics standard. Graphics Definition v1 is stable. Server/Control API is in draft.",
+        "desc": "The EBU OGraf open graphics standard. Both halves of v1 are stable: the Graphics specification (Sep 2025) and the Server API (Aug 2026).",
         "url": "https://ograf.ebu.io",
         "type": "official"
       },
       {
         "name": "OGraf GitHub",
-        "desc": "Official specification repository with JSON schemas, examples, and documentation.",
+        "desc": "Official specification repository with JSON schemas, examples, and documentation. MIT licensed.",
         "url": "https://github.com/ebu/ograf",
         "type": "official",
-        "stars": "70"
+        "stars": "115"
       }
     ]
   },

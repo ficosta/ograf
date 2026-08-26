@@ -7,7 +7,7 @@
   {
     "id": "is-it-stable",
     "question": "Is OGraf stable enough for production?",
-    "answer": "The Graphics Definition v1 reached stable in September 2025. The Server/Control API is still draft (finalising mid-2026). Early adopters are running live productions with real broadcasters today."
+    "answer": "Yes — v1 is complete. The Graphics Definition reached stable in September 2025 and the Server API followed in August 2026. Both are marked production ready, and future changes are committed to being backwards-compatible or optional. Broadcasters are running live productions on it today."
   },
   {
     "id": "who-is-behind",
