@@ -17,6 +17,8 @@
 
 import { useMemo } from "react";
 import { RotateCcw } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 
 type Json = Record<string, unknown>;
 
@@ -70,6 +72,7 @@ const INPUT =
   "focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:bg-slate-50";
 
 export function DataForm({ schema, value, onChange, onReset, disabled }: DataFormProps) {
+  const c = useCopy(CHECK_COPY);
   const fields = useMemo(() => readFields(schema), [schema]);
   const simple = fields.filter(isSimple);
   const complex = fields.filter((f) => !isSimple(f));
@@ -79,7 +82,7 @@ export function DataForm({ schema, value, onChange, onReset, disabled }: DataFor
   if (fields.length === 0) {
     return (
       <p className="text-xs text-slate-500">
-        This graphic declares no data schema, so there is nothing for an operator to fill in.
+        {c.dataForm.noSchema}
       </p>
     );
   }
@@ -88,7 +91,7 @@ export function DataForm({ schema, value, onChange, onReset, disabled }: DataFor
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-          Data — what an operator would type
+          {c.dataForm.heading}
         </p>
         <button
           type="button"
@@ -96,7 +99,7 @@ export function DataForm({ schema, value, onChange, onReset, disabled }: DataFor
           disabled={disabled}
           className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600 disabled:opacity-50"
         >
-          <RotateCcw className="h-3 w-3" strokeWidth={2} /> Reset to defaults
+          <RotateCcw className="h-3 w-3" strokeWidth={2} /> {c.dataForm.reset}
         </button>
       </div>
 
@@ -189,7 +192,7 @@ export function DataForm({ schema, value, onChange, onReset, disabled }: DataFor
       {complex.map((f) => (
         <label key={f.key} className="block">
           <span className="mb-1 block text-xs font-medium text-slate-700">
-            {f.label} <span className="font-normal text-slate-400">· {f.type}, edited as JSON</span>
+            {f.label} <span className="font-normal text-slate-400">{c.dataForm.asJson(f.type)}</span>
           </span>
           <textarea
             rows={4}

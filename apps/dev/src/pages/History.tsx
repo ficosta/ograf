@@ -1,9 +1,12 @@
 import { ExternalLink, GitMerge } from "lucide-react";
 import { SPEC_HISTORY, type SpecHistoryEntry } from "../content/specHistory";
+import { SPEC_HISTORY_LOCALIZED } from "../content/localized/specHistory";
 import { HistoryEntryCard } from "../components/HistoryEntryCard";
 import { useRouteMeta } from "../hooks/useMeta";
+import { HISTORY_COPY, type HistoryCategory } from "../i18n/copy/history";
+import { useCopy } from "../i18n/useLocale";
 
-function groupByYear(entries: SpecHistoryEntry[]): Record<string, SpecHistoryEntry[]> {
+function groupByYear(entries: readonly SpecHistoryEntry[]): Record<string, SpecHistoryEntry[]> {
   return entries.reduce<Record<string, SpecHistoryEntry[]>>((acc, entry) => {
     const year = entry.closedAt.slice(0, 4);
     if (!acc[year]) acc[year] = [];
@@ -13,20 +16,21 @@ function groupByYear(entries: SpecHistoryEntry[]): Record<string, SpecHistoryEnt
 }
 
 const CATEGORY_COUNTS = (() => {
-  const counts: Record<string, number> = {
-    Graphics: 0,
-    Manifest: 0,
-    "GDD / Data": 0,
-    "Bug fixes": 0,
-    Other: 0,
+  // Counted on GitHub labels, which are the same in every language.
+  const counts: Record<HistoryCategory, number> = {
+    graphics: 0,
+    manifest: 0,
+    gddData: 0,
+    bugFixes: 0,
+    other: 0,
   };
   for (const e of SPEC_HISTORY) {
-    if (e.labels.includes("Issue / Bug")) counts["Bug fixes"]++;
-    else if (e.labels.some((l) => l === "GDD Types" || l === "Data Types")) counts["GDD / Data"]++;
-    else if (e.labels.includes("Manifest")) counts["Manifest"]++;
+    if (e.labels.includes("Issue / Bug")) counts.bugFixes++;
+    else if (e.labels.some((l) => l === "GDD Types" || l === "Data Types")) counts.gddData++;
+    else if (e.labels.includes("Manifest")) counts.manifest++;
     else if (e.labels.some((l) => l === "OGraf Graphic" || l === "ograf-graphics"))
-      counts["Graphics"]++;
-    else counts["Other"]++;
+      counts.graphics++;
+    else counts.other++;
   }
   return counts;
 })();
@@ -35,7 +39,8 @@ const MERGED_COUNT = SPEC_HISTORY.filter((e) => e.mergedBy !== undefined).length
 
 export function History() {
   useRouteMeta();
-  const grouped = groupByYear(SPEC_HISTORY);
+  const c = useCopy(HISTORY_COPY);
+  const grouped = groupByYear(useCopy(SPEC_HISTORY_LOCALIZED));
   const years = Object.keys(grouped).sort().reverse();
   const oldest = SPEC_HISTORY[SPEC_HISTORY.length - 1].closedAt.slice(0, 4);
   const newest = SPEC_HISTORY[0].closedAt.slice(0, 4);
@@ -45,10 +50,10 @@ export function History() {
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-6xl">
-          How OGraf got here.
+          {c.title}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          Every major decision, proposal, and fix that shaped the spec — straight from the working group's resolved discussions on GitHub. Expand any entry to read the original thread.
+          {c.lead}
         </p>
         <div className="mt-8 flex justify-center">
           <a
@@ -57,7 +62,7 @@ export function History() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600"
           >
-            View the live source on GitHub
+            {c.viewSource}
             <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </div>
@@ -72,7 +77,7 @@ export function History() {
                 {SPEC_HISTORY.length}
               </p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Resolved
+                {c.stats.resolved}
               </p>
             </div>
             <div className="text-center">
@@ -83,7 +88,7 @@ export function History() {
                 </span>
               </p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Shipped
+                {c.stats.shipped}
               </p>
             </div>
             <div className="text-center">
@@ -91,16 +96,16 @@ export function History() {
                 {oldest === newest ? oldest : `${oldest}–${newest}`}
               </p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Window
+                {c.stats.window}
               </p>
             </div>
-            {Object.entries(CATEGORY_COUNTS)
+            {(Object.entries(CATEGORY_COUNTS) as [HistoryCategory, number][])
               .filter(([, count]) => count > 0)
               .map(([name, count]) => (
                 <div key={name} className="text-center">
                   <p className="font-display text-4xl font-light text-slate-900">{count}</p>
                   <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                    {name}
+                    {c.categories[name]}
                   </p>
                 </div>
               ))}
@@ -130,10 +135,10 @@ export function History() {
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl tracking-tight text-slate-900">
-            Want to shape what comes next?
+            {c.ctaTitle}
           </h2>
           <p className="mt-3 text-slate-700">
-            Open discussions, proposals, and active work live on the EBU OGraf repository. Anyone can read, comment, and contribute.
+            {c.ctaBody}
           </p>
           <a
             href="https://github.com/ebu/ograf/issues"
@@ -141,7 +146,7 @@ export function History() {
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center justify-center rounded-full bg-blue-600 py-2 px-4 text-sm font-semibold text-white hover:bg-blue-500"
           >
-            Join the discussion on GitHub
+            {c.ctaButton}
           </a>
         </div>
       </section>

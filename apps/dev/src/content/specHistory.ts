@@ -30,7 +30,7 @@ export interface SpecThread {
   comments: ThreadComment[];
 }
 
-interface SpecSummary {
+export interface SpecSummary {
   summary: string;
   mergedBy?: number;
 }
@@ -41,13 +41,19 @@ export interface SpecHistoryEntry extends SpecThread {
 }
 
 const threads = threadsJson as SpecThread[];
-const summaries = summariesJson as Record<string, SpecSummary>;
 
-export const SPEC_HISTORY: SpecHistoryEntry[] = threads.map((thread) => {
-  const curated = summaries[String(thread.number)];
-  return {
-    ...thread,
-    summary: curated?.summary ?? thread.title,
-    mergedBy: curated?.mergedBy,
-  };
-});
+/** Joins the GitHub threads with one language's curated summaries. */
+export function mergeSpecHistory(summaries: Record<string, SpecSummary>): SpecHistoryEntry[] {
+  return threads.map((thread) => {
+    const curated = summaries[String(thread.number)];
+    return {
+      ...thread,
+      summary: curated?.summary ?? thread.title,
+      mergedBy: curated?.mergedBy,
+    };
+  });
+}
+
+export const SPEC_HISTORY: SpecHistoryEntry[] = mergeSpecHistory(
+  summariesJson as Record<string, SpecSummary>,
+);

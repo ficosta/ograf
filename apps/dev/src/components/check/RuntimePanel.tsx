@@ -14,6 +14,8 @@ import type {
 import { LifecycleTimeline } from "./LifecycleTimeline";
 import { ConsoleCapture } from "./ConsoleCapture";
 import { DataForm } from "./DataForm";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 
 interface RuntimePanelProps {
   readonly pkg: Pkg;
@@ -34,6 +36,7 @@ const SANDBOX_WIDTH = 1920;
 const SANDBOX_HEIGHT = 1080;
 
 export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
+  const c = useCopy(CHECK_COPY);
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const harnessRef = useRef<Harness | null>(null);
@@ -106,7 +109,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
     let cancelled = false;
     (async () => {
       if (!pkg.mainPath) {
-        setFatal("This package has no `main` module declared in the manifest.");
+        setFatal(c.runtime.noMain);
         setBusy(null);
         return;
       }
@@ -139,6 +142,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
       }
     };
     // We intentionally reboot when `pkg` identity changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pkg]);
 
   // When the iframe mounts for a given src, attach a harness and wait for ready.
@@ -168,7 +172,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
       .then((res) => {
         if (disposed) return;
         if (res.error || !res.tag) {
-          setFatal(res.error ?? "sandbox failed to initialise");
+          setFatal(res.error ?? c.runtime.initFailed);
           setBusy(null);
           setState((s) => ({ ...s, status: "failed", failureReason: res.error }));
           return;
@@ -320,15 +324,15 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h3 className="font-display text-lg tracking-tight text-slate-900">Runtime sandbox</h3>
+          <h3 className="font-display text-lg tracking-tight text-slate-900">{c.runtime.title}</h3>
           <p className="text-xs text-slate-500">
-            The graphic runs in a sandboxed iframe with the package served by an in-browser service worker. No upload.
+            {c.runtime.desc}
           </p>
         </div>
         {busy && (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
             <Loader2 className="h-3 w-3 animate-spin" strokeWidth={2.5} />
-            {busy === "booting" ? "booting sandbox..." : "running..."}
+            {busy === "booting" ? c.runtime.booting : c.runtime.running}
           </span>
         )}
       </div>
@@ -349,7 +353,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               // squeeze the iframe's viewport to 480x270.
               <iframe
                 ref={iframeRef}
-                title="OGraf runtime sandbox"
+                title={c.runtime.iframeTitle}
                 src={iframeSrc}
                 sandbox="allow-scripts allow-same-origin"
                 style={{
@@ -363,7 +367,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-400">
-                Preparing sandbox...
+                {c.runtime.preparing}
               </div>
             )}
             <div className="pointer-events-none absolute bottom-2 right-3 font-mono text-[10px] text-white/50">
@@ -375,7 +379,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
             <div className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800">
               <AlertCircle className="mt-0.5 h-4 w-4 flex-none" strokeWidth={2} />
               <div>
-                <p className="font-medium">Sandbox did not start</p>
+                <p className="font-medium">{c.runtime.failedTitle}</p>
                 <p className="mt-0.5 font-mono">{fatal}</p>
               </div>
             </div>
@@ -393,7 +397,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
             <div className="flex flex-wrap gap-1.5">
               <ControlButton
                 icon={RefreshCw}
-                label="load"
+                label={c.runtime.controls.load}
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
                   manual((h) => callAction(h, "load", "load({ data })", { data: formData }))
@@ -401,7 +405,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               />
               <ControlButton
                 icon={Play}
-                label="play"
+                label={c.runtime.controls.play}
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
                   manual((h) => callAction(h, "playAction", "playAction({})", { payload: {} }))
@@ -409,7 +413,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               />
               <ControlButton
                 icon={RefreshCw}
-                label="update"
+                label={c.runtime.controls.update}
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
                   manual((h) =>
@@ -419,7 +423,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               />
               <ControlButton
                 icon={Square}
-                label="stop"
+                label={c.runtime.controls.stop}
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() =>
                   manual((h) => callAction(h, "stopAction", "stopAction({})", { payload: {} }))
@@ -442,7 +446,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
               ))}
               <ControlButton
                 icon={Trash2}
-                label="dispose"
+                label={c.runtime.controls.dispose}
                 disabled={state.status === "idle" || state.status === "failed" || busy !== null}
                 onClick={() => manual((h) => callAction(h, "dispose", "dispose()", {}))}
               />
@@ -455,7 +459,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
         <div className="space-y-3">
           <div>
             <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-              Lifecycle timeline
+              {c.runtime.timeline}
             </p>
             <LifecycleTimeline calls={state.calls} running={busy === "running"} />
           </div>

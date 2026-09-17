@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Portal del proyecto OGraf",
+    "url": "https://ograf.ebu.io/",
+    "description": "Web oficial — estado actual, hoja de ruta y enlaces a herramientas."
+  },
+  {
+    "title": "Especificación de Graphics de OGraf",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification.html",
+    "description": "La especificación principal de grafismo en formato legible."
+  },
+  {
+    "title": "Especificación de la Server API de OGraf",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification_Server_API.html",
+    "description": "Documentación de la Server API en formato legible."
+  },
+  {
+    "title": "Grupo de trabajo de grafismo HTML de la EBU",
+    "url": "https://tech.ebu.ch/groups/html_graphics",
+    "description": "Página oficial del grupo de trabajo."
+  },
+  {
+    "title": "Repositorio oficial en GitHub",
+    "url": "https://github.com/ebu/ograf",
+    "description": "Código fuente de la especificación, issues e historial del proyecto."
+  },
+  {
+    "title": "Ejemplos de referencia",
+    "url": "https://github.com/ebu/ograf/tree/main/v1/examples",
+    "description": "Grafismos OGraf de ejemplo en GitHub."
+  },
+  {
+    "title": "Registro de cambios",
+    "url": "https://ograf.ebu.io/CHANGELOG.html",
+    "description": "Historial de cambios actual."
+  },
+  {
+    "title": "Etiqueta OGraf en TVBEurope",
+    "url": "https://www.tvbeurope.com/tag/ograf",
+    "description": "Sigue esta página de etiqueta para ver la nueva cobertura de OGraf en prensa."
+  },
+  {
+    "title": "Blog de Loopic",
+    "url": "https://docs.loopic.io/blog",
+    "description": "Útil para las entradas sobre IBC/NAB y las notas de implementación de Loopic."
+  },
+  {
+    "title": "Entradas de Everviz sobre eventos",
+    "url": "https://www.everviz.com/blog/category/conference/",
+    "description": "Entradas de Everviz sobre IBC/NAB y otros eventos, en un solo lugar."
+  },
+  {
+    "title": "Documentación de OGraf de StreamShapers",
+    "url": "https://streamshapers.com/docs/documentation/ograf/",
+    "description": "Documentación de terceros para contexto — útil como referencia."
+  }
+]

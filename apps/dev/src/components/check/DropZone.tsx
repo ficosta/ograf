@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState, type DragEvent } from "react";
 import { Upload, FileArchive } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 
 interface DropZoneProps {
   readonly onFile: (file: File) => void;
@@ -9,6 +11,7 @@ interface DropZoneProps {
 }
 
 export function DropZone({ onFile, onFolder, busy }: DropZoneProps) {
+  const c = useCopy(CHECK_COPY);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const folderRef = useRef<HTMLInputElement | null>(null);
@@ -50,14 +53,14 @@ export function DropZone({ onFile, onFolder, busy }: DropZoneProps) {
         )}
       </div>
       <p className="mt-4 font-display text-lg text-slate-900">
-        {busy ? "Running checks..." : "Drop your OGraf .zip here"}
+        {busy ? c.dropZone.busyTitle : c.dropZone.idleTitle}
       </p>
       <p className="mt-1 text-sm text-slate-500">
-        {busy ? "This only takes a moment." : "or click anywhere in this box to choose a file"}
+        {busy ? c.dropZone.busyHint : c.dropZone.idleHint}
       </p>
       <p className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600">
         <FileArchive className="h-3.5 w-3.5" strokeWidth={2} />
-        stays in your browser · no upload
+        {c.dropZone.local}
       </p>
       {onFolder && (
         <button
@@ -71,7 +74,7 @@ export function DropZone({ onFile, onFolder, busy }: DropZoneProps) {
           }}
           className="mt-3 text-xs font-medium text-blue-600 underline-offset-2 hover:underline disabled:opacity-50"
         >
-          or check an unzipped folder
+          {c.dropZone.folder}
         </button>
       )}
       <input

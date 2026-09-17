@@ -1,0 +1,73 @@
+{
+  "20": {
+    "summary": "Los grafismos ya pueden declarar una imagen en miniatura opcional en su manifiesto, lo que da a controladores y editores una vista previa de cada grafismo.",
+    "mergedBy": 57
+  },
+  "25": {
+    "summary": "Los manifiestos ya pueden declarar qué versión del motor de renderizado necesitan, de modo que los servidores pueden rechazar grafismos pensados para un runtime incompatible.",
+    "mergedBy": 58
+  },
+  "27": {
+    "summary": "Se añadió una indicación opcional de orden de propiedades a los schemas del manifiesto para que las interfaces muestren los campos en un orden predecible y decidido por el diseñador.",
+    "mergedBy": 59
+  },
+  "46": {
+    "summary": "Los diseñadores ya pueden marcar qué campos del manifiesto forman el nombre visible de un grafismo — así es más fácil identificar las instancias en las playlists.",
+    "mergedBy": 56
+  },
+  "63": {
+    "summary": "La especificación OGraf tiene oficialmente licencia MIT — lo que despeja cualquier duda sobre uso comercial, forks y obras derivadas."
+  },
+  "50": {
+    "summary": "Los manifiestos ya pueden agrupar propiedades relacionadas del schema para que los formularios las muestren en secciones con título en lugar de una lista plana."
+  },
+  "47": {
+    "summary": "Se añadieron metadatos de posición a los tipos GDD para que los grafismos sensibles a la composición (rótulos inferiores, moscas, tickers) lleven su ubicación prevista en pantalla."
+  },
+  "54": {
+    "summary": "Los grafismos que necesitan acceso a internet (datos en directo, fuentes remotas, APIs externas) ahora lo declaran de antemano — así los operadores pueden ejecutarlos con seguridad en entornos aislados de la red."
+  },
+  "42": {
+    "summary": "Se eliminó el número de fotogramas que devolvía goToTime(). Los grafismos simplemente saltan al tiempo indicado y retornan — menos ceremonia, menos casos límite."
+  },
+  "49": {
+    "summary": "GDD incorporó un tipo de entrada con texto enmascarado para campos sensibles como contraseñas, claves de API o cualquier dato que no deba verse en texto plano en la interfaz del controlador."
+  },
+  "24": {
+    "summary": "Graphics Data Definition (GDD), que antes era una especificación aparte, se integró en el propio OGraf — una especificación, una única fuente de verdad, un solo lugar donde consultar.",
+    "mergedBy": 40
+  },
+  "41": {
+    "summary": "GDD incorporó un tipo de entrada desplegable para que los manifiestos limiten un campo a un conjunto fijo de opciones sin lógica de validación propia."
+  },
+  "35": {
+    "summary": "Se aclaró exactamente cuándo debe resolver su promise playAction() — eliminando la ambigüedad entre 'ha empezado a reproducirse' y 'ha terminado de reproducirse'.",
+    "mergedBy": 38
+  },
+  "29": {
+    "summary": "Se precisó en la especificación cómo se exponen los grafismos OGraf como Web Components — lo que hace las implementaciones más coherentes entre renderizadores.",
+    "mergedBy": 34
+  },
+  "22": {
+    "summary": "Se documentaron las implicaciones de AdditionalProperties: false en los schemas — es estricto a propósito, pero te pilla si no lo esperas durante la validación."
+  },
+  "36": {
+    "summary": "Se aclaró la diferencia entre los grafismos basados en pasos (etapas discretas) y los grafismos gobernados por updateAction (actualizaciones continuas de datos). Dos patrones, dos casos de uso."
+  },
+  "18": {
+    "summary": "Los archivos de manifiesto usan ahora la convención de extensión *.ograf.json — así los grafismos OGraf se reconocen al instante en un sistema de archivos o un repositorio.",
+    "mergedBy": 21
+  },
+  "9": {
+    "summary": "Se debatió cómo deberían generar los grafismos imágenes de vista previa para controladores y editores — la base de la posterior decisión sobre miniaturas (#20)."
+  },
+  "1": {
+    "summary": "Marcó el rumbo de cómo deben cargar y referenciar fuentes los grafismos OGraf — reconociendo las fuentes como una cuestión de primer orden para una tipografía con calidad de broadcast."
+  },
+  "5": {
+    "summary": "Se concluyó que GDD sigue siendo necesario — lo que abrió el camino a su posterior integración en el propio OGraf (ver #24)."
+  },
+  "2": {
+    "summary": "Se corrigieron los manifiestos de ejemplo para que referenciaran correctamente sus implementaciones en JavaScript — de lo contrario, los ejemplos ni siquiera funcionaban."
+  }
+}

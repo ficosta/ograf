@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 import type { ConsoleLine, RuntimeError } from "../../lib/check/runtime/types";
 
 interface ConsoleCaptureProps {
@@ -16,6 +18,7 @@ const LEVEL_STYLE: Record<ConsoleLine["level"], string> = {
 };
 
 export function ConsoleCapture({ lines, errors }: ConsoleCaptureProps) {
+  const c = useCopy(CHECK_COPY);
   const [open, setOpen] = useState(true);
   const total = lines.length + errors.length;
 
@@ -32,7 +35,7 @@ export function ConsoleCapture({ lines, errors }: ConsoleCaptureProps) {
           ) : (
             <ChevronRight className="h-3.5 w-3.5 text-slate-400" strokeWidth={2} />
           )}
-          <span className="font-mono text-xs text-slate-300">Sandbox console</span>
+          <span className="font-mono text-xs text-slate-300">{c.console.title}</span>
           <span className="rounded-full bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-400">
             {total}
           </span>
@@ -43,7 +46,7 @@ export function ConsoleCapture({ lines, errors }: ConsoleCaptureProps) {
         <div className="max-h-80 overflow-auto border-t border-slate-800">
           {total === 0 ? (
             <p className="px-4 py-6 text-center text-[11px] text-slate-500">
-              No console output or errors captured yet.
+              {c.console.empty}
             </p>
           ) : (
             <div className="px-4 py-3 font-mono text-[11px] leading-relaxed">

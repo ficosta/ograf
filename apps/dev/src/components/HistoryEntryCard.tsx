@@ -10,14 +10,9 @@ import {
   MessageSquare,
 } from "lucide-react";
 import type { SpecHistoryEntry } from "../content/specHistory";
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
+import { HISTORY_COPY } from "../i18n/copy/history";
+import { formatDate } from "../i18n/copy/news/dates";
+import { useCopy, useLocale } from "../i18n/useLocale";
 
 function labelStyle(label: string): string {
   if (label === "Concluded") return "bg-emerald-50 text-emerald-700 ring-emerald-600/20";
@@ -53,6 +48,8 @@ interface HistoryEntryCardProps {
 
 export function HistoryEntryCard({ entry }: HistoryEntryCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const locale = useLocale();
+  const c = useCopy(HISTORY_COPY).card;
   const Icon = pickIcon(entry.labels);
   const commentCount = entry.comments.length;
   const hasThread = entry.body.length > 0 || commentCount > 0;
@@ -72,7 +69,7 @@ export function HistoryEntryCard({ entry }: HistoryEntryCardProps) {
           >
             #{entry.number}
           </a>
-          <time className="text-xs text-slate-500">{formatDate(entry.closedAt)}</time>
+          <time className="text-xs text-slate-500">{formatDate(entry.closedAt, locale)}</time>
           <span className="text-xs text-slate-400">·</span>
           <span className="text-xs text-slate-500">@{entry.author}</span>
         </div>
@@ -99,7 +96,7 @@ export function HistoryEntryCard({ entry }: HistoryEntryCardProps) {
               className="inline-flex items-center gap-1 rounded-full bg-violet-50 px-2 py-0.5 text-xs font-medium text-violet-700 ring-1 ring-inset ring-violet-600/20 hover:bg-violet-100"
             >
               <GitMerge className="h-3 w-3" strokeWidth={2.5} />
-              Merged #{entry.mergedBy}
+              {c.merged(entry.mergedBy)}
             </a>
           )}
           {entry.labels.map((label) => (
@@ -121,10 +118,10 @@ export function HistoryEntryCard({ entry }: HistoryEntryCardProps) {
               className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-blue-600"
             >
               <MessageSquare className="h-4 w-4" />
-              {expanded ? "Hide" : "Read"} discussion
+              {c.toggle(expanded)}
               {commentCount > 0 && (
                 <span className="text-xs text-slate-400">
-                  ({commentCount} {commentCount === 1 ? "comment" : "comments"})
+                  {c.comments(commentCount)}
                 </span>
               )}
               <ChevronDown
@@ -138,22 +135,22 @@ export function HistoryEntryCard({ entry }: HistoryEntryCardProps) {
                   <div>
                     <div className="mb-2 flex items-center gap-2 text-xs text-slate-500">
                       <span className="font-medium text-slate-700">@{entry.author}</span>
-                      <span>opened this discussion</span>
+                      <span>{c.opened}</span>
                     </div>
                     <div className={markdownClass}>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{entry.body}</ReactMarkdown>
                     </div>
                   </div>
                 )}
-                {entry.comments.map((c, i) => (
+                {entry.comments.map((comment, i) => (
                   <div key={i} className="rounded-lg bg-slate-50 p-4">
                     <div className="mb-2 flex items-center gap-2 text-xs text-slate-500">
-                      <span className="font-medium text-slate-700">@{c.author}</span>
+                      <span className="font-medium text-slate-700">@{comment.author}</span>
                       <span>·</span>
-                      <time>{formatDate(c.createdAt)}</time>
+                      <time>{formatDate(comment.createdAt, locale)}</time>
                     </div>
                     <div className={markdownClass}>
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{c.body}</ReactMarkdown>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{comment.body}</ReactMarkdown>
                     </div>
                   </div>
                 ))}

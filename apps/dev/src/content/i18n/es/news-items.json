@@ -1,0 +1,130 @@
+[
+  {
+    "date": "2026-08-13",
+    "title": "OGraf Server API v1 published — the spec is complete",
+    "source": "EBU",
+    "url": "https://ograf.ebu.io/",
+    "type": "announcement",
+    "summary": "Ya está aquí la segunda mitad de OGraf v1. Con la Server API publicada, un controlador puede manejar cualquier renderizador compatible a través de una interfaz definida — la especificación de Graphics decía qué es un grafismo; esta dice cómo reproducirlo. Ambas mitades están ya marcadas como estables y listas para producción, y los cambios futuros serán retrocompatibles u opcionales."
+  },
+  {
+    "date": "2026-08-12",
+    "title": "BBright adds EBU OGraf support to its UHD and ST 2110 playout platform",
+    "source": "Sports Video Group",
+    "url": "https://www.sportsvideo.org/2026/08/12/ibc-2026-bbright-adds-ebu-ograf-graphics-support-to-uhd-and-st-2110-playout-platform/",
+    "type": "announcement",
+    "summary": "Un nuevo motor gráfico renderiza plantillas OGraf animadas directamente dentro del playout por software de BBright, con soporte para Ultra HD y SMPTE ST 2110, incluidos los metadatos ST 2110-41 y el texto temporizado 2110-43. OGraf llega a la capa de playout, no solo a la de grafismo."
+  },
+  {
+    "date": "2026-04-13",
+    "title": "Maps Without Borders: Everviz joins the OGraf revolution",
+    "source": "Everviz",
+    "url": "https://www.everviz.com/blog/maps-without-borders-everviz-joins-the-ograf-revolution/",
+    "type": "announcement",
+    "summary": "Everviz añade exportación nativa a OGraf a sus mapas interactivos y gráficos dinámicos. Crea un mapa una vez y reprodúcelo en cualquier renderizador compatible con OGraf — SPX, Erizos y más."
+  },
+  {
+    "date": "2026-04-01",
+    "title": "From HTML Graphics to Agile Storytelling",
+    "source": "Media Tailor",
+    "url": "https://mediatailor.fi/blog/from-html-graphics-to-agile-storytelling-key-insights-from-the-mediatech-festival-2026/",
+    "type": "article",
+    "summary": "Conclusiones del MediaTech Festival 2026. Media Tailor presenta OGraf como la respuesta abierta del sector a décadas de dependencia del fabricante y detalla su inversión en SPX Graphics para acelerar la adopción en los países nórdicos."
+  },
+  {
+    "date": "2026-03-31",
+    "title": "The rise, fall and rise again of open-source solutions in broadcasting",
+    "source": "EBU Technology & Innovation",
+    "url": "https://tech.ebu.ch/news/2026/the-rise-fall-and-rise-again-of-open-source-solutions-in-broadcasting",
+    "type": "article",
+    "summary": "Frans de Jong explica cómo el código abierto ha vuelto al broadcast y cita OGraf como un proyecto que arrancó en cuanto existió su especificación — un contrapunto al patrón de 'código antes que especificación' que ve surgir en otros ámbitos."
+  },
+  {
+    "date": "2025-11-01",
+    "title": "Maps at Newsroom Speed at NAB 2026",
+    "source": "Everviz",
+    "url": "https://www.everviz.com/blog/maps-at-newsroom-speed-at-nab-2026/",
+    "type": "announcement",
+    "summary": "Everviz adelanta sus demos para el NAB 2026 — mapas interactivos pensados para el ritmo de la redacción, exportados vía OGraf para cualquier renderizador compatible."
+  },
+  {
+    "date": "2025-10-15",
+    "title": "coralbay.tv to showcase many new features at NAB 2026",
+    "source": "coralbay.tv",
+    "url": "https://coralbay.tv/coralbay-tv-to-showcase-many-new-features-at-nab-2026/",
+    "type": "announcement",
+    "summary": "coralbay.tv detalla lo que llevará al NAB 2026, incluida la integración de Loopic + EBU OGraf en el flujo de automatización de coralPlay."
+  },
+  {
+    "date": "2025-09-10",
+    "title": "Loopic + coralPlay Integration",
+    "source": "Loopic",
+    "url": "https://docs.loopic.io/blog/loopic-coralplay-integration",
+    "type": "announcement",
+    "summary": "Paso a paso de un flujo OGraf real: grafismos diseñados en Loopic y automatizados con coralPlay, de coralbay. \"Crea una vez, despliega en cualquier parte\" en acción."
+  },
+  {
+    "date": "2025-08-20",
+    "title": "Loopic at IBC 2025",
+    "source": "Loopic",
+    "url": "https://docs.loopic.io/blog/loopic-at-ibc-2025",
+    "type": "announcement",
+    "summary": "El resumen de Loopic en el IBC 2025 — con exportación a OGraf en un clic y demos funcionando en varios renderizadores compatibles."
+  },
+  {
+    "date": "2025-08-13",
+    "title": "EBU launches new HTML graphics standard",
+    "source": "Advanced Television",
+    "url": "https://www.advanced-television.com/2025/08/13/ebu-launches-new-html-graphics-standard/",
+    "type": "article",
+    "summary": "Cobertura del sector sobre el lanzamiento de OGraf: un estándar de grafismo abierto y nativo de la web, respaldado por la EBU, llamado a acabar con la dependencia del fabricante en los flujos de broadcast."
+  },
+  {
+    "date": "2025-08-05",
+    "title": "Loopic 2.2.1 now supports OGraf",
+    "source": "Loopic",
+    "url": "https://docs.loopic.io/blog/loopic-ograf-support",
+    "type": "announcement",
+    "summary": "Loopic publica su primera versión compatible con OGraf — el editor no-code de grafismo HTML ya exporta paquetes OGraf directamente."
+  },
+  {
+    "date": "2025-07-01",
+    "title": "OGraf, the new HTML graphics standard, is here",
+    "source": "SPX Graphics",
+    "url": "https://www.spx.graphics/ograf-new-html-graphics-standard",
+    "type": "article",
+    "summary": "El artículo explicativo de SPX tras el webinar de la EBU: qué resuelve OGraf para los operadores, cómo lo está implementando SPX y qué supone para los flujos de grafismo HTML existentes."
+  },
+  {
+    "date": "2025-05-20",
+    "title": "Finnish tech companies partner on EBU's OGraf graphics standard",
+    "source": "TVBEurope",
+    "url": "https://www.tvbeurope.com/live-production/finnish-tech-companies-partner-on-ebus-ograf-graphics-standard",
+    "type": "article",
+    "summary": "Cobertura de la alianza entre Media Tailor y SPX Graphics, que muestra cómo las empresas nórdicas dan un paso al frente para impulsar la adopción de OGraf."
+  },
+  {
+    "date": "2025-05-01",
+    "title": "Create Once, Deploy Everywhere — the EBU's Open Graphics Standard Explained",
+    "source": "Xperity",
+    "url": "https://xperity.io/ograf-create-once-deploy-everywhere-the-ebus-open-graphics-standard-explained/",
+    "type": "article",
+    "summary": "Una explicación clara y neutral respecto a fabricantes: qué es OGraf, por qué importa y cómo cambia la economía del grafismo para broadcast en las cadenas más pequeñas."
+  },
+  {
+    "date": "2025-04-15",
+    "title": "OGraf: the EBU's open spec for cross-platform graphics integration",
+    "source": "EBU Technology & Innovation",
+    "url": "https://tech.ebu.ch/news/2025/04/ograf-the-ebu%27s-open-spec-for-cross-platform-graphics-integration",
+    "type": "article",
+    "summary": "La presentación oficial de la EBU — la mejor introducción breve y fiable a OGraf, su alcance y sus objetivos."
+  },
+  {
+    "date": "2025-04-01",
+    "title": "EBU launches OGraf project to define open graphics specifications",
+    "source": "TVBEurope",
+    "url": "https://www.tvbeurope.com/production-post/ebu-launches-ograf-project-to-define-open-graphics-specifications",
+    "type": "article",
+    "summary": "Una de las primeras coberturas del lanzamiento de OGraf — qué se propuso construir la EBU y quién participó desde el primer día."
+  }
+]

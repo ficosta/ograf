@@ -1,4 +1,6 @@
 import { ExternalLink, ShieldCheck, ShieldAlert } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 import type { SchemaSource } from "../../lib/check/types";
 
 interface SchemaBadgeProps {
@@ -6,6 +8,7 @@ interface SchemaBadgeProps {
 }
 
 export function SchemaBadge({ source }: SchemaBadgeProps) {
+  const c = useCopy(CHECK_COPY);
   const live = source.kind === "live";
   const Icon = live ? ShieldCheck : ShieldAlert;
   const tone = live
@@ -16,7 +19,7 @@ export function SchemaBadge({ source }: SchemaBadgeProps) {
       <Icon className="mt-0.5 h-4 w-4 flex-none" strokeWidth={1.75} />
       <div className="min-w-0">
         <p className="font-medium">
-          {live ? "Validated against the live EBU schema" : "Validated against the bundled snapshot"}
+          {live ? c.schema.live : c.schema.bundled}
         </p>
         <p className="mt-0.5 text-[11px] leading-relaxed opacity-80">
           {live ? (
@@ -30,18 +33,18 @@ export function SchemaBadge({ source }: SchemaBadgeProps) {
               <ExternalLink className="h-3 w-3" strokeWidth={2} />
             </a>
           ) : (
-            <span>{source.note ?? "Live schema not reachable."}</span>
+            <span title={source.note}>{c.schema.bundledNote(source.note)}</span>
           )}
-          <span className="ml-2 opacity-70">· fetched {formatTime(source.fetchedAt)}</span>
+          <span className="ml-2 opacity-70">{c.schema.fetched(formatTime(source.fetchedAt, c.schema.dateLocale))}</span>
         </p>
       </div>
     </div>
   );
 }
 
-function formatTime(iso: string): string {
+function formatTime(iso: string, locale: string | undefined): string {
   try {
-    return new Date(iso).toLocaleString();
+    return new Date(iso).toLocaleString(locale);
   } catch {
     return iso;
   }

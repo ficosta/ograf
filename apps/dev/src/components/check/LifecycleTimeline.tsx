@@ -1,4 +1,6 @@
 import { AlertCircle, CalendarClock, CheckCircle2, Clock, Play, RefreshCw, Rewind, Square, Trash2, Zap } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 import type { RuntimeCall } from "../../lib/check/runtime/types";
 
 const ICONS = {
@@ -18,11 +20,12 @@ interface LifecycleTimelineProps {
 }
 
 export function LifecycleTimeline({ calls, running }: LifecycleTimelineProps) {
+  const c = useCopy(CHECK_COPY);
   if (calls.length === 0) {
     return (
       <div className="flex items-center gap-2 rounded-lg border border-dashed border-slate-200 p-4 text-xs text-slate-500">
         <Clock className="h-3.5 w-3.5" strokeWidth={2} />
-        {running ? "Running..." : "No lifecycle calls yet. Click Play or Run smoke test."}
+        {running ? c.timeline.running : c.timeline.empty}
       </div>
     );
   }

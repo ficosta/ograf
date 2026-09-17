@@ -13,22 +13,14 @@
 import { Link } from "../i18n/Link";
 import { ChevronRight } from "lucide-react";
 import CHECK_RULES from "../content/check-rules.json";
-import { CATEGORY_LABEL, CATEGORY_ORDER, type Category } from "../lib/check/types";
+import { CATEGORY_ORDER } from "../lib/check/types";
 import { useRouteMeta } from "../hooks/useMeta";
-
-/** What each id prefix stands for, so the numbering is not a private joke. */
-const PREFIX_NOTE: Partial<Record<Category, string>> = {
-  manifest: "M — the .ograf.json itself, validated against the EBU schema and then across its own fields.",
-  gdd: "G — the data schema controllers build operator forms from.",
-  structure: "S — what the package contains and how it is laid out.",
-  module: "C — the graphic module's source: exports, lifecycle, portability.",
-  styling: "X — stylesheet rules that decide whether a graphic survives a different renderer.",
-  assets: "A — images, fonts and the licences that must ship beside them.",
-  runtime: "R — assertions made while the graphic actually runs in the sandbox.",
-};
+import { useCopy } from "../i18n/useLocale";
+import { CHECK_COPY } from "../i18n/copy/check";
 
 export function CheckRules() {
   useRouteMeta();
+  const c = useCopy(CHECK_COPY);
 
   const categories = CATEGORY_ORDER.filter((c) => c in CHECK_RULES.categories);
 
@@ -37,20 +29,19 @@ export function CheckRules() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Link to="/check" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
-            <ChevronRight className="h-3 w-3 rotate-180" /> Package Checker
+            <ChevronRight className="h-3 w-3 rotate-180" /> {c.rulesPage.back}
           </Link>
         </div>
 
         <div className="mb-12">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">Reference</p>
+          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-blue-600">{c.rulesPage.eyebrow}</p>
           <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900">
-            Checker rules.
+            {c.rulesPage.title}
           </h1>
           <p className="mt-6 text-lg tracking-tight text-slate-700">
-            All {CHECK_RULES.total} rules, across {categories.length} categories. Reports cite these
-            ids, so this is where to look one up. The list is generated from the checker's own source
-            on every build — it cannot drift from what actually runs.
+            {c.rulesPage.intro(CHECK_RULES.total, categories.length)}
           </p>
+          {c.findingsNote && <p className="mt-4 text-xs text-slate-500">{c.findingsNote}</p>}
         </div>
 
         <div className="space-y-10">
@@ -60,11 +51,11 @@ export function CheckRules() {
             return (
               <div key={category}>
                 <div className="mb-3 flex items-baseline gap-2">
-                  <h2 className="font-display text-xl text-slate-900">{CATEGORY_LABEL[category]}</h2>
-                  <span className="text-sm text-slate-400">{entry.count} rules</span>
+                  <h2 className="font-display text-xl text-slate-900">{c.categories[category]}</h2>
+                  <span className="text-sm text-slate-400">{c.rules(entry.count)}</span>
                 </div>
-                {PREFIX_NOTE[category] && (
-                  <p className="mb-4 text-sm text-slate-600">{PREFIX_NOTE[category]}</p>
+                {c.rulesPage.prefix[category] && (
+                  <p className="mb-4 text-sm text-slate-600">{c.rulesPage.prefix[category]}</p>
                 )}
                 <ul className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white">
                   {entry.rules.map((rule) => (
@@ -82,12 +73,7 @@ export function CheckRules() {
         </div>
 
         <p className="mt-12 text-sm text-slate-500">
-          A rule with no description raises more than one kind of finding, and its message says which.
-          Run a package through the{" "}
-          <Link to="/check" className="text-blue-600 hover:underline">
-            checker
-          </Link>{" "}
-          to see them in context.
+          {c.rulesPage.footer}
         </p>
       </div>
     </section>

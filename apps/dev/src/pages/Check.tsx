@@ -2,6 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "../i18n/Link";
 import { Braces, FileJson, FileCode, FileType, Files, Image, Box, ChevronRight, Play, ShieldAlert } from "lucide-react";
 import { useRouteMeta } from "../hooks/useMeta";
+import { useCopy, useLocalePath } from "../i18n/useLocale";
+import { CHECK_COPY, type CheckCopy } from "../i18n/copy/check";
+import type { Category } from "../lib/check/types";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { canShare, decodeReport, encodeReport } from "../lib/check/share";
 import CHECK_RULES from "../content/check-rules.json";
@@ -18,6 +21,8 @@ const RUNTIME_CONSENT_KEY = "ograf-check-runtime-consent";
 
 export function Check() {
   useRouteMeta();
+  const c = useCopy(CHECK_COPY);
+  const localePath = useLocalePath();
 
   const [report, setReport] = useState<Report | null>(null);
   const [pkg, setPkg] = useState<Pkg | null>(null);
@@ -43,11 +48,11 @@ export function Check() {
       setPkg(p);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : "Failed to check the package.");
+      setError(err instanceof Error ? err.message : c.page.failedPackage);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [c]);
 
   const handleFolder = useCallback(async (files: readonly File[]) => {
     setBusy(true);
@@ -64,11 +69,11 @@ export function Check() {
       setPkg(p);
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : "Failed to check the folder.");
+      setError(err instanceof Error ? err.message : c.page.failedFolder);
     } finally {
       setBusy(false);
     }
-  }, []);
+  }, [c]);
 
   const runtimeFindings = useMemo<readonly Finding[]>(() => {
     if (!runtimeSession || !pkg) return [];
@@ -135,7 +140,7 @@ export function Check() {
       setShareState("too-large");
       return;
     }
-    const url = `${window.location.origin}/check#${fragment}`;
+    const url = `${window.location.origin}${localePath("/check")}#${fragment}`;
     try {
       await navigator.clipboard.writeText(url);
       setShareState("copied");
@@ -146,7 +151,7 @@ export function Check() {
       setShareState("copied");
     }
     setTimeout(() => setShareState("idle"), 2500);
-  }, [combinedReport]);
+  }, [combinedReport, localePath]);
 
   const startRuntime = useCallback(() => {
     let consented = false;
@@ -176,34 +181,29 @@ export function Check() {
     <section className="py-16">
       <ConfirmDialog
         open={consentOpen}
-        title="Run the graphic in a sandbox?"
-        confirmLabel="Run it"
-        cancelLabel="Not now"
+        title={c.page.consentTitle}
+        confirmLabel={c.page.consentConfirm}
+        cancelLabel={c.page.consentCancel}
         onConfirm={acceptConsent}
         onCancel={() => setConsentOpen(false)}
       >
-        <p>
-          This executes the JavaScript inside the .zip you dropped, in a sandboxed iframe on this
-          page. Only do it with a package you trust.
-        </p>
-        <p>
-          Nothing is uploaded — the code runs in your browser and the results stay there. We&rsquo;ll
-          remember this choice on this device.
-        </p>
+        {c.page.consentBody.map((paragraph) => (
+          <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+        ))}
       </ConfirmDialog>
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6">
           <Link to="/tools" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
-            <ChevronRight className="h-3 w-3 rotate-180" /> All tools
+            <ChevronRight className="h-3 w-3 rotate-180" /> {c.page.allTools}
           </Link>
         </div>
         <div className="mb-12 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-2">Tool</p>
+          <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-2">{c.page.eyebrow}</p>
           <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
-            OGraf package checker.
+            {c.page.title}
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg tracking-tight text-slate-700">
-            Drop any OGraf <code className="font-mono text-base">.zip</code> and get a structured report. Static rules run instantly; a runtime sandbox mounts the graphic and exercises its lifecycle on demand. Everything stays in your browser.
+            {c.page.intro}
           </p>
         </div>
 
@@ -215,7 +215,7 @@ export function Check() {
                 {error}
               </p>
             )}
-            <WhatGetsChecked />
+            <WhatGetsChecked c={c} />
           </>
         )}
 
@@ -240,9 +240,9 @@ export function Check() {
                     <Play className="h-5 w-5" strokeWidth={2} />
                   </div>
                   <div>
-                    <p className="font-display text-base tracking-tight text-slate-900">Run in sandbox</p>
+                    <p className="font-display text-base tracking-tight text-slate-900">{c.page.runTitle}</p>
                     <p className="mt-0.5 text-xs text-slate-600">
-                      Mount the graphic in a sandboxed iframe and exercise load / play / update / stop / customAction / dispose — plus goToTime and setActionsSchedule when the manifest declares non-real-time support. Adds runtime findings to the report.
+                      {c.page.runDesc}
                     </p>
                   </div>
                 </div>
@@ -254,6 +254,8 @@ export function Check() {
               <RuntimePanel key={pkg.zipName} pkg={pkg} onSessionChange={setRuntimeSession} />
             )}
 
+            {c.findingsNote && <p className="text-xs text-slate-500">{c.findingsNote}</p>}
+
             <CheckerResults findings={combinedReport.findings} />
           </div>
         )}
@@ -262,48 +264,49 @@ export function Check() {
   );
 }
 
-function WhatGetsChecked() {
+function WhatGetsChecked({ c }: { readonly c: CheckCopy }) {
   // Counts come from check-rules.json, regenerated from the rule modules at
   // build time. They were hand-typed once and drifted twice — the page claimed
   // 53 rules when there were 82, and never mentioned the GDD category at all.
   const n = (key: keyof typeof CHECK_RULES.categories) => CHECK_RULES.categories[key]?.count ?? 0;
-  const categories = [
-    { Icon: FileJson, label: "Manifest", count: n("manifest"), desc: "Validated against the live EBU schema (draft-2020-12), customActions shape, `main` pointer, $schema freshness, semver — plus cross-field checks a per-field schema cannot make: durations naming an undeclared customAction, unsatisfiable render requirements, missing thumbnails." },
-    { Icon: Braces, label: "Data schema (GDD)", count: n("gdd"), desc: "Field types and gddType constraints, required gddOptions, the patterns the spec pins for colours, labels covering every select option, and defaults that match their own field's type, enum, bounds and pattern." },
-    { Icon: Files, label: "Package structure", count: n("structure"), desc: "Single top-level folder, README / LICENSE / preview present, referenced assets shipped, no OS junk, large-file warnings." },
-    { Icon: FileCode, label: "Graphic module", count: n("module"), desc: "Default-export HTMLElement class, six lifecycle methods, the non-real-time pair when the manifest declares it, no self-registered `customElements.define`, no top-level `document`, Shadow-DOM-safe relative URLs." },
-    { Icon: FileType, label: "Styling", count: n("styling"), desc: "`position: fixed` catch, remote `@import` / `@font-face`, `body` selector flag, font-family fallback, Shadow-DOM portability hints." },
-    { Icon: Image, label: "Assets", count: n("assets"), desc: "Preview image 16:9 (decoded from raw bytes), fonts shipped with a licence, oversized images, unknown extensions." },
-    { Icon: Play, label: "Runtime (optional)", count: n("runtime"), desc: "Mounts the graphic in a sandboxed iframe, drives the full OGraf lifecycle including goToTime and setActionsSchedule where declared, captures timings, return values, console and uncaught errors." },
+  const ICONS: readonly (readonly [Category, typeof FileJson])[] = [
+    ["manifest", FileJson],
+    ["gdd", Braces],
+    ["structure", Files],
+    ["module", FileCode],
+    ["styling", FileType],
+    ["assets", Image],
+    ["runtime", Play],
   ];
+  const categories = ICONS.map(([key, Icon]) => ({ Icon, ...c.page.checked[key], count: n(key) }));
   return (
     <div className="mt-10">
       <div className="mb-3 flex items-baseline justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">What gets checked</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{c.page.checkedTitle}</p>
         <Link to="/check/rules" className="text-xs font-medium text-blue-600 hover:underline">
-          All {CHECK_RULES.total} rules by id →
+          {c.page.allRules(CHECK_RULES.total)}
         </Link>
       </div>
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {categories.map((c) => (
-          <li key={c.label} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-3">
+        {categories.map((cat) => (
+          <li key={cat.label} className="flex gap-3 rounded-lg border border-slate-200 bg-white p-3">
             <div className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-blue-50 text-blue-600">
-              <c.Icon className="h-4 w-4" strokeWidth={1.75} />
+              <cat.Icon className="h-4 w-4" strokeWidth={1.75} />
             </div>
             <div className="min-w-0">
               <p className="text-sm font-semibold text-slate-900">
-                {c.label} <span className="font-normal text-slate-400">· {c.count} rules</span>
+                {cat.label} <span className="font-normal text-slate-400">· {c.rules(cat.count)}</span>
               </p>
-              <p className="text-[12px] text-slate-600">{c.desc}</p>
+              <p className="text-[12px] text-slate-600">{cat.desc}</p>
             </div>
           </li>
         ))}
       </ul>
       <p className="mt-4 flex items-center gap-2 text-xs text-slate-500">
-        <Box className="h-3.5 w-3.5" strokeWidth={2} /> No upload — everything runs in your browser.
+        <Box className="h-3.5 w-3.5" strokeWidth={2} /> {c.page.noUpload}
       </p>
       <p className="mt-1 flex items-center gap-2 text-xs text-slate-500">
-        <ShieldAlert className="h-3.5 w-3.5" strokeWidth={2} /> The runtime sandbox executes the package's code; opt-in click required.
+        <ShieldAlert className="h-3.5 w-3.5" strokeWidth={2} /> {c.page.optIn}
       </p>
     </div>
   );

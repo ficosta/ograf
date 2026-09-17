@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Portal do projeto OGraf",
+    "url": "https://ograf.ebu.io/",
+    "description": "Página oficial — status atual, roadmap e links para ferramentas."
+  },
+  {
+    "title": "Especificação de Graphics do OGraf",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification.html",
+    "description": "A principal especificação de grafismo em formato legível."
+  },
+  {
+    "title": "Especificação da Server API do OGraf",
+    "url": "https://ograf.ebu.io/v1/specification/docs/Specification_Server_API.html",
+    "description": "Documentação da Server API em formato legível."
+  },
+  {
+    "title": "Grupo de trabalho de grafismo HTML da EBU",
+    "url": "https://tech.ebu.ch/groups/html_graphics",
+    "description": "Página oficial do grupo de trabalho."
+  },
+  {
+    "title": "Repositório oficial no GitHub",
+    "url": "https://github.com/ebu/ograf",
+    "description": "Código-fonte da especificação, issues e histórico do projeto."
+  },
+  {
+    "title": "Exemplos de referência",
+    "url": "https://github.com/ebu/ograf/tree/main/v1/examples",
+    "description": "Grafismos OGraf de exemplo no GitHub."
+  },
+  {
+    "title": "Changelog",
+    "url": "https://ograf.ebu.io/CHANGELOG.html",
+    "description": "Histórico de mudanças atual."
+  },
+  {
+    "title": "Tag OGraf na TVBEurope",
+    "url": "https://www.tvbeurope.com/tag/ograf",
+    "description": "Acompanhe esta página de tag para novas matérias sobre OGraf na imprensa."
+  },
+  {
+    "title": "Blog do Loopic",
+    "url": "https://docs.loopic.io/blog",
+    "description": "Útil para posts sobre IBC/NAB e notas de implementação do Loopic."
+  },
+  {
+    "title": "Posts da Everviz sobre eventos",
+    "url": "https://www.everviz.com/blog/category/conference/",
+    "description": "Posts da Everviz sobre IBC/NAB e outros eventos, num só lugar."
+  },
+  {
+    "title": "Documentação OGraf da StreamShapers",
+    "url": "https://streamshapers.com/docs/documentation/ograf/",
+    "description": "Documentação de terceiros para contexto — bom material de apoio."
+  }
+]

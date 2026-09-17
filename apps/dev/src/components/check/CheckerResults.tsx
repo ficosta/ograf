@@ -1,13 +1,16 @@
 import { useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { CATEGORY_LABEL, CATEGORY_ORDER, type Category, type Finding } from "../../lib/check/types";
+import { CATEGORY_ORDER, type Category, type Finding } from "../../lib/check/types";
 import { FindingRow } from "./FindingRow";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 
 interface CheckerResultsProps {
   readonly findings: readonly Finding[];
 }
 
 export function CheckerResults({ findings }: CheckerResultsProps) {
+  const c = useCopy(CHECK_COPY);
   const grouped = useMemo(() => groupByCategory(findings), [findings]);
 
   const [openMap, setOpenMap] = useState<Record<Category, boolean>>(() => {
@@ -38,8 +41,8 @@ export function CheckerResults({ findings }: CheckerResultsProps) {
               className="flex w-full items-center justify-between gap-3 rounded-2xl px-5 py-4 text-left hover:bg-slate-50"
             >
               <div className="flex items-center gap-3">
-                <h3 className="font-display text-lg text-slate-900">{CATEGORY_LABEL[category]}</h3>
-                <span className="text-xs text-slate-500">{items.length} check{items.length === 1 ? "" : "s"}</span>
+                <h3 className="font-display text-lg text-slate-900">{c.categories[category]}</h3>
+                <span className="text-xs text-slate-500">{c.results.checks(items.length)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CategorySummary summary={summary} />

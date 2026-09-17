@@ -11,7 +11,7 @@
     {
       "id": "package",
       "label": "OGraf Package",
-      "description": "A folder with manifest.ograf.json, index.html, graphic.mjs, style.css. Self-contained, versionable, easy to ship.",
+      "description": "A folder with the manifest (<name>.ograf.json), graphic.mjs, style.css and any assets. Self-contained, versionable, easy to ship.",
       "icon": "Package"
     },
     {
@@ -23,7 +23,7 @@
     {
       "id": "renderer",
       "label": "Renderer",
-      "description": "SPX Graphics Server, ograf-server, or any compliant engine. Instantiates the Web Component, calls load / play / update / stop.",
+      "description": "SPX Graphics Server, ograf-server, or any compliant engine. Instantiates the Web Component and calls load, playAction, updateAction, stopAction, customAction and dispose.",
       "icon": "Cpu"
     },
     {

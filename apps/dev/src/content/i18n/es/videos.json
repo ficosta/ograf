@@ -1,0 +1,32 @@
+[
+  {
+    "youtubeId": "con5EdjpZps",
+    "title": "Loopic 2.3 Walkthrough — Lottie support, UI & OGraf improvements",
+    "author": "Loopic",
+    "summary": "Recorrido completo por Loopic 2.3, con las mejoras en la exportación a OGraf, la nueva interfaz y el soporte para animaciones Lottie."
+  },
+  {
+    "youtubeId": "-S_gBYPyCiw",
+    "title": "Everviz Maps in Erizos Studio — OGraf integration",
+    "author": "Everviz",
+    "summary": "Mapas de Everviz exportados como paquetes OGraf reproduciéndose en Erizos Studio — una muestra de interoperabilidad entre renderizadores."
+  },
+  {
+    "youtubeId": "LMsskW8Fq8Y",
+    "title": "Everviz Maps in SPX Graphics — OGraf in action",
+    "author": "Everviz",
+    "summary": "El mismo mapa de Everviz, ahora funcionando dentro de SPX Graphics. Demuestra la promesa de 'un paquete, cualquier renderizador'."
+  },
+  {
+    "youtubeId": "_WBoLIwGs6c",
+    "title": "Everviz + OGraf Editor — Manifest integration and preview",
+    "author": "Everviz",
+    "summary": "Recorrido técnico por el formato del manifiesto, cómo se integra Everviz en un editor OGraf y la previsualización del resultado."
+  },
+  {
+    "youtubeId": "P6VEWyv7-P0",
+    "title": "Using OGraf with SPX and Loopic",
+    "author": "SPX Graphics",
+    "summary": "Demo de principio a fin: diseño en Loopic, control en SPX. La demo corta más clara de la propuesta de valor de OGraf."
+  }
+]

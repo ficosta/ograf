@@ -1,0 +1,73 @@
+{
+  "20": {
+    "summary": "Os grafismos agora podem declarar uma imagem de miniatura opcional no manifesto, dando a controladores e editores uma prévia visual de cada grafismo.",
+    "mergedBy": 57
+  },
+  "25": {
+    "summary": "Os manifestos agora podem declarar qual versão do motor de renderização exigem, permitindo que servidores recusem grafismos feitos para um runtime incompatível.",
+    "mergedBy": 58
+  },
+  "27": {
+    "summary": "Foi adicionada uma dica opcional de ordem das propriedades nos schemas do manifesto, para que as interfaces exibam os campos numa ordem previsível, definida por quem criou o grafismo.",
+    "mergedBy": 59
+  },
+  "46": {
+    "summary": "Quem cria o grafismo agora pode marcar quais campos do manifesto compõem o nome de exibição do grafismo — facilitando identificar as instâncias nas playlists.",
+    "mergedBy": 56
+  },
+  "63": {
+    "summary": "A especificação OGraf passa a ter licença MIT oficialmente — acabando com qualquer dúvida sobre uso comercial, forks e obras derivadas."
+  },
+  "50": {
+    "summary": "Os manifestos agora podem agrupar propriedades relacionadas do schema, para que os formulários as exibam em seções com título em vez de uma lista única."
+  },
+  "47": {
+    "summary": "Foram adicionados metadados de posição aos tipos GDD, para que grafismos sensíveis ao layout (lower thirds, bugs, tickers) carreguem o posicionamento pretendido na tela."
+  },
+  "54": {
+    "summary": "Grafismos que precisam de acesso à internet (dados ao vivo, fontes remotas, APIs externas) agora declaram isso de antemão — permitindo que operadores os rodem com segurança em ambientes isolados da rede."
+  },
+  "42": {
+    "summary": "O retorno da contagem de frames foi removido de goToTime(). Os grafismos simplesmente vão até o tempo indicado e retornam — menos cerimônia, menos casos extremos."
+  },
+  "49": {
+    "summary": "O GDD ganhou um tipo de entrada com texto mascarado para campos sensíveis, como senhas, chaves de API ou qualquer coisa que não deva aparecer em texto puro na interface do controlador."
+  },
+  "24": {
+    "summary": "O Graphics Data Definition (GDD), antes uma especificação separada, foi incorporado ao próprio OGraf — uma especificação, uma fonte da verdade, um só lugar para consultar.",
+    "mergedBy": 40
+  },
+  "41": {
+    "summary": "O GDD ganhou um tipo de entrada drop-down, para que os manifestos restrinjam campos a um conjunto fixo de opções sem lógica de validação própria."
+  },
+  "35": {
+    "summary": "Ficou definido exatamente quando playAction() deve resolver sua promise — eliminando a ambiguidade entre 'começou a reproduzir' e 'terminou de reproduzir'.",
+    "mergedBy": 38
+  },
+  "29": {
+    "summary": "A especificação ficou mais precisa sobre como os grafismos OGraf se expõem como Web Components — deixando as implementações mais consistentes entre renderizadores.",
+    "mergedBy": 34
+  },
+  "22": {
+    "summary": "Foram documentadas as implicações de AdditionalProperties: false nos schemas — é rígido de propósito, mas pega de surpresa quem não espera por isso na validação."
+  },
+  "36": {
+    "summary": "Ficou clara a distinção entre grafismos baseados em passos (etapas discretas) e grafismos guiados por updateAction (atualizações contínuas de dados). Dois padrões, dois casos de uso."
+  },
+  "18": {
+    "summary": "Os arquivos de manifesto agora seguem a convenção de extensão *.ograf.json — tornando os grafismos OGraf reconhecíveis de imediato num sistema de arquivos ou repositório.",
+    "mergedBy": 21
+  },
+  "9": {
+    "summary": "Discussão sobre como os grafismos devem gerar imagens de prévia para controladores e editores — a base para a decisão posterior sobre miniaturas (#20)."
+  },
+  "1": {
+    "summary": "Definiu o rumo de como os grafismos OGraf devem carregar e referenciar fontes — reconhecendo as fontes como uma questão central para uma tipografia com qualidade de broadcast."
+  },
+  "5": {
+    "summary": "Concluiu que o GDD ainda é necessário — abrindo caminho para sua futura incorporação ao próprio OGraf (veja #24)."
+  },
+  "2": {
+    "summary": "Os arquivos de manifesto de exemplo foram corrigidos para referenciar corretamente suas implementações em JavaScript — sem isso, os exemplos nem chegavam a rodar."
+  }
+}

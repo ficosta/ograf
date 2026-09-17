@@ -1,0 +1,275 @@
+[
+  {
+    "id": "community-hub",
+    "name": "Punto de encuentro de la comunidad",
+    "icon": "Heart",
+    "description": "Somos nosotros. El espacio independiente e impulsado por la comunidad para aprender, construir y probar OGraf.",
+    "featured": true,
+    "items": [
+      {
+        "name": "ograf.dev",
+        "desc": "Esta web. Tutoriales, mapa del ecosistema, historia de la especificación y herramientas en el navegador: un verificador de paquetes con sandbox de ejecución y un explorador de schema.",
+        "url": "https://ograf.dev",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "official",
+    "name": "Oficial",
+    "icon": "ShieldCheck",
+    "description": "La propia especificación y su fuente oficial.",
+    "items": [
+      {
+        "name": "OGraf Specification",
+        "desc": "El estándar abierto de grafismo EBU OGraf. Las dos mitades de v1 son estables: la especificación de Graphics (sept 2025) y la Server API (ago 2026).",
+        "url": "https://ograf.ebu.io",
+        "type": "official"
+      },
+      {
+        "name": "OGraf GitHub",
+        "desc": "Repositorio oficial de la especificación con JSON schemas, ejemplos y documentación. Licencia MIT.",
+        "url": "https://github.com/ebu/ograf",
+        "type": "official",
+        "stars": "115"
+      }
+    ]
+  },
+  {
+    "id": "editors",
+    "name": "Editores",
+    "icon": "PenTool",
+    "description": "Crea grafismos — herramientas de autoría sin código o editores para desarrolladores.",
+    "items": [
+      {
+        "name": "Loopic",
+        "desc": "Creador de plantillas de grafismo para televisión en el navegador, sin código, con exportación a OGraf en un clic.",
+        "url": "https://www.loopic.io",
+        "type": "commercial",
+        "logo": "/logos/adopters/vendors/loopic.svg"
+      },
+      {
+        "name": "DJ HTML Creator",
+        "desc": "Aplicación de escritorio para Windows de motion graphics con editor de línea de tiempo. Exporta como Web Component OGraf.",
+        "url": "https://djhtmlcreator.com",
+        "type": "commercial"
+      },
+      {
+        "name": "Eyevinn ograf-editor",
+        "desc": "Editor visual de plantillas web con arrastrar y soltar, editor de código Monaco y sistema de animación.",
+        "url": "https://github.com/Eyevinn/ograf-editor",
+        "type": "oss",
+        "stars": "2"
+      },
+      {
+        "name": "Ferryman",
+        "desc": "Convierte animaciones de After Effects / Lottie JSON en plantillas HTML de broadcast para CasparCG, SPX y OGraf.",
+        "url": "https://ferryman.streamshapers.com",
+        "type": "oss",
+        "stars": "30"
+      },
+      {
+        "name": "everviz",
+        "desc": "Mapas y gráficos interactivos en el navegador. Exporta paquetes OGraf con el manifiesto estándar .ograf.json, así que un mismo mapa se reproduce en cualquier renderizador compatible.",
+        "url": "https://www.everviz.com",
+        "type": "commercial",
+        "logo": "/logos/adopters/vendors/everviz.svg"
+      },
+      {
+        "name": "StreamShapers OGraf Export",
+        "desc": "Extensión de After Effects que exporta a OGraf sin salir de la aplicación — la comprobación previa y un panel de configuración de Ferryman integrado están dentro de AE. Se mostró al grupo de trabajo en abril de 2026; StreamShapers dice que saldrá a la venta durante el verano.",
+        "url": "https://www.streamshapers.com/ae-extension/",
+        "type": "commercial",
+        "status": "soon"
+      },
+      {
+        "name": "Adobe After Effects",
+        "desc": "Adobe está trabajando en el soporte nativo de OGraf en After Effects. Hasta que llegue, las vías para salir de AE son la extensión de StreamShapers o Ferryman.",
+        "url": "https://www.adobe.com/products/aftereffects.html",
+        "type": "commercial",
+        "status": "soon"
+      }
+    ]
+  },
+  {
+    "id": "controllers",
+    "name": "Controladores",
+    "icon": "Gamepad2",
+    "description": "Maneja grafismos en directo desde una superficie de control o una interfaz de operador.",
+    "items": [
+      {
+        "name": "SPX-GC",
+        "desc": "Controlador de grafismo profesional en el navegador para producciones en directo. Compatible con CasparCG, OBS y vMix. Conformidad con OGraf en la v1.4.",
+        "url": "https://github.com/TuomoKu/SPX-GC",
+        "type": "oss",
+        "stars": "409"
+      },
+      {
+        "name": "SuperConductor",
+        "desc": "Cliente de playout multiplataforma que controla CasparCG, ATEM, OBS, vMix y dispositivos HTTP.",
+        "url": "https://github.com/SuperFlyTV/SuperConductor",
+        "type": "oss"
+      },
+      {
+        "name": "coralPlay",
+        "desc": "La automatización de playout de coralbay.tv. Reproduce de forma nativa grafismos OGraf creados en Loopic, como overlays o como composiciones DVE.",
+        "url": "https://coralbay.tv/products/",
+        "type": "commercial"
+      },
+      {
+        "name": "Sofie",
+        "desc": "El sistema de automatización de televisión de código abierto de SuperFly.tv, ya en uso en informativos en directo. Hay en desarrollo una demo que maneja OGraf a través de la Control API.",
+        "url": "https://sofieautomation.com",
+        "type": "oss",
+        "status": "soon"
+      }
+    ]
+  },
+  {
+    "id": "renderers",
+    "name": "Renderizadores y servidores",
+    "icon": "Server",
+    "description": "Renderiza grafismos a la salida — SDI, NDI, canvas del navegador o pipeline en la nube.",
+    "items": [
+      {
+        "name": "CasparCG",
+        "desc": "Servidor de playout de grafismo y vídeo profesional y de código abierto. Salida SDI/NDI. OGraf mediante el HTML producer.",
+        "url": "https://github.com/CasparCG/server",
+        "type": "oss",
+        "stars": "1000+"
+      },
+      {
+        "name": "ograf-server",
+        "desc": "Renderizador OGraf de referencia con API de subida, API de control y renderizado en el navegador.",
+        "url": "https://github.com/SuperFlyTV/ograf-server",
+        "type": "oss",
+        "stars": "24"
+      },
+      {
+        "name": "SPX Graphics Server",
+        "desc": "Servidor comercial dedicado con soporte completo de plantillas OGraf + SPX y ServerAPI para playout automatizado.",
+        "url": "https://www.spx.graphics",
+        "type": "commercial"
+      },
+      {
+        "name": "gstcefsrc",
+        "desc": "Elemento de origen de GStreamer que envuelve Chromium Embedded Framework — renderiza cualquier página HTML/JS como fuente de vídeo + audio para un pipeline de GStreamer. No es un servidor OGraf, pero sirve como pieza para llevar grafismo HTML a salidas SDI/NDI/archivo.",
+        "url": "https://github.com/centricular/gstcefsrc",
+        "type": "oss",
+        "stars": "210"
+      },
+      {
+        "name": "Erizos Studio",
+        "desc": "OGraf es un modo alternativo de renderizado HTML en Composer desde la v3.4, con los mismos comandos LOAD/IN/OUT/SET que los proyectos nativos.",
+        "url": "https://erizos.tv",
+        "type": "commercial"
+      },
+      {
+        "name": "LiveOS",
+        "desc": "La plataforma de producción en directo local, remota y descentralizada de NetOn.Live, con soporte completo de OGraf. NetOn.Live es miembro fundador del grupo de trabajo de grafismo HTML de la EBU.",
+        "url": "https://www.neton.live",
+        "type": "commercial",
+        "logo": "/logos/adopters/vendors/neton-live.svg"
+      },
+      {
+        "name": "BBright Integrated Playout",
+        "desc": "Playout por software para UHD y SMPTE ST 2110 con un motor gráfico que renderiza plantillas OGraf animadas directamente dentro del flujo de playout.",
+        "url": "https://www.bbright.com/product/integrated-playout/",
+        "type": "commercial"
+      },
+      {
+        "name": "Pixotope",
+        "desc": "Plataforma de plató virtual y grafismo AR y XR basada en Unreal. Figura en la lista de adoptantes del grupo de trabajo; todavía no se ha anunciado públicamente ninguna versión con soporte de OGraf.",
+        "url": "https://www.pixotope.com",
+        "type": "commercial",
+        "status": "soon",
+        "logo": "/logos/adopters/vendors/pixotope.svg"
+      },
+      {
+        "name": "Grass Valley AMPP",
+        "desc": "Plataforma de producción en directo nativa de la nube. Grass Valley ha estado evaluando una integración con OGraf y espera a que la Control API se consolide antes de comprometerse.",
+        "url": "https://www.grassvalley.com/products/ampp/",
+        "type": "commercial",
+        "status": "exploring"
+      }
+    ]
+  },
+  {
+    "id": "post",
+    "name": "Postproducción y edición",
+    "icon": "Clapperboard",
+    "description": "Lleva paquetes OGraf a la línea de tiempo de edición — la mitad de la especificación que no es en directo.",
+    "items": [
+      {
+        "name": "DaVinci Resolve",
+        "desc": "Importación nativa de OGraf desde Resolve 21 — suelta archivos .json / .lottie en el media pool y se comportan como clips de animación totalmente renderizados, con canal alfa reconocido.",
+        "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+        "type": "commercial"
+      }
+    ]
+  },
+  {
+    "id": "devtools",
+    "name": "Herramientas de desarrollo",
+    "icon": "Wrench",
+    "description": "Valida, inspecciona, prueba y genera recursos OGraf mientras desarrollas.",
+    "items": [
+      {
+        "name": "ograf-form",
+        "desc": "Web Component que genera formularios automáticamente a partir de schemas OGraf/GDD.",
+        "url": "https://github.com/SuperFlyTV/ograf-form",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "templates",
+    "name": "Plantillas y ejemplos",
+    "icon": "FileCode2",
+    "description": "Plantillas de inicio e implementaciones de referencia de las que aprender o hacer un fork.",
+    "items": [
+      {
+        "name": "ograf-graphics",
+        "desc": "Colección de código abierto de plantillas de grafismo OGraf.",
+        "url": "https://github.com/nytamin/ograf-graphics",
+        "type": "oss",
+        "stars": "4"
+      }
+    ]
+  },
+  {
+    "id": "community",
+    "name": "Comunidad y documentación",
+    "icon": "BookOpen",
+    "description": "Documentación, foros y todo lo demás que merece la pena leer.",
+    "items": [
+      {
+        "name": "StreamShapers Docs",
+        "desc": "Documentación sobre flujos de trabajo con OGraf, CasparCG, SPX y After Effects.",
+        "url": "https://streamshapers.com/docs",
+        "type": "oss"
+      },
+      {
+        "name": "CasparCG Forum",
+        "desc": "Foro activo de la comunidad con hilos de discusión sobre OGraf.",
+        "url": "https://casparcgforum.org",
+        "type": "oss"
+      }
+    ]
+  },
+  {
+    "id": "consulting",
+    "name": "Consultoría",
+    "icon": "Briefcase",
+    "description": "Contrata a alguien que acelere tu despliegue de OGraf.",
+    "items": [
+      {
+        "name": "Xperity",
+        "desc": "Consultoría de adopción de OGraf con el Xperity Synthesis Framework para migración e integración.",
+        "url": "https://xperity.io",
+        "type": "commercial",
+        "logo": "/logos/xperity.svg"
+      }
+    ]
+  }
+]

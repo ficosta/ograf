@@ -1,0 +1,43 @@
+[
+  {
+    "date": "2026-06-09",
+    "title": "Open Graphics for Live Media: OGraf Proven in a National Election (EBU NTS 2026)",
+    "speaker": "Niels Borg, TV 2 Danmark",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/networks26/presentations/14_Niels_Borg_OGraf_and_Election.pdf",
+    "summary": "Os slides por trás do primeiro grande estudo de caso em produção: como a TV 2 Danmark usou OGraf na cobertura da eleição nacional e deixou o apresentador conduzir os resultados de forma interativa."
+  },
+  {
+    "date": "2025-10-01",
+    "title": "tech-i edição 66 — Bringing flexibility to HTML5 graphics workflows with OGraf",
+    "localUrl": "/docs/tech-i-066.pdf",
+    "externalUrl": "https://tech.ebu.ch/docs/tech-i/tech-i-066.pdf",
+    "summary": "Edição 66 da revista tech-i da EBU. A matéria sobre OGraf mostra os ganhos de flexibilidade no fluxo de trabalho para emissoras que abandonam soluções proprietárias."
+  },
+  {
+    "date": "2025-06-18",
+    "title": "OGraf — A new HTML standard (EBU NTS 2025)",
+    "speaker": "Niels Borg",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/networks25/presentations/NTS2025_Niels_Borg_OGraf_A_new%20HTML-graphics_standard.pdf",
+    "summary": "Apresentação técnica do EBU Network Technology Seminar 2025. Manifesto, ciclo de vida do Web Component, caminhos de renderização e roadmap."
+  },
+  {
+    "date": "2025-04-28",
+    "title": "HTML graphics with EBU's OGraf standard (slides do webinar)",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/roundtable_2025_HTML_graphics/presentations/EBU_webinar_HTML_graphics_OGraf_standard.pdf",
+    "summary": "Slides do webinar da EBU de 28 de abr. de 2025 — escopo, definição do problema e o caminho até a padronização."
+  },
+  {
+    "date": "2025-04-01",
+    "title": "tech-i edição 64 — OGraf: defining the future of broadcast graphics",
+    "localUrl": "/docs/tech-i-064.pdf",
+    "externalUrl": "https://tech.ebu.ch/docs/tech-i/tech-i-064.pdf",
+    "summary": "Edição 64 da revista tech-i da EBU. A matéria oficial de anúncio, apresentando a visão do OGraf e o grupo de trabalho por trás dele."
+  },
+  {
+    "date": "2025-03-27",
+    "title": "OGraf — slides do webinar sobre a especificação de grafismo HTML",
+    "localUrl": "/docs/ograf-webinar-2025-03-27.pdf",
+    "externalUrl": "https://tech.ebu.ch/files/live/sites/tech/files/shared/events/roundtable_2025_EBU_open_standard_for_HTML_graphic_in_the_broadcast_industry/presentations/webinar_OGraf_HTML_graphics_spec.pdf",
+    "summary": "A primeira apresentação do OGraf distribuída publicamente — contexto, motivação e as ideias fundamentais que se tornaram a especificação v1."
+  }
+]

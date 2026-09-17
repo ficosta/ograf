@@ -1,4 +1,6 @@
 import { AlertCircle, AlertTriangle, CheckCircle2, ExternalLink, Info } from "lucide-react";
+import { useCopy } from "../../i18n/useLocale";
+import { CHECK_COPY } from "../../i18n/copy/check";
 import type { Finding } from "../../lib/check/types";
 
 const SEVERITY_STYLES = {
@@ -13,6 +15,7 @@ interface FindingRowProps {
 }
 
 export function FindingRow({ finding }: FindingRowProps) {
+  const c = useCopy(CHECK_COPY);
   const style = SEVERITY_STYLES[finding.severity];
   const { Icon } = style;
   return (
@@ -38,7 +41,7 @@ export function FindingRow({ finding }: FindingRowProps) {
                 rel={finding.specRef.startsWith("http") ? "noopener noreferrer" : undefined}
                 className="inline-flex items-center gap-1 text-slate-600 underline decoration-slate-300 hover:decoration-slate-600"
               >
-                spec
+                {c.finding.spec}
                 {finding.specRef.startsWith("http") && <ExternalLink className="h-3 w-3" strokeWidth={2} />}
               </a>
             )}

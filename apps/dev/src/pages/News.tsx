@@ -14,19 +14,12 @@ import {
   Play,
   Plus,
 } from "lucide-react";
-import {
-  EVENTS,
-  NEWS_ITEMS,
-  PRESENTATIONS,
-  RESOURCES,
-  VIDEOS,
-  type Event,
-  type NewsItem,
-  type NewsType,
-  type Presentation,
-  type Video,
-} from "../content/news";
+import type { Event, NewsItem, NewsType, Presentation, Video } from "../content/news";
+import { NEWS } from "../content/localized/news";
 import { useRouteMeta } from "../hooks/useMeta";
+import { NEWS_COPY } from "../i18n/copy/news";
+import { formatDate, formatEventDate } from "../i18n/copy/news/dates";
+import { useCopy, useLocale } from "../i18n/useLocale";
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -36,46 +29,10 @@ const TYPE_STYLES: Record<NewsType, string> = {
   community: "bg-violet-50 text-violet-700 ring-violet-600/20",
 };
 
-const TYPE_LABELS: Record<NewsType, string> = {
-  announcement: "Announcement",
-  article: "Article",
-  community: "Community",
-};
-
 function typeIcon(type: NewsType) {
   if (type === "announcement") return Megaphone;
   if (type === "community") return MessagesSquare;
   return Newspaper;
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function formatEventDate(start: string, end?: string): string {
-  const s = new Date(start);
-  const sFormatted = s.toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-  if (!end) return sFormatted;
-  const e = new Date(end);
-  const sameMonth = s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear();
-  if (sameMonth) {
-    // Ask the formatter only for combinations it renders idiomatically. A bare
-    // { day, year } is not one: Chrome emits "2026 (day: 14)" for it, which is
-    // how "Sep 11 – 2026 (day: 14)" used to reach the page.
-    const startPart = s.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-    const endDay = e.toLocaleDateString(undefined, { day: "numeric" });
-    const year = e.toLocaleDateString(undefined, { year: "numeric" });
-    return `${startPart} – ${endDay}, ${year}`;
-  }
-  return `${sFormatted} – ${e.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`;
 }
 
 function partitionEvents(events: readonly Event[]): {
@@ -105,6 +62,8 @@ function groupNewsByYear(items: readonly NewsItem[]): Record<string, NewsItem[]>
 }
 
 function EventCard({ event, past = false }: { event: Event; past?: boolean }) {
+  const locale = useLocale();
+  const c = useCopy(NEWS_COPY);
   return (
     <a
       href={event.url}
@@ -115,10 +74,10 @@ function EventCard({ event, past = false }: { event: Event; past?: boolean }) {
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2 text-xs font-medium text-blue-600">
           <Calendar className="h-3.5 w-3.5" />
-          <time>{formatEventDate(event.date, event.endDate)}</time>
+          <time>{formatEventDate(event.date, event.endDate, locale)}</time>
           {past && (
             <span className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-slate-500">
-              Past
+              {c.pastBadge}
             </span>
           )}
         </div>
@@ -149,6 +108,8 @@ function EventCard({ event, past = false }: { event: Event; past?: boolean }) {
 
 function NewsCard({ item }: { item: NewsItem }) {
   const Icon = typeIcon(item.type);
+  const locale = useLocale();
+  const c = useCopy(NEWS_COPY);
   return (
     <a
       href={item.url}
@@ -158,7 +119,7 @@ function NewsCard({ item }: { item: NewsItem }) {
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
-          <time>{formatDate(item.date)}</time>
+          <time>{formatDate(item.date, locale)}</time>
           <span className="text-slate-400">·</span>
           <span className="font-medium text-slate-700">{item.source}</span>
         </div>
@@ -175,7 +136,7 @@ function NewsCard({ item }: { item: NewsItem }) {
           className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${TYPE_STYLES[item.type]}`}
         >
           <Icon className="h-3 w-3" strokeWidth={2.5} />
-          {TYPE_LABELS[item.type]}
+          {c.typeLabels[item.type]}
         </span>
       </div>
       <p className="mt-4 flex-1 text-sm text-slate-700">{item.summary}</p>
@@ -184,6 +145,7 @@ function NewsCard({ item }: { item: NewsItem }) {
 }
 
 function VideoCard({ video }: { video: Video }) {
+  const c = useCopy(NEWS_COPY);
   const embedSrc = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?rel=0`;
   return (
     <div className="flex flex-col rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/5 overflow-hidden">
@@ -211,7 +173,7 @@ function VideoCard({ video }: { video: Video }) {
           rel="noopener noreferrer"
           className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
         >
-          Watch on YouTube
+          {c.watchOnYouTube}
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>
@@ -221,12 +183,14 @@ function VideoCard({ video }: { video: Video }) {
 
 function PresentationCard({ item }: { item: Presentation }) {
   const hasLocal = Boolean(item.localUrl);
+  const locale = useLocale();
+  const c = useCopy(NEWS_COPY);
   return (
     <div className="group flex flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-900/5 transition-all hover:shadow-md hover:ring-slate-900/10">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2 text-xs font-medium text-blue-600">
           <Calendar className="h-3.5 w-3.5" />
-          <time>{formatDate(item.date)}</time>
+          <time>{formatDate(item.date, locale)}</time>
         </div>
         <span
           className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ring-1 ring-inset ${
@@ -238,12 +202,12 @@ function PresentationCard({ item }: { item: Presentation }) {
           {hasLocal ? (
             <>
               <FileText className="h-3 w-3" strokeWidth={2.5} />
-              Local copy
+              {c.localCopy}
             </>
           ) : (
             <>
               <Lock className="h-3 w-3" strokeWidth={2.5} />
-              EBU sign-in
+              {c.ebuSignIn}
             </>
           )}
         </span>
@@ -265,7 +229,7 @@ function PresentationCard({ item }: { item: Presentation }) {
             className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500"
           >
             <Download className="h-3.5 w-3.5" strokeWidth={2.5} />
-            Open PDF
+            {c.openPdf}
           </a>
         ) : (
           <a
@@ -275,7 +239,7 @@ function PresentationCard({ item }: { item: Presentation }) {
             className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-200"
           >
             <ExternalLink className="h-3.5 w-3.5" strokeWidth={2.5} />
-            View on EBU
+            {c.viewOnEbu}
           </a>
         )}
         {hasLocal && (
@@ -285,7 +249,7 @@ function PresentationCard({ item }: { item: Presentation }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600"
           >
-            source
+            {c.source}
             <ExternalLink className="h-3 w-3" />
           </a>
         )}
@@ -296,8 +260,10 @@ function PresentationCard({ item }: { item: Presentation }) {
 
 export function News() {
   useRouteMeta();
-  const { upcoming, past } = partitionEvents(EVENTS);
-  const newsByYear = groupNewsByYear(NEWS_ITEMS);
+  const c = useCopy(NEWS_COPY);
+  const { newsItems, events, presentations, videos, resources } = useCopy(NEWS);
+  const { upcoming, past } = partitionEvents(events);
+  const newsByYear = groupNewsByYear(newsItems);
   const newsYears = Object.keys(newsByYear).sort().reverse();
 
   return (
@@ -305,10 +271,10 @@ export function News() {
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-6xl">
-          News, events & talks.
+          {c.title}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          Everything OGraf, in one place — announcements, editorial coverage, conference sessions, presentation decks, and demo videos.
+          {c.lead}
         </p>
       </div>
 
@@ -317,35 +283,35 @@ export function News() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 md:grid-cols-5">
             <div className="text-center">
-              <p className="font-display text-4xl font-light text-blue-600">{NEWS_ITEMS.length}</p>
+              <p className="font-display text-4xl font-light text-blue-600">{newsItems.length}</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                News items
+                {c.stats.news}
               </p>
             </div>
             <div className="text-center">
               <p className="font-display text-4xl font-light text-emerald-600">{upcoming.length}</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Upcoming events
+                {c.stats.upcoming}
               </p>
             </div>
             <div className="text-center">
               <p className="font-display text-4xl font-light text-slate-900">{past.length}</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Past events
+                {c.stats.past}
               </p>
             </div>
             <div className="text-center">
               <p className="font-display text-4xl font-light text-amber-600">
-                {PRESENTATIONS.length}
+                {presentations.length}
               </p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Decks
+                {c.stats.decks}
               </p>
             </div>
             <div className="text-center">
-              <p className="font-display text-4xl font-light text-rose-600">{VIDEOS.length}</p>
+              <p className="font-display text-4xl font-light text-rose-600">{videos.length}</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
-                Videos
+                {c.stats.videos}
               </p>
             </div>
           </div>
@@ -364,10 +330,10 @@ export function News() {
                   </div>
                   <div>
                     <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                      Upcoming events
+                      {c.upcomingTitle}
                     </h2>
                     <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                      Conferences, talks, and meetups with OGraf on the agenda.
+                      {c.upcomingLead}
                     </p>
                   </div>
                 </div>
@@ -387,10 +353,10 @@ export function News() {
                   </div>
                   <div>
                     <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                      Past events
+                      {c.pastTitle}
                     </h2>
                     <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                      Sessions and roundtables worth catching the recordings or decks for.
+                      {c.pastLead}
                     </p>
                   </div>
                 </div>
@@ -406,7 +372,7 @@ export function News() {
       )}
 
       {/* Videos */}
-      {VIDEOS.length > 0 && (
+      {videos.length > 0 && (
         <section className="bg-slate-50 py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-start gap-4">
@@ -415,15 +381,15 @@ export function News() {
               </div>
               <div>
                 <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                  Videos & demos
+                  {c.videosTitle}
                 </h2>
                 <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                  OGraf in motion — workflow demos and walkthroughs from the ecosystem.
+                  {c.videosLead}
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              {VIDEOS.map((v) => (
+              {videos.map((v) => (
                 <VideoCard key={v.youtubeId} video={v} />
               ))}
             </div>
@@ -432,7 +398,7 @@ export function News() {
       )}
 
       {/* Presentations */}
-      {PRESENTATIONS.length > 0 && (
+      {presentations.length > 0 && (
         <section className="py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-start gap-4">
@@ -441,15 +407,15 @@ export function News() {
               </div>
               <div>
                 <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                  Presentations & decks
+                  {c.decksTitle}
                 </h2>
                 <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                  EBU webinars, NTS sessions, and tech-i magazine features. Local copies served here when possible; the rest link to the EBU archive.
+                  {c.decksLead}
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {PRESENTATIONS.map((p) => (
+              {presentations.map((p) => (
                 <PresentationCard key={`${p.date}-${p.title}`} item={p} />
               ))}
             </div>
@@ -466,10 +432,10 @@ export function News() {
             </div>
             <div>
               <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                Latest news
+                {c.newsTitle}
               </h2>
               <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                Announcements, deep dives, and industry coverage.
+                {c.newsLead}
               </p>
             </div>
           </div>
@@ -490,7 +456,7 @@ export function News() {
       </section>
 
       {/* Resources */}
-      {RESOURCES.length > 0 && (
+      {resources.length > 0 && (
         <section className="py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-start gap-4">
@@ -499,15 +465,15 @@ export function News() {
               </div>
               <div>
                 <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-                  Reference links
+                  {c.resourcesTitle}
                 </h2>
                 <p className="mt-1 text-sm text-slate-600 sm:text-base">
-                  Official spec, repos, and pages to watch for fresh OGraf coverage.
+                  {c.resourcesLead}
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {RESOURCES.map((r) => (
+              {resources.map((r) => (
                 <a
                   key={r.url}
                   href={r.url}
@@ -534,10 +500,10 @@ export function News() {
       <section className="bg-slate-50 py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-            Spotted something we missed?
+            {c.ctaTitle}
           </h2>
           <p className="mt-3 text-slate-700">
-            Article, talk, deck, video, or community thread — if it's OGraf-relevant, we want to list it. Open an issue and we'll add it.
+            {c.ctaBody}
           </p>
           <a
             href="https://github.com/ficosta/ograf/issues/new?title=News+or+resource:+&body=Link:%0AWhy+it%27s+OGraf-relevant:"
@@ -546,7 +512,7 @@ export function News() {
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 py-2 px-4 text-sm font-semibold text-white hover:bg-blue-500"
           >
             <Plus className="h-4 w-4" strokeWidth={2.5} />
-            Submit on GitHub
+            {c.ctaButton}
           </a>
         </div>
       </section>
