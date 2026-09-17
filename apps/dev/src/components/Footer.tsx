@@ -36,6 +36,7 @@ export function Footer() {
           </div>
           <div className="mt-6 text-center text-sm text-slate-500 sm:mt-0 sm:text-left">
             <p>{t.footer.curatedBy}</p>
+            {t.common.translationNotice && <p className="mt-1">{t.common.translationNotice}</p>}
             <p className="mt-1">
               {t.footer.notAffiliated}{" "}
               <a

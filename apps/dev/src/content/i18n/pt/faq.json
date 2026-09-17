@@ -1,0 +1,47 @@
+[
+  {
+    "id": "what-is-ograf",
+    "question": "O que é o OGraf?",
+    "answer": "O OGraf é a especificação aberta da EBU para grafismo de broadcast. Em vez de formatos de cada fabricante, os grafismos são empacotados como Web Components padrão com um manifesto leve, então um mesmo pacote roda em qualquer renderizador compatível com OGraf."
+  },
+  {
+    "id": "is-it-stable",
+    "question": "O OGraf já é estável o suficiente para produção?",
+    "answer": "Sim — a v1 está completa. A Graphics Definition ficou estável em setembro de 2025 e a Server API veio em agosto de 2026. As duas estão marcadas como prontas para produção, e as mudanças futuras têm o compromisso de ser retrocompatíveis ou opcionais. Emissoras já fazem produções ao vivo com ele hoje."
+  },
+  {
+    "id": "who-is-behind",
+    "question": "Quem está por trás do OGraf?",
+    "answer": "A especificação pertence à European Broadcasting Union (EBU) e é construída de forma aberta com fabricantes como SPX Graphics, Loopic, SuperFlyTV e StreamShapers, além de emissoras como a TV2 Denmark."
+  },
+  {
+    "id": "do-i-need-special-tools",
+    "question": "Preciso de ferramentas especiais para criar grafismos?",
+    "answer": "Não. Qualquer editor de texto e um navegador bastam. Para um fluxo guiado, use o Loopic ou o DJ HTML Creator — os dois exportam pacotes OGraf. Quem usa After Effects pode converter animações Lottie com o Ferryman. Solte o seu .zip em ograf.dev/check para validá-lo contra o schema oficial da EBU."
+  },
+  {
+    "id": "migration",
+    "question": "Dá para migrar nossos templates atuais de CasparCG ou Vizrt?",
+    "answer": "Templates HTML de CasparCG migram com poucas mudanças — basicamente envolvê-los num Web Component e adicionar um manifesto. Templates Vizrt hoje exigem reescrita completa, mas várias consultorias (veja o Ecossistema) são especializadas em migração."
+  },
+  {
+    "id": "cost",
+    "question": "Quanto custa adotar o OGraf?",
+    "answer": "A especificação e a maior parte das ferramentas da comunidade são gratuitas e com licença MIT. Ferramentas comerciais (Loopic, SPX Graphics Server, DJ HTML Creator) têm preços próprios. Renderizadores como ograf-server e CasparCG são open source."
+  },
+  {
+    "id": "hiring",
+    "question": "Posso contratar alguém para criar templates para nós?",
+    "answer": "Sim. A página Ecossistema lista consultorias e estúdios — a Xperity e vários fabricantes de ferramentas comerciais oferecem produção de templates e serviços de migração. Desenvolvedores web com experiência em broadcast também podem ser contratados pelos canais habituais."
+  },
+  {
+    "id": "vendor-lockin",
+    "question": "O que acontece se um fabricante abandonar o OGraf?",
+    "answer": "Seus grafismos não dependem de nenhum fabricante específico. Enquanto existir um renderizador compatível, seus pacotes continuam funcionando. Como a especificação é aberta, sempre é possível construir novos renderizadores — o risco é muito menor do que com formatos proprietários."
+  },
+  {
+    "id": "contribute",
+    "question": "Como posso contribuir?",
+    "answer": "Envie um tutorial ou uma entrada para o ecossistema por pull request no GitHub, relate problemas na especificação, entre no grupo de trabalho pela EBU ou simplesmente construa algo legal e conte para a gente."
+  }
+]
