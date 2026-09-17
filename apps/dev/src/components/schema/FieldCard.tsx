@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ChevronDown, Hash } from "lucide-react";
 import { CodeBlock } from "../CodeBlock";
 import type { FieldGuide } from "../../content/schema-language";
+import { useCopy } from "../../i18n/useLocale";
+import { SCHEMA_EXPLORER_COPY } from "../../i18n/copy/schema-explorer";
 
 interface FieldCardProps {
   readonly guide: FieldGuide;
@@ -16,6 +18,7 @@ interface FieldCardProps {
  * has a stable anchor id (`field-{key}`) so individual fields are link-able.
  */
 export function FieldCard({ guide, required, schemaDescription }: FieldCardProps) {
+  const t = useCopy(SCHEMA_EXPLORER_COPY).cards;
   const [open, setOpen] = useState(false);
   const [activeExample, setActiveExample] = useState(0);
   const description = guide.description || schemaDescription || "";
@@ -38,8 +41,8 @@ export function FieldCard({ guide, required, schemaDescription }: FieldCardProps
             </code>
             <a
               href={`#${anchorId}`}
-              aria-label={`Direct link to ${guide.friendlyName}`}
-              title="Copy link to this field"
+              aria-label={t.directLink(guide.friendlyName)}
+              title={t.copyFieldLink}
               className="inline-flex h-5 w-5 items-center justify-center rounded text-slate-300 opacity-0 transition-opacity hover:bg-slate-100 hover:text-slate-700 group-hover/card:opacity-100 focus:opacity-100"
             >
               <Hash className="h-3 w-3" strokeWidth={2.5} />
@@ -48,7 +51,7 @@ export function FieldCard({ guide, required, schemaDescription }: FieldCardProps
           <p className="mt-2 text-sm text-slate-700">{description}</p>
           {guide.exampleValue && (
             <p className="mt-2 text-xs text-slate-400">
-              <span className="font-medium text-slate-500">Example:</span>{" "}
+              <span className="font-medium text-slate-500">{t.example}</span>{" "}
               <code className="font-mono">{guide.exampleValue}</code>
             </p>
           )}
@@ -60,7 +63,7 @@ export function FieldCard({ guide, required, schemaDescription }: FieldCardProps
               : "bg-slate-50 text-slate-600 ring-slate-400/30"
           }`}
         >
-          {required ? "Required" : "Optional"}
+          {required ? t.required : t.optional}
         </span>
       </div>
 
@@ -72,9 +75,7 @@ export function FieldCard({ guide, required, schemaDescription }: FieldCardProps
             aria-expanded={open}
             className="mt-4 inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
           >
-            {open
-              ? `Hide ${examples.length === 1 ? "example" : `${examples.length} examples`}`
-              : `Show ${examples.length === 1 ? "example" : `${examples.length} examples`}`}
+            {t.toggleExamples(open, examples.length)}
             <ChevronDown
               className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
               strokeWidth={2.5}
@@ -85,7 +86,7 @@ export function FieldCard({ guide, required, schemaDescription }: FieldCardProps
               {examples.length > 1 && (
                 <div
                   role="tablist"
-                  aria-label="Examples"
+                  aria-label={t.examplesAria}
                   className="mb-2 flex flex-wrap gap-1"
                 >
                   {examples.map((ex, i) => (

@@ -1,0 +1,36 @@
+{
+  "title": "Como um grafismo OGraf chega ao ar",
+  "description": "Do editor de texto do designer até um quadro de transmissão ao vivo: cada etapa do fluxo de trabalho OGraf — e onde cada parte do ecossistema se encaixa.",
+  "nodes": [
+    {
+      "id": "designer",
+      "label": "Designer",
+      "description": "Cria o grafismo com HTML, CSS e JavaScript. Pode usar uma ferramenta visual (Loopic, DJ HTML Creator, ograf-editor) ou programar à mão.",
+      "icon": "PenTool"
+    },
+    {
+      "id": "package",
+      "label": "Pacote OGraf",
+      "description": "Uma pasta com o manifesto (<nome>.ograf.json), graphic.mjs, style.css e os assets necessários. Autocontido, versionável, fácil de distribuir.",
+      "icon": "Package"
+    },
+    {
+      "id": "validator",
+      "label": "Validador",
+      "description": "Verifica o pacote contra a especificação. Confirma que o manifesto é válido e que o Web Component implementa o ciclo de vida corretamente.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "renderer",
+      "label": "Renderizador",
+      "description": "SPX Graphics Server, ograf-server ou qualquer motor compatível. Instancia o Web Component e chama load, playAction, updateAction, stopAction, customAction e dispose.",
+      "icon": "Cpu"
+    },
+    {
+      "id": "playout",
+      "label": "No ar",
+      "description": "O grafismo renderizado é composto sobre o vídeo ao vivo e enviado para a transmissão — saída SDI, ST 2110, NDI ou web.",
+      "icon": "Radio"
+    }
+  ]
+}

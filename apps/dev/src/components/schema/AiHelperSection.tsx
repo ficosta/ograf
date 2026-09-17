@@ -1,5 +1,4 @@
-import { Link } from "../../i18n/Link";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -13,7 +12,9 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import { AI_PLATFORMS, AI_PROMPT, AI_TIPS, type AiPlatform } from "../../content/ai-helper";
+import { AI_PLATFORMS, AI_PROMPT, type AiPlatform } from "../../content/ai-helper";
+import { useCopy } from "../../i18n/useLocale";
+import { SCHEMA_EXPLORER_COPY } from "../../i18n/copy/schema-explorer";
 
 const PLATFORM_ICONS: Record<AiPlatform["icon"], LucideIcon> = {
   MessageSquare,
@@ -28,6 +29,7 @@ const PLATFORM_ICONS: Record<AiPlatform["icon"], LucideIcon> = {
  * how to get useful output back.
  */
 export function AiHelperSection() {
+  const c = useCopy(SCHEMA_EXPLORER_COPY).ai;
   return (
     <section
       id="ai-helper"
@@ -38,25 +40,25 @@ export function AiHelperSection() {
         <div className="mb-12 max-w-3xl">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-300 ring-1 ring-inset ring-white/10">
             <Wand2 className="h-3 w-3" strokeWidth={2.5} />
-            AI helper
+            {c.badge}
           </div>
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
-            Get an AI to check or compose your manifest.
+            {c.title}
           </h2>
           <p className="mt-3 text-base text-slate-300">
-            Copy the prompt below into any chat AI. It teaches the model the OGraf rules at a level a designer can rely on — required fields, the canonical gddTypes, vendor extensions, the lot.
+            {c.intro}
           </p>
         </div>
 
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_360px]">
           {/* Prompt block */}
-          <PromptBlock />
+          <PromptBlock copied={c.copied} copyPrompt={c.copyPrompt} cites={c.cites} />
 
           {/* Sidebar: platforms + tips */}
           <aside className="space-y-8">
             <div>
               <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Where to paste it
+                {c.whereToPaste}
               </p>
               <ul className="space-y-2">
                 {AI_PLATFORMS.map((p) => {
@@ -80,7 +82,7 @@ export function AiHelperSection() {
                               strokeWidth={2}
                             />
                           </span>
-                          <span className="mt-0.5 block text-xs text-slate-400">{p.note}</span>
+                          <span className="mt-0.5 block text-xs text-slate-400">{c.platformNotes[p.name]}</span>
                         </span>
                       </a>
                     </li>
@@ -92,10 +94,10 @@ export function AiHelperSection() {
             <div>
               <p className="mb-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
                 <Lightbulb className="h-3 w-3" strokeWidth={2.5} />
-                Tips for better answers
+                {c.tipsTitle}
               </p>
               <ul className="space-y-2.5">
-                {AI_TIPS.map((tip, i) => (
+                {c.tips.map((tip, i) => (
                   <li key={i} className="flex gap-2 text-xs leading-relaxed text-slate-300">
                     <span className="mt-1 inline-block h-1 w-1 flex-none rounded-full bg-blue-400" />
                     <span>{tip}</span>
@@ -106,22 +108,21 @@ export function AiHelperSection() {
           </aside>
         </div>
 
-        <p className="mt-10 text-xs text-slate-400">
-          A heads-up: AI output is a great <em>draft</em>, never a final answer. Always run what you get through the{" "}
-          <Link
-            to="/check"
-            className="underline decoration-slate-500 underline-offset-2 hover:text-blue-300 hover:decoration-blue-400"
-          >
-            Package Checker
-          </Link>{" "}
-          before shipping.
-        </p>
+        <p className="mt-10 text-xs text-slate-400">{c.headsUp}</p>
       </div>
     </section>
   );
 }
 
-function PromptBlock() {
+function PromptBlock({
+  copied: copiedLabel,
+  copyPrompt,
+  cites,
+}: {
+  readonly copied: string;
+  readonly copyPrompt: string;
+  readonly cites: ReactNode;
+}) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
@@ -152,12 +153,12 @@ function PromptBlock() {
           {copied ? (
             <>
               <Check className="h-3 w-3" strokeWidth={2.5} />
-              Copied
+              {copiedLabel}
             </>
           ) : (
             <>
               <Copy className="h-3 w-3" strokeWidth={2} />
-              Copy prompt
+              {copyPrompt}
             </>
           )}
         </button>
@@ -168,16 +169,7 @@ function PromptBlock() {
       <div className="border-t border-white/10 bg-white/5 px-4 py-2 text-[11px] text-slate-400">
         <span className="inline-flex items-center gap-1">
           <ExternalLink className="h-3 w-3" />
-          The prompt cites{" "}
-          <a
-            href="https://ograf.ebu.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline decoration-slate-500 underline-offset-2 hover:text-blue-300 hover:decoration-blue-400"
-          >
-            ograf.ebu.io
-          </a>{" "}
-          so models with browsing can fetch the canonical schema while answering.
+          {cites}
         </span>
       </div>
     </div>

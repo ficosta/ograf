@@ -14,6 +14,10 @@ import {
 } from "lucide-react";
 import { CodeBlock } from "../CodeBlock";
 import type { GddTypeGuide, GddMockKind } from "../../content/schema-language";
+import { useCopy } from "../../i18n/useLocale";
+import { SCHEMA_EXPLORER_COPY, type SchemaExplorerCopy } from "../../i18n/copy/schema-explorer";
+
+type MockCopy = SchemaExplorerCopy["mocks"];
 
 const ICONS: Record<GddTypeGuide["icon"], LucideIcon> = {
   Type,
@@ -36,6 +40,8 @@ function gddAnchor(gddType: string): string {
  * see in the controller. Mocks are pure CSS / SVG — no real interaction.
  */
 export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
+  const copy = useCopy(SCHEMA_EXPLORER_COPY);
+  const t = copy.cards;
   const [open, setOpen] = useState(false);
   const [activeExample, setActiveExample] = useState(0);
   const Icon = ICONS[guide.icon];
@@ -61,8 +67,8 @@ export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
             </code>
             <a
               href={`#${anchorId}`}
-              aria-label={`Direct link to ${guide.friendlyName}`}
-              title="Copy link to this type"
+              aria-label={t.directLink(guide.friendlyName)}
+              title={t.copyTypeLink}
               className="inline-flex h-5 w-5 items-center justify-center rounded text-slate-300 opacity-0 transition-opacity hover:bg-slate-100 hover:text-slate-700 group-hover/card:opacity-100 focus:opacity-100"
             >
               <Hash className="h-3 w-3" strokeWidth={2.5} />
@@ -74,10 +80,10 @@ export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
 
       <div className="mt-4">
         <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-          What the operator sees
+          {t.operatorSees}
         </p>
         <div className="rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200/60">
-          <Mock kind={guide.mock} />
+          <Mock kind={guide.mock} m={copy.mocks} />
         </div>
       </div>
 
@@ -87,9 +93,7 @@ export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
         aria-expanded={open}
         className="mt-4 inline-flex items-center gap-1.5 self-start text-xs font-medium text-blue-600 hover:text-blue-700"
       >
-        {open
-          ? `Hide ${examples.length === 1 ? "example" : `${examples.length} examples`}`
-          : `Show ${examples.length === 1 ? "example" : `${examples.length} examples`}`}
+        {t.toggleExamples(open, examples.length)}
         <ChevronDown
           className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
           strokeWidth={2.5}
@@ -100,7 +104,7 @@ export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
           {examples.length > 1 && (
             <div
               role="tablist"
-              aria-label="Examples"
+              aria-label={t.examplesAria}
               className="mb-2 flex flex-wrap gap-1"
             >
               {examples.map((ex, i) => (
@@ -137,16 +141,16 @@ export function GddTypeCard({ guide }: { readonly guide: GddTypeGuide }) {
  *  page keyboard nav clean.
  * ──────────────────────────────────────────────────────────────────────────── */
 
-function Mock({ kind }: { readonly kind: GddMockKind }) {
-  if (kind === "single-line") return <SingleLineMock />;
-  if (kind === "multi-line") return <MultiLineMock />;
-  if (kind === "file-path") return <FilePathMock />;
-  if (kind === "image-path") return <ImagePathMock />;
-  if (kind === "select") return <SelectMock />;
-  if (kind === "color-rrggbb") return <ColorMock alpha={false} />;
-  if (kind === "color-rrggbbaa") return <ColorMock alpha={true} />;
-  if (kind === "percentage") return <PercentageMock />;
-  if (kind === "duration-ms") return <DurationMsMock />;
+function Mock({ kind, m }: { readonly kind: GddMockKind; readonly m: MockCopy }) {
+  if (kind === "single-line") return <SingleLineMock m={m} />;
+  if (kind === "multi-line") return <MultiLineMock m={m} />;
+  if (kind === "file-path") return <FilePathMock m={m} />;
+  if (kind === "image-path") return <ImagePathMock m={m} />;
+  if (kind === "select") return <SelectMock m={m} />;
+  if (kind === "color-rrggbb") return <ColorMock alpha={false} m={m} />;
+  if (kind === "color-rrggbbaa") return <ColorMock alpha={true} m={m} />;
+  if (kind === "percentage") return <PercentageMock m={m} />;
+  if (kind === "duration-ms") return <DurationMsMock m={m} />;
   return null;
 }
 
@@ -156,10 +160,10 @@ function MockLabel({ children }: { readonly children: string }) {
   );
 }
 
-function SingleLineMock() {
+function SingleLineMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Name</MockLabel>
+      <MockLabel>{m.name}</MockLabel>
       <input
         readOnly
         aria-hidden
@@ -171,29 +175,29 @@ function SingleLineMock() {
   );
 }
 
-function MultiLineMock() {
+function MultiLineMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Quote</MockLabel>
+      <MockLabel>{m.quote}</MockLabel>
       <textarea
         readOnly
         aria-hidden
         tabIndex={-1}
         rows={2}
-        value="Open graphics, open broadcast, open standards. That's the future."
+        value={m.quoteValue}
         className="w-full resize-none cursor-default rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 focus:outline-none"
       />
     </div>
   );
 }
 
-function FilePathMock() {
+function FilePathMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Theme music</MockLabel>
+      <MockLabel>{m.themeMusic}</MockLabel>
       <div className="flex items-center gap-2">
         <span className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600">
-          Browse…
+          {m.browse}
         </span>
         <code className="truncate font-mono text-xs text-slate-400">/audio/intro.mp3</code>
       </div>
@@ -201,36 +205,36 @@ function FilePathMock() {
   );
 }
 
-function ImagePathMock() {
+function ImagePathMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Logo</MockLabel>
+      <MockLabel>{m.logo}</MockLabel>
       <div className="flex items-center gap-3 rounded-lg border border-dashed border-slate-300 bg-white p-3">
         <div className="flex h-10 w-10 flex-none items-center justify-center rounded bg-slate-100">
           <ImageIcon className="h-4 w-4 text-slate-400" strokeWidth={1.5} />
         </div>
         <div className="min-w-0">
           <p className="truncate text-xs font-medium text-slate-700">station-logo.svg</p>
-          <p className="text-[10px] text-slate-400">Drop or browse</p>
+          <p className="text-[10px] text-slate-400">{m.dropOrBrowse}</p>
         </div>
       </div>
     </div>
   );
 }
 
-function SelectMock() {
+function SelectMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Position</MockLabel>
+      <MockLabel>{m.position}</MockLabel>
       <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-1.5">
-        <span className="text-sm text-slate-700">Bottom right</span>
+        <span className="text-sm text-slate-700">{m.bottomRight}</span>
         <ChevronDown className="h-3.5 w-3.5 text-slate-400" strokeWidth={2.5} />
       </div>
     </div>
   );
 }
 
-function ColorMock({ alpha }: { readonly alpha: boolean }) {
+function ColorMock({ alpha, m }: { readonly alpha: boolean; readonly m: MockCopy }) {
   const colour = alpha ? "#0f172acc" : "#2563eb";
   const swatchStyle = alpha
     ? {
@@ -243,7 +247,7 @@ function ColorMock({ alpha }: { readonly alpha: boolean }) {
     : { backgroundColor: "#2563eb" };
   return (
     <div>
-      <MockLabel>{alpha ? "Overlay" : "Accent"}</MockLabel>
+      <MockLabel>{alpha ? m.overlay : m.accent}</MockLabel>
       <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white p-1.5">
         <span
           aria-hidden
@@ -259,10 +263,10 @@ function ColorMock({ alpha }: { readonly alpha: boolean }) {
   );
 }
 
-function PercentageMock() {
+function PercentageMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Opacity</MockLabel>
+      <MockLabel>{m.opacity}</MockLabel>
       <div className="space-y-1.5">
         <div className="relative h-1.5 w-full rounded-full bg-slate-200">
           <div className="absolute inset-y-0 left-0 w-[72%] rounded-full bg-blue-600" />
@@ -278,10 +282,10 @@ function PercentageMock() {
   );
 }
 
-function DurationMsMock() {
+function DurationMsMock({ m }: { readonly m: MockCopy }) {
   return (
     <div>
-      <MockLabel>Animation duration</MockLabel>
+      <MockLabel>{m.animationDuration}</MockLabel>
       <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5">
         <Timer className="h-3.5 w-3.5 text-slate-400" strokeWidth={1.75} />
         <span className="text-sm text-slate-700">600</span>

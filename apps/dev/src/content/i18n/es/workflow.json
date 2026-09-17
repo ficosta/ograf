@@ -1,0 +1,36 @@
+{
+  "title": "Cómo llega a antena un grafismo OGraf",
+  "description": "Del editor de texto del diseñador a un fotograma de emisión en directo: estas son todas las etapas del flujo de trabajo OGraf — y dónde encaja cada parte del ecosistema.",
+  "nodes": [
+    {
+      "id": "designer",
+      "label": "Diseñador",
+      "description": "Crea el grafismo con HTML, CSS y JavaScript. Puede usar una herramienta visual (Loopic, DJ HTML Creator, ograf-editor) o programarlo a mano.",
+      "icon": "PenTool"
+    },
+    {
+      "id": "package",
+      "label": "Paquete OGraf",
+      "description": "Una carpeta con el manifiesto (<nombre>.ograf.json), graphic.mjs, style.css y los recursos necesarios. Autocontenido, versionable y fácil de distribuir.",
+      "icon": "Package"
+    },
+    {
+      "id": "validator",
+      "label": "Validador",
+      "description": "Comprueba el paquete frente a la especificación. Confirma que el manifiesto es válido y que el Web Component implementa correctamente el ciclo de vida.",
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "renderer",
+      "label": "Renderizador",
+      "description": "SPX Graphics Server, ograf-server o cualquier motor compatible. Instancia el Web Component y llama a load, playAction, updateAction, stopAction, customAction y dispose.",
+      "icon": "Cpu"
+    },
+    {
+      "id": "playout",
+      "label": "En antena",
+      "description": "El grafismo renderizado se compone sobre el vídeo en directo y se envía a emisión — salida SDI, ST 2110, NDI o web.",
+      "icon": "Radio"
+    }
+  ]
+}

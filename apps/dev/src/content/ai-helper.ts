@@ -11,49 +11,25 @@
  */
 
 export interface AiPlatform {
-  readonly name: string;
+  /** Product name; also the key of its note in the Schema Explorer copy. */
+  readonly name: "ChatGPT" | "Claude" | "Gemini" | "Perplexity";
   readonly url: string;
-  readonly note: string;
   /** Lucide icon name resolved by the page. */
   readonly icon: "MessageSquare" | "Sparkles" | "Zap" | "Search";
 }
 
+/** Platform notes and tips are UI text: see i18n/copy/schema-explorer. */
 export const AI_PLATFORMS: readonly AiPlatform[] = [
-  {
-    name: "ChatGPT",
-    url: "https://chat.openai.com",
-    note: "OpenAI's flagship. Most designers already have an account. GPT-4 / 5 class models handle the prompt comfortably.",
-    icon: "Sparkles",
-  },
-  {
-    name: "Claude",
-    url: "https://claude.ai",
-    note: "Anthropic. Particularly strong at structured-data tasks like JSON Schema validation. Free tier is generous.",
-    icon: "MessageSquare",
-  },
-  {
-    name: "Gemini",
-    url: "https://gemini.google.com",
-    note: "Google. Has live web access — can fetch the canonical schema at ograf.ebu.io while it answers.",
-    icon: "Zap",
-  },
-  {
-    name: "Perplexity",
-    url: "https://perplexity.ai",
-    note: "Web-grounded. Useful when you also want to discover ecosystem tools or recent OGraf news in the same conversation.",
-    icon: "Search",
-  },
+  { name: "ChatGPT", url: "https://chat.openai.com", icon: "Sparkles" },
+  { name: "Claude", url: "https://claude.ai", icon: "MessageSquare" },
+  { name: "Gemini", url: "https://gemini.google.com", icon: "Zap" },
+  { name: "Perplexity", url: "https://perplexity.ai", icon: "Search" },
 ];
 
-export const AI_TIPS: readonly string[] = [
-  "Paste your full .ograf.json with the prompt. The AI can spot missing required fields and typos in seconds.",
-  "Describe the graphic in plain English and let the AI draft the manifest for you. \"Lower third with a name, title, and team-colour picker, 1 step, real-time only.\"",
-  "Always run the result through the Package Checker (/tools/check or ograf.tools/check) before shipping. AI output is a great draft, not a final answer.",
-  "Mention which gddType you want for each operator field. Without that, the AI will often default to plain JSON Schema strings, which controllers can't render as nicely.",
-  "If you're using a vendor-specific feature, add a v_yourCompany_field — the spec rejects unknown top-level keys but allows v_ prefixes everywhere.",
-  "When the AI gives you JSON, ask \"validate this against https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json\" — models with browsing will fetch the canonical version and double-check themselves.",
-];
-
+/**
+ * The prompt stays in English in every locale: it is instructions for a
+ * model and quotes the English schema verbatim.
+ */
 export const AI_PROMPT = `You are an OGraf manifest expert helping a broadcast designer create or debug an .ograf.json manifest.
 
 CONTEXT

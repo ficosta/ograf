@@ -1,22 +1,24 @@
 import { CheckCircle2, CloudOff, Loader2 } from "lucide-react";
 import type { SchemaSource } from "../../lib/check/types";
+import { useCopy } from "../../i18n/useLocale";
+import { SCHEMA_EXPLORER_COPY, type SchemaExplorerCopy } from "../../i18n/copy/schema-explorer";
 
 interface SchemaSourceBadgeProps {
   readonly source: SchemaSource | null;
   readonly loading: boolean;
 }
 
-function formatRelativeTime(iso: string): string {
+function formatRelativeTime(iso: string, t: SchemaExplorerCopy["source"]): string {
   const then = new Date(iso).getTime();
   const seconds = Math.max(0, Math.floor((Date.now() - then) / 1000));
-  if (seconds < 5) return "just now";
-  if (seconds < 60) return `${seconds}s ago`;
+  if (seconds < 5) return t.justNow;
+  if (seconds < 60) return t.secondsAgo(seconds);
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes} min ago`;
+  if (minutes < 60) return t.minutesAgo(minutes);
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} h ago`;
+  if (hours < 24) return t.hoursAgo(hours);
   const days = Math.floor(hours / 24);
-  return `${days}d ago`;
+  return t.daysAgo(days);
 }
 
 /**
@@ -25,6 +27,7 @@ function formatRelativeTime(iso: string): string {
  * once the loader settles.
  */
 export function SchemaSourceBadge({ source, loading }: SchemaSourceBadgeProps) {
+  const t = useCopy(SCHEMA_EXPLORER_COPY).source;
   if (loading) {
     return (
       <span
@@ -32,7 +35,7 @@ export function SchemaSourceBadge({ source, loading }: SchemaSourceBadgeProps) {
         aria-live="polite"
       >
         <Loader2 className="h-3 w-3 animate-spin" strokeWidth={2.5} />
-        Fetching live schema from ograf.ebu.io…
+        {t.fetching}
       </span>
     );
   }
@@ -46,8 +49,8 @@ export function SchemaSourceBadge({ source, loading }: SchemaSourceBadgeProps) {
         aria-live="polite"
       >
         <CheckCircle2 className="h-3 w-3" strokeWidth={2.5} />
-        Synced with EBU
-        <span className="text-emerald-600/70">· fetched {formatRelativeTime(source.fetchedAt)}</span>
+        {t.synced}
+        <span className="text-emerald-600/70">{t.fetched(formatRelativeTime(source.fetchedAt, t))}</span>
       </span>
     );
   }
@@ -55,11 +58,11 @@ export function SchemaSourceBadge({ source, loading }: SchemaSourceBadgeProps) {
   return (
     <span
       className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 ring-1 ring-inset ring-amber-600/20"
-      title={source.note ?? "Bundled snapshot"}
+      title={source.note ?? t.bundledSnapshot}
       aria-live="polite"
     >
       <CloudOff className="h-3 w-3" strokeWidth={2.5} />
-      Offline · using local copy
+      {t.offline}
     </span>
   );
 }

@@ -2,92 +2,56 @@ import { Link } from "../i18n/Link";
 import { ArrowRight, ShieldCheck, Wand2, FileSearch, Clock } from "lucide-react";
 import { useRouteMeta } from "../hooks/useMeta";
 import CHECK_RULES from "../content/check-rules.json";
+import { useCopy } from "../i18n/useLocale";
+import { TOOLS_COPY } from "../i18n/copy/tools";
+import type { ToolsCopy } from "../i18n/copy/tools/en";
+
+type ToolSlug = keyof ToolsCopy["tools"];
 
 interface Tool {
-  readonly name: string;
-  readonly slug: string;
-  readonly tagline: string;
-  readonly description: string;
+  readonly slug: ToolSlug;
   readonly icon: typeof ShieldCheck;
   readonly href: string;
   readonly status: "available" | "coming-soon";
-  readonly badge?: string;
 }
 
 const TOOLS: readonly Tool[] = [
-  {
-    name: "Package Checker",
-    slug: "check",
-    tagline: "Validate a .zip before you ship.",
-    description:
-      `Drop any OGraf package and get a structured report against ${CHECK_RULES.total} rules across manifest, data schema (GDD), structure, module, styling, assets and runtime. Validates against the official EBU schema — live, with a pinned offline snapshot as fallback. Runs entirely in your browser — no upload.`,
-    icon: ShieldCheck,
-    href: "/check",
-    status: "available",
-    badge: "New",
-  },
-  {
-    name: "Schema Explorer",
-    slug: "schema",
-    tagline: "Browse the OGraf manifest schema in plain language.",
-    description:
-      "Every top-level field of an .ograf.json manifest, grouped into five designer-friendly clusters, plus a visual catalogue of every operator-input type. Sourced live from the EBU schema with a bundled fallback.",
-    icon: FileSearch,
-    href: "/tools/schema-explorer",
-    status: "available",
-  },
-  {
-    name: "Template Generator",
-    slug: "generator",
-    tagline: "Scaffold a new OGraf package from a preset.",
-    description:
-      "Pick a base (lower third, bug, ticker, …), tweak a handful of fields, and download a ready-to-edit package with manifest, module, stylesheet, and local fonts already wired up correctly.",
-    icon: Wand2,
-    href: "#",
-    status: "coming-soon",
-  },
+  { slug: "check", icon: ShieldCheck, href: "/check", status: "available" },
+  { slug: "schema", icon: FileSearch, href: "/tools/schema-explorer", status: "available" },
+  { slug: "generator", icon: Wand2, href: "#", status: "coming-soon" },
 ];
 
 export function Tools() {
   useRouteMeta();
+  const c = useCopy(TOOLS_COPY);
   return (
     <section className="py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mb-14 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-2">Tools</p>
+          <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-2">{c.eyebrow}</p>
           <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">
-            Build, check, and ship OGraf packages.
+            {c.title}
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-            A growing set of browser-based tools for everyone writing OGraf graphics. Everything runs client-side — no sign-up, no upload.
+            {c.intro}
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {TOOLS.map((t) => (
-            <ToolCard key={t.slug} tool={t} />
+            <ToolCard key={t.slug} tool={t} copy={c} />
           ))}
         </div>
 
-        <p className="mt-16 text-center text-sm text-slate-500">
-          Got an idea for a tool? Open an issue on{" "}
-          <a
-            href="https://github.com/ficosta/ograf/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-slate-700 underline decoration-slate-300 underline-offset-2 hover:text-blue-600 hover:decoration-blue-400"
-          >
-            GitHub
-          </a>
-          .
-        </p>
+        <p className="mt-16 text-center text-sm text-slate-500">{c.idea}</p>
       </div>
     </section>
   );
 }
 
-function ToolCard({ tool }: { readonly tool: Tool }) {
+function ToolCard({ tool, copy }: { readonly tool: Tool; readonly copy: ToolsCopy }) {
   const Icon = tool.icon;
+  const text = copy.tools[tool.slug];
   const disabled = tool.status === "coming-soon";
 
   const content = (
@@ -97,23 +61,23 @@ function ToolCard({ tool }: { readonly tool: Tool }) {
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="font-display text-lg text-slate-900">{tool.name}</h2>
-          {tool.badge && (
+          <h2 className="font-display text-lg text-slate-900">{text.name}</h2>
+          {text.badge && (
             <span className="inline-flex rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-              {tool.badge}
+              {text.badge}
             </span>
           )}
           {disabled && (
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-slate-500">
-              <Clock className="h-2.5 w-2.5" strokeWidth={2.5} /> Coming soon
+              <Clock className="h-2.5 w-2.5" strokeWidth={2.5} /> {copy.comingSoon}
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm font-medium text-slate-700">{tool.tagline}</p>
-        <p className="mt-2 text-sm text-slate-600">{tool.description}</p>
+        <p className="mt-1 text-sm font-medium text-slate-700">{text.tagline}</p>
+        <p className="mt-2 text-sm text-slate-600">{text.description(CHECK_RULES.total)}</p>
         {!disabled && (
           <p className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-700">
-            Open {tool.name.toLowerCase()}
+            {text.open}
             <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </p>
         )}

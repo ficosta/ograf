@@ -13,13 +13,10 @@ import {
 } from "lucide-react";
 import { useRouteMeta } from "../hooks/useMeta";
 import { loadManifestSchema, type LoadedSchema } from "../lib/schema/loader";
-import {
-  CLUSTERS,
-  FIELD_GUIDES,
-  GDD_TYPES,
-  type ClusterGuide,
-  type FieldGuide,
-} from "../content/schema-language";
+import type { ClusterGuide, FieldGuide } from "../content/schema-language";
+import { useCopy } from "../i18n/useLocale";
+import { SCHEMA_LANGUAGE } from "../i18n/copy/schema-language";
+import { SCHEMA_EXPLORER_COPY, type SchemaExplorerCopy } from "../i18n/copy/schema-explorer";
 import { FieldCard } from "../components/schema/FieldCard";
 import { GddTypeCard } from "../components/schema/GddTypeCard";
 import { SchemaSourceBadge } from "../components/schema/SchemaSourceBadge";
@@ -59,6 +56,8 @@ function readShape(schema: Record<string, unknown> | undefined): SchemaShape {
 
 export function SchemaExplorer() {
   useRouteMeta();
+  const c = useCopy(SCHEMA_EXPLORER_COPY);
+  const { CLUSTERS, FIELD_GUIDES, GDD_TYPES } = useCopy(SCHEMA_LANGUAGE);
 
   const [loaded, setLoaded] = useState<LoadedSchema | null>(null);
   const [loading, setLoading] = useState(true);
@@ -90,13 +89,13 @@ export function SchemaExplorer() {
           <FileSearch className="h-6 w-6 text-blue-600" strokeWidth={1.75} />
         </div>
         <p className="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">
-          Schema Explorer
+          {c.hero.eyebrow}
         </p>
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-6xl">
-          Every field of an OGraf manifest, in plain language.
+          {c.hero.title}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          Designer-friendly catalogue of the canonical EBU manifest schema. Browse the top-level fields, see every operator-input type with a real visual mock, and skip the JSON-Schema jargon entirely.
+          {c.hero.intro}
         </p>
         <div className="mt-6 flex justify-center">
           <SchemaSourceBadge source={loaded?.source ?? null} loading={loading} />
@@ -107,10 +106,10 @@ export function SchemaExplorer() {
       <section className="bg-slate-50 py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-4">
-            <Stat value={Object.keys(shape.properties).length || FIELD_GUIDES.length} label="Manifest fields" />
-            <Stat value={shape.required.length || 6} label="Required" />
-            <Stat value={CLUSTERS.length} label="Clusters" />
-            <Stat value={GDD_TYPES.length} label="Operator-input types" />
+            <Stat value={Object.keys(shape.properties).length || FIELD_GUIDES.length} label={c.stats.fields} />
+            <Stat value={shape.required.length || 6} label={c.stats.required} />
+            <Stat value={CLUSTERS.length} label={c.stats.clusters} />
+            <Stat value={GDD_TYPES.length} label={c.stats.types} />
           </div>
         </div>
       </section>
@@ -120,14 +119,13 @@ export function SchemaExplorer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 max-w-3xl">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              The whole shape, at a glance
+              {c.mindMap.title}
             </h2>
             <p className="mt-3 text-base text-slate-700">
-              Everything an OGraf manifest can contain — required fields in pink, optional in
-              slate. Click any branch below to jump to the detailed card.
+              {c.mindMap.intro}
             </p>
           </div>
-          <SchemaMindMap />
+          <SchemaMindMap copy={c.mindMap} />
         </div>
       </section>
 
@@ -136,10 +134,10 @@ export function SchemaExplorer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-3xl">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              Manifest fields
+              {c.fields.title}
             </h2>
             <p className="mt-3 text-base text-slate-700">
-              Everything that can live at the top of an <code className="font-mono text-sm text-blue-600">.ograf.json</code> manifest, grouped into the five things designers actually care about: who is this graphic, how does it behave, what data does it ask the operator for, what custom buttons can the operator press, and what does it need from the renderer.
+              {c.fields.intro}
             </p>
           </div>
 
@@ -191,10 +189,10 @@ export function SchemaExplorer() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-3xl">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              Operator-input types
+              {c.gdd.title}
             </h2>
             <p className="mt-3 text-base text-slate-700">
-              Inside the <code className="font-mono text-sm text-blue-600">schema</code> field — that's the form the controller builds for the operator. These are the input types you can use, each one with a mock of what the operator actually sees in the controller. Compose them to ask for whatever your graphic needs: name, score, photo, colour, position…
+              {c.gdd.intro}
             </p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -206,20 +204,11 @@ export function SchemaExplorer() {
           {/* Modifiers that any GDD field can carry */}
           <div className="mt-12 rounded-2xl bg-blue-50 ring-1 ring-blue-100 p-6">
             <p className="text-sm font-semibold text-blue-900">
-              Two extras every field can have
+              {c.gdd.extrasTitle}
             </p>
             <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 text-sm text-blue-900">
-              <div>
-                <code className="font-mono text-xs">hidden: true</code> — when present, the
-                field's value is{" "}
-                <strong>excluded from the graphic's display label</strong> in playout/automation
-                UIs. Use it for technical or noisy fields.
-              </div>
-              <div>
-                <code className="font-mono text-xs">order: 0</code> — UI ordering hint. Lower
-                numbers come first. Lets you control where each field appears in the operator's
-                form.
-              </div>
+              <div>{c.gdd.hidden}</div>
+              <div>{c.gdd.order}</div>
             </div>
           </div>
         </div>
@@ -232,37 +221,37 @@ export function SchemaExplorer() {
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-display text-2xl tracking-tight text-slate-900 sm:text-3xl">
-            Ready to put the pieces together?
+            {c.cta.title}
           </h2>
           <p className="mt-3 text-slate-700">
-            The Spec page walks you through the full manifest end-to-end with a worked example. The Tutorials show 11 graphics built start to finish. The Package Checker validates a finished package against this same schema.
+            {c.cta.body}
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
               to="/spec"
               className="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
             >
-              Read the Spec
+              {c.cta.spec}
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </Link>
             <Link
               to="/tutorials"
               className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:ring-slate-300"
             >
-              Browse tutorials
+              {c.cta.tutorials}
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </Link>
             <Link
               to="/check"
               className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:ring-slate-300"
             >
-              Validate a package
+              {c.cta.check}
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
             </Link>
           </div>
           {loaded?.source.kind === "live" && (
             <p className="mt-8 text-xs text-slate-400">
-              Source:{" "}
+              {c.cta.source}{" "}
               <a
                 href={loaded.source.url}
                 target="_blank"
@@ -316,143 +305,148 @@ function isBranch(n: TreeNode): n is BranchNode {
   return Array.isArray((n as BranchNode).children);
 }
 
-const MIND_MAP: BranchNode = {
-  label: "OGraf Manifest",
-  hint: "root.json",
-  children: [
-    { label: "$schema", required: true, anchor: "field-$schema", hint: "string · const URL" },
-    { label: "id", required: true, anchor: "field-id", hint: "string" },
-    { label: "name", required: true, anchor: "field-name", hint: "string" },
-    { label: "main", required: true, anchor: "field-main", hint: "string · entry file" },
-    { label: "supportsRealTime", required: true, anchor: "field-supportsRealTime", hint: "boolean" },
-    {
-      label: "supportsNonRealTime",
-      required: true,
-      anchor: "field-supportsNonRealTime",
-      hint: "boolean",
-    },
-    { label: "version", anchor: "field-version", hint: "string · sortable" },
-    { label: "description", anchor: "field-description", hint: "string" },
-    { label: "stepCount", anchor: "field-stepCount", hint: "number · default 1 · -1 = dynamic" },
-    {
-      label: "author",
-      anchor: "field-author",
-      hint: "object",
-      children: [
-        { label: "name", required: true, hint: "string" },
-        { label: "email", hint: "string" },
-        { label: "url", hint: "string" },
-      ],
-    },
-    {
-      label: "customActions",
-      anchor: "field-customActions",
-      hint: "array · lib/action.json",
-      children: [
-        { label: "id", required: true, hint: "string" },
-        { label: "name", required: true, hint: "string" },
-        { label: "description", hint: "string" },
-        { label: "schema", hint: "object | null  (null = no params)" },
-      ],
-    },
-    {
-      label: "schema",
-      anchor: "field-schema",
-      hint: "gdd/object.json — operator data form",
-      children: [
-        {
-          label: "type",
-          required: true,
-          hint: "boolean · string · number · integer · array · object",
-        },
-        { label: "gddType", hint: "1 of 9 below ↓" },
-        { label: "gddOptions", hint: "object — extensions, labels…" },
-        { label: "default", hint: "type-dependent" },
-        { label: "hidden", hint: "boolean — skip in display label" },
-        { label: "order", hint: "number — UI sort hint, lower first" },
-        { label: "items", hint: "(if type=array)  → recursive object.json" },
-        { label: "properties", hint: "(if type=object) → recursive object.json" },
-        {
-          label: "→ gddTypes",
-          hint: "9 canonical types",
-          children: [
-            { label: "single-line", anchor: "gdd-single-line", hint: "string" },
-            { label: "multi-line", anchor: "gdd-multi-line", hint: "string" },
-            { label: "file-path", anchor: "gdd-file-path", hint: "string + extensions[]" },
-            {
-              label: "file-path/image-path",
-              anchor: "gdd-file-path-image-path",
-              hint: "string + extensions[]",
-            },
-            { label: "select", anchor: "gdd-select", hint: "string|number|integer + enum + labels" },
-            { label: "color-rrggbb", anchor: "gdd-color-rrggbb", hint: "string · #rrggbb" },
-            { label: "color-rrggbbaa", anchor: "gdd-color-rrggbbaa", hint: "string · #rrggbbaa" },
-            { label: "percentage", anchor: "gdd-percentage", hint: "number" },
-            { label: "duration-ms", anchor: "gdd-duration-ms", hint: "integer" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "renderRequirements",
-      anchor: "field-renderRequirements",
-      hint: "array of requirement objects",
-      children: [
-        {
-          label: "resolution",
-          hint: "object",
-          children: [
-            { label: "width", hint: "constraints/number · {min,max,exact,ideal}" },
-            { label: "height", hint: "constraints/number" },
-          ],
-        },
-        { label: "frameRate", hint: "constraints/number" },
-        { label: "accessToPublicInternet", hint: "constraints/boolean · {exact, ideal}" },
-        {
-          label: "engine",
-          hint: "array",
-          children: [
-            { label: "type", required: true, hint: "string — CEF, Gecko, …" },
-            { label: "version.min", required: true, hint: "string — engine-specific" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "thumbnails",
-      anchor: "field-thumbnails",
-      hint: "array",
-      children: [
-        { label: "file", required: true, hint: "string — PNG, JPG, GIF, WebP" },
-        {
-          label: "resolution",
-          hint: "object",
-          children: [
-            { label: "width", required: true, hint: "integer ≥ 1" },
-            { label: "height", required: true, hint: "integer ≥ 1" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "v_*  (vendor extensions)",
-      hint: "any custom fields prefixed v_ are allowed at every level",
-    },
-  ],
-};
+type MindMapCopy = SchemaExplorerCopy["mindMap"];
 
-function SchemaMindMap() {
+function buildMindMap(m: MindMapCopy): BranchNode {
+  const h = m.hints;
+  return {
+    label: m.rootLabel,
+    hint: "root.json",
+    children: [
+      { label: "$schema", required: true, anchor: "field-$schema", hint: h.schema },
+      { label: "id", required: true, anchor: "field-id", hint: "string" },
+      { label: "name", required: true, anchor: "field-name", hint: "string" },
+      { label: "main", required: true, anchor: "field-main", hint: h.main },
+      { label: "supportsRealTime", required: true, anchor: "field-supportsRealTime", hint: "boolean" },
+      {
+        label: "supportsNonRealTime",
+        required: true,
+        anchor: "field-supportsNonRealTime",
+        hint: "boolean",
+      },
+      { label: "version", anchor: "field-version", hint: h.version },
+      { label: "description", anchor: "field-description", hint: "string" },
+      { label: "stepCount", anchor: "field-stepCount", hint: h.stepCount },
+      {
+        label: "author",
+        anchor: "field-author",
+        hint: "object",
+        children: [
+          { label: "name", required: true, hint: "string" },
+          { label: "email", hint: "string" },
+          { label: "url", hint: "string" },
+        ],
+      },
+      {
+        label: "customActions",
+        anchor: "field-customActions",
+        hint: "array · lib/action.json",
+        children: [
+          { label: "id", required: true, hint: "string" },
+          { label: "name", required: true, hint: "string" },
+          { label: "description", hint: "string" },
+          { label: "schema", hint: h.actionSchema },
+        ],
+      },
+      {
+        label: "schema",
+        anchor: "field-schema",
+        hint: h.operatorForm,
+        children: [
+          {
+            label: "type",
+            required: true,
+            hint: "boolean · string · number · integer · array · object",
+          },
+          { label: "gddType", hint: h.gddType },
+          { label: "gddOptions", hint: h.gddOptions },
+          { label: "default", hint: h.default },
+          { label: "hidden", hint: h.hidden },
+          { label: "order", hint: h.order },
+          { label: "items", hint: h.items },
+          { label: "properties", hint: h.properties },
+          {
+            label: "→ gddTypes",
+            hint: h.gddTypes,
+            children: [
+              { label: "single-line", anchor: "gdd-single-line", hint: "string" },
+              { label: "multi-line", anchor: "gdd-multi-line", hint: "string" },
+              { label: "file-path", anchor: "gdd-file-path", hint: "string + extensions[]" },
+              {
+                label: "file-path/image-path",
+                anchor: "gdd-file-path-image-path",
+                hint: "string + extensions[]",
+              },
+              { label: "select", anchor: "gdd-select", hint: "string|number|integer + enum + labels" },
+              { label: "color-rrggbb", anchor: "gdd-color-rrggbb", hint: "string · #rrggbb" },
+              { label: "color-rrggbbaa", anchor: "gdd-color-rrggbbaa", hint: "string · #rrggbbaa" },
+              { label: "percentage", anchor: "gdd-percentage", hint: "number" },
+              { label: "duration-ms", anchor: "gdd-duration-ms", hint: "integer" },
+            ],
+          },
+        ],
+      },
+      {
+        label: "renderRequirements",
+        anchor: "field-renderRequirements",
+        hint: h.renderRequirements,
+        children: [
+          {
+            label: "resolution",
+            hint: "object",
+            children: [
+              { label: "width", hint: "constraints/number · {min,max,exact,ideal}" },
+              { label: "height", hint: "constraints/number" },
+            ],
+          },
+          { label: "frameRate", hint: "constraints/number" },
+          { label: "accessToPublicInternet", hint: "constraints/boolean · {exact, ideal}" },
+          {
+            label: "engine",
+            hint: "array",
+            children: [
+              { label: "type", required: true, hint: h.engineType },
+              { label: "version.min", required: true, hint: h.engineVersion },
+            ],
+          },
+        ],
+      },
+      {
+        label: "thumbnails",
+        anchor: "field-thumbnails",
+        hint: "array",
+        children: [
+          { label: "file", required: true, hint: "string — PNG, JPG, GIF, WebP" },
+          {
+            label: "resolution",
+            hint: "object",
+            children: [
+              { label: "width", required: true, hint: "integer ≥ 1" },
+              { label: "height", required: true, hint: "integer ≥ 1" },
+            ],
+          },
+        ],
+      },
+      {
+        label: h.vendorLabel,
+        hint: h.vendor,
+      },
+    ],
+  };
+}
+
+function SchemaMindMap({ copy }: { readonly copy: MindMapCopy }) {
+  const root = buildMindMap(copy);
   return (
     <div className="rounded-2xl bg-slate-50 ring-1 ring-slate-200 p-6 sm:p-8 overflow-x-auto">
       <ul className="font-mono text-sm leading-7">
-        <RenderNode node={MIND_MAP} depth={0} />
+        <RenderNode node={root} depth={0} />
       </ul>
       <p className="mt-6 text-xs text-slate-500">
         <span className="inline-block h-2 w-2 rounded-full bg-rose-500 align-middle" />{" "}
-        <span className="font-mono">required</span> &nbsp;·&nbsp;{" "}
+        <span className="font-mono">{copy.legendRequired}</span> &nbsp;·&nbsp;{" "}
         <span className="inline-block h-2 w-2 rounded-full bg-slate-400 align-middle" />{" "}
-        <span className="font-mono">optional</span> &nbsp;·&nbsp; click any branch to jump to its
-        full card below
+        <span className="font-mono">{copy.legendOptional}</span> &nbsp;·&nbsp; {copy.legendClick}
       </p>
     </div>
   );

@@ -8,8 +8,10 @@ import {
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
-import workflow from "../content/workflow.json";
-import type { Workflow, WorkflowNode } from "../content/workflow.types";
+import { WORKFLOW } from "../content/localized/workflow";
+import type { WorkflowNode } from "../content/workflow.types";
+import { WORKFLOW_COPY } from "../i18n/copy/workflow";
+import { useCopy } from "../i18n/useLocale";
 
 const ICON_MAP: Readonly<Record<string, LucideIcon>> = {
   Code2,
@@ -24,8 +26,8 @@ function resolveIcon(name: string): LucideIcon {
   return ICON_MAP[name] ?? Code2;
 }
 
-const WORKFLOW = workflow as Workflow;
-const NODE_COUNT = WORKFLOW.nodes.length;
+// Every locale has the same nodes (enforced by scripts/check-i18n.mjs).
+const NODE_COUNT = WORKFLOW.en.nodes.length;
 
 // Geometry tuned for a 1200x360 SVG viewBox.
 const VIEWBOX_WIDTH = 1200;
@@ -58,6 +60,8 @@ const CONNECTIONS = NODE_XS.slice(0, -1).map((x, i) => {
 });
 
 export function WorkflowDiagram() {
+  const workflow = useCopy(WORKFLOW);
+  const c = useCopy(WORKFLOW_COPY);
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [activeNode, setActiveNode] = useState<string | null>(null);
@@ -85,7 +89,7 @@ export function WorkflowDiagram() {
     <figure
       ref={containerRef}
       className="relative overflow-hidden rounded-3xl bg-slate-950 p-6 shadow-2xl ring-1 ring-slate-900/50 sm:p-10"
-      aria-label="How an OGraf graphic flows on-air"
+      aria-label={workflow.title}
     >
       {/* Subtle grid background for the technical feel */}
       <div
@@ -109,12 +113,12 @@ export function WorkflowDiagram() {
 
       <figcaption className="relative mb-8 flex flex-col gap-2 sm:mb-10">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
-          The OGraf workflow
+          {c.eyebrow}
         </p>
         <h3 className="font-display text-2xl tracking-tight text-white sm:text-3xl">
-          {WORKFLOW.title}
+          {workflow.title}
         </h3>
-        <p className="max-w-2xl text-sm text-slate-400">{WORKFLOW.description}</p>
+        <p className="max-w-2xl text-sm text-slate-400">{workflow.description}</p>
       </figcaption>
 
       <div className="relative">
@@ -180,7 +184,7 @@ export function WorkflowDiagram() {
           ))}
 
           {/* Nodes */}
-          {WORKFLOW.nodes.map((node, i) => (
+          {workflow.nodes.map((node, i) => (
             <WorkflowSvgNode
               key={node.id}
               node={node}
@@ -196,7 +200,7 @@ export function WorkflowDiagram() {
 
       {/* Node captions below the SVG, clickable to reveal description */}
       <div className="relative mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-3 md:grid-cols-5">
-        {WORKFLOW.nodes.map((node, i) => {
+        {workflow.nodes.map((node, i) => {
           const Icon = resolveIcon(node.icon);
           const isActive = activeNode === node.id;
           return (
@@ -231,7 +235,7 @@ export function WorkflowDiagram() {
                   <Icon className="h-3.5 w-3.5" strokeWidth={2} />
                 </span>
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                  Step {i + 1}
+                  {c.step(i + 1)}
                 </span>
               </div>
               <p className="mt-2 font-display text-base text-white">{node.label}</p>
