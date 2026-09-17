@@ -1,134 +1,662 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ograf.dev/</loc>
-    <lastmod>2026-04-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials</loc>
-    <lastmod>2026-04-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ograf.dev/ecosystem</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/ecosystem"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ograf.dev/spec</loc>
-    <lastmod>2026-04-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/spec"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/spec"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/spec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/spec"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ograf.dev/history</loc>
-    <lastmod>2026-04-17</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/history"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/history"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/history"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/history"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ograf.dev/news</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/news"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tools</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tools/schema-explorer</loc>
-    <lastmod>2026-04-18</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools/schema-explorer"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ograf.dev/check</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/check/rules</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check/rules"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ograf.dev/about</loc>
-    <lastmod>2026-04-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/about"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/about"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://ograf.dev/get-started</loc>
-    <lastmod>2026-04-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/get-started"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/get-started"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/get-started"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/get-started"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/bug</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/bug"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/ticker</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/ticker"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/quote</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/quote"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/election-bars</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/election-bars"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/sport-lineup</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/score-bug</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/score-bug"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/countdown</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/countdown"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/breaking-news</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/breaking-news"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/weather</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/weather"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ograf.dev/tutorials/social-card</loc>
-    <lastmod>2026-08-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/social-card"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/ecosystem"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/spec</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/spec"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/spec"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/spec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/spec"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/history</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/history"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/history"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/history"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/history"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/news</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/news"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tools</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tools/schema-explorer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools/schema-explorer"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/check</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/check/rules</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check/rules"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/about"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/about"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/get-started</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/get-started"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/get-started"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/get-started"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/get-started"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/bug</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/bug"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/ticker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/ticker"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/quote</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/quote"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/election-bars</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/election-bars"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/sport-lineup</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/score-bug</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/score-bug"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/countdown"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/breaking-news</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/breaking-news"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/weather</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/weather"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/pt/tutorials/social-card</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/social-card"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/ecosystem</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/ecosystem"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/ecosystem"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/spec</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/spec"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/spec"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/spec"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/spec"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/history</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/history"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/history"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/history"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/history"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/news</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/news"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tools</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tools/schema-explorer</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tools/schema-explorer"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tools/schema-explorer"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/check</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/check/rules</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/check/rules"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/check/rules"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/about"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/about"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/about"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/get-started</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/get-started"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/get-started"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/get-started"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/get-started"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/bug</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/bug"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/ticker</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/ticker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/ticker"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/quote</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/quote"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/quote"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/election-bars</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/election-bars"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/election-bars"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/sport-lineup</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/sport-lineup"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/sport-lineup"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/score-bug</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/score-bug"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/score-bug"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/countdown</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/countdown"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/countdown"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/breaking-news</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/breaking-news"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/breaking-news"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/weather</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/weather"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/weather"/>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ograf.dev/es/tutorials/social-card</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ograf.dev/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://ograf.dev/pt/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://ograf.dev/es/tutorials/social-card"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ograf.dev/tutorials/social-card"/>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

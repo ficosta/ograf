@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import {
   ArrowRight,
   Code2,

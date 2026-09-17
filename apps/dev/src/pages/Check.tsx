@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Braces, FileJson, FileCode, FileType, Files, Image, Box, ChevronRight, Play, ShieldAlert } from "lucide-react";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { canShare, decodeReport, encodeReport } from "../lib/check/share";
 import CHECK_RULES from "../content/check-rules.json";
@@ -17,11 +17,7 @@ import { buildRuntimeFindings } from "../lib/check/runtime/rules";
 const RUNTIME_CONSENT_KEY = "ograf-check-runtime-consent";
 
 export function Check() {
-  useMeta({
-    title: "OGraf Package Checker",
-    description:
-      "A comprehensive in-browser validator for OGraf Graphics Definition v1 packages. Drop a .zip, get a structured report against 30+ static rules and run it live in a sandbox.",
-  });
+  useRouteMeta();
 
   const [report, setReport] = useState<Report | null>(null);
   const [pkg, setPkg] = useState<Pkg | null>(null);

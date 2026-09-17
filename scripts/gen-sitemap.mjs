@@ -27,6 +27,12 @@ const tutorialsPath = resolve(repoRoot, "apps/dev/src/content/tutorials.json");
 const sitemapPath = resolve(repoRoot, "apps/dev/public/sitemap.xml");
 
 const SITE_ORIGIN = "https://ograf.dev";
+
+/** Every page ships in each language; English at the root, others prefixed. */
+const LOCALES = ["en", "pt", "es"];
+const LOCALE_TAGS = { en: "en", pt: "pt-BR", es: "es-ES" };
+const localizePath = (path, locale) =>
+  locale === "en" ? path : path === "/" ? `/${locale}` : `/${locale}${path}`;
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const SRC = "apps/dev/src";
@@ -102,7 +108,7 @@ async function main() {
 
   const urls = [
     ...STATIC_ROUTES.map((r) => ({
-      loc: SITE_ORIGIN + r.path,
+      path: r.path,
       lastmod: lastmodFor(r.sources),
       priority: r.priority,
       changefreq: r.changefreq,
@@ -111,7 +117,7 @@ async function main() {
       const templateDir = `apps/dev/public/templates/${t.slug.split("/").pop()}`;
       const sources = [`${SRC}/pages/${pageComponentFor(t.slug)}.tsx`, templateDir, `${CONTENT}/tutorials.json`];
       return {
-        loc: SITE_ORIGIN + t.slug,
+        path: t.slug,
         lastmod: lastmodFor(sources),
         priority: "0.8",
         changefreq: "monthly",
@@ -119,12 +125,26 @@ async function main() {
     }),
   ];
 
+  // One <url> per language, each listing all its alternates, as Google's
+  // hreflang-in-sitemap format requires. Translations live in src/i18n and
+  // are edited alongside the page, so they share its lastmod.
+  const alternates = (path) =>
+    [
+      ...LOCALES.map(
+        (l) => `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAGS[l]}" href="${SITE_ORIGIN}${localizePath(path, l)}"/>`,
+      ),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_ORIGIN}${path}"/>`,
+    ].join("\n");
+
+  const entries = LOCALES.flatMap((locale) => urls.map((u) => ({ ...u, locale })));
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries
   .map(
     (u) => `  <url>
-    <loc>${u.loc}</loc>
+    <loc>${SITE_ORIGIN}${localizePath(u.path, u.locale)}</loc>
+${alternates(u.path)}
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
@@ -138,7 +158,7 @@ ${urls
 
   const spread = new Set(urls.map((u) => u.lastmod));
   console.log(
-    `Wrote ${urls.length} URLs to ${sitemapPath}` +
+    `Wrote ${entries.length} URLs to ${sitemapPath}` +
       (gitAvailable
         ? ` · ${spread.size} distinct lastmod date${spread.size === 1 ? "" : "s"}`
         : " · git unavailable, dated today"),

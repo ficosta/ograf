@@ -21,7 +21,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync, existsSync, rmSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -32,40 +32,33 @@ const ssrDir = join(appDir, "dist-ssr");
 
 const ORIGIN = "https://ograf.dev";
 const SITE_NAME = "ograf.dev";
-const DEFAULT_IMAGE = `${ORIGIN}/og-image.jpg`;
 
-/** Routes whose copy lives here; tutorials are appended from tutorials.json. */
-const STATIC_ROUTES = [
-  { path: "/", title: "ograf.dev · The missing community for OGraf", description: "Community hub for the OGraf open broadcast graphics standard. Tutorials, ecosystem directory, specification guide, and live interactive demos." },
-  { path: "/get-started", title: "Get Started · Lower Third tutorial", description: "Build a CBS-style lower third from scratch. Fifteen minutes, no build step, and a package that validates." },
-  { path: "/tutorials", title: "Tutorials", description: "Learn by building real broadcast graphics. Eleven OGraf packages, each explained line by line, each one downloadable and spec-valid." },
-  { path: "/ecosystem", title: "Ecosystem", description: "Every OGraf-compatible tool, editor, renderer, and service worth knowing about — open source and commercial." },
-  { path: "/history", title: "History", description: "A timeline of the OGraf specification — from early HTML-graphics work to a stable v1 with a published Server API." },
-  { path: "/news", title: "News & Events", description: "OGraf news, upcoming events, presentations, videos, and community signals." },
-  { path: "/spec", title: "Specification Guide", description: "How OGraf works, explained plainly. Packaging, manifest, lifecycle, and the data schema that drives operator forms." },
-  { path: "/tools", title: "Tools", description: "OGraf developer tools on ograf.dev — a client-side package checker with a runtime sandbox, plus a schema explorer. All browser-based, no upload." },
-  { path: "/tools/schema-explorer", title: "Schema Explorer", description: "Browse the OGraf manifest schema interactively, in plain language, with every operator-input type catalogued." },
-  { path: "/check", title: "OGraf Package Checker", description: "A comprehensive in-browser validator for OGraf Graphics packages. Drop a .zip and get a structured report — nothing is uploaded." },
-  { path: "/check/rules", title: "Package Checker rules", description: "Every rule the OGraf Package Checker applies, listed by id across seven categories." },
-  { path: "/about", title: "About", description: "About ograf.dev — a community-driven portal for the OGraf open broadcast graphics standard." },
-];
+/**
+ * Titles and descriptions per language live in src/i18n/meta.json, which the
+ * client reads too — one source, so prerendered HTML and hydrated tags agree.
+ * Its keys are the route list: every path in the English table is rendered in
+ * every language.
+ */
+const META = JSON.parse(readFileSync(join(appDir, "src/i18n/meta.json"), "utf8"));
+const LOCALES = ["en", "pt", "es"];
+const DEFAULT_LOCALE = "en";
+const LOCALE_TAGS = { en: "en", pt: "pt-BR", es: "es-ES" };
+const OG_LOCALES = { en: "en_US", pt: "pt_BR", es: "es_ES" };
 
-function tutorialRoutes() {
-  const file = join(appDir, "src/content/tutorials.json");
-  if (!existsSync(file)) return [];
-  const tutorials = JSON.parse(readFileSync(file, "utf8"));
-  // `slug` in tutorials.json is already an absolute path ("/tutorials/bug"),
-  // so it is used as-is. Anything already covered by STATIC_ROUTES is dropped,
-  // which is how /get-started avoids being rendered twice.
-  const staticPaths = new Set(STATIC_ROUTES.map((r) => r.path));
-  return tutorials
-    .filter((t) => typeof t.slug === "string" && t.slug.startsWith("/"))
-    .filter((t) => !staticPaths.has(t.slug))
-    .map((t) => ({
-      path: t.slug,
-      title: `${t.title} tutorial`,
-      description: t.desc ?? undefined,
-    }));
+function localizePath(path, locale) {
+  if (locale === DEFAULT_LOCALE) return path;
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
+}
+
+function routes() {
+  const paths = Object.keys(META[DEFAULT_LOCALE]).filter((p) => p !== "*");
+  return LOCALES.flatMap((locale) =>
+    paths.map((path) => {
+      const meta = META[locale][path];
+      if (!meta) throw new Error(`src/i18n/meta.json: "${locale}" has no entry for ${path}`);
+      return { path: localizePath(path, locale), bare: path, locale, ...meta };
+    }),
+  );
 }
 
 function escapeHtml(s) {
@@ -79,29 +72,45 @@ function setTag(html, pattern, replacement) {
 
 function buildHtml(template, route, appHtml) {
   const fullTitle = route.title.includes(SITE_NAME) ? route.title : `${route.title} · ${SITE_NAME}`;
-  const desc = route.description ?? STATIC_ROUTES[0].description;
-  const url = `${ORIGIN}${route.path === "/" ? "/" : route.path}`;
+  const desc = route.description;
+  const url = `${ORIGIN}${route.path}`;
   const t = escapeHtml(fullTitle);
   const d = escapeHtml(desc);
 
   let html = template;
+  html = setTag(html, /<html lang="[^"]*"/, `<html lang="${LOCALE_TAGS[route.locale]}"`);
   html = setTag(html, /<title>[\s\S]*?<\/title>/, `<title>${t}</title>`);
   html = setTag(html, /<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${d}" />`);
-  html = setTag(html, /<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${url}" />`);
   html = setTag(html, /<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${t}" />`);
   html = setTag(html, /<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${d}" />`);
   html = setTag(html, /<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${url}" />`);
   html = setTag(html, /<meta name="twitter:title" content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${t}" />`);
   html = setTag(html, /<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${d}" />`);
 
+  // Canonical is the page itself in its own language; hreflang points at the
+  // other two, and x-default at English. Without these Google treats the
+  // translations as duplicates of the English page.
+  const alternates = [
+    ...LOCALES.map(
+      (l) => `<link rel="alternate" hreflang="${LOCALE_TAGS[l]}" href="${ORIGIN}${localizePath(route.bare, l)}" />`,
+    ),
+    `<link rel="alternate" hreflang="x-default" href="${ORIGIN}${route.bare}" />`,
+    `<meta property="og:locale" content="${OG_LOCALES[route.locale]}" />`,
+  ].join("\n    ");
+  html = setTag(
+    html,
+    /<link rel="canonical" href="[^"]*"\s*\/>/,
+    `<link rel="canonical" href="${url}" />\n    ${alternates}`,
+  );
+
   // Structured data: what the page is, and who publishes it.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": route.path === "/" ? "WebSite" : "WebPage",
+    "@type": route.bare === "/" ? "WebSite" : "WebPage",
     name: fullTitle,
     description: desc,
     url,
-    inLanguage: "en",
+    inLanguage: LOCALE_TAGS[route.locale],
     isPartOf: { "@type": "WebSite", name: SITE_NAME, url: `${ORIGIN}/` },
     about: {
       "@type": "SoftwareApplication",
@@ -130,10 +139,9 @@ const { render } = await import(pathToFileURL(join(ssrDir, "entry-server.js")).h
 
 // --- render every route ---------------------------------------------------
 const template = readFileSync(join(distDir, "index.html"), "utf8");
-const routes = [...STATIC_ROUTES, ...tutorialRoutes()];
 
 let written = 0;
-for (const route of routes) {
+for (const route of routes()) {
   const appHtml = await render(route.path);
   const html = buildHtml(template, route, appHtml);
   const outFile =

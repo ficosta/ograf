@@ -10,11 +10,11 @@
  * every build, so the page cannot describe a checker that no longer exists.
  */
 
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { ChevronRight } from "lucide-react";
 import CHECK_RULES from "../content/check-rules.json";
 import { CATEGORY_LABEL, CATEGORY_ORDER, type Category } from "../lib/check/types";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 
 /** What each id prefix stands for, so the numbering is not a private joke. */
 const PREFIX_NOTE: Partial<Record<Category, string>> = {
@@ -28,10 +28,7 @@ const PREFIX_NOTE: Partial<Record<Category, string>> = {
 };
 
 export function CheckRules() {
-  useMeta({
-    title: "Package Checker rules",
-    description: `Every one of the ${CHECK_RULES.total} rules the OGraf Package Checker applies, listed by id across ${Object.keys(CHECK_RULES.categories).length} categories.`,
-  });
+  useRouteMeta();
 
   const categories = CATEGORY_ORDER.filter((c) => c in CHECK_RULES.categories);
 

@@ -1,12 +1,9 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Compass, ArrowRight } from "lucide-react";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 
 export function NotFound() {
-  useMeta({
-    title: "Page not found",
-    description: "This page doesn't exist at ograf.dev. Try the tutorials, specification, or ecosystem instead.",
-  });
+  useRouteMeta();
   return (
     <section className="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">

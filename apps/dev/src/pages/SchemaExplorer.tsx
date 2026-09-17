@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import {
   Activity,
   ArrowRight,
@@ -11,7 +11,7 @@ import {
   Tv,
   type LucideIcon,
 } from "lucide-react";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 import { loadManifestSchema, type LoadedSchema } from "../lib/schema/loader";
 import {
   CLUSTERS,
@@ -58,11 +58,7 @@ function readShape(schema: Record<string, unknown> | undefined): SchemaShape {
 }
 
 export function SchemaExplorer() {
-  useMeta({
-    title: "Schema Explorer",
-    description:
-      "Browse the OGraf manifest schema interactively, in plain language. Every top-level field and every operator-data type explained without jargon.",
-  });
+  useRouteMeta();
 
   const [loaded, setLoaded] = useState<LoadedSchema | null>(null);
   const [loading, setLoading] = useState(true);

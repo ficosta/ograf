@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { ChevronRight } from "lucide-react";
 import tutorials from "../content/tutorials.json";
 import type { Tutorial, TutorialDifficulty } from "../content/tutorials.types";
