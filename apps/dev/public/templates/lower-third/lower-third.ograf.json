@@ -12,6 +12,9 @@
   "stepCount": 1,
   "supportsRealTime": true,
   "supportsNonRealTime": false,
+  "thumbnails": [
+    { "file": "thumbnail.webp", "resolution": { "width": 1920, "height": 1080 } }
+  ],
   "schema": {
     "type": "object",
     "properties": {

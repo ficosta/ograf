@@ -1,4 +1,4 @@
-import { Download, ExternalLink, FileCode, FileJson, FileText, FileType, Package } from "lucide-react";
+import { Download, ExternalLink, FileCode, FileImage, FileJson, FileText, FileType, Package } from "lucide-react";
 
 interface TemplateDownloadProps {
   readonly slug: string;
@@ -16,7 +16,9 @@ function packageFiles(slug: string): readonly PackageFile[] {
     { icon: FileJson, name: `${slug}.ograf.json`, desc: "Manifest — what a renderer reads (id, schema, lifecycle flags)" },
     { icon: FileCode, name: "graphic.mjs", desc: "Web Component with load / play / update / stop / customAction / dispose" },
     { icon: FileType, name: "style.css", desc: "Stylesheet, loaded by graphic.mjs via a <link> tag" },
+    { icon: FileImage, name: "thumbnail.webp", desc: "1920×1080 preview, declared in the manifest" },
     { icon: FileText, name: "README.md", desc: "Usage notes" },
+    { icon: FileText, name: "LICENSE", desc: "MIT" },
   ];
 }
 

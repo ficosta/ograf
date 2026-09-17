@@ -32,6 +32,22 @@ const TEMPLATE = `
   </div>
 `;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * The step a playAction() lands on, exactly as the spec defines it: `goto`
+ * wins; otherwise the current step (-1 before the first play) plus `delta`,
+ * which defaults to 1. A target at or past stepCount means "go to the end",
+ * returned as undefined — so a second play on a one-step graphic takes it off
+ * air instead of replaying it.
+ */
+function resolveTargetStep(currentStep, { goto, delta } = {}, stepCount = 1) {
+  const target = Number.isInteger(goto) && goto >= 0
+    ? goto
+    : (currentStep ?? -1) + (Number.isInteger(delta) ? delta : 1);
+  return target >= stepCount ? undefined : Math.max(target, 0);
+}
+
 export default class SocialCardGraphic extends HTMLElement {
 
   _initDom() {
@@ -43,6 +59,8 @@ export default class SocialCardGraphic extends HTMLElement {
     this._handle = this.querySelector('.social-user-handle');
     this._platform = this.querySelector('.social-platform');
     this._text = this.querySelector('.social-text');
+    this._step = undefined;
+    this._rev = 0;
     this._initialized = true;
   }
 
@@ -53,13 +71,13 @@ export default class SocialCardGraphic extends HTMLElement {
 
   _applyData(data) {
     if (!data) return;
-    if (data.user) {
+    if (data.user !== undefined) {
       this._userName.textContent = data.user;
       this._initials.textContent = this._getInitials(data.user);
     }
-    if (data.handle) this._handle.textContent = data.handle;
-    if (data.text) this._text.textContent = data.text;
-    if (data.platform) this._platform.textContent = data.platform;
+    if (data.handle !== undefined) this._handle.textContent = data.handle;
+    if (data.text !== undefined) this._text.textContent = data.text;
+    if (data.platform !== undefined) this._platform.textContent = data.platform;
   }
 
   async load({ data } = {}) {
@@ -68,17 +86,29 @@ export default class SocialCardGraphic extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async playAction({ skipAnimation } = {}) {
+  // Each action takes the next revision number. Anything that finishes after a
+  // newer action has started checks it and backs off, so play → stop → play
+  // sent without waiting ends on air instead of hidden by the stale stop.
+  async playAction({ goto, delta, skipAnimation } = {}) {
     this._initDom();
+    const target = resolveTargetStep(this._step, { goto, delta });
+    if (target === undefined) {
+      await this.stopAction({ skipAnimation });
+      return { statusCode: 200, currentStep: undefined };
+    }
+    ++this._rev;
+    this._step = target;
     this._root.classList.remove('out');
     if (skipAnimation) {
-      this._root.classList.add('visible');
-      return { statusCode: 200, currentStep: 0 };
+      this._root.classList.add('instant', 'visible');
+      return { statusCode: 200, currentStep: this._step };
     }
+    this._root.classList.remove('instant');
+    // Force a reflow so the browser registers the starting state.
     void this._root.offsetWidth;
     this._root.classList.add('visible');
-    await new Promise(r => setTimeout(r, 700));
-    return { statusCode: 200, currentStep: 0 };
+    await sleep(700);
+    return { statusCode: 200, currentStep: this._step };
   }
 
   async updateAction({ data } = {}) {
@@ -89,21 +119,28 @@ export default class SocialCardGraphic extends HTMLElement {
 
   async stopAction({ skipAnimation } = {}) {
     this._initDom();
+    const rev = ++this._rev;
+    this._step = undefined;
     if (skipAnimation) {
-      this._root.classList.remove('visible');
+      this._root.classList.add('instant');
+      this._root.classList.remove('visible', 'out');
       return { statusCode: 200 };
     }
+    this._root.classList.remove('instant');
     this._root.classList.add('out');
-    await new Promise(r => setTimeout(r, 500));
-    this._root.classList.remove('visible', 'out');
+    await sleep(500);
+    if (rev === this._rev) this._root.classList.remove('visible', 'out');
     return { statusCode: 200 };
   }
 
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  // Every OGraf graphic must expose customAction, even without any declared.
+  // The renderer passes { id, payload, skipAnimation }; an unknown id is a 4xx.
+  async customAction({ id } = {}) {
+    return { statusCode: 404, statusMessage: `Unknown custom action: ${id ?? ''}` };
   }
 
   async dispose() {
+    this._rev = (this._rev ?? 0) + 1;
     this.innerHTML = '';
     this._initialized = false;
     return { statusCode: 200 };

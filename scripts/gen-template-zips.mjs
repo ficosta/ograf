@@ -15,7 +15,7 @@ const outDir = join(repoRoot, "apps/dev/public/downloads");
 
 mkdirSync(outDir, { recursive: true });
 
-const PACKAGE_FILES = ["graphic.mjs", "style.css"];
+const PACKAGE_FILES = ["graphic.mjs", "style.css", "thumbnail.webp"];
 const PACKAGE_DIRS = ["fonts", "assets"];
 
 const entries = readdirSync(templatesDir, { withFileTypes: true })
@@ -59,6 +59,10 @@ for (const slug of entries) {
     }
   }
 
+  // The templates are MIT (templates/LICENSE); ship the licence with each
+  // package so it survives being passed around on its own.
+  cpSync(join(templatesDir, "LICENSE"), join(pkgDir, "LICENSE"));
+
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
   writeFileSync(join(pkgDir, "README.md"), renderReadme(slug, manifest));
 
@@ -94,6 +98,8 @@ ${description}
 | \`${slug}.ograf.json\` | Manifest -- what a renderer reads. |
 | \`graphic.mjs\` | Web Component with the full OGraf lifecycle. |
 | \`style.css\` | Stylesheet, loaded via a \`<link>\` injected by graphic.mjs. |
+| \`thumbnail.webp\` | 1920×1080 preview, declared in the manifest's \`thumbnails\`. |
+| \`LICENSE\` | MIT licence for the package. |
 | \`fonts/\` | Local font files (if present), with the font's license alongside. |
 | \`README.md\` | This file. |
 

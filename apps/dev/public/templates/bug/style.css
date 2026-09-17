@@ -111,3 +111,11 @@
   text-transform: uppercase;
   margin-top: 2px;
 }
+
+/* skipAnimation: the graphic jumps straight to its end state. The spec says a
+ * graphic MUST skip the animation when asked, and that includes children with
+ * their own transitions and delays. */
+.bug.instant,
+.bug.instant * {
+  transition: none !important;
+}

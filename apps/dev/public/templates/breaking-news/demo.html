@@ -26,7 +26,7 @@
 
       switch (action) {
         case 'load':
-          await el.load({ data: data || { headline: 'EBU announces OGraf v2 roadmap for 2027' } });
+          await el.load({ data: data || { headline: 'City council approves new riverside transit line' } });
           break;
         case 'play':
           await el.playAction({ delta: 1 });
@@ -41,7 +41,7 @@
     });
 
     el.load({
-      data: { headline: 'EBU announces OGraf v2 roadmap for 2027' },
+      data: { headline: 'City council approves new riverside transit line' },
       renderType: 'realtime',
       renderCharacteristics: { resolution: { width: 1920, height: 1080 } }
     });

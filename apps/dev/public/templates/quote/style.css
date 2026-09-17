@@ -26,7 +26,12 @@
   src: url('./fonts/InstrumentSerif-Regular.woff2') format('woff2');
 }
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* Reset scoped to the graphic. A bare `*` rule in light DOM would also restyle
+ * the renderer's page and every other graphic on it; :where() keeps the
+ * specificity at zero, same as the bare selector it replaces. */
+:where(.quote-root, .quote-root *),
+:where(.quote-root, .quote-root *)::before,
+:where(.quote-root, .quote-root *)::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* The graphic's own root. `position: absolute; inset: 0` fills whatever box the
  * renderer hands us: in an iframe mount that is the frame, and inside a shadow
@@ -144,4 +149,12 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-top: 4px;
+}
+
+/* skipAnimation: the graphic jumps straight to its end state. The spec says a
+ * graphic MUST skip the animation when asked, and that includes children with
+ * their own transitions and delays. */
+.quote.instant,
+.quote.instant * {
+  transition: none !important;
 }

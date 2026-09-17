@@ -113,3 +113,11 @@
   60% { opacity: 0; transform: translateY(6px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* skipAnimation: the graphic jumps straight to its end state. The spec says a
+ * graphic MUST skip the animation when asked, and that includes children with
+ * their own transitions and delays. */
+.l3rd.instant,
+.l3rd.instant * {
+  transition: none !important;
+}

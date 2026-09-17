@@ -9,6 +9,9 @@
   "stepCount": 1,
   "supportsRealTime": true,
   "supportsNonRealTime": false,
+  "thumbnails": [
+    { "file": "thumbnail.webp", "resolution": { "width": 1920, "height": 1080 } }
+  ],
   "schema": {
     "type": "object",
     "properties": {
@@ -23,10 +26,10 @@
         "title": "Headlines",
         "items": { "type": "string", "gddType": "single-line" },
         "default": [
-          "EBU releases OGraf Graphics Definition v1 — the open standard for broadcast graphics",
-          "SPX Graphics Controller adds full OGraf compliance in upcoming v1.4 release",
-          "CasparCG community explores native OGraf renderer integration",
-          "Loopic announces one-click OGraf export for all template projects"
+          "Heavy rain expected across the region from Thursday evening",
+          "Local team books its place in the regional cup final",
+          "City library extends weekend opening hours from next month",
+          "Morning commute: delays on the northern line after signal fault"
         ]
       }
     }

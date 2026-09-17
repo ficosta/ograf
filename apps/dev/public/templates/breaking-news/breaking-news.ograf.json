@@ -9,6 +9,9 @@
   "stepCount": 0,
   "supportsRealTime": true,
   "supportsNonRealTime": false,
+  "thumbnails": [
+    { "file": "thumbnail.webp", "resolution": { "width": 1920, "height": 1080 } }
+  ],
   "schema": {
     "type": "object",
     "properties": {
@@ -16,7 +19,7 @@
         "type": "string",
         "title": "Headline",
         "gddType": "single-line",
-        "default": "EBU announces OGraf v2 roadmap for 2027"
+        "default": "City council approves new riverside transit line"
       }
     }
   }

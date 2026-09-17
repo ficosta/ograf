@@ -181,7 +181,7 @@
     "demo": {
       "src": "/templates/breaking-news/demo.html",
       "fields": [
-        { "key": "headline", "label": "Headline", "defaultValue": "EBU announces OGraf v2 roadmap for 2027" }
+        { "key": "headline", "label": "Headline", "defaultValue": "City council approves new riverside transit line" }
       ]
     },
     "concepts": ["stepCount: 0", "Fire-and-forget", "Auto-dismiss timing", "Full-screen overlays"]
@@ -226,8 +226,8 @@
     "demo": {
       "src": "/templates/social-card/demo.html",
       "fields": [
-        { "key": "user", "label": "User", "defaultValue": "Johan Nyman" },
-        { "key": "handle", "label": "Handle", "defaultValue": "@nytamin" },
+        { "key": "user", "label": "User", "defaultValue": "Jamie Rivera" },
+        { "key": "handle", "label": "Handle", "defaultValue": "@jamie.demo" },
         { "key": "text", "label": "Post", "defaultValue": "Just shipped our first OGraf template to production." }
       ]
     },

@@ -9,11 +9,14 @@
   "stepCount": 1,
   "supportsRealTime": true,
   "supportsNonRealTime": false,
+  "thumbnails": [
+    { "file": "thumbnail.webp", "resolution": { "width": 1920, "height": 1080 } }
+  ],
   "schema": {
     "type": "object",
     "properties": {
-      "user":   { "type": "string", "title": "User",   "gddType": "single-line", "default": "Johan Nyman" },
-      "handle": { "type": "string", "title": "Handle", "gddType": "single-line", "default": "@nytamin" },
+      "user":   { "type": "string", "title": "User",   "gddType": "single-line", "default": "Jamie Rivera" },
+      "handle": { "type": "string", "title": "Handle", "gddType": "single-line", "default": "@jamie.demo" },
       "text":   { "type": "string", "title": "Post",   "gddType": "multi-line",  "default": "Just shipped our first OGraf template to production." }
     }
   }

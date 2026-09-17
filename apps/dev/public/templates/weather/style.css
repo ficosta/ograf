@@ -10,7 +10,12 @@
   src: url('./fonts/Inter-Variable.woff2') format('woff2-variations');
 }
 
-*, *::before, *::after {
+/* Reset scoped to the graphic. A bare `*` rule in light DOM would also restyle
+ * the renderer's page and every other graphic on it; :where() keeps the
+ * specificity at zero, same as the bare selector it replaces. */
+:where(.weather-root, .weather-root *),
+:where(.weather-root, .weather-root *)::before,
+:where(.weather-root, .weather-root *)::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -172,4 +177,12 @@
   font-size: 14px;
   font-weight: 700;
   color: #334155;
+}
+
+/* skipAnimation: the graphic jumps straight to its end state. The spec says a
+ * graphic MUST skip the animation when asked, and that includes children with
+ * their own transitions and delays. */
+.weather.instant,
+.weather.instant * {
+  transition: none !important;
 }

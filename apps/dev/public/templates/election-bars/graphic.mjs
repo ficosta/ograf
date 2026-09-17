@@ -26,6 +26,22 @@ const TEMPLATE = `
   </div>
 `;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * The step a playAction() lands on, exactly as the spec defines it: `goto`
+ * wins; otherwise the current step (-1 before the first play) plus `delta`,
+ * which defaults to 1. A target at or past stepCount means "go to the end",
+ * returned as undefined — so a second play on a one-step graphic takes it off
+ * air instead of replaying it.
+ */
+function resolveTargetStep(currentStep, { goto, delta } = {}, stepCount = 1) {
+  const target = Number.isInteger(goto) && goto >= 0
+    ? goto
+    : (currentStep ?? -1) + (Number.isInteger(delta) ? delta : 1);
+  return target >= stepCount ? undefined : Math.max(target, 0);
+}
+
 export default class ElectionBarsGraphic extends HTMLElement {
 
   _initDom() {
@@ -35,6 +51,8 @@ export default class ElectionBarsGraphic extends HTMLElement {
     this._title = this.querySelector('.election-title');
     this._subtitle = this.querySelector('.election-subtitle');
     this._barsContainer = this.querySelector('.election-bars');
+    this._step = undefined;
+    this._rev = 0;
     this._initialized = true;
   }
 
@@ -69,14 +87,19 @@ export default class ElectionBarsGraphic extends HTMLElement {
     requestAnimationFrame(update);
   }
 
-  _animateBars() {
+  // Grow the bars from zero. Every timer checks the revision it started under,
+  // so a stop (or a newer play) that lands mid-reveal is never overwritten.
+  _animateBars(rev) {
     const rows = this._barsContainer.querySelectorAll('.election-row');
     const fills = this._barsContainer.querySelectorAll('.election-bar-fill');
     const pctLabels = this._barsContainer.querySelectorAll('.election-pct');
 
-    rows.forEach((row, i) => setTimeout(() => row.classList.add('show'), i * 120));
+    rows.forEach((row, i) => setTimeout(() => {
+      if (rev === this._rev) row.classList.add('show');
+    }, i * 120));
 
     setTimeout(() => {
+      if (rev !== this._rev) return;
       fills.forEach((fill, i) => {
         const pct = Number(fill.dataset.pct);
         fill.style.width = pct + '%';
@@ -84,16 +107,43 @@ export default class ElectionBarsGraphic extends HTMLElement {
         if (label) {
           label.style.left = pct + '%';
           const valueEl = label.querySelector('.election-pct-value');
-          if (valueEl) setTimeout(() => this._countUp(valueEl, pct, 900), 150);
+          if (valueEl) setTimeout(() => {
+            if (rev === this._rev) this._countUp(valueEl, pct, 900);
+          }, 150);
         }
       });
     }, 200);
   }
 
+  // skipAnimation: the end state at once. The root carries `.instant`, which
+  // turns every transition off, so widths and rows land without animating.
+  _showBarsInstantly() {
+    this._barsContainer.querySelectorAll('.election-row').forEach((row) => row.classList.add('show'));
+    this._barsContainer.querySelectorAll('.election-bar-fill').forEach((fill) => {
+      fill.style.width = fill.dataset.pct + '%';
+    });
+    this._barsContainer.querySelectorAll('.election-pct').forEach((label) => {
+      label.style.left = label.dataset.pct + '%';
+      const value = label.querySelector('.election-pct-value');
+      if (value) value.textContent = label.dataset.pct + '%';
+    });
+  }
+
+  // Back to the pre-play state, so the next play grows the bars again.
+  _resetBars() {
+    this._barsContainer.querySelectorAll('.election-row').forEach((row) => row.classList.remove('show'));
+    this._barsContainer.querySelectorAll('.election-bar-fill').forEach((fill) => { fill.style.width = ''; });
+    this._barsContainer.querySelectorAll('.election-pct').forEach((label) => {
+      label.style.left = '';
+      const value = label.querySelector('.election-pct-value');
+      if (value) value.textContent = '0%';
+    });
+  }
+
   _applyData(data) {
     if (!data) return;
-    if (data.title) this._title.textContent = data.title;
-    if (data.subtitle) this._subtitle.textContent = data.subtitle;
+    if (data.title !== undefined) this._title.textContent = data.title;
+    if (data.subtitle !== undefined) this._subtitle.textContent = data.subtitle;
     if (Array.isArray(data.parties)) this._renderBars(data.parties);
   }
 
@@ -103,61 +153,79 @@ export default class ElectionBarsGraphic extends HTMLElement {
     return { statusCode: 200 };
   }
 
-  async playAction({ skipAnimation } = {}) {
+  // Each action takes the next revision number. Anything that finishes after a
+  // newer action has started checks it and backs off, so play → stop → play
+  // sent without waiting ends on air instead of hidden by the stale stop.
+  async playAction({ goto, delta, skipAnimation } = {}) {
     this._initDom();
+    const target = resolveTargetStep(this._step, { goto, delta });
+    if (target === undefined) {
+      await this.stopAction({ skipAnimation });
+      return { statusCode: 200, currentStep: undefined };
+    }
+    const rev = ++this._rev;
+    this._step = target;
     this._root.classList.remove('out');
-    void this._root.offsetWidth;
-    this._root.classList.add('visible');
 
-    if (!skipAnimation) {
-      await new Promise(r => setTimeout(r, 400));
-      this._animateBars();
-      await new Promise(r => setTimeout(r, 1400));
+    if (skipAnimation) {
+      this._root.classList.add('instant', 'visible');
+      this._showBarsInstantly();
     } else {
-      const fills = this._barsContainer.querySelectorAll('.election-bar-fill');
-      const rows = this._barsContainer.querySelectorAll('.election-row');
-      const labels = this._barsContainer.querySelectorAll('.election-pct');
-      rows.forEach(r => r.classList.add('show'));
-      fills.forEach((f, i) => {
-        const pct = f.dataset.pct;
-        f.style.transition = 'none';
-        f.style.width = pct + '%';
-        if (labels[i]) {
-          labels[i].style.transition = 'none';
-          labels[i].style.left = pct + '%';
-          const v = labels[i].querySelector('.election-pct-value');
-          if (v) v.textContent = pct + '%';
-        }
-      });
+      this._root.classList.remove('instant');
+      void this._root.offsetWidth;
+      this._root.classList.add('visible');
+      await sleep(400);
+      if (rev !== this._rev) return { statusCode: 200, currentStep: this._step };
+      this._animateBars(rev);
+      await sleep(1400);
     }
 
-    return { statusCode: 200, currentStep: 0 };
+    return { statusCode: 200, currentStep: this._step };
   }
 
-  async updateAction({ data } = {}) {
+  async updateAction({ data, skipAnimation } = {}) {
     this._initDom();
-    if (data?.title) this._title.textContent = data.title;
-    if (data?.subtitle) this._subtitle.textContent = data.subtitle;
+    if (data?.title !== undefined) this._title.textContent = data.title;
+    if (data?.subtitle !== undefined) this._subtitle.textContent = data.subtitle;
     if (Array.isArray(data?.parties)) {
       this._renderBars(data.parties);
-      this._animateBars();
+      // Off air, the new rows just wait for the next play to reveal them.
+      if (this._step !== undefined) {
+        if (skipAnimation) this._showBarsInstantly();
+        else this._animateBars(this._rev);
+      }
     }
     return { statusCode: 200 };
   }
 
   async stopAction({ skipAnimation } = {}) {
     this._initDom();
+    const rev = ++this._rev;
+    this._step = undefined;
+    if (skipAnimation) {
+      this._root.classList.add('instant');
+      this._root.classList.remove('visible', 'out');
+      this._resetBars();
+      return { statusCode: 200 };
+    }
+    this._root.classList.remove('instant');
     this._root.classList.add('out');
-    if (!skipAnimation) await new Promise(r => setTimeout(r, 400));
-    this._root.classList.remove('visible', 'out');
+    await sleep(400);
+    if (rev === this._rev) {
+      this._root.classList.remove('visible', 'out');
+      this._resetBars();
+    }
     return { statusCode: 200 };
   }
 
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: `Unknown custom action: ${action ?? ""}` };
+  // Every OGraf graphic must expose customAction, even without any declared.
+  // The renderer passes { id, payload, skipAnimation }; an unknown id is a 4xx.
+  async customAction({ id } = {}) {
+    return { statusCode: 404, statusMessage: `Unknown custom action: ${id ?? ''}` };
   }
 
   async dispose() {
+    this._rev = (this._rev ?? 0) + 1;
     this.innerHTML = '';
     this._initialized = false;
     return { statusCode: 200 };

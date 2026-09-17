@@ -77,10 +77,15 @@
 .ticker-content {
   display: flex;
   align-items: center;
-  gap: 40px;
   white-space: nowrap;
   animation: scroll 20s linear infinite;
-  padding-left: 100%;
+}
+
+/* Spacing as a trailing margin on every child rather than `gap` or padding:
+ * both copies of the headlines then have exactly the same width, which is
+ * what makes translateX(-50%) a seamless loop. */
+.ticker-content > * {
+  margin-right: 40px;
 }
 
 .ticker-item {
@@ -111,4 +116,12 @@
 @keyframes scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* skipAnimation: the graphic jumps straight to its end state. The spec says a
+ * graphic MUST skip the animation when asked, and that includes children with
+ * their own transitions and delays. */
+.ticker.instant,
+.ticker.instant * {
+  transition: none !important;
 }
