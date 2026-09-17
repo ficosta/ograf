@@ -1,4 +1,7 @@
 import { Download, ExternalLink, FileCode, FileImage, FileJson, FileText, FileType, Package } from "lucide-react";
+import { useCopy, useLocalePath } from "../i18n/useLocale";
+import { TUTORIAL_UI_COPY } from "../i18n/copy/tutorial-ui";
+import type { TutorialUiCopy } from "../i18n/copy/tutorial-ui/en";
 
 interface TemplateDownloadProps {
   readonly slug: string;
@@ -11,44 +14,44 @@ interface PackageFile {
   readonly desc: string;
 }
 
-function packageFiles(slug: string): readonly PackageFile[] {
+function packageFiles(slug: string, desc: TutorialUiCopy["download"]["files"]): readonly PackageFile[] {
   return [
-    { icon: FileJson, name: `${slug}.ograf.json`, desc: "Manifest — what a renderer reads (id, schema, lifecycle flags)" },
-    { icon: FileCode, name: "graphic.mjs", desc: "Web Component with load / play / update / stop / customAction / dispose" },
-    { icon: FileType, name: "style.css", desc: "Stylesheet, loaded by graphic.mjs via a <link> tag" },
-    { icon: FileImage, name: "thumbnail.webp", desc: "1920×1080 preview, declared in the manifest" },
-    { icon: FileText, name: "README.md", desc: "Usage notes" },
-    { icon: FileText, name: "LICENSE", desc: "MIT" },
+    { icon: FileJson, name: `${slug}.ograf.json`, desc: desc.manifest },
+    { icon: FileCode, name: "graphic.mjs", desc: desc.graphic },
+    { icon: FileType, name: "style.css", desc: desc.style },
+    { icon: FileImage, name: "thumbnail.webp", desc: desc.thumbnail },
+    { icon: FileText, name: "README.md", desc: desc.readme },
+    { icon: FileText, name: "LICENSE", desc: desc.license },
   ];
 }
 
+type RendererName = keyof TutorialUiCopy["download"]["renderers"];
+
 interface Renderer {
-  readonly name: string;
+  readonly name: RendererName;
   readonly href: string;
-  readonly desc: string;
 }
 
 const RENDERERS: readonly Renderer[] = [
   {
     name: "ograf-server",
     href: "https://github.com/SuperFlyTV/ograf-server",
-    desc: "Reference renderer with upload + control APIs. Self-host.",
   },
   {
     name: "SPX-GC",
     href: "https://github.com/TuomoKu/SPX-GC",
-    desc: "Professional browser-based graphics controller with OGraf support.",
   },
   {
     name: "CasparCG",
     href: "https://github.com/CasparCG/server",
-    desc: "Open-source playout server — renders OGraf via the HTML producer.",
   },
 ];
 
 export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
   const href = `/downloads/${slug}.zip`;
-  const files = packageFiles(slug);
+  const c = useCopy(TUTORIAL_UI_COPY).download;
+  const localize = useLocalePath();
+  const files = packageFiles(slug, c.files);
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
       <div className="flex items-start gap-4">
@@ -57,10 +60,10 @@ export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
         </div>
         <div className="flex-1">
           <h3 className="font-display text-lg tracking-tight text-slate-900">
-            Download the full {title} package
+            {c.heading(title)}
           </h3>
           <p className="mt-1 text-sm text-slate-600">
-            A real OGraf Graphics Definition v1 package. A compliant renderer reads the manifest and drives the lifecycle. MIT-licensed; drop it into any OGraf-compatible system.
+            {c.intro}
           </p>
         </div>
       </div>
@@ -83,16 +86,16 @@ export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
           download
           className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 active:scale-[0.97] transition-[colors,transform]"
         >
-          <Download className="h-4 w-4" strokeWidth={2} /> Download {slug}.zip
+          <Download className="h-4 w-4" strokeWidth={2} /> {c.button(slug)}
         </a>
         <span className="text-xs text-slate-500">
-          MIT · fonts included · drop on <a href="/check" className="underline decoration-slate-300 hover:decoration-slate-600">/check</a> to validate
+          {c.note(localize("/check"))}
         </span>
       </div>
 
       <div className="mt-8">
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">
-          Deploy to a compliant OGraf renderer
+          {c.renderersHeading}
         </p>
         <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3">
           {RENDERERS.map((r) => (
@@ -107,7 +110,7 @@ export function TemplateDownload({ slug, title }: TemplateDownloadProps) {
                   {r.name}
                   <ExternalLink className="h-3 w-3 text-slate-300 group-hover:text-blue-400" strokeWidth={2} />
                 </span>
-                <span className="text-[11px] text-slate-500">{r.desc}</span>
+                <span className="text-[11px] text-slate-500">{c.renderers[r.name]}</span>
               </a>
             </li>
           ))}

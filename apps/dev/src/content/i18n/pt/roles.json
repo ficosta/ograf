@@ -1,0 +1,32 @@
+[
+  {
+    "id": "designer",
+    "title": "Designer",
+    "tagline": "Crie grafismo para broadcast com ferramentas que você conhece.",
+    "description": "Construa lower thirds, placares e tickers com HTML, CSS e JavaScript. Nada de linguagens de script proprietárias. Suas habilidades de motion design se aplicam diretamente — grafismos OGraf são só páginas web com um pequeno manifesto.",
+    "icon": "PenTool",
+    "cta": "Ver os tutoriais",
+    "ctaLink": "/tutorials",
+    "accent": "blue"
+  },
+  {
+    "id": "developer",
+    "title": "Desenvolvedor",
+    "tagline": "Um formato, todos os sistemas de playout.",
+    "description": "Web Components, métodos de ciclo de vida padrão (load, play, stop, update), definições de dados baseadas em JSON Schema. Construa uma vez, valide com a especificação oficial e publique em qualquer renderizador compatível com OGraf.",
+    "icon": "Code2",
+    "cta": "Ler a especificação",
+    "ctaLink": "/spec",
+    "accent": "cyan"
+  },
+  {
+    "id": "broadcaster",
+    "title": "Emissora",
+    "tagline": "Avalie o OGraf para o seu fluxo de produção.",
+    "description": "Padrão apoiado pela EBU. Vários renderizadores comerciais e open source. Independente de fabricante. Compare com Vizrt, Chyron e os demais — veja quais ferramentas já têm suporte e quais estão a caminho.",
+    "icon": "Radio",
+    "cta": "Explorar o ecossistema",
+    "ctaLink": "/ecosystem",
+    "accent": "emerald"
+  }
+]

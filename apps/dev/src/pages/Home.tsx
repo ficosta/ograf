@@ -1,24 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "../i18n/Link";
+import type { ReactNode } from "react";
 import { ArrowLeftRight, Check, Code2, Minus, Unlock, X } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
 import { RoleCards } from "../components/RoleCards";
 import { AdopterLogos } from "../components/AdopterLogos";
 import { useRouteMeta } from "../hooks/useMeta";
-import faqData from "../content/faq.json";
+import { useCopy } from "../i18n/useLocale";
+import { FAQ } from "../content/localized/faq";
+import { HOME_COPY } from "../i18n/copy/home";
+import type { HomeCopy } from "../i18n/copy/home/en";
 
-const ROTATING_WORDS = ["community", "guide", "hub", "partner", "toolkit", "resource"];
+type HomeFeatures = HomeCopy["features"];
 
-function TypewriterWord() {
+function TypewriterWord({ words }: { readonly words: readonly string[] }) {
   const [wordIndex, setWordIndex] = useState(0);
   // Start fully typed: the prerendered HTML (what crawlers and link previews
   // read) then says "The missing community for OGraf." instead of leaving a
   // hole, and the animation takes over from there after hydration.
-  const [displayed, setDisplayed] = useState(ROTATING_WORDS[0] ?? "");
+  const [displayed, setDisplayed] = useState(words[0] ?? "");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const word = ROTATING_WORDS[wordIndex];
+    const word = words[wordIndex] ?? "";
 
     if (!isDeleting && displayed === word) {
       // Word fully typed — hold, then start deleting
@@ -29,7 +33,7 @@ function TypewriterWord() {
     if (isDeleting && displayed === "") {
       // Word fully deleted — move to next word
       setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+      setWordIndex((prev) => (prev + 1) % words.length);
       return;
     }
 
@@ -43,7 +47,7 @@ function TypewriterWord() {
     }, speed);
 
     return () => clearTimeout(timeout);
-  }, [displayed, isDeleting, wordIndex]);
+  }, [displayed, isDeleting, wordIndex, words]);
 
   return (
     <span className="relative whitespace-nowrap text-blue-600">
@@ -70,11 +74,15 @@ function TypewriterWord() {
   );
 }
 
-const ECOSYSTEM_TOOLS = [
+const ECOSYSTEM_TOOLS: ReadonlyArray<{
+  readonly name: keyof HomeCopy["tools"];
+  readonly stars?: string;
+  readonly url: string;
+  readonly logo: string;
+  readonly logoClass: string;
+}> = [
   {
     name: "SPX-GC",
-    desc: "Professional browser-based graphics controller for live productions. Supports CasparCG, OBS, and vMix.",
-    cat: "Controller",
     stars: "409",
     url: "https://github.com/TuomoKu/SPX-GC",
     logo: "/img/logos/spx.svg",
@@ -82,8 +90,6 @@ const ECOSYSTEM_TOOLS = [
   },
   {
     name: "CasparCG",
-    desc: "Open-source professional graphics and video playout server with SDI and NDI output.",
-    cat: "Renderer",
     stars: "1000+",
     url: "https://casparcg.com",
     logo: "/img/logos/casparcg.svg",
@@ -91,8 +97,6 @@ const ECOSYSTEM_TOOLS = [
   },
   {
     name: "Ferryman",
-    desc: "Convert After Effects and Lottie animations into OGraf-compatible HTML templates.",
-    cat: "Converter",
     stars: "30",
     url: "https://ferryman.streamshapers.com",
     logo: "/img/logos/streamshapers.svg",
@@ -100,8 +104,6 @@ const ECOSYSTEM_TOOLS = [
   },
   {
     name: "ograf-server",
-    desc: "Reference OGraf renderer with upload API, control API, and browser-based rendering.",
-    cat: "Server",
     stars: "24",
     url: "https://github.com/SuperFlyTV/ograf-server",
     logo: "/img/logos/superflytv.svg",
@@ -109,52 +111,48 @@ const ECOSYSTEM_TOOLS = [
   },
   {
     name: "Loopic",
-    desc: "No-code browser-based TV graphics template builder with one-click OGraf export.",
-    cat: "Editor",
     url: "https://www.loopic.io",
     logo: "/img/logos/loopic.svg",
     logoClass: "h-7",
   },
 ];
 
-const FEATURES = [
+const FEATURES: ReadonlyArray<{ readonly id: keyof HomeFeatures; readonly icon: ReactNode }> = [
   {
+    id: "open",
     icon: <Unlock className="h-8 w-8 text-white" strokeWidth={1.5} />,
-    title: "Open Standard",
-    desc: "No lock-in. No licenses. No gatekeepers. MIT-licensed and EBU-backed — your graphics belong to you, not some vendor's invoice.",
   },
   {
+    id: "web",
     icon: <Code2 className="h-8 w-8 text-white" strokeWidth={1.5} />,
-    title: "Web Native",
-    desc: "If you can build a website, you can build broadcast graphics. HTML, CSS, JavaScript — the skills you already have, live on air.",
   },
   {
+    id: "interop",
     icon: <ArrowLeftRight className="h-8 w-8 text-white" strokeWidth={1.5} />,
-    title: "Interoperable",
-    desc: "Build once. Ship everywhere. The same OGraf package plays on SPX, CasparCG, Loopic, and any compliant system — no rebuilds, no conversions.",
   },
 ];
 
 type CellState = "yes" | "no" | "partial";
 
 const COMPARISON_SYSTEMS = [
-  { name: "OGraf", note: "Open spec", highlight: true },
-  { name: "Vizrt", note: "Viz Engine" },
-  { name: "Chyron", note: "PRIME / LyricX" },
-  { name: "Ross", note: "XPression" },
-  { name: "Avid", note: "Maestro" },
-  { name: "Flowics", note: "Cloud" },
-  { name: "Singular.live", note: "Cloud" },
+  { name: "OGraf", highlight: true },
+  { name: "Vizrt" },
+  { name: "Chyron" },
+  { name: "Ross" },
+  { name: "Avid" },
+  { name: "Flowics" },
+  { name: "Singular.live" },
 ];
 
-const COMPARISON_ROWS: { feature: string; note?: string; values: CellState[] }[] = [
+/** Labels for each row are in HOME_COPY.rows, in the same order. */
+const COMPARISON_ROWS: { values: CellState[] }[] = [
   // OGraf, Vizrt, Chyron, Ross, Avid, Flowics, Singular
-  { feature: "Open specification", values: ["yes", "no", "no", "no", "no", "no", "no"] },
-  { feature: "Web-native (HTML/CSS/JS)", values: ["yes", "partial", "partial", "partial", "partial", "yes", "yes"] },
-  { feature: "Cross-renderer portable", note: "Same package runs on any compliant system", values: ["yes", "no", "no", "no", "no", "no", "no"] },
-  { feature: "Self-hosted option", values: ["yes", "yes", "yes", "yes", "yes", "no", "no"] },
-  { feature: "Open-source reference implementation", values: ["yes", "no", "no", "no", "no", "no", "partial"] },
-  { feature: "Cloud rendering available", values: ["partial", "partial", "partial", "no", "partial", "yes", "yes"] },
+  { values: ["yes", "no", "no", "no", "no", "no", "no"] },
+  { values: ["yes", "partial", "partial", "partial", "partial", "yes", "yes"] },
+  { values: ["yes", "no", "no", "no", "no", "no", "no"] },
+  { values: ["yes", "yes", "yes", "yes", "yes", "no", "no"] },
+  { values: ["yes", "no", "no", "no", "no", "no", "partial"] },
+  { values: ["partial", "partial", "partial", "no", "partial", "yes", "yes"] },
 ];
 
 function ComparisonCell({ state }: { state: CellState }) {
@@ -195,28 +193,27 @@ function splitIntoColumns<T>(items: readonly T[], columns: number): T[][] {
 
 export function Home() {
   useRouteMeta();
-  const faqColumns = useMemo(
-    () => splitIntoColumns<FaqEntry>(faqData as readonly FaqEntry[], 3),
-    []
-  );
+  const c = useCopy(HOME_COPY);
+  const faq = useCopy(FAQ);
+  const faqColumns = useMemo(() => splitIntoColumns<FaqEntry>(faq, 3), [faq]);
   return (
     <>
       {/* Hero */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center lg:pt-32">
         <h1 className="mx-auto max-w-4xl font-display text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl min-h-[7rem] sm:min-h-[10rem]">
-          The missing{" "}
-          <TypewriterWord />{" "}
-          for OGraf.
+          {c.heroBefore}{" "}
+          <TypewriterWord key={c.rotatingWords.join()} words={c.rotatingWords} />{" "}
+          {c.heroAfter}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
-          OGraf is a new open format for broadcast graphics. No vendor lock-in, no proprietary runtimes, one package that plays on any compatible system.
+          {c.heroLead}
         </p>
         <div className="mt-10 flex justify-center gap-x-6">
           <Link
             to="/get-started"
             className="group inline-flex items-center justify-center rounded-full bg-blue-600 py-2 px-4 text-sm font-semibold text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
-            Start the tutorial
+            {c.startTutorial}
           </Link>
           <Link
             to="/tools"
@@ -225,16 +222,16 @@ export function Home() {
             <svg aria-hidden="true" className="h-3 w-3 flex-none fill-blue-600 group-active:fill-current">
               <path d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z" />
             </svg>
-            <span className="ml-3">Explore tools</span>
+            <span className="ml-3">{c.exploreTools}</span>
           </Link>
         </div>
 
         {/* Vendors and broadcasters listed as adopters by the EBU */}
         <AdopterLogos
-          heading="Vendors & adopters"
-          vendorsLabel="Vendors"
-          organisationsLabel="Broadcast organizations"
-          sourcePrefix="Companies and broadcasters listed as OGraf vendors and adopters on"
+          heading={c.adopters.heading}
+          vendorsLabel={c.adopters.vendorsLabel}
+          organisationsLabel={c.adopters.organisationsLabel}
+          sourcePrefix={c.adopters.sourcePrefix}
         />
       </div>
 
@@ -250,20 +247,20 @@ export function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
-              Why OGraf matters.
+              {c.featuresTitle}
             </h2>
             <p className="mt-4 text-lg tracking-tight text-blue-100">
-              The broadcast graphics market has long relied on closed, vendor-specific systems. OGraf adds an open, web-native layer that anyone can render, control, and ship.
+              {c.featuresLead}
             </p>
           </div>
           <div className="mt-16 grid grid-cols-1 gap-y-10 gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((f) => (
-              <div key={f.title} className="rounded-2xl bg-white/10 p-8">
+              <div key={f.id} className="rounded-2xl bg-white/10 p-8">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10">
                   {f.icon}
                 </div>
-                <h3 className="mt-6 font-display text-lg font-medium text-white">{f.title}</h3>
-                <p className="mt-2 text-sm text-blue-100">{f.desc}</p>
+                <h3 className="mt-6 font-display text-lg font-medium text-white">{c.features[f.id].title}</h3>
+                <p className="mt-2 text-sm text-blue-100">{c.features[f.id].desc}</p>
               </div>
             ))}
           </div>
@@ -275,10 +272,10 @@ export function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              Where OGraf fits in.
+              {c.compareTitle}
             </h2>
             <p className="mt-4 text-lg tracking-tight text-slate-700">
-              Broadcast graphics is a deep, mature space — Vizrt, Chyron, Ross, Avid, Singular, Flowics and many others power the world's biggest productions. OGraf isn't here to replace them. It adds a portable, open layer so the same graphic can travel between systems.
+              {c.compareLead}
             </p>
           </div>
 
@@ -287,9 +284,9 @@ export function Home() {
               <thead>
                 <tr>
                   <th scope="col" className="sticky left-0 z-10 bg-white px-6 py-5 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    Feature
+                    {c.featureColumn}
                   </th>
-                  {COMPARISON_SYSTEMS.map((sys) => (
+                  {COMPARISON_SYSTEMS.map((sys, sysIdx) => (
                     <th
                       key={sys.name}
                       scope="col"
@@ -298,48 +295,51 @@ export function Home() {
                       <div className={`font-display text-sm font-semibold ${sys.highlight ? "text-blue-700" : "text-slate-900"}`}>
                         {sys.name}
                       </div>
-                      <div className="mt-0.5 text-[11px] font-normal text-slate-500">{sys.note}</div>
+                      <div className="mt-0.5 text-[11px] font-normal text-slate-500">{c.systemNotes[sysIdx]}</div>
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {COMPARISON_ROWS.map((row) => (
-                  <tr key={row.feature}>
+                {COMPARISON_ROWS.map((row, rowIdx) => {
+                  const label = c.rows[rowIdx];
+                  return (
+                  <tr key={rowIdx}>
                     <th scope="row" className="sticky left-0 bg-white px-6 py-4 align-top text-sm font-medium text-slate-900">
-                      {row.feature}
-                      {row.note && (
-                        <div className="mt-0.5 text-xs font-normal text-slate-500">{row.note}</div>
+                      {label?.feature}
+                      {label?.note && (
+                        <div className="mt-0.5 text-xs font-normal text-slate-500">{label.note}</div>
                       )}
                     </th>
                     {row.values.map((state, idx) => (
                       <td
-                        key={`${row.feature}-${idx}`}
+                        key={`${rowIdx}-${idx}`}
                         className={`px-4 py-4 text-center ${COMPARISON_SYSTEMS[idx].highlight ? "bg-blue-50/60" : ""}`}
                       >
                         <ComparisonCell state={state} />
                       </td>
                     ))}
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
           <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-500">
             <span className="inline-flex items-center gap-2">
-              <ComparisonCell state="yes" /> Supported
+              <ComparisonCell state="yes" /> {c.legend.yes}
             </span>
             <span className="inline-flex items-center gap-2">
-              <ComparisonCell state="partial" /> Partial / via add-on
+              <ComparisonCell state="partial" /> {c.legend.partial}
             </span>
             <span className="inline-flex items-center gap-2">
-              <ComparisonCell state="no" /> Not supported
+              <ComparisonCell state="no" /> {c.legend.no}
             </span>
           </div>
 
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-slate-500">
-            This chart focuses on one specific axis: whether a graphic authored on one system can be rendered on another. Every platform above earned its place by solving real production problems — OGraf's contribution is the shared format, not a replacement for the runtimes teams already trust. Specialist platforms like <span className="font-medium text-slate-700">Brainstorm</span>, <span className="font-medium text-slate-700">Aximmetry</span>, <span className="font-medium text-slate-700">WASP3D</span>, and <span className="font-medium text-slate-700">Zero Density</span> lead in virtual studios, AR and XR; open stacks like <span className="font-medium text-slate-700">CasparCG</span>, <span className="font-medium text-slate-700">SPX-GC</span>, and <span className="font-medium text-slate-700">ograf-server</span> render OGraf packages natively today.
+            {c.compareFootnote}
           </p>
         </div>
       </section>
@@ -349,10 +349,10 @@ export function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              A growing ecosystem of tools.
+              {c.ecosystemTitle}
             </h2>
             <p className="mt-4 text-lg tracking-tight text-slate-700">
-              From reference renderers to no-code editors, the OGraf ecosystem has everything you need to build, test, and deploy broadcast graphics.
+              {c.ecosystemLead}
             </p>
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:max-w-none lg:grid-cols-3">
@@ -367,7 +367,7 @@ export function Home() {
                 <div className="flex items-center justify-between">
                   <img src={tool.logo} alt={tool.name} loading="lazy" decoding="async" className={`${tool.logoClass} w-auto grayscale opacity-70`} />
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
-                    {tool.cat}
+                    {c.tools[tool.name].cat}
                     {tool.stars && (
                       <>
                         <span className="text-slate-300">·</span>
@@ -377,7 +377,7 @@ export function Home() {
                     )}
                   </span>
                 </div>
-                <p className="mt-4 flex-1 text-sm text-slate-700">{tool.desc}</p>
+                <p className="mt-4 flex-1 text-sm text-slate-700">{c.tools[tool.name].desc}</p>
               </a>
             ))}
           </div>
@@ -386,7 +386,7 @@ export function Home() {
               to="/ecosystem"
               className="inline-flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-blue-600"
             >
-              View the full ecosystem map
+              {c.viewEcosystem}
               <svg width={13} height={7} viewBox="0 0 13 7" fill="none" strokeWidth={1} className="inline-block"><path d="M12.5 3.5H0.5" stroke="currentColor" strokeLinecap="round" /><path d="M9.5 6.5L12.5 3.5L9.5 0.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
           </div>
@@ -398,19 +398,15 @@ export function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              OGraf by the numbers.
+              {c.statsTitle}
             </h2>
             <p className="mt-4 text-lg tracking-tight text-slate-700">
-              The EBU-backed standard is in active use across the broadcast graphics industry.
+              {c.statsLead}
             </p>
           </div>
           <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 gap-8 sm:grid-cols-3">
-            {[
-              { stat: "EBU", label: "Working group maintains the specification on GitHub" },
-              { stat: "v1 Stable", label: "Graphics Definition stable since September 2025" },
-              { stat: "10+", label: "Tools and renderers supporting the OGraf standard" },
-            ].map((s) => (
-              <div key={s.stat} className="text-center">
+            {c.stats.map((s, i) => (
+              <div key={i} className="text-center">
                 <p className="font-display text-4xl font-light tracking-tight text-blue-600">{s.stat}</p>
                 <p className="mt-2 text-sm text-slate-700">{s.label}</p>
               </div>
@@ -423,8 +419,8 @@ export function Home() {
       <section className="py-20 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <TutorialCards
-            title="Learn by building real graphics."
-            subtitle="Each tutorial builds a production-quality broadcast graphic from scratch — with live interactive demos."
+            title={c.tutorialsTitle}
+            subtitle={c.tutorialsSubtitle}
             max={4}
           />
         </div>
@@ -435,7 +431,7 @@ export function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-              Common questions.
+              {c.faqTitle}
             </h2>
           </div>
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">

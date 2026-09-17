@@ -6,10 +6,10 @@ import {
   Radio,
   type LucideIcon,
 } from "lucide-react";
-import roles from "../content/roles.json";
-import type { Role, RoleAccent } from "../content/roles.types";
-
-const ROLES = roles as readonly Role[];
+import type { RoleAccent } from "../content/roles.types";
+import { ROLES } from "../content/localized/roles";
+import { UI_COPY } from "../i18n/copy/ui";
+import { useCopy } from "../i18n/useLocale";
 
 const ICON_MAP: Readonly<Record<string, LucideIcon>> = {
   Code2,
@@ -68,22 +68,21 @@ interface RoleCardsProps {
   readonly subheading?: string;
 }
 
-export function RoleCards({
-  heading = "Where should you start?",
-  subheading = "Pick the lane that sounds most like you. Each path links to the page that gets you productive fastest.",
-}: RoleCardsProps) {
+export function RoleCards({ heading, subheading }: RoleCardsProps) {
+  const c = useCopy(UI_COPY).roleCards;
+  const roles = useCopy(ROLES);
   return (
-    <section aria-label="Role-based entry points" className="mx-auto w-full">
+    <section aria-label={c.ariaLabel} className="mx-auto w-full">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-600">Start here</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-600">{c.eyebrow}</p>
         <h2 className="mt-3 font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-          {heading}
+          {heading ?? c.heading}
         </h2>
-        <p className="mt-4 text-base text-slate-600">{subheading}</p>
+        <p className="mt-4 text-base text-slate-600">{subheading ?? c.subheading}</p>
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-3">
-        {ROLES.map((role) => {
+        {roles.map((role) => {
           const Icon = resolveIcon(role.icon);
           const accent = ACCENT[role.accent];
           return (

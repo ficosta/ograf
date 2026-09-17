@@ -13,6 +13,8 @@
 
 import { useEffect, useRef } from "react";
 import { AlertTriangle } from "lucide-react";
+import { UI_COPY } from "../i18n/copy/ui";
+import { useCopy } from "../i18n/useLocale";
 
 interface ConfirmDialogProps {
   readonly open: boolean;
@@ -28,12 +30,13 @@ export function ConfirmDialog({
   open,
   title,
   children,
-  confirmLabel = "Continue",
-  cancelLabel = "Cancel",
+  confirmLabel,
+  cancelLabel,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  const c = useCopy(UI_COPY).confirmDialog;
 
   useEffect(() => {
     const el = ref.current;
@@ -80,7 +83,7 @@ export function ConfirmDialog({
             onClick={onCancel}
             className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100"
           >
-            {cancelLabel}
+            {cancelLabel ?? c.cancel}
           </button>
           <button
             type="button"
@@ -88,7 +91,7 @@ export function ConfirmDialog({
             onClick={onConfirm}
             className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-700"
           >
-            {confirmLabel}
+            {confirmLabel ?? c.confirm}
           </button>
         </div>
       </div>

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "designer",
+    "title": "Diseñador",
+    "tagline": "Diseña grafismo para televisión con herramientas que ya conoces.",
+    "description": "Crea rótulos inferiores, marcadores y tickers con HTML, CSS y JavaScript. Sin lenguajes de script propietarios. Tus conocimientos de motion design se aplican directamente: los grafismos OGraf no son más que páginas web con un pequeño manifiesto.",
+    "icon": "PenTool",
+    "cta": "Ver los tutoriales",
+    "ctaLink": "/tutorials",
+    "accent": "blue"
+  },
+  {
+    "id": "developer",
+    "title": "Desarrollador",
+    "tagline": "Un formato, todos los sistemas de playout.",
+    "description": "Web Components, métodos de ciclo de vida estándar (load, play, stop, update), definiciones de datos basadas en JSON Schema. Constrúyelo una vez, valídalo con la especificación oficial y publícalo en cualquier renderizador compatible con OGraf.",
+    "icon": "Code2",
+    "cta": "Leer la especificación",
+    "ctaLink": "/spec",
+    "accent": "cyan"
+  },
+  {
+    "id": "broadcaster",
+    "title": "Cadena",
+    "tagline": "Evalúa OGraf para tu flujo de trabajo.",
+    "description": "Estándar respaldado por la EBU. Varios renderizadores comerciales y de código abierto. Independiente del fabricante. Compáralo con Vizrt, Chyron y los demás, y descubre qué herramientas lo admiten hoy y cuáles están en camino.",
+    "icon": "Radio",
+    "cta": "Explorar el ecosistema",
+    "ctaLink": "/ecosystem",
+    "accent": "emerald"
+  }
+]

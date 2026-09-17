@@ -1,5 +1,7 @@
 import { useRef, useState, useCallback, useMemo } from "react";
 import { Play, Square, RefreshCw, Plus, X, Repeat, SkipForward, AlertCircle } from "lucide-react";
+import { useCopy } from "../i18n/useLocale";
+import { TUTORIAL_UI_COPY } from "../i18n/copy/tutorial-ui";
 
 type Field =
   | {
@@ -56,6 +58,7 @@ export function TemplateDemo({
   defaultPlayMode = "loop",
   defaultData,
 }: TemplateDemoProps) {
+  const c = useCopy(TUTORIAL_UI_COPY).demo;
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -78,11 +81,11 @@ export function TemplateDemo({
         JSON.parse(raw);
         errors[field.key] = null;
       } catch (err) {
-        errors[field.key] = err instanceof Error ? err.message : "Invalid JSON";
+        errors[field.key] = err instanceof Error ? err.message : c.invalidJson;
       }
     }
     return errors;
-  }, [fields, values]);
+  }, [fields, values, c.invalidJson]);
 
   const hasJsonError = Object.values(jsonErrors).some((e) => e !== null);
 
@@ -175,7 +178,7 @@ export function TemplateDemo({
             >
               <div className="flex flex-col items-center gap-3">
                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/70" />
-                <span className="text-xs font-mono text-white/40">Loading preview…</span>
+                <span className="text-xs font-mono text-white/40">{c.loadingPreview}</span>
               </div>
             </div>
           )}
@@ -186,7 +189,7 @@ export function TemplateDemo({
             className="h-full w-full border-0"
             sandbox="allow-scripts allow-same-origin"
             title={title}
-            aria-label={`${title} — interactive preview`}
+            aria-label={c.previewLabel(title)}
             role="region"
           />
         </div>
@@ -205,11 +208,11 @@ export function TemplateDemo({
                         <span>
                           {field.label}
                           <span className="ml-1.5 rounded bg-slate-100 px-1 py-0.5 font-mono text-[10px] font-normal text-slate-500">
-                            array
+                            {c.array}
                           </span>
                         </span>
                         <span className="text-[10px] text-slate-400">
-                          {list.length} {list.length === 1 ? "item" : "items"}
+                          {c.itemCount(list.length)}
                         </span>
                       </label>
                       <div className="space-y-1.5">
@@ -228,7 +231,7 @@ export function TemplateDemo({
                               type="button"
                               onClick={() => removeListItem(field.key, i)}
                               disabled={list.length <= 1}
-                              aria-label={`Remove item ${i + 1}`}
+                              aria-label={c.removeItem(i + 1)}
                               className="inline-flex h-7 w-7 flex-none items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-30"
                             >
                               <X className="h-3.5 w-3.5" />
@@ -240,7 +243,7 @@ export function TemplateDemo({
                           onClick={() => addListItem(field.key)}
                           className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50"
                         >
-                          <Plus className="h-3 w-3" /> Add item
+                          <Plus className="h-3 w-3" /> {c.addItem}
                         </button>
                       </div>
                     </div>
@@ -259,7 +262,7 @@ export function TemplateDemo({
                         </span>
                         {error && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-medium text-rose-600">
-                            <AlertCircle className="h-3 w-3" /> Invalid JSON
+                            <AlertCircle className="h-3 w-3" /> {c.invalidJson}
                           </span>
                         )}
                       </label>
@@ -300,10 +303,10 @@ export function TemplateDemo({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             {showPlayMode ? (
               <div>
-                <label className="mb-1 block text-xs font-medium text-slate-500">Play mode</label>
+                <label className="mb-1 block text-xs font-medium text-slate-500">{c.playMode}</label>
                 <div
                   role="radiogroup"
-                  aria-label="Play mode"
+                  aria-label={c.playMode}
                   className="inline-flex rounded-lg bg-slate-100 p-0.5"
                 >
                   <button
@@ -317,7 +320,7 @@ export function TemplateDemo({
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
-                    <SkipForward className="h-3 w-3" /> Run once
+                    <SkipForward className="h-3 w-3" /> {c.runOnce}
                   </button>
                   <button
                     type="button"
@@ -330,7 +333,7 @@ export function TemplateDemo({
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
-                    <Repeat className="h-3 w-3" /> Loop
+                    <Repeat className="h-3 w-3" /> {c.loop}
                   </button>
                 </div>
               </div>
@@ -341,25 +344,25 @@ export function TemplateDemo({
               <button
                 onClick={handlePlay}
                 disabled={isPlaying || hasJsonError}
-                title={hasJsonError ? "Fix the JSON field before playing" : undefined}
+                title={hasJsonError ? c.fixJsonBeforePlaying : undefined}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-500 active:scale-[0.97] active:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed transition-[colors,transform]"
               >
-                <Play className="h-3.5 w-3.5" /> Play
+                <Play className="h-3.5 w-3.5" /> {c.play}
               </button>
               <button
                 onClick={handleUpdate}
                 disabled={!isPlaying || hasJsonError}
-                title={hasJsonError ? "Fix the JSON field before updating" : undefined}
+                title={hasJsonError ? c.fixJsonBeforeUpdating : undefined}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 active:scale-[0.97] active:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed transition-[colors,transform]"
               >
-                <RefreshCw className="h-3.5 w-3.5" /> Update
+                <RefreshCw className="h-3.5 w-3.5" /> {c.update}
               </button>
               <button
                 onClick={handleStop}
                 disabled={!isPlaying}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 active:scale-[0.97] active:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed transition-[colors,transform]"
               >
-                <Square className="h-3.5 w-3.5" /> Stop
+                <Square className="h-3.5 w-3.5" /> {c.stop}
               </button>
             </div>
           </div>

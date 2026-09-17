@@ -1,0 +1,487 @@
+[
+  {
+    "slug": "/get-started",
+    "title": "Lower third",
+    "subtitle": "Nome e cargo sobre a imagem",
+    "difficulty": "Beginner",
+    "time": "15 min",
+    "desc": "O grafismo mais comum do broadcast. Uma tarja de nome e cargo que entra deslizando pela esquerda, com um visual limpo inspirado na CBS. Aprenda o ciclo de vida completo do OGraf: load, play, update, stop.",
+    "preview": "/templates/previews/lower-third.webp",
+    "demo": {
+      "src": "/templates/lower-third/demo.html",
+      "fields": [
+        {
+          "key": "name",
+          "label": "Nome",
+          "defaultValue": "Jane Smith"
+        },
+        {
+          "key": "title",
+          "label": "Cargo",
+          "defaultValue": "Senior Graphics Engineer"
+        }
+      ]
+    },
+    "concepts": [
+      "Noções de Web Components",
+      "Estrutura do manifesto",
+      "Transições CSS",
+      "Métodos de ciclo de vida"
+    ]
+  },
+  {
+    "slug": "/tutorials/bug",
+    "title": "Bug / AO VIVO",
+    "subtitle": "Indicador de canto com pulso",
+    "difficulty": "Beginner",
+    "time": "10 min",
+    "desc": "Um bug de canto que surge com uma animação de escala e traz um ponto LIVE pulsante. Costuma ser usado para a marca do canal, indicadores de ao vivo ou logos de eventos. Demonstra animações simples e um schema de dados mínimo.",
+    "preview": "/templates/previews/bug.webp",
+    "demo": {
+      "src": "/templates/bug/demo.html",
+      "fields": [
+        {
+          "key": "label",
+          "label": "Rótulo",
+          "defaultValue": "LIVE"
+        },
+        {
+          "key": "sublabel",
+          "label": "Sub-rótulo",
+          "defaultValue": "Breaking News"
+        }
+      ]
+    },
+    "concepts": [
+      "Animações de escala",
+      "Posicionamento no canto",
+      "Manifesto mínimo",
+      "Indicadores pulsantes"
+    ]
+  },
+  {
+    "slug": "/tutorials/ticker",
+    "title": "Ticker de notícias",
+    "subtitle": "Manchetes rolando na tela",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Um ticker que rola sem parar na parte de baixo da tela — do tipo que você vê na CNN ou na BBC News. Demonstra animações CSS infinitas, arrays de dados dinâmicos e loop contínuo sem emendas.",
+    "preview": "/templates/previews/ticker.webp",
+    "demo": {
+      "src": "/templates/ticker/demo.html",
+      "fields": [
+        {
+          "key": "badge",
+          "label": "Selo",
+          "defaultValue": "Breaking"
+        }
+      ]
+    },
+    "concepts": [
+      "Animações CSS com keyframes",
+      "Arrays de dados dinâmicos",
+      "Loop sem emendas",
+      "Layout de barra inferior"
+    ]
+  },
+  {
+    "slug": "/tutorials/quote",
+    "title": "Citação em tela cheia",
+    "subtitle": "Tipografia cinematográfica em tela cheia",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "Um cartão de citação elegante em tela cheia, com animações de entrada escalonadas — o texto da citação, a linha divisória e depois a atribuição aparecem em sequência. Usa Instrument Serif para dar impacto editorial.",
+    "preview": "/templates/previews/quote.webp",
+    "demo": {
+      "src": "/templates/quote/demo.html",
+      "fields": [
+        {
+          "key": "text",
+          "label": "Citação",
+          "defaultValue": "Open graphics, open broadcast, open standards. That's the future."
+        },
+        {
+          "key": "author",
+          "label": "Autor",
+          "defaultValue": "Demo Quote"
+        },
+        {
+          "key": "role",
+          "label": "Função",
+          "defaultValue": "Sample Credit"
+        }
+      ]
+    },
+    "concepts": [
+      "Animações escalonadas",
+      "Layout em tela cheia",
+      "Design tipográfico",
+      "Atrasos em transições CSS"
+    ]
+  },
+  {
+    "slug": "/tutorials/election-bars",
+    "title": "Barras de eleição",
+    "subtitle": "Gráfico de porcentagens animado",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Gráfico de barras horizontais animado para resultados eleitorais. As barras crescem em tempos escalonados e as porcentagens aparecem animadas. Ensina larguras guiadas por dados, entrada escalonada das linhas e cores por partido.",
+    "preview": "/templates/previews/election-bars.webp",
+    "demo": {
+      "src": "/templates/election-bars/demo.html",
+      "fields": [
+        {
+          "key": "title",
+          "label": "Título",
+          "defaultValue": "General Election 2026"
+        },
+        {
+          "key": "subtitle",
+          "label": "Subtítulo",
+          "defaultValue": "78% reporting"
+        },
+        {
+          "key": "parties",
+          "label": "Partidos",
+          "type": "json",
+          "defaultValue": [
+            {
+              "name": "Progressives",
+              "pct": 42,
+              "votes": 1284000,
+              "color": "#2563eb"
+            },
+            {
+              "name": "Conservatives",
+              "pct": 35,
+              "votes": 1070000,
+              "color": "#dc2626"
+            },
+            {
+              "name": "Centrists",
+              "pct": 15,
+              "votes": 459000,
+              "color": "#f59e0b"
+            },
+            {
+              "name": "Greens",
+              "pct": 8,
+              "votes": 245000,
+              "color": "#16a34a"
+            }
+          ]
+        }
+      ]
+    },
+    "concepts": [
+      "Larguras guiadas por dados",
+      "Animação escalonada das linhas",
+      "Sistema de cores",
+      "Contadores animados"
+    ]
+  },
+  {
+    "slug": "/tutorials/sport-lineup",
+    "title": "Escalação esportiva",
+    "subtitle": "Grade com o elenco do time",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Um cartão com a escalação completa do time, com números, nomes e posições dos jogadores numa grade responsiva. Os cards aparecem com animação escalonada. Ensina dados em array, layouts em grade e entradas sequenciais.",
+    "preview": "/templates/previews/sport-lineup.webp",
+    "demo": {
+      "src": "/templates/sport-lineup/demo.html",
+      "fields": [
+        {
+          "key": "team",
+          "label": "Time",
+          "defaultValue": "FC Barcelona"
+        },
+        {
+          "key": "meta",
+          "label": "Info da partida",
+          "defaultValue": "La Liga — Matchday 32"
+        },
+        {
+          "key": "formation",
+          "label": "Formação",
+          "defaultValue": "4-3-3"
+        },
+        {
+          "key": "coach",
+          "label": "Técnico",
+          "defaultValue": "H. Flick"
+        },
+        {
+          "key": "players",
+          "label": "Jogadores",
+          "type": "json",
+          "defaultValue": [
+            {
+              "number": 1,
+              "name": "ter Stegen",
+              "position": "GK"
+            },
+            {
+              "number": 23,
+              "name": "Koundé",
+              "position": "RB"
+            },
+            {
+              "number": 4,
+              "name": "Araújo",
+              "position": "CB"
+            },
+            {
+              "number": 15,
+              "name": "Christensen",
+              "position": "CB"
+            },
+            {
+              "number": 28,
+              "name": "Baldé",
+              "position": "LB"
+            },
+            {
+              "number": 8,
+              "name": "Pedri",
+              "position": "CM"
+            },
+            {
+              "number": 16,
+              "name": "Fermín",
+              "position": "CM"
+            },
+            {
+              "number": 6,
+              "name": "Gavi",
+              "position": "CM"
+            },
+            {
+              "number": 11,
+              "name": "Yamal",
+              "position": "RW"
+            },
+            {
+              "number": 9,
+              "name": "Lewandowski",
+              "position": "ST"
+            },
+            {
+              "number": 19,
+              "name": "Raphinha",
+              "position": "LW"
+            }
+          ]
+        }
+      ]
+    },
+    "concepts": [
+      "Layout em grade",
+      "Schema de dados em array",
+      "Entrada escalonada dos cards",
+      "Selos com o número do jogador"
+    ]
+  },
+  {
+    "slug": "/tutorials/score-bug",
+    "title": "Placar",
+    "subtitle": "Placar de partida ao vivo",
+    "difficulty": "Advanced",
+    "time": "25 min",
+    "desc": "Placar fixo na tela com ações customizadas. A ação 'goal' dispara um flash de comemoração. Ensina customActions — o recurso do OGraf para operações específicas do grafismo além de play/stop.",
+    "preview": "/templates/previews/score-bug.webp",
+    "demo": {
+      "src": "/templates/score-bug/demo.html",
+      "fields": [
+        {
+          "key": "home",
+          "label": "Time da casa",
+          "defaultValue": "BAR"
+        },
+        {
+          "key": "away",
+          "label": "Time visitante",
+          "defaultValue": "RMA"
+        },
+        {
+          "key": "homeScore",
+          "label": "Gols da casa",
+          "defaultValue": "2"
+        },
+        {
+          "key": "awayScore",
+          "label": "Gols do visitante",
+          "defaultValue": "1"
+        },
+        {
+          "key": "time",
+          "label": "Tempo de jogo",
+          "defaultValue": "67:42"
+        },
+        {
+          "key": "period",
+          "label": "Período",
+          "defaultValue": "2nd Half"
+        }
+      ]
+    },
+    "concepts": [
+      "customActions",
+      "Grafismos persistentes",
+      "Animações de flash",
+      "Gerenciamento do estado do placar"
+    ]
+  },
+  {
+    "slug": "/tutorials/countdown",
+    "title": "Contagem regressiva",
+    "subtitle": "Relógio que avança sozinho",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "Um relógio de contagem regressiva que avança em tempo real com setInterval — sem precisar de updateAction do renderizador. Fica vermelho nos últimos 10 segundos. Ensina grafismos que se atualizam sozinhos e a limpeza de intervalos.",
+    "preview": "/templates/previews/countdown.webp",
+    "demo": {
+      "src": "/templates/countdown/demo.html",
+      "fields": [
+        {
+          "key": "label",
+          "label": "Rótulo",
+          "defaultValue": "STARTING IN"
+        },
+        {
+          "key": "seconds",
+          "label": "Segundos",
+          "defaultValue": "120"
+        }
+      ]
+    },
+    "concepts": [
+      "Temporização com setInterval",
+      "Estado que se atualiza sozinho",
+      "Limpeza em dispose()",
+      "Estados de urgência"
+    ]
+  },
+  {
+    "slug": "/tutorials/breaking-news",
+    "title": "Plantão",
+    "subtitle": "Alerta urgente em tela cheia",
+    "difficulty": "Intermediate",
+    "time": "15 min",
+    "desc": "Overlay em tela cheia do tipo disparar e esquecer, com selo vermelho de BREAKING NEWS. Entra, fica 4 segundos e sai sozinho. Ensina stepCount: 0 — grafismos que executam o ciclo de vida completo automaticamente.",
+    "preview": "/templates/previews/breaking-news.webp",
+    "demo": {
+      "src": "/templates/breaking-news/demo.html",
+      "fields": [
+        {
+          "key": "headline",
+          "label": "Manchete",
+          "defaultValue": "City council approves new riverside transit line"
+        }
+      ]
+    },
+    "concepts": [
+      "stepCount: 0",
+      "Disparar e esquecer",
+      "Tempo de saída automática",
+      "Overlays em tela cheia"
+    ]
+  },
+  {
+    "slug": "/tutorials/weather",
+    "title": "Previsão do tempo",
+    "subtitle": "Condições atuais e previsão de 3 dias",
+    "difficulty": "Intermediate",
+    "time": "20 min",
+    "desc": "Cartão do tempo com as condições atuais e uma linha de previsão para 3 dias. Usa ícones emoji, objetos de dados aninhados e um layout compacto com várias seções. Ensina o design de schemas complexos.",
+    "preview": "/templates/previews/weather.webp",
+    "demo": {
+      "src": "/templates/weather/demo.html",
+      "fields": [
+        {
+          "key": "location",
+          "label": "Local",
+          "defaultValue": "London"
+        },
+        {
+          "key": "temp",
+          "label": "Temperatura",
+          "defaultValue": "18°C"
+        },
+        {
+          "key": "condition",
+          "label": "Condição",
+          "defaultValue": "Partly Cloudy"
+        },
+        {
+          "key": "icon",
+          "label": "Ícone (emoji)",
+          "defaultValue": "⛅"
+        },
+        {
+          "key": "forecast",
+          "label": "Previsão",
+          "type": "json",
+          "defaultValue": [
+            {
+              "day": "Tue",
+              "temp": "20°C",
+              "icon": "☀️"
+            },
+            {
+              "day": "Wed",
+              "temp": "16°C",
+              "icon": "🌧️"
+            },
+            {
+              "day": "Thu",
+              "temp": "19°C",
+              "icon": "⛅"
+            }
+          ]
+        }
+      ]
+    },
+    "concepts": [
+      "Objetos de dados aninhados",
+      "Schema complexo",
+      "Sistemas de ícones",
+      "Cards com várias seções"
+    ]
+  },
+  {
+    "slug": "/tutorials/social-card",
+    "title": "Card de rede social",
+    "subtitle": "Post sobreposto com avatar",
+    "difficulty": "Beginner",
+    "time": "10 min",
+    "desc": "Um card de post de rede social que entra deslizando pela direita. Gera automaticamente as iniciais do avatar a partir do nome do usuário. Ensina posicionamento à direita, geração de iniciais e selos de plataforma.",
+    "preview": "/templates/previews/social-card.webp",
+    "demo": {
+      "src": "/templates/social-card/demo.html",
+      "fields": [
+        {
+          "key": "user",
+          "label": "Usuário",
+          "defaultValue": "Jamie Rivera"
+        },
+        {
+          "key": "handle",
+          "label": "Perfil",
+          "defaultValue": "@jamie.demo"
+        },
+        {
+          "key": "text",
+          "label": "Post",
+          "defaultValue": "Just shipped our first OGraf template to production."
+        }
+      ]
+    },
+    "concepts": [
+      "Entrada deslizando pela direita",
+      "Geração de avatar",
+      "Selos de plataforma",
+      "Design de cards"
+    ]
+  }
+]

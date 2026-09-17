@@ -10,6 +10,8 @@ import { TemplateDownload } from "../components/TemplateDownload";
 import manifestJson from "../../public/templates/lower-third/lower-third.ograf.json";
 import { useRouteMeta } from "../hooks/useMeta";
 import CHECK_RULES from "../content/check-rules.json";
+import { useCopy, useLocalePath, useT } from "../i18n/useLocale";
+import { GET_STARTED_COPY } from "../i18n/copy/get-started";
 
 const MANIFEST_JSON_FROM_DISK = JSON.stringify(manifestJson, null, 2);
 
@@ -221,24 +223,27 @@ export default class LowerThird extends HTMLElement {
 
 export function GetStarted() {
   useRouteMeta();
+  const c = useCopy(GET_STARTED_COPY);
+  const t = useT();
+  const localize = useLocalePath();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
 
         <div className="mb-4">
           <Link to="/tutorials" className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600">
-            <ChevronRight className="h-3 w-3 rotate-180" /> All tutorials
+            <ChevronRight className="h-3 w-3 rotate-180" /> {t.common.allTutorials}
           </Link>
         </div>
 
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-2">
-            <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">Beginner</span>
+            <span className="inline-flex rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700">{t.common.difficulty.Beginner}</span>
             <span className="text-xs text-slate-400">15 min</span>
           </div>
-          <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">Build your first OGraf template.</h1>
+          <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">{c.title}</h1>
           <p className="mt-6 text-lg tracking-tight text-slate-700">
-            In this tutorial you'll build a production-quality lower third graphic from scratch — the same kind you see on CBS, BBC, or any news broadcast. It slides in, displays a name and title, updates live, and slides out.
+            {c.lead}
           </p>
         </div>
 
@@ -246,20 +251,20 @@ export function GetStarted() {
           <TemplateDemo
             src="/templates/lower-third/demo.html"
             fields={[
-              { key: "name", label: "Name", defaultValue: "Jane Smith" },
-              { key: "title", label: "Title", defaultValue: "Senior Graphics Engineer" },
+              { key: "name", label: c.demo.name, defaultValue: "Jane Smith" },
+              { key: "title", label: c.demo.title, defaultValue: "Senior Graphics Engineer" },
             ]}
-            title="Lower Third — OGraf Template"
+            title={c.demo.heading}
           />
         </div>
 
         {/* Prerequisites */}
         <div className="rounded-xl bg-slate-50 p-6 mb-16">
-          <h3 className="text-sm font-semibold text-slate-900 mb-3">Before you start</h3>
+          <h3 className="text-sm font-semibold text-slate-900 mb-3">{c.prereqTitle}</h3>
           <ul className="space-y-2 text-sm text-slate-600">
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" /> Basic knowledge of HTML and CSS (JavaScript helps but isn't required to follow along)</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" /> A text editor — VS Code, Sublime Text, or anything you're comfortable with</li>
-            <li className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" /> A web browser (Chrome, Firefox, Edge, Safari)</li>
+            {c.prereqs.map((item) => (
+              <li key={item} className="flex items-start gap-2"><ChevronRight className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" /> {item}</li>
+            ))}
           </ul>
         </div>
 
@@ -268,19 +273,19 @@ export function GetStarted() {
 
           {/* Step 1: Project Structure */}
           <div>
-            <StepHeader n={1} title="Create your project folder" />
+            <StepHeader n={1} title={c.step1.title} />
             <p className="text-base text-slate-700 mb-6">
-              Create a new folder with these four files. That's your entire OGraf package — no build tools, no npm, no framework.
+              {c.step1.body}
             </p>
 
             <div className="rounded-xl bg-slate-50 border border-slate-200 p-6 mb-6">
               <div className="font-mono text-sm space-y-1.5">
                 {[
                   { indent: 0, icon: <FolderOpen className="h-4 w-4 text-blue-500" />, name: "lower-third/", bold: true },
-                  { indent: 1, icon: <FileJson className="h-4 w-4 text-amber-500" />, name: "lower-third.ograf.json", note: "manifest" },
-                  { indent: 1, icon: <Settings className="h-4 w-4 text-slate-500" />, name: "graphic.mjs", note: "logic" },
-                  { indent: 1, icon: <Palette className="h-4 w-4 text-purple-500" />, name: "style.css", note: "design" },
-                  { indent: 1, icon: <Image className="h-4 w-4 text-green-500" />, name: "thumbnail.webp", note: "preview (optional)" },
+                  { indent: 1, icon: <FileJson className="h-4 w-4 text-amber-500" />, name: "lower-third.ograf.json", note: c.step1.notes.manifest },
+                  { indent: 1, icon: <Settings className="h-4 w-4 text-slate-500" />, name: "graphic.mjs", note: c.step1.notes.logic },
+                  { indent: 1, icon: <Palette className="h-4 w-4 text-purple-500" />, name: "style.css", note: c.step1.notes.design },
+                  { indent: 1, icon: <Image className="h-4 w-4 text-green-500" />, name: "thumbnail.webp", note: c.step1.notes.preview },
                 ].map((f, i) => (
                   <div key={i} className="flex items-center gap-2" style={{ paddingLeft: f.indent * 20 }}>
                     {f.icon}
@@ -293,83 +298,73 @@ export function GetStarted() {
 
             <div className="rounded-xl bg-blue-50 border border-blue-100 p-5">
               <p className="text-sm text-blue-800">
-                <strong className="text-blue-900">That's it.</strong> Four files. No <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">node_modules</code>, no <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">package.json</code>, no build step. OGraf packages are plain web files.
+                {c.step1.callout}
               </p>
             </div>
           </div>
 
           {/* Step 2: The Manifest */}
           <div>
-            <StepHeader n={2} title="Write the manifest — your graphic's ID card" />
+            <StepHeader n={2} title={c.step2.title} />
             <p className="text-base text-slate-700 mb-4">
-              The manifest tells every OGraf system who your graphic is and what it needs. When an operator loads your graphic in SPX or any controller, <strong className="text-slate-900">this file is the first thing it reads</strong>. It auto-generates the data form you saw in the demo above.
+              {c.step2.body}
             </p>
             <CodeBlock filename="lower-third.ograf.json" language="JSON" code={MANIFEST_JSON_FROM_DISK} />
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="rounded-lg bg-slate-50 p-4">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Identity</p>
-                <p className="text-sm text-slate-700"><code className="font-mono text-xs text-blue-600">id</code> and <code className="font-mono text-xs text-blue-600">name</code> — how controllers identify and display your graphic.</p>
-              </div>
-              <div className="rounded-lg bg-slate-50 p-4">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Behavior</p>
-                <p className="text-sm text-slate-700"><code className="font-mono text-xs text-blue-600">stepCount: 1</code> — one step: it appears, holds, then disappears when stopped.</p>
-              </div>
-              <div className="rounded-lg bg-slate-50 p-4">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Entry Point</p>
-                <p className="text-sm text-slate-700"><code className="font-mono text-xs text-blue-600">main</code> — points to your JavaScript file with the Web Component class.</p>
-              </div>
-              <div className="rounded-lg bg-slate-50 p-4">
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Data Schema</p>
-                <p className="text-sm text-slate-700"><code className="font-mono text-xs text-blue-600">schema</code> — defines the form fields. Controllers auto-generate the input UI from this.</p>
-              </div>
+              {c.step2.cards.map((card) => (
+                <div key={card.label} className="rounded-lg bg-slate-50 p-4">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">{card.label}</p>
+                  <p className="text-sm text-slate-700">{card.body}</p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Step 3: Folder structure */}
           <div>
-            <StepHeader n={3} title="Assemble the package folder" />
+            <StepHeader n={3} title={c.step3.title} />
             <p className="text-base text-slate-700 mb-4">
-              An OGraf package is a small folder with a manifest, a JavaScript module, a stylesheet, and any static assets the graphic needs. There is no HTML entry point — the renderer mounts the default-exported class under its own tag, so the module just has to export a class that extends <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">HTMLElement</code>.
+              {c.step3.body}
             </p>
-            <CodeBlock filename="lower-third/" language="Text" code={FOLDER_TREE} />
+            <CodeBlock filename="lower-third/" language={c.step3.language} code={FOLDER_TREE} />
             <p className="mt-4 text-sm text-slate-500">
-              The <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">fonts/</code> folder ships the Inter weights this graphic uses along with their license (SIL OFL) — playout boxes are often offline, so bundling fonts avoids CDN calls that would silently fail.
+              {c.step3.note}
             </p>
           </div>
 
           {/* Step 4: CSS */}
           <div>
-            <StepHeader n={4} title="Design the look — CSS" />
+            <StepHeader n={4} title={c.step4.title} />
             <p className="text-base text-slate-700 mb-4">
-              This is where the visual design lives. We're building a CBS-inspired clean look: white background, blue accent bar on the left, uppercase blue title. The slide-in uses CSS transitions with <strong className="text-slate-900">cubic-bezier easing</strong> for that broadcast-quality feel.
+              {c.step4.body}
             </p>
             <CodeBlock filename="style.css" language="CSS" code={CSS_CODE} />
 
             <div className="mt-6 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900 flex items-center gap-2">
-                <Palette className="h-4 w-4" /> Design tip
+                <Palette className="h-4 w-4" /> {c.step4.tipTitle}
               </p>
               <p className="mt-2 text-sm text-amber-800">
-                The <code className="font-mono text-xs bg-amber-100 px-1 py-0.5 rounded">cubic-bezier(0.16, 1, 0.3, 1)</code> easing is key — it starts fast and decelerates smoothly, giving that snappy broadcast motion feel. The out-animation uses <code className="font-mono text-xs bg-amber-100 px-1 py-0.5 rounded">cubic-bezier(0.76, 0, 0.24, 1)</code> for a quick, punchy exit.
+                {c.step4.tip}
               </p>
             </div>
           </div>
 
           {/* Step 5: JavaScript */}
           <div>
-            <StepHeader n={5} title="Write the logic — the Web Component" />
+            <StepHeader n={5} title={c.step5.title} />
             <p className="text-base text-slate-700 mb-4">
-              This is the heart of your OGraf graphic. It's a standard Web Component that the renderer controls by calling six methods — five linear lifecycle steps plus <code className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded">customAction</code> for graphic-specific extras. Each returns a Promise: <strong className="text-slate-900">the renderer waits for your animation to finish before doing anything else.</strong>
+              {c.step5.body}
             </p>
 
             {/* Visual lifecycle flow */}
             <div className="flex items-center gap-1 overflow-x-auto pb-4 mb-6">
               {[
-                { icon: <Download className="h-3.5 w-3.5" />, label: "load", desc: "Get data" },
-                { icon: <Play className="h-3.5 w-3.5" />, label: "play", desc: "Animate in" },
-                { icon: <RefreshCw className="h-3.5 w-3.5" />, label: "update", desc: "Change data" },
-                { icon: <Square className="h-3.5 w-3.5" />, label: "stop", desc: "Animate out" },
-                { icon: <Trash2 className="h-3.5 w-3.5" />, label: "dispose", desc: "Clean up" },
+                { icon: <Download className="h-3.5 w-3.5" />, label: "load", desc: c.step5.lifecycle.load },
+                { icon: <Play className="h-3.5 w-3.5" />, label: "play", desc: c.step5.lifecycle.play },
+                { icon: <RefreshCw className="h-3.5 w-3.5" />, label: "update", desc: c.step5.lifecycle.update },
+                { icon: <Square className="h-3.5 w-3.5" />, label: "stop", desc: c.step5.lifecycle.stop },
+                { icon: <Trash2 className="h-3.5 w-3.5" />, label: "dispose", desc: c.step5.lifecycle.dispose },
               ].map((m, i) => (
                 <div key={m.label} className="flex items-center gap-1 shrink-0">
                   <div className="rounded-lg bg-blue-50 px-3 py-2 text-center">
@@ -386,46 +381,36 @@ export function GetStarted() {
 
             <div className="mt-6 rounded-xl bg-blue-50 border border-blue-100 p-5">
               <p className="text-sm font-semibold text-blue-900 flex items-center gap-2">
-                <Settings className="h-4 w-4" /> How it works
+                <Settings className="h-4 w-4" /> {c.step5.howTitle}
               </p>
               <div className="mt-2 text-sm text-blue-800 space-y-2">
-                <p><strong>_initDom()</strong> — A private helper, idempotent. The first public method to run calls it to set <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">innerHTML</code> + grab element refs. This way the graphic works whether the renderer inserts the element before or after calling <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">load()</code>.</p>
-                <p><strong>load()</strong> — Receives the operator's data (name + title) and puts it in the DOM. No animation yet.</p>
-                <p><strong>playAction()</strong> — Works out which step to go to from <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">goto</code> / <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">delta</code>, exactly as the spec defines it. A lower third has one step, so the first play lands on step 0: it adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.visible</code> class, waits 700ms for the slide-in, and reports <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">currentStep: 0</code>. A second play goes past the last step, so the graphic leaves the air and reports <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">currentStep: undefined</code> — that is what a controller's "next" button relies on.</p>
-                <p><strong>updateAction()</strong> — Swaps the text content. The check is <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">!== undefined</code> rather than truthiness, so an operator who empties a field actually clears it. In production you'd add a smooth text-swap animation.</p>
-                <p><strong>stopAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.out</code> class for the exit animation and waits 500ms. Every action bumps <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">_rev</code>, and the stop only hides the graphic if nothing newer has started — otherwise an operator who hits play again mid-exit would end up with an empty screen.</p>
-                <p><strong>customAction()</strong> — OGraf requires every graphic to expose this, even without any declared in the manifest. It receives <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">{'{ id, payload, skipAnimation }'}</code>; with nothing declared, answering every <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">id</code> with a 4xx such as <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">statusCode: 404</code> is the right default.</p>
-                <p><strong>dispose()</strong> — Clears the DOM and resets <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">_initialized</code> so a re-load rebuilds cleanly. Called when the graphic is removed from the renderer entirely.</p>
+                {c.step5.how.map((item, i) => (
+                  <p key={i}>{item}</p>
+                ))}
               </div>
             </div>
           </div>
 
           {/* Step 6: Test */}
           <div>
-            <StepHeader n={6} title="Test it" />
+            <StepHeader n={6} title={c.step6.title} />
             <p className="text-base text-slate-700 mb-6">
-              Your graphic is ready. Here's how to test it:
+              {c.step6.body}
             </p>
             <div className="space-y-3">
               {[
+                c.step6.optionA,
                 {
-                  title: "Option A: Use the live demo above",
-                  desc: "Scroll up — the interactive preview at the top of this page is running the exact same code. Click Play, change the text, click Update, click Stop.",
+                  title: c.step6.optionB.title,
+                  desc: c.step6.optionB.desc(CHECK_RULES.total),
+                  link: { href: localize("/check"), label: c.step6.optionB.link },
                 },
-                {
-                  title: "Option B: Check your package",
-                  desc: `Zip your folder and drop it on /check. You'll get a structured report against ${CHECK_RULES.total} rules and the live EBU schema.`,
-                  link: { href: "/check", label: "Open checker" },
-                },
-                {
-                  title: "Option C: Load it in an OGraf renderer",
-                  desc: "Deploy to a compliant renderer: ograf-server (self-hosted reference), SPX-GC (browser controller), or CasparCG (via the HTML producer). Links are on the download card below.",
-                },
+                c.step6.optionC,
               ].map((opt) => (
                 <div key={opt.title} className="rounded-xl ring-1 ring-slate-200 p-5">
                   <p className="text-sm font-semibold text-slate-900">{opt.title}</p>
                   <p className="mt-1 text-sm text-slate-600">{opt.desc}</p>
-                  {opt.link && (
+                  {"link" in opt && opt.link && (
                     <a href={opt.link.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-blue-600 hover:text-blue-500">
                       {opt.link.label} <ChevronRight className="h-3 w-3" />
                     </a>
@@ -436,21 +421,21 @@ export function GetStarted() {
           </div>
 
           {/* Download the full package */}
-          <TemplateDownload slug="lower-third" title="CBS-Style Lower Third" />
+          <TemplateDownload slug="lower-third" title={c.downloadTitle} />
 
           {/* Done */}
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />
-            <h2 className="font-display text-2xl tracking-tight text-white">You built an OGraf graphic.</h2>
+            <h2 className="font-display text-2xl tracking-tight text-white">{c.done.title}</h2>
             <p className="mt-3 text-blue-100 max-w-lg mx-auto">
-              This package works with any OGraf-compatible system — SPX, ograf-server, CasparCG (via HTML producer), and more. Same files, everywhere.
+              {c.done.body}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <a href="https://ograf.ebu.io" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-blue-50">
-                Read the full spec
+                {c.done.spec}
               </a>
               <a href="https://github.com/nytamin/ograf-graphics" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/20 hover:bg-white/20">
-                Browse more templates
+                {c.done.more}
               </a>
             </div>
           </div>
