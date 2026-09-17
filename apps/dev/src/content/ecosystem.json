@@ -42,6 +42,13 @@
     "description": "Build graphics — no-code authoring tools or developer-facing editors.",
     "items": [
       {
+        "name": "OGraf Studio",
+        "desc": "Zero Density's open-source visual editor: WYSIWYG canvas with layers and masks, per-property animation tracks, data binding to operator fields, and AI-assisted authoring over MCP. Exports OGraf packages it checks before saving. Runs from a single downloadable file — no Node.js needed. AGPL-3.0.",
+        "url": "https://github.com/zerodensity/ograf-studio",
+        "type": "oss",
+        "stars": "35"
+      },
+      {
         "name": "Loopic",
         "desc": "No-code browser-based TV graphics template builder with one-click OGraf export.",
         "url": "https://www.loopic.io",

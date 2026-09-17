@@ -42,6 +42,13 @@
     "description": "Crie grafismos — ferramentas de criação no-code ou editores voltados a desenvolvedores.",
     "items": [
       {
+        "name": "OGraf Studio",
+        "desc": "Editor visual open source da Zero Density: tela WYSIWYG com camadas e máscaras, trilhas de animação por propriedade, vínculo de dados com os campos do operador e autoria assistida por IA via MCP. Exporta pacotes OGraf que ele mesmo verifica antes de salvar. Roda a partir de um único arquivo, sem precisar de Node.js. AGPL-3.0.",
+        "url": "https://github.com/zerodensity/ograf-studio",
+        "type": "oss",
+        "stars": "35"
+      },
+      {
         "name": "Loopic",
         "desc": "Criador de templates de grafismo para TV no navegador, sem código, com exportação OGraf em um clique.",
         "url": "https://www.loopic.io",
