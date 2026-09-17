@@ -8,7 +8,7 @@
     "items": [
       {
         "name": "ograf.dev",
-        "desc": "This site. Tutorials, ecosystem map, spec history, migration guides, plus in-browser tools under /tools: an 82-rule Package Checker with a runtime sandbox, and a Schema Explorer.",
+        "desc": "This site. Tutorials, ecosystem map, spec history, plus in-browser tools: a Package Checker with a runtime sandbox, and a Schema Explorer.",
         "url": "https://ograf.dev",
         "type": "oss"
       }
@@ -46,7 +46,7 @@
         "desc": "No-code browser-based TV graphics template builder with one-click OGraf export.",
         "url": "https://www.loopic.io",
         "type": "commercial",
-        "logo": "/logos/loopic.svg"
+        "logo": "/logos/adopters/vendors/loopic.svg"
       },
       {
         "name": "DJ HTML Creator",
@@ -73,7 +73,7 @@
         "desc": "Browser-based interactive maps and charts. Exports OGraf packages using the standard .ograf.json manifest, so one map plays on any compliant renderer.",
         "url": "https://www.everviz.com",
         "type": "commercial",
-        "logo": "/logos/everviz.svg"
+        "logo": "/logos/adopters/vendors/everviz.svg"
       },
       {
         "name": "StreamShapers OGraf Export",
@@ -169,7 +169,7 @@
         "desc": "NetOn.Live's local, remote and decentralised live production platform, with full OGraf support. NetOn.Live is a founding member of the EBU HTML graphics working group.",
         "url": "https://www.neton.live",
         "type": "commercial",
-        "logo": "/logos/neton-live.svg"
+        "logo": "/logos/adopters/vendors/neton-live.svg"
       },
       {
         "name": "BBright Integrated Playout",
@@ -182,7 +182,8 @@
         "desc": "Unreal-based virtual studio, AR and XR graphics platform. Named on the working group's adopter list; no release with OGraf support has been announced publicly yet.",
         "url": "https://www.pixotope.com",
         "type": "commercial",
-        "status": "soon"
+        "status": "soon",
+        "logo": "/logos/adopters/vendors/pixotope.svg"
       },
       {
         "name": "Grass Valley AMPP",

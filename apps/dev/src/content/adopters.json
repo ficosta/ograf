@@ -1,0 +1,143 @@
+{
+  "source": "https://ograf.ebu.io/",
+  "retrieved": "2026-09-17",
+  "vendors": [
+    {
+      "name": "Adobe",
+      "url": "https://www.adobe.com/",
+      "logo": "/logos/adopters/vendors/adobe.svg"
+    },
+    {
+      "name": "SPX Graphics",
+      "url": "https://spxgraphics.com/",
+      "logo": "/logos/adopters/vendors/spx-graphics.png"
+    },
+    {
+      "name": "StreamShapers",
+      "url": "https://www.streamshapers.com/",
+      "logo": "/logos/adopters/vendors/streamshapers.svg"
+    },
+    {
+      "name": "SuperFly.tv",
+      "url": "https://superfly.tv/",
+      "logo": "/logos/adopters/vendors/superfly-tv.svg"
+    },
+    {
+      "name": "Blackmagic Design",
+      "url": "https://www.blackmagicdesign.com/",
+      "logo": "/logos/adopters/vendors/blackmagic-design.svg"
+    },
+    {
+      "name": "Everviz",
+      "url": "https://everviz.com/",
+      "logo": "/logos/adopters/vendors/everviz.svg"
+    },
+    {
+      "name": "Loopic",
+      "url": "https://www.loopic.io/",
+      "logo": "/logos/adopters/vendors/loopic.svg"
+    },
+    {
+      "name": "Neton Live",
+      "url": "https://www.neton.live/",
+      "logo": "/logos/adopters/vendors/neton-live.svg"
+    },
+    {
+      "name": "Chyron",
+      "url": "https://chyron.com",
+      "logo": "/logos/adopters/vendors/chyron.svg"
+    },
+    {
+      "name": "CuttingRoom",
+      "url": "https://www.cuttingroom.com",
+      "logo": "/logos/adopters/vendors/cuttingroom.svg"
+    },
+    {
+      "name": "Erizos",
+      "url": "https://erizos.tv",
+      "logo": "/logos/adopters/vendors/erizos.svg"
+    },
+    {
+      "name": "Mapcreator",
+      "url": "https://mapcreator.io",
+      "logo": "/logos/adopters/vendors/mapcreator.svg"
+    },
+    {
+      "name": "Pixotope",
+      "url": "https://www.pixotope.com",
+      "logo": "/logos/adopters/vendors/pixotope.svg"
+    },
+    {
+      "name": "Zero Density",
+      "url": "https://www.zerodensity.io",
+      "logo": "/logos/adopters/vendors/zero-density_black.svg"
+    },
+    {
+      "name": "Matrox",
+      "url": "https://www.matrox.com/",
+      "logo": "/logos/adopters/vendors/matrox.svg"
+    },
+    {
+      "name": "MoovIT",
+      "url": "https://moovit.de/",
+      "logo": "/logos/adopters/vendors/moovit.png"
+    }
+  ],
+  "organisations": [
+    {
+      "name": "European Broadcasting Union",
+      "url": "https://www.ebu.ch/home",
+      "logo": "/logos/adopters/organisations/european-broadcasting-union.svg"
+    },
+    {
+      "name": "BBC",
+      "url": "https://www.bbc.com/",
+      "logo": "/logos/adopters/organisations/bbc.svg"
+    },
+    {
+      "name": "NRK",
+      "url": "https://www.nrk.no/",
+      "logo": "/logos/adopters/organisations/nrk.svg"
+    },
+    {
+      "name": "TV2 Denmark",
+      "url": "https://tv2.dk/",
+      "logo": "/logos/adopters/organisations/tv-2-denmark.png"
+    },
+    {
+      "name": "SVT",
+      "url": "https://www.svt.se/",
+      "logo": "/logos/adopters/organisations/svt.png"
+    },
+    {
+      "name": "TV 2",
+      "url": "https://www.tv2.no/",
+      "logo": "/logos/adopters/organisations/tv-2-norway.png"
+    },
+    {
+      "name": "Deutsche Welle",
+      "url": "https://www.dw.com/",
+      "logo": "/logos/adopters/organisations/deutsche-welle.png"
+    },
+    {
+      "name": "ITN",
+      "url": "https://www.itn.co.uk/",
+      "logo": "/logos/adopters/organisations/itn.png"
+    },
+    {
+      "name": "YLE",
+      "url": "https://yle.fi/",
+      "logo": "/logos/adopters/organisations/yle.svg"
+    },
+    {
+      "name": "Volant Media",
+      "url": "https://www.volantmedia.net/",
+      "logo": "/logos/adopters/organisations/volant-media.webp"
+    },
+    {
+      "name": "Canadian Broadcasting Corporation",
+      "url": "https://www.cbc.ca/",
+      "logo": "/logos/adopters/organisations/cbc.svg"
+    }
+  ]
+}

@@ -1,16 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { ArrowLeftRight, Check, Code2, Minus, Unlock, X } from "lucide-react";
 import { TutorialCards } from "../components/TutorialCards";
 import { RoleCards } from "../components/RoleCards";
-import { useMeta } from "../hooks/useMeta";
+import { AdopterLogos } from "../components/AdopterLogos";
+import { useRouteMeta } from "../hooks/useMeta";
 import faqData from "../content/faq.json";
 
 const ROTATING_WORDS = ["community", "guide", "hub", "partner", "toolkit", "resource"];
 
 function TypewriterWord() {
   const [wordIndex, setWordIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
+  // Start fully typed: the prerendered HTML (what crawlers and link previews
+  // read) then says "The missing community for OGraf." instead of leaving a
+  // hole, and the animation takes over from there after hydration.
+  const [displayed, setDisplayed] = useState(ROTATING_WORDS[0] ?? "");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -190,10 +194,7 @@ function splitIntoColumns<T>(items: readonly T[], columns: number): T[][] {
 }
 
 export function Home() {
-  useMeta({
-    title: "ograf.dev · The missing community for OGraf",
-    description: "Community hub for the OGraf open broadcast graphics standard. Learn, build, test, and connect. Eleven live tutorials, a full ecosystem map, and a plain-language spec guide.",
-  });
+  useRouteMeta();
   const faqColumns = useMemo(
     () => splitIntoColumns<FaqEntry>(faqData as readonly FaqEntry[], 3),
     []
@@ -228,20 +229,13 @@ export function Home() {
           </Link>
         </div>
 
-        {/* Ecosystem partners */}
-        <div className="mt-36 lg:mt-44">
-          <p className="font-display text-base text-slate-900">
-            Built on the ecosystem of these projects
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-            <img src="/img/logos/ebu.svg" alt="EBU" loading="lazy" decoding="async" className="h-7 w-auto opacity-70" />
-            <img src="/img/logos/superflytv.svg" alt="SuperFlyTV" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
-            <img src="/img/logos/spx.svg" alt="SPX Graphics" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
-            <img src="/img/logos/casparcg.svg" alt="CasparCG" loading="lazy" decoding="async" className="h-6 w-auto opacity-70" />
-            <img src="/img/logos/loopic.svg" alt="Loopic" loading="lazy" decoding="async" className="h-6 w-auto opacity-70" />
-            <img src="/img/logos/streamshapers.svg" alt="StreamShapers" loading="lazy" decoding="async" className="h-5 w-auto opacity-70" />
-          </div>
-        </div>
+        {/* Vendors and broadcasters listed as adopters by the EBU */}
+        <AdopterLogos
+          heading="Vendors & adopters"
+          vendorsLabel="Vendors"
+          organisationsLabel="Broadcast organizations"
+          sourcePrefix="Companies and broadcasters listed as OGraf vendors and adopters on"
+        />
       </div>
 
       {/* Role-based onboarding */}

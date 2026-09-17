@@ -16,7 +16,7 @@ import {
   Wrench,
 } from "lucide-react";
 import ecosystemJson from "../content/ecosystem.json";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 
 interface EcoItem {
   readonly name: string;
@@ -99,7 +99,7 @@ const OSS_COUNT = ALL_ITEMS.filter((i) => i.type === "oss").length;
 const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length;
 
 export function Ecosystem() {
-  useMeta({ title: "Ecosystem", description: "Every OGraf-compatible tool, editor, renderer, and resource worth knowing about." });
+  useRouteMeta();
   const [activeId, setActiveId] = useState<string>(CATEGORIES[0]?.id ?? "");
   const navRef = useRef<HTMLElement | null>(null);
 
@@ -319,7 +319,7 @@ export function Ecosystem() {
             If you built or know of an OGraf-compatible tool, editor, or resource that isn't here, open an issue or a PR and we'll add it.
           </p>
           <a
-            href="https://github.com/ebu/ograf/issues/new"
+            href="https://github.com/ficosta/ograf/issues/new?title=Ecosystem+listing:+&body=Name:%0AURL:%0AWhat+it+does+with+OGraf:"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 py-2 px-4 text-sm font-semibold text-white hover:bg-blue-500"
