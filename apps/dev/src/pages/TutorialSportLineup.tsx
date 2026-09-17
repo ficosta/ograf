@@ -1,21 +1,31 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TutorialManifest } from "../components/TutorialManifest";
-import tutorials from "../content/tutorials.json";
 import manifestJson from "../../public/templates/sport-lineup/sport-lineup.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import GRAPHIC_SOURCE from "../../public/templates/sport-lineup/graphic.mjs?raw";
+import STYLE_SOURCE from "../../public/templates/sport-lineup/style.css?raw";
+import { excerpt, cssExcerpt } from "../lib/excerpt";
+import { useRouteMeta } from "../hooks/useMeta";
 
-const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/sport-lineup");
 const MANIFEST = JSON.stringify(manifestJson, null, 2);
+const RENDER_CODE = excerpt(GRAPHIC_SOURCE, ["_renderPlayers", "_applyData"]);
+const PLAY_CODE = excerpt(GRAPHIC_SOURCE, ["resolveTargetStep", "playAction", "stopAction"]);
+const LINEUP_CSS = cssExcerpt(STYLE_SOURCE, [
+  ":where(.sport-lineup-root, .sport-lineup-root *)",
+  ".lineup.visible",
+  ".lineup.visible .lineup-card",
+  ".lineup.out",
+  ".lineup-header",
+  ".lineup-grid",
+  ".lineup-card",
+  ".lineup-number",
+]);
 
 export function TutorialSportLineup() {
-  useMeta({
-    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
-    description: TUTORIAL?.desc ?? undefined,
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -33,7 +43,7 @@ export function TutorialSportLineup() {
           </div>
           <h1 className="font-display text-4xl font-medium tracking-tight text-slate-900 sm:text-5xl">Build a sport lineup card.</h1>
           <p className="mt-6 text-lg tracking-tight text-slate-700">
-            The pre-match lineup graphic is a staple of sports broadcasting — from Premier League coverage to the World Cup. A grid of player cards reveals one by one, showing name, number, and position, followed by the formation and coaching staff.
+            The pre-match lineup graphic is a staple of sports broadcasting — from Premier League coverage to the World Cup. A grid of player cards reveals one by one, showing number, name, and position, with the formation and coach in the footer.
           </p>
         </div>
 
@@ -70,15 +80,15 @@ export function TutorialSportLineup() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Grid layout</p>
-                <p className="text-sm text-slate-600 mt-1">Uses CSS Grid to arrange player cards in responsive columns. Cards reflow naturally whether you have 11 players or 5 subs.</p>
+                <p className="text-sm text-slate-600 mt-1">Uses CSS Grid with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">auto-fill</code> columns at least 120px wide. Cards reflow naturally whether you have 11 players or 5 subs.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Staggered cards</p>
-                <p className="text-sm text-slate-600 mt-1">Each player card gets an increasing <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">transition-delay</code>, creating a wave of cards appearing across the grid.</p>
+                <p className="text-sm text-slate-600 mt-1">Each player card gets an inline <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">transition-delay</code> of 300 ms + 60 ms per card, creating a wave of cards appearing across the grid.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">Two-part structure</p>
-                <p className="text-sm text-slate-600 mt-1">Dark header bar with team name, then the player grid, then a footer with formation and coach — three distinct visual zones.</p>
+                <p className="text-sm font-semibold text-slate-900">Three-part structure</p>
+                <p className="text-sm text-slate-600 mt-1">Dark gradient header with team name and match info, then the player grid, then a footer with formation and coach — three distinct visual zones.</p>
               </div>
             </div>
           </div>
@@ -86,100 +96,25 @@ export function TutorialSportLineup() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">Rendering the players</h2>
             <p className="text-base text-slate-700 mb-4">
-              The <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_renderPlayers</code> method creates a card for each player. The number gets a bold circle treatment, and the position badge sits beneath the name. Each card's <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">transition-delay</code> is calculated from its index.
+              <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_renderPlayers</code> builds a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.lineup-card</code> for each player: the number in a dark circle, the name, and the position beneath it. Every value goes through <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">escapeHtml</code> before it lands in the markup, and each card's <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">transition-delay</code> is calculated from its index. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">load</code> and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">updateAction</code> both call <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_applyData</code>, which only touches fields that are not <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">undefined</code> — so a partial update changes just what it sends, an empty string blanks a field (for formation and coach, the "Formation:" / "Coach:" label goes too), and a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">players</code> array re-renders the grid.
             </p>
-            <CodeBlock filename="graphic.mjs (key parts)" language="JavaScript" code={`_renderPlayers(players) {
-  const grid = this.querySelector('.player-grid');
-  grid.innerHTML = '';
+            <CodeBlock filename="graphic.mjs (rendering)" language="JavaScript" code={RENDER_CODE} />
+          </div>
 
-  players.forEach((player, i) => {
-    const card = document.createElement('div');
-    card.className = 'player-card';
-    card.style.transitionDelay = \`\${i * 80}ms\`;
-
-    card.innerHTML = \`
-      <div class="player-number">\${player.number}</div>
-      <div class="player-name">\${player.name}</div>
-      <div class="player-position">\${player.position}</div>
-    \`;
-
-    grid.appendChild(card);
-  });
-}
-
-async load({ data }) {
-  if (data?.team) this._teamName.textContent = data.team;
-  if (data?.meta) this._meta.textContent = data.meta;
-  if (data?.players) this._renderPlayers(data.players);
-  if (data?.formation) this._formation.textContent = data.formation;
-  if (data?.coach) this._coach.textContent = \`Coach: \${data.coach}\`;
-  return { statusCode: 200 };
-}
-
-async playAction() {
-  this._root.classList.add('visible');
-  await new Promise(r => setTimeout(r, 1200));
-  return { statusCode: 200, currentStep: 0 };
-}`} />
+          <div>
+            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">Playing it on air</h2>
+            <p className="text-base text-slate-700 mb-4">
+              <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">resolveTargetStep</code> implements the OGraf step model: <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">goto</code> if given, otherwise the current step (-1 before the first play) plus <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">delta</code>, default 1. With one step, the first play lands on step 0 and a second play goes past the end, so the graphic stops and returns <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">currentStep: undefined</code>. On step 0, <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">playAction</code> adds <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">visible</code> and waits until the last card has finished: 300 ms + 60 ms per card + 500 ms for the card's own transition. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">stopAction</code> fades out over 400 ms and only clears the classes if no newer action (a higher <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">this._rev</code>) has started meanwhile.
+            </p>
+            <CodeBlock filename="graphic.mjs (step model)" language="JavaScript" code={PLAY_CODE} />
           </div>
 
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS — grid and card reveal</h2>
             <p className="text-base text-slate-700 mb-4">
-              The player grid uses <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">grid-template-columns: repeat(auto-fill, minmax(100px, 1fr))</code> so it adapts to the container width. Each card fades and scales in when the parent gets the <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">visible</code> class.
+              The player grid uses <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))</code> so it adapts to the container width; a 2px gap over a light grey background draws the dividers between cards. Each card fades in and rises 12px when the parent gets the <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">visible</code> class. The reset is scoped with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">:where(.sport-lineup-root, …)</code>, so it never restyles the renderer's page.
             </p>
-            <CodeBlock filename="style.css (key parts)" language="CSS" code={`.lineup-header {
-  background: #1a1a2e;
-  padding: 16px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.player-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 8px;
-  padding: 16px;
-}
-
-.player-card {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 12px 8px;
-  text-align: center;
-  opacity: 0;
-  transform: scale(0.8) translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  /* transition-delay set per card via JS */
-}
-
-.visible .player-card {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-
-.player-number {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 8px;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-.lineup-footer {
-  background: #1a1a2e;
-  padding: 12px 24px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-}`} />
+            <CodeBlock filename="style.css (key parts)" language="CSS" code={LINEUP_CSS} />
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import {
   Play, Square, RefreshCw, FolderOpen, FileJson, Settings, Palette,
   Image, ChevronRight, Download, Trash2, Check,
@@ -8,7 +8,8 @@ import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TemplateDownload } from "../components/TemplateDownload";
 import manifestJson from "../../public/templates/lower-third/lower-third.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
+import CHECK_RULES from "../content/check-rules.json";
 
 const MANIFEST_JSON_FROM_DISK = JSON.stringify(manifestJson, null, 2);
 
@@ -128,6 +129,17 @@ const TEMPLATE = \`
   </div>
 \`;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// The spec's step rule: goto wins; otherwise current step (-1 before the
+// first play) + delta, which defaults to 1. At or past stepCount → the end.
+function resolveTargetStep(currentStep, { goto, delta } = {}, stepCount = 1) {
+  const target = Number.isInteger(goto) && goto >= 0
+    ? goto
+    : (currentStep ?? -1) + (Number.isInteger(delta) ? delta : 1);
+  return target >= stepCount ? undefined : Math.max(target, 0);
+}
+
 export default class LowerThird extends HTMLElement {
 
   _initDom() {
@@ -136,54 +148,69 @@ export default class LowerThird extends HTMLElement {
     this._root  = this.querySelector('.l3rd');
     this._name  = this.querySelector('.l3rd-name');
     this._title = this.querySelector('.l3rd-title');
+    this._step = undefined;                        // "start": nothing on air yet
+    this._rev = 0;                                 // bumped by every action
     this._initialized = true;
   }
 
   async load({ data } = {}) {
     this._initDom();                               // <-- first line of every public method
-    if (data?.name)  this._name.textContent  = data.name;
-    if (data?.title) this._title.textContent = data.title;
+    if (data?.name !== undefined)  this._name.textContent  = data.name;
+    if (data?.title !== undefined) this._title.textContent = data.title;
     return { statusCode: 200 };
   }
 
-  async playAction({ skipAnimation } = {}) {
+  async playAction({ goto, delta, skipAnimation } = {}) {
     this._initDom();
+    const target = resolveTargetStep(this._step, { goto, delta });
+    if (target === undefined) {                    // "next" on the last step = go off air
+      await this.stopAction({ skipAnimation });
+      return { statusCode: 200, currentStep: undefined };
+    }
+    ++this._rev;
+    this._step = target;
     this._root.classList.remove('out');
     if (skipAnimation) {
       this._root.classList.add('visible');
-      return { statusCode: 200, currentStep: 0 };
+      return { statusCode: 200, currentStep: this._step };
     }
     void this._root.offsetWidth;                   // force reflow before transition
     this._root.classList.add('visible');
-    await new Promise(r => setTimeout(r, 700));
-    return { statusCode: 200, currentStep: 0 };
+    await sleep(700);
+    return { statusCode: 200, currentStep: this._step };
   }
 
   async stopAction({ skipAnimation } = {}) {
     this._initDom();
+    const rev = ++this._rev;
+    this._step = undefined;
     if (skipAnimation) {
-      this._root.classList.remove('visible');
+      this._root.classList.remove('visible', 'out');
       return { statusCode: 200 };
     }
     this._root.classList.add('out');
-    await new Promise(r => setTimeout(r, 500));
-    this._root.classList.remove('visible', 'out');
+    await sleep(500);
+    // A play that arrived while we were animating out wins.
+    if (rev === this._rev) this._root.classList.remove('visible', 'out');
     return { statusCode: 200 };
   }
 
   async updateAction({ data } = {}) {
     this._initDom();
-    if (data?.name)  this._name.textContent  = data.name;
-    if (data?.title) this._title.textContent = data.title;
+    // !== undefined, not a truthy check: an empty string clears the field.
+    if (data?.name !== undefined)  this._name.textContent  = data.name;
+    if (data?.title !== undefined) this._title.textContent = data.title;
     return { statusCode: 200 };
   }
 
   // Required on every graphic, even when the manifest declares no customActions.
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: \`Unknown custom action: \${action ?? ""}\` };
+  // The renderer calls customAction({ id, payload, skipAnimation }).
+  async customAction({ id } = {}) {
+    return { statusCode: 404, statusMessage: \`Unknown custom action: \${id ?? ''}\` };
   }
 
   async dispose() {
+    this._rev++;                                   // cancels anything still pending
     this.innerHTML = '';
     this._initialized = false;                     // reset so a re-load re-inits
     return { statusCode: 200 };
@@ -193,7 +220,7 @@ export default class LowerThird extends HTMLElement {
 // Note the absence of customElements.define() -- the renderer picks the tag.`;
 
 export function GetStarted() {
-  useMeta({ title: "Get Started · Lower Third tutorial", description: "Build a CBS-style lower third from scratch. Fifteen minutes from zero to a working OGraf template." });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -253,7 +280,7 @@ export function GetStarted() {
                   { indent: 1, icon: <FileJson className="h-4 w-4 text-amber-500" />, name: "lower-third.ograf.json", note: "manifest" },
                   { indent: 1, icon: <Settings className="h-4 w-4 text-slate-500" />, name: "graphic.mjs", note: "logic" },
                   { indent: 1, icon: <Palette className="h-4 w-4 text-purple-500" />, name: "style.css", note: "design" },
-                  { indent: 1, icon: <Image className="h-4 w-4 text-green-500" />, name: "index.html", note: "entry point" },
+                  { indent: 1, icon: <Image className="h-4 w-4 text-green-500" />, name: "thumbnail.webp", note: "preview (optional)" },
                 ].map((f, i) => (
                   <div key={i} className="flex items-center gap-2" style={{ paddingLeft: f.indent * 20 }}>
                     {f.icon}
@@ -364,10 +391,10 @@ export function GetStarted() {
               <div className="mt-2 text-sm text-blue-800 space-y-2">
                 <p><strong>_initDom()</strong> — A private helper, idempotent. The first public method to run calls it to set <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">innerHTML</code> + grab element refs. This way the graphic works whether the renderer inserts the element before or after calling <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">load()</code>.</p>
                 <p><strong>load()</strong> — Receives the operator's data (name + title) and puts it in the DOM. No animation yet.</p>
-                <p><strong>playAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.visible</code> CSS class, which triggers the slide-in transition. Waits 700ms for it to finish, then tells the renderer "I'm ready."</p>
-                <p><strong>updateAction()</strong> — Swaps the text content. In production you'd add a smooth text-swap animation.</p>
-                <p><strong>stopAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.out</code> class for the exit animation. Waits 500ms, then cleans up.</p>
-                <p><strong>customAction()</strong> — OGraf requires every graphic to expose this, even without any declared in the manifest. A no-op that returns <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">statusCode: 404</code> for unknown actions is the correct default.</p>
+                <p><strong>playAction()</strong> — Works out which step to go to from <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">goto</code> / <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">delta</code>, exactly as the spec defines it. A lower third has one step, so the first play lands on step 0: it adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.visible</code> class, waits 700ms for the slide-in, and reports <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">currentStep: 0</code>. A second play goes past the last step, so the graphic leaves the air and reports <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">currentStep: undefined</code> — that is what a controller's "next" button relies on.</p>
+                <p><strong>updateAction()</strong> — Swaps the text content. The check is <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">!== undefined</code> rather than truthiness, so an operator who empties a field actually clears it. In production you'd add a smooth text-swap animation.</p>
+                <p><strong>stopAction()</strong> — Adds the <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">.out</code> class for the exit animation and waits 500ms. Every action bumps <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">_rev</code>, and the stop only hides the graphic if nothing newer has started — otherwise an operator who hits play again mid-exit would end up with an empty screen.</p>
+                <p><strong>customAction()</strong> — OGraf requires every graphic to expose this, even without any declared in the manifest. It receives <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">{'{ id, payload, skipAnimation }'}</code>; with nothing declared, answering every <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">id</code> with a 4xx such as <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">statusCode: 404</code> is the right default.</p>
                 <p><strong>dispose()</strong> — Clears the DOM and resets <code className="font-mono text-xs bg-blue-100 px-1 py-0.5 rounded">_initialized</code> so a re-load rebuilds cleanly. Called when the graphic is removed from the renderer entirely.</p>
               </div>
             </div>
@@ -387,7 +414,7 @@ export function GetStarted() {
                 },
                 {
                   title: "Option B: Check your package",
-                  desc: "Zip your folder and drop it on /check. You'll get a structured report against 30+ rules and the live EBU schema.",
+                  desc: `Zip your folder and drop it on /check. You'll get a structured report against ${CHECK_RULES.total} rules and the live EBU schema.`,
                   link: { href: "/check", label: "Open checker" },
                 },
                 {

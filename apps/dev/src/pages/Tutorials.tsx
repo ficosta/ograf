@@ -1,8 +1,8 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { TemplateDemo } from "../components/TemplateDemo";
 import tutorials from "../content/tutorials.json";
 import type { Tutorial, TutorialDifficulty, TutorialField } from "../content/tutorials.types";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 
 const TUTORIALS = tutorials as readonly Tutorial[];
 
@@ -13,7 +13,7 @@ const DIFFICULTY_STYLES: Record<TutorialDifficulty, string> = {
 };
 
 export function Tutorials() {
-  useMeta({ title: "Tutorials", description: "Learn by building real broadcast graphics. Eleven live interactive demos with source code and step-by-step walkthroughs." });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -86,7 +86,7 @@ export function Tutorials() {
             We're always looking for new graphic types to cover — scoreboards, tickers, data visualizations, AR overlays, or anything you've seen on air and want to learn how to build.
           </p>
           <a
-            href="https://github.com/ebu/ograf/issues/new?title=Tutorial+idea:+&labels=tutorial&body=I'd+like+to+see+a+tutorial+for..."
+            href="https://github.com/ficosta/ograf/issues/new?title=Tutorial+idea:+&labels=tutorial&body=I'd+like+to+see+a+tutorial+for..."
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-slate-900 hover:ring-slate-300 hover:bg-white transition-all"

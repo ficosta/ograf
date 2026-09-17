@@ -1,21 +1,30 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TutorialManifest } from "../components/TutorialManifest";
-import tutorials from "../content/tutorials.json";
 import manifestJson from "../../public/templates/quote/quote.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import GRAPHIC_SOURCE from "../../public/templates/quote/graphic.mjs?raw";
+import STYLE_SOURCE from "../../public/templates/quote/style.css?raw";
+import { useRouteMeta } from "../hooks/useMeta";
+import { cssExcerpt, excerpt } from "../lib/excerpt";
 
-const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/quote");
 const MANIFEST = JSON.stringify(manifestJson, null, 2);
+const CSS_CODE = cssExcerpt(STYLE_SOURCE, [
+  ":where(.quote-root, .quote-root *)",
+  ".quote-root {",
+  ".quote {",
+  ".quote.visible {",
+  ".quote.visible .quote-text",
+  ".quote.visible .quote-line",
+  ".quote.visible .quote-attr",
+  ".quote-text {",
+]);
+const PLAY_CODE = excerpt(GRAPHIC_SOURCE, ["resolveTargetStep", "playAction", "stopAction"]);
 
 export function TutorialQuote() {
-  useMeta({
-    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
-    description: TUTORIAL?.desc ?? undefined,
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -54,7 +63,7 @@ export function TutorialQuote() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The staggered reveal technique</h2>
             <p className="text-base text-slate-700 mb-4">
-              The magic here is <strong className="text-slate-900">CSS transition delays</strong>. Each element starts hidden and below its final position. When the <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.visible</code> class is added, they animate in sequence:
+              The magic here is <strong className="text-slate-900">CSS transition delays</strong>. The text and attribution start transparent and slightly below their final position; the divider starts at zero width. When the <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.visible</code> class is added, they animate in sequence:
             </p>
             <div className="grid grid-cols-3 gap-3">
               {[
@@ -73,33 +82,10 @@ export function TutorialQuote() {
 
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS — staggered transitions</h2>
-            <CodeBlock filename="style.css (key parts)" language="CSS" code={`.quote {
-  position: absolute;   /* against the graphic's root, not the viewport */
-  inset: 0;            /* fills the render area */
-  opacity: 0;
-}
-
-.quote.visible { opacity: 1; transition: opacity 0.8s ease; }
-
-/* Each child has its own delay */
-.quote.visible .quote-text {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease 0.3s,       /* 300ms delay */
-              transform 0.8s ease-out 0.3s;
-}
-
-.quote.visible .quote-line {
-  transform: scaleX(1);
-  transition: transform 0.6s ease-out 0.4s;  /* 400ms delay */
-}
-
-.quote.visible .quote-attr {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.6s ease 0.5s,         /* 500ms delay */
-              transform 0.8s ease-out 0.5s;
-}`} />
+            <p className="text-base text-slate-700 mb-4">
+              Everything lives inside <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.quote-root</code>. The reset is scoped with <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">:where(.quote-root, …)</code>, so it never restyles the renderer's page, and the root fills whatever box the renderer provides with <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">position: absolute; inset: 0</code>. Each child's hidden state (like <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.quote-text</code> below) sits 20px low at zero opacity; the <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.visible</code> rules carry the delays.
+            </p>
+            <CodeBlock filename="style.css (key parts)" language="CSS" code={CSS_CODE} />
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">
@@ -129,24 +115,12 @@ export function TutorialQuote() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The playAction timing</h2>
             <p className="text-base text-slate-700 mb-4">
-              Since the staggered animation takes longer than a simple slide, the <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">playAction()</code> promise waits <strong className="text-slate-900">1200ms</strong> — enough for all three elements to finish their reveal before the renderer considers the graphic "ready."
+              Since the staggered animation takes longer than a simple slide, the <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">playAction()</code> promise waits <strong className="text-slate-900">1300ms</strong> before it resolves — the length of the slowest reveal. By then the background (1s), the quote text (0.3s delay + 0.8s), the divider (0.4s + 0.6s) and the attribution (0.5s + 0.8s) have all landed. <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">stopAction()</code> fades the whole card out over 500ms.
             </p>
-            <CodeBlock filename="graphic.mjs" language="JavaScript" code={`async playAction({ skipAnimation } = {}) {
-  this._root.classList.remove('out');
-  if (skipAnimation) {
-    this._root.classList.add('visible');
-    return { statusCode: 200, currentStep: 0 };
-  }
-  void this._root.offsetWidth;
-  this._root.classList.add('visible');
-
-  // Wait for all staggered animations to complete
-  // Quote text: 0.3s delay + 0.8s duration = 1.1s
-  // Attribution: 0.5s delay + 0.8s duration = 1.3s
-  await new Promise(r => setTimeout(r, 1200));
-
-  return { statusCode: 200, currentStep: 0 };
-}`} />
+            <p className="text-base text-slate-700 mb-4">
+              The rest follows the OGraf step model. <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">resolveTargetStep()</code> takes <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">goto</code> if given, otherwise the current step plus <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">delta</code> (default 1). The first play puts the quote on air at step 0; a second play goes past the single step, so it runs the stop and returns <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">currentStep: undefined</code>. Each action bumps <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">this._rev</code>, and a stop only removes <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.visible</code> if nothing newer has started — play → stop → play without waiting ends on air.
+            </p>
+            <CodeBlock filename="graphic.mjs (key parts)" language="JavaScript" code={PLAY_CODE} />
           </div>
 
           <TutorialManifest slug="quote" title="Full Page Quote" manifest={MANIFEST} />

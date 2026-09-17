@@ -1,21 +1,20 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TutorialManifest } from "../components/TutorialManifest";
-import tutorials from "../content/tutorials.json";
 import manifestJson from "../../public/templates/bug/bug.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import GRAPHIC_SOURCE from "../../public/templates/bug/graphic.mjs?raw";
+import STYLE_SOURCE from "../../public/templates/bug/style.css?raw";
+import { useRouteMeta } from "../hooks/useMeta";
+import { cssExcerpt } from "../lib/excerpt";
 
-const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/bug");
 const MANIFEST = JSON.stringify(manifestJson, null, 2);
+const CSS_CODE = cssExcerpt(STYLE_SOURCE, [".bug {", ".bug.visible", ".bug.out"]);
 
 export function TutorialBug() {
-  useMeta({
-    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
-    description: TUTORIAL?.desc ?? undefined,
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -73,35 +72,13 @@ export function TutorialBug() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The key CSS — scale + blur animation</h2>
             <p className="text-base text-slate-700 mb-4">
-              Instead of sliding in, the bug <strong className="text-slate-900">scales up from 50% with a blur</strong>. This creates a subtle "materializing" effect that's less intrusive than a slide — perfect for something that sits in the corner.
+              Instead of sliding in, the bug <strong className="text-slate-900">scales up from 50% with an 8px blur</strong>. The resting state lives on <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.bug</code>; the JavaScript only toggles the <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">visible</code> and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">out</code> classes. This creates a subtle "materializing" effect that's less intrusive than a slide — perfect for something that sits in the corner.
             </p>
-            <CodeBlock filename="style.css (key parts)" language="CSS" code={`.bug {
-  position: absolute;           /* Anchors to the renderer's frame, not the viewport */
-  top: 40px;
-  right: 40px;
-  transform: scale(0.5);        /* Start small */
-  opacity: 0;
-  filter: blur(8px);            /* Start blurred */
-}
-
-.bug.visible {
-  transform: scale(1);          /* Scale to full size */
-  opacity: 1;
-  filter: blur(0);              /* Sharpen */
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.4s ease,
-              filter 0.4s ease;
-}
-
-.bug.out {
-  transform: scale(0.8);        /* Shrink slightly on exit */
-  opacity: 0;
-  filter: blur(8px);
-}`} />
+            <CodeBlock filename="style.css (key parts)" language="CSS" code={CSS_CODE} />
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">
-                The out-animation shrinks to 80% (not 50%) and uses a faster easing. This asymmetry — slow in, quick out — feels natural. The eye notices the entrance but barely registers the exit.
+                The in-animation is a 0.6s ease-out that settles gently; the out-animation (<code className="font-mono text-xs bg-amber-100 px-1 py-0.5 rounded">.bug.out</code>) only shrinks to 80% (not 50%) over a shorter 0.4s ease-in-out, with opacity and blur gone in 0.3s. This asymmetry — soft in, quick out — feels natural. The eye notices the entrance but barely registers the exit.
               </p>
             </div>
           </div>
@@ -109,86 +86,15 @@ export function TutorialBug() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The Web Component</h2>
             <p className="text-base text-slate-700 mb-4">
-              Same shape as the lower third: a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">&lt;link&gt;</code> to the stylesheet (absolute URL via <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">import.meta.url</code>), a lazy <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_initDom()</code>, and all six lifecycle methods. No module-level <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customElements.define()</code> — the renderer picks the tag.
+              Same shape as the lower third: a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">&lt;link&gt;</code> to the stylesheet (absolute URL via <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">import.meta.url</code>), a lazy <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_initDom()</code>, and all six lifecycle methods. No module-level <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customElements.define()</code> — the renderer picks the tag. This is the complete file from the download:
             </p>
-            <CodeBlock filename="graphic.mjs" language="JavaScript" code={`const STYLE_URL = new URL('./style.css', import.meta.url).href;
-
-const TEMPLATE = \`
-  <link rel="stylesheet" href="\${STYLE_URL}">
-  <div class="bug">
-    <div class="bug-container">
-      <div class="bug-live">
-        <div class="bug-live-ping"></div>
-        <div class="bug-live-dot"></div>
-      </div>
-      <div class="bug-text">
-        <div class="bug-label"></div>
-        <div class="bug-sublabel"></div>
-      </div>
-    </div>
-  </div>
-\`;
-
-export default class BugGraphic extends HTMLElement {
-
-  _initDom() {
-    if (this._initialized) return;
-    this.innerHTML = TEMPLATE;
-    this._root     = this.querySelector('.bug');
-    this._label    = this.querySelector('.bug-label');
-    this._sublabel = this.querySelector('.bug-sublabel');
-    this._initialized = true;
-  }
-
-  async load({ data } = {}) {
-    this._initDom();
-    if (data?.label)    this._label.textContent    = data.label;
-    if (data?.sublabel) this._sublabel.textContent = data.sublabel;
-    return { statusCode: 200 };
-  }
-
-  async playAction({ skipAnimation } = {}) {
-    this._initDom();
-    this._root.classList.remove('out');
-    if (skipAnimation) {
-      this._root.classList.add('visible');
-      return { statusCode: 200, currentStep: 0 };
-    }
-    void this._root.offsetWidth;
-    this._root.classList.add('visible');
-    await new Promise(r => setTimeout(r, 600));
-    return { statusCode: 200, currentStep: 0 };
-  }
-
-  async stopAction({ skipAnimation } = {}) {
-    this._initDom();
-    if (skipAnimation) {
-      this._root.classList.remove('visible');
-      return { statusCode: 200 };
-    }
-    this._root.classList.add('out');
-    await new Promise(r => setTimeout(r, 400));
-    this._root.classList.remove('visible', 'out');
-    return { statusCode: 200 };
-  }
-
-  async updateAction({ data } = {}) {
-    this._initDom();
-    if (data?.label)    this._label.textContent    = data.label;
-    if (data?.sublabel) this._sublabel.textContent = data.sublabel;
-    return { statusCode: 200 };
-  }
-
-  async customAction({ action } = {}) {
-    return { statusCode: 404, description: \`Unknown custom action: \${action ?? ""}\` };
-  }
-
-  async dispose() {
-    this.innerHTML = '';
-    this._initialized = false;
-    return { statusCode: 200 };
-  }
-}`} />
+            <CodeBlock filename="graphic.mjs" language="JavaScript" code={GRAPHIC_SOURCE} />
+            <ul className="mt-4 space-y-2 text-sm text-slate-700 list-disc pl-5">
+              <li><strong className="text-slate-900">Steps.</strong> <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">resolveTargetStep()</code> follows the spec: <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">goto</code> if given, otherwise the current step (-1 before the first play) plus <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">delta</code> (default 1). The bug has one step, so the first play puts it on air at step 0 and a second play takes it off air and returns <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">currentStep: undefined</code>.</li>
+              <li><strong className="text-slate-900">Out-of-order actions.</strong> Every action bumps <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">this._rev</code>. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">stopAction()</code> only removes <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.visible</code> after its 400ms if no newer action has started, so play → stop → play sent without waiting ends on air.</li>
+              <li><strong className="text-slate-900">Partial updates.</strong> <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">load()</code> and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">updateAction()</code> apply each field that is <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">!== undefined</code>: send only <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">sublabel</code> to change it alone, or an empty string to clear it.</li>
+              <li><strong className="text-slate-900">Custom actions.</strong> The renderer calls <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customAction(&#123; id, payload, skipAnimation &#125;)</code> with an <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">id</code> from the manifest's <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customActions</code>. The bug declares none, so any id gets <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">&#123; statusCode: 404, statusMessage &#125;</code> — a 4xx is the spec's error range.</li>
+            </ul>
           </div>
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">

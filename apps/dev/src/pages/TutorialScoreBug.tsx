@@ -1,21 +1,24 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TutorialManifest } from "../components/TutorialManifest";
-import tutorials from "../content/tutorials.json";
 import manifestJson from "../../public/templates/score-bug/score-bug.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import GRAPHIC_SOURCE from "../../public/templates/score-bug/graphic.mjs?raw";
+import STYLE_SOURCE from "../../public/templates/score-bug/style.css?raw";
+import { excerpt, cssExcerpt } from "../lib/excerpt";
+import { useRouteMeta } from "../hooks/useMeta";
 
-const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/score-bug");
 const MANIFEST = JSON.stringify(manifestJson, null, 2);
+const CUSTOM_CODE = excerpt(GRAPHIC_SOURCE, ["customAction"]);
+const PLAY_CODE = excerpt(GRAPHIC_SOURCE, ["resolveTargetStep", "playAction"]);
+const GOAL_CSS = cssExcerpt(STYLE_SOURCE, [".score-bug.goal .score-bug-inner", "@keyframes goalFlash"]);
+const ACTIVE_CODE = excerpt(GRAPHIC_SOURCE, ["_updateActiveTeam"]);
+const ACTIVE_CSS = cssExcerpt(STYLE_SOURCE, [".score-team.active .score-team-name", ".score-team.active .score-value"]);
 
 export function TutorialScoreBug() {
-  useMeta({
-    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
-    description: TUTORIAL?.desc ?? undefined,
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -59,128 +62,70 @@ export function TutorialScoreBug() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">customActions</p>
-                <p className="text-sm text-slate-600 mt-1">This is the <strong>only tutorial</strong> that teaches <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customAction</code> — a method for triggering visual events (goal flash, card shown) without advancing the graphic's step.</p>
+                <p className="text-sm text-slate-600 mt-1">The manifest declares one custom action, <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">goal</code>. The renderer triggers it through <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customAction</code> to flash the bug without changing its data or its step.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Persistent position</p>
-                <p className="text-sm text-slate-600 mt-1">Unlike lower thirds that play in and out, the score bug stays on screen for the entire match. It plays in once and receives continuous updates.</p>
+                <p className="text-sm text-slate-600 mt-1">Unlike lower thirds that play in and out, the score bug stays on screen for the entire match. It plays in once, then takes partial <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">updateAction</code> calls for the score, clock and period.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Dark, compact design</p>
-                <p className="text-sm text-slate-600 mt-1">Small footprint with high contrast. Dark background ensures readability over any video content — bright pitch, crowd shots, replays.</p>
+                <p className="text-sm text-slate-600 mt-1">A small top-left card on a near-opaque dark background with a blue accent bar. It stays readable over any video: bright pitch, crowd shots, replays.</p>
               </div>
             </div>
           </div>
 
           <div>
-            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The customAction — goal flash</h2>
+            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The customAction: goal flash</h2>
             <p className="text-base text-slate-700 mb-4">
-              When a goal is scored, the playout system calls <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customAction</code> with an action name. The graphic flashes the scoring team's side, plays a brief animation, and returns to normal — all without changing the graphic's step or requiring a full update cycle.
+              When a goal is scored, the renderer calls <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">{"customAction({ id, payload, skipAnimation })"}</code> with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">id: "goal"</code>, one of the ids declared in the manifest's <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">customActions</code>. The graphic adds a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">goal</code> class for 800 ms, then removes it. Nothing else changes: the score itself arrives separately through <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">updateAction</code>. An id the graphic doesn't know gets a 404, which is how a renderer learns the action is unsupported.
             </p>
-            <CodeBlock filename="graphic.mjs (key parts)" language="JavaScript" code={`async customAction({ action, data }) {
-  if (action === 'goal') {
-    const side = data?.team === 'home' ? 'left' : 'right';
-    const scoreEl = this.querySelector(\`.score-\${side}\`);
-    const flashEl = this.querySelector('.goal-flash');
-
-    // Update the score
-    if (data?.score !== undefined) {
-      scoreEl.textContent = data.score;
-    }
-
-    // Trigger the flash animation
-    flashEl.classList.add('active');
-    scoreEl.classList.add('pulse');
-
-    await new Promise(r => setTimeout(r, 2000));
-
-    flashEl.classList.remove('active');
-    scoreEl.classList.remove('pulse');
-
-    return { statusCode: 200 };
-  }
-
-  if (action === 'card') {
-    // Show yellow/red card indicator briefly
-    const indicator = this.querySelector('.card-indicator');
-    indicator.className = \`card-indicator \${data?.cardType || 'yellow'}\`;
-    indicator.classList.add('show');
-    await new Promise(r => setTimeout(r, 3000));
-    indicator.classList.remove('show');
-    return { statusCode: 200 };
-  }
-
-  return { statusCode: 404, description: \`Unknown action: \${action}\` };
-}`} />
+            <CodeBlock filename="graphic.mjs (customAction)" language="JavaScript" code={CUSTOM_CODE} />
             <div className="mt-4 rounded-xl bg-blue-50 border border-blue-100 p-5">
               <p className="text-sm font-semibold text-blue-900">Key insight: customAction vs updateAction</p>
               <p className="mt-2 text-sm text-blue-800">
-                <code className="font-mono text-xs bg-blue-200 px-1 py-0.5 rounded">updateAction</code> changes the graphic's persistent data (score, time, team names). <code className="font-mono text-xs bg-blue-200 px-1 py-0.5 rounded">customAction</code> triggers a transient visual event — it plays an animation, then the graphic returns to its previous visual state. Think of it as a notification overlay on top of the base graphic.
+                <code className="font-mono text-xs bg-blue-200 px-1 py-0.5 rounded">updateAction</code> changes the graphic's persistent data (score, time, team names). <code className="font-mono text-xs bg-blue-200 px-1 py-0.5 rounded">customAction</code> triggers a transient visual event: it plays an animation, then the graphic returns to its previous visual state. With <code className="font-mono text-xs bg-blue-200 px-1 py-0.5 rounded">skipAnimation</code> the flash is pure animation, so there is nothing left to do and it just returns.
               </p>
             </div>
           </div>
 
           <div>
-            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS — goal flash effect</h2>
+            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">Playing in, and playing again</h2>
             <p className="text-base text-slate-700 mb-4">
-              The goal flash is a full-width overlay that pulses with the scoring team's color. The score number itself also scales up briefly with a <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">pulse</code> class.
+              The manifest says <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">stepCount: 1</code>. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">resolveTargetStep</code> applies the spec's rule: <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">goto</code> if given, otherwise the current step (-1 before the first play) plus <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">delta</code>, which defaults to 1. The first play lands on step 0 and runs the 600 ms entrance. A second play targets step 1, which is past the last step, so the graphic goes to its end: it runs <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">stopAction</code> and returns <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">currentStep: undefined</code>.
             </p>
-            <CodeBlock filename="style.css (key parts)" language="CSS" code={`.score-bug {
-  position: absolute;   /* against the graphic's root, not the viewport */
-  top: 32px;
-  left: 48px;
-  background: rgba(15, 15, 25, 0.92);
-  backdrop-filter: blur(8px);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  overflow: hidden;
-  font-family: 'Inter', system-ui, sans-serif;
-}
+            <CodeBlock filename="graphic.mjs (step model)" language="JavaScript" code={PLAY_CODE} />
+            <p className="mt-4 text-base text-slate-700">
+              Every action takes the next <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">this._rev</code>. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">stopAction</code> only removes the <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">visible</code> class if no newer action started during its 400 ms exit, so play → stop → play sent without waiting ends on air.
+            </p>
+          </div>
 
-.goal-flash {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 215, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.15s ease;
-  pointer-events: none;
-}
+          <div>
+            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS: goal flash effect</h2>
+            <p className="text-base text-slate-700 mb-4">
+              The flash is a single keyframe animation on the inner card. It keeps the card's normal drop shadow and grows a blue glow around it, peaking halfway through, then fades back to nothing. Its 0.8 s duration matches the 800 ms the graphic waits before removing the class.
+            </p>
+            <CodeBlock filename="style.css (goal flash)" language="CSS" code={GOAL_CSS} />
+          </div>
 
-.goal-flash.active {
-  opacity: 1;
-  animation: flash-pulse 0.6s ease-in-out 3;
-}
-
-@keyframes flash-pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
-}
-
-.score-left.pulse,
-.score-right.pulse {
-  animation: score-bump 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes score-bump {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.4); }
-  100% { transform: scale(1); }
-}
-
-.team-active {
-  background: rgba(255, 255, 255, 0.08);
-}`} />
+          <div>
+            <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">Highlighting the leader</h2>
+            <p className="text-base text-slate-700 mb-4">
+              After every load and update, the team with more goals gets an <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">active</code> class; on a draw neither does. Updates may be partial, so a clock-only update carries no scores: the graphic then falls back to the scores already on screen instead of dropping the highlight.
+            </p>
+            <CodeBlock filename="graphic.mjs (_updateActiveTeam)" language="JavaScript" code={ACTIVE_CODE} />
+            <div className="mt-4">
+              <CodeBlock filename="style.css (active team)" language="CSS" code={ACTIVE_CSS} />
+            </div>
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">
-                Highlight the team currently in possession by adding a subtle <code className="font-mono text-xs bg-amber-200 px-1 py-0.5 rounded">team-active</code> background class. This tiny detail — common in premium sports broadcasts — gives viewers a subconscious sense of momentum without being distracting.
+                The leader's score turns light blue and its name goes pure white. It's a small cue, common in premium sports broadcasts, that tells viewers who is ahead at a glance without adding anything to the layout. When a score does change, <code className="font-mono text-xs bg-amber-200 px-1 py-0.5 rounded">updateAction</code> also gives the number a 350 ms <code className="font-mono text-xs bg-amber-200 px-1 py-0.5 rounded">updating</code> pop.
               </p>
             </div>
           </div>
 
-          <TutorialManifest slug="score-bug" title="Score Bug" manifest={MANIFEST} intro="Notice the customActions array — that's how OGraf declares graphic-specific operations beyond play/stop. The graphic must return statusCode 404 for anything not listed." />
+          <TutorialManifest slug="score-bug" title="Score Bug" manifest={MANIFEST} intro="Notice the customActions array: that's how OGraf declares graphic-specific operations beyond play, update and stop. The renderer only sends ids listed there, and the graphic answers anything else with a 4xx (this one uses 404)." />
 
           <div className="rounded-2xl bg-blue-600 p-8 text-center">
             <Check className="h-10 w-10 text-white mx-auto mb-4" />

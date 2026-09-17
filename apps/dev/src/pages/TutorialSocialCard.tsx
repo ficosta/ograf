@@ -1,21 +1,30 @@
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import { Check, ChevronRight } from "lucide-react";
 import { TemplateDemo } from "../components/TemplateDemo";
 import { TutorialCards } from "../components/TutorialCards";
 import { CodeBlock } from "../components/CodeBlock";
 import { TutorialManifest } from "../components/TutorialManifest";
-import tutorials from "../content/tutorials.json";
 import manifestJson from "../../public/templates/social-card/social-card.ograf.json";
-import { useMeta } from "../hooks/useMeta";
+import GRAPHIC_SOURCE from "../../public/templates/social-card/graphic.mjs?raw";
+import STYLE_SOURCE from "../../public/templates/social-card/style.css?raw";
+import { useRouteMeta } from "../hooks/useMeta";
+import { cssExcerpt, excerpt } from "../lib/excerpt";
 
-const TUTORIAL = tutorials.find((t) => t.slug === "/tutorials/social-card");
 const MANIFEST = JSON.stringify(manifestJson, null, 2);
+const DATA_CODE = excerpt(GRAPHIC_SOURCE, ["_getInitials", "_applyData", "load"]);
+const PLAY_CODE = excerpt(GRAPHIC_SOURCE, ["resolveTargetStep", "playAction", "stopAction"]);
+const CSS_CODE = cssExcerpt(STYLE_SOURCE, [
+  ":where(.social-card-root, .social-card-root *)",
+  ".social {",
+  ".social.visible {",
+  ".social.out",
+  ".social-card::before",
+  ".social-avatar {",
+  ".social.visible .social-avatar",
+]);
 
 export function TutorialSocialCard() {
-  useMeta({
-    title: (TUTORIAL?.title ?? "Tutorial") + " tutorial",
-    description: TUTORIAL?.desc ?? undefined,
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
@@ -56,15 +65,15 @@ export function TutorialSocialCard() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Right-side position</p>
-                <p className="text-sm text-slate-600 mt-1">Uses <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">right: 48px</code> instead of <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">left</code>. This keeps the anchor visible on the left side of the frame — a common broadcast convention for displayed content.</p>
+                <p className="text-sm text-slate-600 mt-1">Uses <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">right: 48px; bottom: 80px</code> instead of <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">left</code>. This keeps the anchor visible on the left side of the frame — a common broadcast convention for displayed content.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Auto-generated avatar</p>
-                <p className="text-sm text-slate-600 mt-1">No image needed. The avatar circle shows the user's initials, extracted from their name with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_getInitials()</code>. Works for any name, any language.</p>
+                <p className="text-sm text-slate-600 mt-1">No image needed. The avatar circle shows the user's initials, extracted from their name with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_getInitials()</code>. Nothing to host, nothing to break.</p>
               </div>
               <div className="rounded-xl bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">Platform badge</p>
-                <p className="text-sm text-slate-600 mt-1">A small badge indicates the source platform (X, Instagram, etc.). This provides editorial transparency — viewers know where the post came from.</p>
+                <p className="text-sm font-semibold text-slate-900">Two-stage entrance</p>
+                <p className="text-sm text-slate-600 mt-1">The card slides in from off-screen right with a light blur over 0.7s, and the avatar pops in 0.35s later on an overshooting curve — all from CSS, keyed off one <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.visible</code> class.</p>
               </div>
             </div>
           </div>
@@ -72,128 +81,25 @@ export function TutorialSocialCard() {
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The initials method</h2>
             <p className="text-base text-slate-700 mb-4">
-              Instead of requiring a profile photo URL (which may break, be low-res, or have rights issues), the social card generates an avatar from the user's name. The <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_getInitials</code> method takes the first letter of each word in the name.
+              Instead of requiring a profile photo URL (which may break, be low-res, or have rights issues), the social card generates an avatar from the user's name. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_getInitials</code> splits the name on spaces, takes the first letter of each word, upper-cases them and keeps the first two: "Jane Smith" → "JS", "Dr. Martin King" → "DM", "Madonna" → "M", and an empty name → an empty avatar. <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">_applyData</code> is shared by <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">load()</code> and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">updateAction()</code>; it applies each field that is <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">!== undefined</code>, so a partial update touches only the fields you send and an empty string clears one. It also accepts an optional <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">platform</code> string for the dark badge in the header. The manifest schema doesn't declare it, so by default the badge is empty — and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.social-platform:empty</code> hides it rather than leaving a blank capsule.
             </p>
-            <CodeBlock filename="graphic.mjs (key parts)" language="JavaScript" code={`_getInitials(name) {
-  if (!name) return '?';
-  return name
-    .split(' ')
-    .filter(word => word.length > 0)
-    .map(word => word[0].toUpperCase())
-    .slice(0, 2)
-    .join('');
-}
-
-// "Jane Smith"       → "JS"
-// "Dr. Martin King"  → "DM"  (first two words)
-// "Madonna"          → "M"
-// ""                 → "?"
-
-async load({ data }) {
-  if (data?.user) {
-    this._userName.textContent = data.user;
-    this._avatar.textContent = this._getInitials(data.user);
-  }
-  if (data?.handle) this._handle.textContent = data.handle;
-  if (data?.text) this._postText.textContent = data.text;
-  return { statusCode: 200 };
-}
-
-async playAction() {
-  this._root.classList.add('visible');
-  await new Promise(r => setTimeout(r, 600));
-  return { statusCode: 200, currentStep: 0 };
-}
-
-async stopAction() {
-  this._root.classList.add('out');
-  await new Promise(r => setTimeout(r, 400));
-  this._root.classList.remove('visible', 'out');
-  return { statusCode: 200 };
-}`} />
+            <CodeBlock filename="graphic.mjs (key parts)" language="JavaScript" code={DATA_CODE} />
+            <p className="text-base text-slate-700 mt-6 mb-4">
+              Playing and stopping follow the OGraf step model. The first play puts the card on air at step 0 and resolves after 700ms; a second play goes past the single step, runs the stop and returns <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">currentStep: undefined</code>. Every action bumps <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">this._rev</code>, and the stop only removes <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.visible</code> after its 500ms if nothing newer has started — so play → stop → play sent without waiting ends on air.
+            </p>
+            <CodeBlock filename="graphic.mjs (play and stop)" language="JavaScript" code={PLAY_CODE} />
           </div>
 
           <div>
             <h2 className="font-display text-2xl tracking-tight text-slate-900 mb-4">The CSS — right-side card with blue accent</h2>
             <p className="text-base text-slate-700 mb-4">
-              The card slides in from the right edge with a blue left-border accent. The avatar circle uses a gradient background that gives each card a unique but consistent feel.
+              The card slides in from the right edge: <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.social</code> starts at <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">translateX(120%)</code>, transparent and blurred, and <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">.social.out</code> sends it back over 0.5s. A 4px gradient bar drawn with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">::before</code> gives the white card its blue left accent, and the avatar is a solid blue circle that scales up from 40%. The reset is scoped with <code className="font-mono text-xs bg-slate-200 px-1 py-0.5 rounded">:where(.social-card-root, …)</code> so it never restyles the renderer's page.
             </p>
-            <CodeBlock filename="style.css (key parts)" language="CSS" code={`.social-card {
-  position: absolute;   /* against the graphic's root, not the viewport */
-  top: 50%;
-  right: 48px;
-  transform: translateY(-50%) translateX(30px);
-  width: 360px;
-  background: rgba(15, 15, 25, 0.92);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  border-left: 3px solid #3b82f6;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.5s ease,
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.social-card.visible {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-
-.social-card.out {
-  opacity: 0;
-  transform: translateY(-50%) translateX(30px);
-  transition-duration: 0.3s;
-}
-
-.social-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
-  color: white;
-  flex-shrink: 0;
-}
-
-.social-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.social-user-name {
-  font-weight: 600;
-  color: white;
-  font-size: 15px;
-}
-
-.social-handle {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-}
-
-.social-text {
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.social-platform {
-  margin-top: 12px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.35);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}`} />
+            <CodeBlock filename="style.css (key parts)" language="CSS" code={CSS_CODE} />
             <div className="mt-4 rounded-xl bg-amber-50 border border-amber-100 p-5">
               <p className="text-sm font-semibold text-amber-900">Design tip</p>
               <p className="mt-2 text-sm text-amber-800">
-                The avatar circle uses the first letter of each word in the user's name — "Jane Smith" becomes "JS". This avoids the need for external image assets entirely. The gradient background ensures the circle always looks intentional, not like a missing image fallback.
+                The avatar circle uses the first letter of each word in the user's name — "Jane Smith" becomes "JS". This avoids the need for external image assets entirely. The solid brand-blue fill and the delayed pop-in make the circle look intentional, not like a missing image fallback.
               </p>
             </div>
           </div>
