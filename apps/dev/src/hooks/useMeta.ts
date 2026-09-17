@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router";
 import routeMeta from "../i18n/meta.json";
 import {
+  DEFAULT_LOCALE,
   LOCALES,
   LOCALE_TAGS,
   OG_LOCALES,
@@ -32,6 +33,11 @@ const META = routeMeta as Readonly<Record<Locale, Readonly<Record<string, RouteM
 export function metaFor(path: string, locale: Locale): RouteMeta {
   const table = META[locale];
   return table[stripLocale(path)] ?? table["*"]!;
+}
+
+/** A path with no entry of its own is the Not Found page. */
+function isKnownRoute(path: string): boolean {
+  return stripLocale(path) in META[DEFAULT_LOCALE];
 }
 
 /**
@@ -75,7 +81,9 @@ export function useMeta({ title, description, ogImage }: UseMetaOptions): void {
     setMeta("twitter:title", fullTitle);
     setMeta("twitter:description", desc);
     setMeta("twitter:image", image);
-    setAlternates(pathname);
+    // The Not Found page is served for every unknown URL, so it must not claim
+    // a canonical or hreflang set of its own — it is noindex.
+    if (isKnownRoute(pathname)) setAlternates(pathname);
   }, [title, description, ogImage, pathname]);
 }
 

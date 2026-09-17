@@ -151,5 +151,23 @@ for (const route of routes()) {
   written++;
 }
 
+// --- 404 -----------------------------------------------------------------
+// Bunny serves this file for any path that is not in storage. It is the plain
+// shell, not a prerendered page: the client router reads the URL and renders
+// the Not Found page in the language of the /pt or /es prefix it finds. It
+// carries noindex because it is served for every unknown URL, and the CDN
+// returns it with a real 404 status, so a typo'd link can no longer be indexed
+// as a copy of the homepage.
+const notFound = META[DEFAULT_LOCALE]["*"];
+let shell = template;
+shell = setTag(shell, /<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(notFound.title)} · ${SITE_NAME}</title>`);
+shell = setTag(
+  shell,
+  /<meta name="description" content="[^"]*"\s*\/>/,
+  `<meta name="description" content="${escapeHtml(notFound.description)}" />\n    <meta name="robots" content="noindex" />`,
+);
+shell = shell.replace(/<link rel="canonical" href="[^"]*"\s*\/>\n?\s*/, "");
+writeFileSync(join(distDir, "404.html"), shell);
+
 rmSync(ssrDir, { recursive: true, force: true });
-console.log(`prerendered ${written} routes`);
+console.log(`prerendered ${written} routes + 404.html`);

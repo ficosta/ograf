@@ -33,10 +33,18 @@ const LOCALES = ["en", "pt", "es"];
 const LOCALE_TAGS = { en: "en", pt: "pt-BR", es: "es-ES" };
 const localizePath = (path, locale) =>
   locale === "en" ? path : path === "/" ? `/${locale}` : `/${locale}${path}`;
+
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const SRC = "apps/dev/src";
 const CONTENT = `${SRC}/content`;
+
+/**
+ * A translated page also changes when its translation changes, which lives
+ * outside the English page's own files. Those paths are added to the pt/es
+ * entries only, so editing a translation does not re-date the English pages.
+ */
+const TRANSLATION_SOURCES = [`${SRC}/i18n/copy`, `${SRC}/i18n/messages`, `${SRC}/i18n/meta.json`, `${CONTENT}/i18n`];
 
 /** Shared chrome. Changing the navbar does not make every page "new". */
 const STATIC_ROUTES = [
@@ -103,6 +111,11 @@ function lastmodFor(sources) {
   return lastCommit(sources) ?? TODAY;
 }
 
+/** Both are ISO dates, so string comparison is date comparison. */
+function maxDate(a, b) {
+  return a > b ? a : b;
+}
+
 async function main() {
   const tutorials = JSON.parse(await readFile(tutorialsPath, "utf8"));
 
@@ -136,7 +149,14 @@ async function main() {
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_ORIGIN}${path}"/>`,
     ].join("\n");
 
-  const entries = LOCALES.flatMap((locale) => urls.map((u) => ({ ...u, locale })));
+  const translatedAt = lastmodFor(TRANSLATION_SOURCES);
+  const entries = LOCALES.flatMap((locale) =>
+    urls.map((u) => ({
+      ...u,
+      locale,
+      lastmod: locale === "en" ? u.lastmod : maxDate(u.lastmod, translatedAt),
+    })),
+  );
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
