@@ -1,3 +1,4 @@
+import { Link } from "../../i18n/Link";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -107,12 +108,12 @@ export function AiHelperSection() {
 
         <p className="mt-10 text-xs text-slate-400">
           A heads-up: AI output is a great <em>draft</em>, never a final answer. Always run what you get through the{" "}
-          <a
-            href="/tools/check"
+          <Link
+            to="/check"
             className="underline decoration-slate-500 underline-offset-2 hover:text-blue-300 hover:decoration-blue-400"
           >
             Package Checker
-          </a>{" "}
+          </Link>{" "}
           before shipping.
         </p>
       </div>

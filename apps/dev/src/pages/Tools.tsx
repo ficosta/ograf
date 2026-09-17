@@ -1,6 +1,7 @@
-import { Link } from "react-router";
-import { ArrowRight, ShieldCheck, Play, Wand2, FileSearch, Clock } from "lucide-react";
-import { useMeta } from "../hooks/useMeta";
+import { Link } from "../i18n/Link";
+import { ArrowRight, ShieldCheck, Wand2, FileSearch, Clock } from "lucide-react";
+import { useRouteMeta } from "../hooks/useMeta";
+import CHECK_RULES from "../content/check-rules.json";
 
 interface Tool {
   readonly name: string;
@@ -19,21 +20,11 @@ const TOOLS: readonly Tool[] = [
     slug: "check",
     tagline: "Validate a .zip before you ship.",
     description:
-      "Drop any OGraf package and get a structured report against 82 rules across manifest, data schema (GDD), structure, module, styling, assets and runtime. Validates against the official EBU schema — live, with a pinned offline snapshot as fallback. Runs entirely in your browser — no upload.",
+      `Drop any OGraf package and get a structured report against ${CHECK_RULES.total} rules across manifest, data schema (GDD), structure, module, styling, assets and runtime. Validates against the official EBU schema — live, with a pinned offline snapshot as fallback. Runs entirely in your browser — no upload.`,
     icon: ShieldCheck,
     href: "/check",
     status: "available",
     badge: "New",
-  },
-  {
-    name: "Runtime Harness",
-    slug: "runtime",
-    tagline: "Load your package and drive the lifecycle.",
-    description:
-      "Mount a package in a sandboxed iframe and call load / playAction / updateAction / stopAction / customAction / dispose for real — plus goToTime and setActionsSchedule when the manifest declares non-real-time support. Captures timings, return values, console output and a live preview, and adds 14 runtime checks to the report. Built into the Package Checker.",
-    icon: Play,
-    href: "/check",
-    status: "available",
   },
   {
     name: "Schema Explorer",
@@ -58,11 +49,7 @@ const TOOLS: readonly Tool[] = [
 ];
 
 export function Tools() {
-  useMeta({
-    title: "Tools",
-    description:
-      "OGraf developer tools on ograf.dev — a client-side package checker with 82 rules and a runtime sandbox, plus a schema explorer. All browser-based, no upload.",
-  });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">

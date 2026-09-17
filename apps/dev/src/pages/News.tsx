@@ -26,7 +26,7 @@ import {
   type Presentation,
   type Video,
 } from "../content/news";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -295,7 +295,7 @@ function PresentationCard({ item }: { item: Presentation }) {
 }
 
 export function News() {
-  useMeta({ title: "News & Events", description: "OGraf news, upcoming events, presentations, videos, and community signals." });
+  useRouteMeta();
   const { upcoming, past } = partitionEvents(EVENTS);
   const newsByYear = groupNewsByYear(NEWS_ITEMS);
   const newsYears = Object.keys(newsByYear).sort().reverse();
@@ -540,7 +540,7 @@ export function News() {
             Article, talk, deck, video, or community thread — if it's OGraf-relevant, we want to list it. Open an issue and we'll add it.
           </p>
           <a
-            href="https://github.com/ebu/ograf/issues/new"
+            href="https://github.com/ficosta/ograf/issues/new?title=News+or+resource:+&body=Link:%0AWhy+it%27s+OGraf-relevant:"
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 py-2 px-4 text-sm font-semibold text-white hover:bg-blue-500"

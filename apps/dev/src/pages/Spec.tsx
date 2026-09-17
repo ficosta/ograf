@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "../i18n/Link";
 import {
   Lightbulb, Palette, Package, Tv, Download, Play, RefreshCw, Square, Trash2,
   FolderOpen, FileJson, Settings, Image, Type, AlignLeft, List, Pipette, Percent,
@@ -8,7 +8,8 @@ import {
 import { TutorialCards } from "../components/TutorialCards";
 import { WorkflowDiagram } from "../components/WorkflowDiagram";
 import { CodeBlock } from "../components/CodeBlock";
-import { useMeta } from "../hooks/useMeta";
+import { useRouteMeta } from "../hooks/useMeta";
+import CHECK_RULES from "../content/check-rules.json";
 
 function Callout({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
@@ -155,7 +156,7 @@ const NAV_ITEMS = [
 ];
 
 export function Spec() {
-  useMeta({ title: "Specification Guide", description: "How OGraf works, explained plainly. Packaging, manifests, the Web Component lifecycle, and data schemas — without jargon." });
+  useRouteMeta();
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -254,7 +255,7 @@ export function Spec() {
               </Visual>
 
               <div className="space-y-4 text-base text-slate-700">
-                <p>The only required file is the manifest (<code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.ograf.json</code>). Everything else is up to you — use any fonts, images, CSS frameworks, or JavaScript libraries you want.</p>
+                <p>Two files are required: the manifest (<code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">.ograf.json</code>) and the JavaScript module its <code className="text-sm font-mono bg-slate-100 px-1.5 py-0.5 rounded">main</code> field points to. Everything else is up to you — bundle any fonts, images, CSS or JavaScript libraries the graphic needs inside the package.</p>
               </div>
 
               <Callout icon={<Palette className="h-4 w-4" />} title="For After Effects designers">
@@ -604,7 +605,7 @@ export function Spec() {
                 <Link to="/check" className="flex flex-col rounded-2xl p-6 ring-1 ring-slate-200 hover:shadow-lg hover:shadow-slate-900/5 transition-shadow">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 mb-3"><CheckCircle className="h-5 w-5 text-blue-600" /></div>
                   <p className="font-display text-lg text-slate-900">Check your package</p>
-                  <p className="mt-2 text-sm text-slate-500 flex-1">Drop a .zip and get a structured report against 30+ rules and the live EBU schema.</p>
+                  <p className="mt-2 text-sm text-slate-500 flex-1">Drop a .zip and get a structured report against {CHECK_RULES.total} rules and the live EBU schema.</p>
                   <p className="mt-4 text-sm font-medium text-blue-600">Open the checker &rarr;</p>
                 </Link>
               </div>
