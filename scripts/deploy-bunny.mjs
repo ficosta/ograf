@@ -22,7 +22,7 @@
  */
 
 import { readdirSync, readFileSync } from "node:fs";
-import { extname, join, posix, sep } from "node:path";
+import { extname, join, posix, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 // Critical: Bunny Storage doesn't set Content-Type from extension on its own,
@@ -83,7 +83,11 @@ if (missing.length) {
   process.exit(1);
 }
 
-const DIST_DIR = fileURLToPath(new URL("../apps/dev/dist/", import.meta.url));
+// Defaults to the ograf.dev build; BUNNY_DIST_DIR points it at another one
+// (studio.ograf.tools ships the OGraf Studio editor from its own storage zone).
+const DIST_DIR = process.env.BUNNY_DIST_DIR
+  ? resolve(process.env.BUNNY_DIST_DIR) + "/"
+  : fileURLToPath(new URL("../apps/dev/dist/", import.meta.url));
 const CONCURRENCY = 8;
 
 function walk(dir, base = dir) {
@@ -129,7 +133,7 @@ async function purgeCache() {
 
 async function main() {
   const files = walk(DIST_DIR);
-  console.log(`Uploading ${files.length} files from apps/dev/dist/ to "${BUNNY_STORAGE_ZONE}"…`);
+  console.log(`Uploading ${files.length} files from ${DIST_DIR} to "${BUNNY_STORAGE_ZONE}"…`);
 
   let done = 0;
   const queue = [...files];
