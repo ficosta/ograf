@@ -30,10 +30,10 @@ export function checkStructure(pkg: Pkg): readonly Finding[] {
     findings.push({
       id: "S-01",
       category: "structure",
-      severity: "warning",
-      title: "No single top-level folder",
+      severity: "info",
+      title: "Files at the zip root",
       message:
-        "The zip extracts its files directly to the current directory. Wrapping them in a folder named after your package (e.g. `bug/`) is friendlier for operators who unzip it.",
+        "The manifest sits at the root of the zip, which is how the EBU's own example packages ship. Wrapping everything in one folder named after the package (e.g. `bug/`) is an optional courtesy for operators who unzip by hand.",
     });
   } else {
     findings.push({

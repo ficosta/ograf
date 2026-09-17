@@ -133,14 +133,20 @@
               result = await el.load({
                 data: msg.data,
                 renderType: "realtime",
-                renderCharacteristics: {},
+                // What a real playout renderer reports. The stage below is
+                // 1920×1080, so that is the resolution the graphic gets.
+                renderCharacteristics: {
+                  resolution: { width: 1920, height: 1080 },
+                  frameRate: 50,
+                  accessToPublicInternet: true,
+                },
               });
               break;
             case "playAction":
               result = await el.playAction(msg.payload ?? {});
               break;
             case "updateAction":
-              result = await el.updateAction({ data: msg.data });
+              result = await el.updateAction({ data: msg.data, skipAnimation: msg.skipAnimation === true });
               break;
             case "stopAction":
               result = await el.stopAction(msg.payload ?? {});

@@ -56,14 +56,6 @@ function createBestPracticeWarnings(
     });
   }
 
-  if (!manifest["license"]) {
-    warnings.push({
-      severity: "info",
-      message: "Consider specifying a license (SPDX identifier recommended)",
-      path: "/license",
-    });
-  }
-
   if (!manifest["author"]) {
     warnings.push({
       severity: "info",

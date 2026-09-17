@@ -3,6 +3,7 @@ import { AlertCircle, Play, Square, RefreshCw, Trash2, Zap, Loader2 } from "luci
 import type { Pkg } from "../../lib/check/types";
 import { startSession, releaseSession } from "../../lib/check/runtime/session";
 import { Harness } from "../../lib/check/runtime/harness";
+import { PLAY_TO_END_LABEL, extractStepCount } from "../../lib/check/runtime/rules";
 import type {
   ConsoleLine,
   HarnessEvent,
@@ -57,6 +58,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
     return m && typeof m === "object" ? (m as { schema?: unknown }).schema : undefined;
   }, [pkg.manifest]);
   const customActions = useMemo(() => extractCustomActions(pkg.manifest), [pkg.manifest]);
+  const stepCount = useMemo(() => extractStepCount(pkg.manifest), [pkg.manifest]);
   /** Only drive goToTime / setActionsSchedule when the graphic advertises them. */
   const supportsNonRealTime = useMemo(() => {
     const m = pkg.manifest;
@@ -256,12 +258,24 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
         await new Promise((r) => setTimeout(r, 600));
         await callAction(harness, "updateAction", "updateAction({ data })", { data: formData });
         await callAction(harness, "stopAction", "stopAction({})", { payload: {} });
+        if (stepCount >= 1) {
+          // Walk every declared step, then one more: the spec says that last
+          // play must take the graphic to the end (R-15). A dynamic step count
+          // (-1) has no known end, and a zero-step graphic ends by itself.
+          for (let step = 0; step < stepCount; step++) {
+            await callAction(harness, "playAction", "playAction({})", { payload: {} });
+          }
+          await callAction(harness, "playAction", PLAY_TO_END_LABEL, { payload: {} });
+          await callAction(harness, "stopAction", "stopAction({ skipAnimation: true })", {
+            payload: { skipAnimation: true },
+          });
+        }
         await callAction(harness, "customAction", `customAction("${UNKNOWN_ACTION}")`, {
-          payload: { action: UNKNOWN_ACTION },
+          payload: { id: UNKNOWN_ACTION, payload: null },
         });
         for (const action of customActions) {
           await callAction(harness, "customAction", `customAction("${action.id}")`, {
-            payload: { action: action.id, data: action.defaultData },
+            payload: { id: action.id, payload: action.defaultData ?? null },
           });
         }
         if (supportsNonRealTime) {
@@ -284,7 +298,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
         setBusy(null);
       }
     },
-    [callAction, customActions, formData, supportsNonRealTime]
+    [callAction, customActions, formData, stepCount, supportsNonRealTime]
   );
 
   // Manual controls
@@ -420,7 +434,7 @@ export function RuntimePanel({ pkg, onSessionChange }: RuntimePanelProps) {
                   onClick={() =>
                     manual((h) =>
                       callAction(h, "customAction", `customAction("${ca.id}")`, {
-                        payload: { action: ca.id, data: ca.defaultData },
+                        payload: { id: ca.id, payload: ca.defaultData ?? null },
                       })
                     )
                   }

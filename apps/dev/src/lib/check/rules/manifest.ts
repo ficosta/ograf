@@ -202,17 +202,9 @@ export async function checkManifest(pkg: Pkg): Promise<readonly Finding[]> {
       specRef: SPEC_GRAPHICS,
     });
   }
-  if (typeof manifest.license !== "string" || manifest.license.length === 0) {
-    findings.push({
-      id: "M-07",
-      category: "manifest",
-      severity: "info",
-      title: "Optional — no license declared",
-      message:
-        "Optional. Declaring a `license` (SPDX identifier recommended, e.g. `MIT`) reduces ambiguity for distributors.",
-      path: `${pkg.manifestPath}/license`,
-    });
-  }
+  // No license hint here: the manifest schema has no `license` field and
+  // rejects unknown top-level keys, so suggesting one would make a valid
+  // package invalid. A LICENSE file in the package (S-05) is the right place.
 
   // M-08: main file exists
   if (typeof manifest.main === "string" && manifest.main.length > 0) {

@@ -9,6 +9,10 @@ interface ReturnShape {
 }
 
 const SPEC_LIFECYCLE = "https://ograf.ebu.io/#lifecycle";
+const SPEC_PLAY_ACTION = "https://ograf.ebu.io/v1/specification/docs/Specification.html#playaction";
+
+/** Label of the smoke-run call that plays one step past the last one (R-15). */
+export const PLAY_TO_END_LABEL = "playAction({}) past the last step";
 
 /**
  * Turns a live RuntimeSession into a list of R-* findings added to the
@@ -51,11 +55,40 @@ export function buildRuntimeFindings(
     byAction.set(c.action, arr);
   }
 
+  const stepCount = extractStepCount(manifest);
+  // The first play from the start state is the one whose step is predictable:
+  // step 0, or undefined for a zero-step graphic. Later plays depend on what
+  // ran before them, so R-03 judges only the first.
+  const plays = byAction.get("playAction")?.filter((c) => c.label !== PLAY_TO_END_LABEL);
   addLifecycleFinding(findings, byAction.get("load"), "R-02", "load");
-  addLifecycleFinding(findings, byAction.get("playAction"), "R-03", "playAction", { requireCurrentStep: true });
+  addLifecycleFinding(findings, plays?.slice(0, 1), "R-03", "playAction", {
+    expectCurrentStep: stepCount === 0 ? "undefined" : "number",
+  });
   addLifecycleFinding(findings, byAction.get("updateAction"), "R-04", "updateAction");
   addLifecycleFinding(findings, byAction.get("stopAction"), "R-05", "stopAction");
   addLifecycleFinding(findings, byAction.get("dispose"), "R-07", "dispose");
+
+  // R-15: the step model. "When the target step is higher or equal to the
+  // stepCount … the Graphic MUST transition to the end", and the reply's
+  // currentStep MUST be undefined. A graphic that ignores goto/delta keeps
+  // replaying step 0 and a controller's "next" never takes it off air.
+  const toEnd = session.calls.find((c) => c.label === PLAY_TO_END_LABEL);
+  if (toEnd && !toEnd.error) {
+    const shape = describeReturn(toEnd.result);
+    const reachedEnd = shape.isObject && shape.currentStep === undefined;
+    findings.push({
+      id: "R-15",
+      category: "runtime",
+      severity: reachedEnd ? "pass" : "error",
+      title: reachedEnd
+        ? "Playing past the last step goes to the end"
+        : "Playing past the last step does not go to the end",
+      message: reachedEnd
+        ? `After ${stepCount} step${stepCount === 1 ? "" : "s"}, one more playAction({}) returned currentStep undefined.`
+        : `After ${stepCount} step${stepCount === 1 ? "" : "s"}, one more playAction({}) must take the graphic to the end and return currentStep: undefined. Got ${formatReturn(toEnd)}. Work out the target step from goto/delta as the spec describes.`,
+      specRef: SPEC_PLAY_ACTION,
+    });
+  }
 
   // R-13 / R-14: the non-real-time pair, asserted only when the manifest says
   // the graphic supports it — a real-time-only graphic is right not to have them.
@@ -64,7 +97,9 @@ export function buildRuntimeFindings(
     addLifecycleFinding(findings, byAction.get("goToTime"), "R-14", "goToTime");
   }
 
-  // R-06: unknown customAction should return a 404-class statusCode.
+  // R-06: an id the manifest does not declare. The spec only obliges the
+  // renderer to send declared ids, so failing loudly is good practice rather
+  // than a requirement — the EBU's l3rd-name example resolves undefined here.
   const customUnknown = session.calls.find(
     (c) =>
       c.action === "customAction" &&
@@ -77,13 +112,13 @@ export function buildRuntimeFindings(
     findings.push({
       id: "R-06",
       category: "runtime",
-      severity: reasonableFallback ? "pass" : "warning",
+      severity: reasonableFallback ? "pass" : "info",
       title: reasonableFallback
         ? "Unknown customAction returns a non-success statusCode"
-        : "Unknown customAction does not return a 4xx statusCode",
+        : "Unknown customAction reports success",
       message: reasonableFallback
         ? `Called customAction with "__ograf_unknown__"; graphic returned statusCode ${shape.statusCode}. Good — the fallback path works.`
-        : `customAction for an unknown action should return statusCode >= 400 (404 is typical). Got ${formatReturn(customUnknown)}.`,
+        : `Optional. Answering an id the manifest does not declare with a 4xx (400 or 404 are typical) makes a controller's typo visible instead of silently doing nothing. Got ${formatReturn(customUnknown)}.`,
       specRef: SPEC_LIFECYCLE,
     });
   }
@@ -156,7 +191,10 @@ export function buildRuntimeFindings(
     if (hits.length === 0) continue;
     const last = hits[hits.length - 1];
     const shape = describeReturn(last.result);
-    const ok = !last.error && shape.isObject && typeof shape.statusCode === "number" && shape.statusCode >= 200 && shape.statusCode < 300;
+    const ok =
+      !last.error &&
+      (last.result === undefined ||
+        (shape.isObject && typeof shape.statusCode === "number" && shape.statusCode >= 200 && shape.statusCode < 300));
     findings.push({
       id: "R-12",
       category: "runtime",
@@ -179,7 +217,7 @@ function addLifecycleFinding(
   calls: readonly RuntimeCall[] | undefined,
   id: string,
   label: string,
-  opts: { requireCurrentStep?: boolean } = {}
+  opts: { expectCurrentStep?: "number" | "undefined" } = {}
 ): void {
   if (!calls || calls.length === 0) {
     findings.push({
@@ -199,6 +237,20 @@ function addLifecycleFinding(
       severity: "error",
       title: `${label}() threw`,
       message: last.error,
+    });
+    return;
+  }
+  // "If the returned Promise resolves to undefined, it MUST be treated as a
+  // { statusCode: 200 }." playAction is the exception: it has to report
+  // currentStep, so it always resolves to an object.
+  const mayBeUndefined = opts.expectCurrentStep === undefined;
+  if (last.result === undefined && mayBeUndefined) {
+    findings.push({
+      id,
+      category: "runtime",
+      severity: "pass",
+      title: `${label}() resolved (undefined counts as success)`,
+      message: `Resolved to undefined, which the spec treats as { statusCode: 200 }. Completed in ${last.durationMs.toFixed(0)} ms.`,
     });
     return;
   }
@@ -224,14 +276,25 @@ function addLifecycleFinding(
     });
     return;
   }
-  if (opts.requireCurrentStep && typeof shape.currentStep !== "number") {
+  if (opts.expectCurrentStep === "number" && typeof shape.currentStep !== "number") {
     findings.push({
       id,
       category: "runtime",
       severity: "warning",
       title: `${label}() did not return \`currentStep: number\``,
-      message: `playAction is expected to return { statusCode, currentStep: number }. Got currentStep: ${JSON.stringify(shape.currentStep)}.`,
-      specRef: SPEC_LIFECYCLE,
+      message: `The first playAction from the start lands on step 0, so it should return { statusCode, currentStep: 0 }. Got currentStep: ${JSON.stringify(shape.currentStep)}.`,
+      specRef: SPEC_PLAY_ACTION,
+    });
+    return;
+  }
+  if (opts.expectCurrentStep === "undefined" && shape.currentStep !== undefined) {
+    findings.push({
+      id,
+      category: "runtime",
+      severity: "warning",
+      title: `${label}() returned a currentStep for a zero-step graphic`,
+      message: `The manifest declares stepCount: 0, and "in case stepCount is equal to zero … the currentStep field in the response MUST be undefined". Got currentStep: ${JSON.stringify(shape.currentStep)}.`,
+      specRef: SPEC_PLAY_ACTION,
     });
     return;
   }
@@ -240,7 +303,7 @@ function addLifecycleFinding(
     category: "runtime",
     severity: "pass",
     title: `${label}() returned a success statusCode`,
-    message: `statusCode ${shape.statusCode}${opts.requireCurrentStep && typeof shape.currentStep === "number" ? `, currentStep ${shape.currentStep}` : ""}. Completed in ${last.durationMs.toFixed(0)} ms.`,
+    message: `statusCode ${shape.statusCode}${typeof shape.currentStep === "number" ? `, currentStep ${shape.currentStep}` : ""}. Completed in ${last.durationMs.toFixed(0)} ms.`,
   });
 }
 
@@ -271,6 +334,13 @@ function formatReturn(call: RuntimeCall): string {
 
 function formatError(e: RuntimeError): string {
   return e.stack ?? e.message;
+}
+
+/** Manifest stepCount; absent means 1, per the spec. */
+export function extractStepCount(manifest: unknown): number {
+  if (!manifest || typeof manifest !== "object") return 1;
+  const value = (manifest as { stepCount?: unknown }).stepCount;
+  return typeof value === "number" && Number.isInteger(value) ? value : 1;
 }
 
 function extractDeclaredActions(manifest: unknown): readonly string[] {

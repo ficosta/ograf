@@ -77,7 +77,7 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
       severity: "error",
       title: `Missing lifecycle method${missing.length > 1 ? "s" : ""}: ${missing.join(", ")}`,
       message:
-        "Real OGraf players call every lifecycle method as part of their spec-compliance check. Declare each as `async` on the class; return `{ statusCode: 200 }` (or `{ statusCode: 404 }` for no-op customAction).",
+        "Real OGraf players call every lifecycle method as part of their spec-compliance check. Declare each as `async` on the class; return `{ statusCode: 200 }` (or a 4xx such as `{ statusCode: 404 }` from customAction for an id it does not know).",
       path: mainPath,
       specRef: "https://ograf.ebu.io/#lifecycle",
     });
@@ -109,8 +109,10 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
 
   // C-04: lifecycle methods are async.
   // Every occurrence is considered, not just the first: a class can declare
-  // the method well after some other reference to it, and only a declaration
-  // that is actually `async` counts as compliant.
+  // the method well after some other reference to it. The spec only requires
+  // a returned Promise, which a plain method can return too — the EBU's own
+  // bar-chart, headline and weather examples do exactly that — so this is a
+  // style hint, and the runtime run is what proves a Promise comes back.
   const nonAsync: string[] = [];
   for (const method of LIFECYCLE_METHODS) {
     const decl = new RegExp(`(?:^|[\\s{;])(async\\s+)?${method}\\s*\\(`, "g");
@@ -122,12 +124,44 @@ export function checkModule(pkg: Pkg): readonly Finding[] {
     findings.push({
       id: "C-04",
       category: "module",
-      severity: "warning",
-      title: `Non-async lifecycle method${nonAsync.length > 1 ? "s" : ""}: ${nonAsync.join(", ")}`,
+      severity: "info",
+      title: `Lifecycle method${nonAsync.length > 1 ? "s" : ""} not declared async: ${nonAsync.join(", ")}`,
       message:
-        "Every OGraf lifecycle method is expected to return a Promise. Declare them `async` so the renderer can `await` them without surprises.",
+        "Each lifecycle method must return a Promise. A plain method that returns one is compliant; declaring it `async` just makes that impossible to get wrong. The runtime run checks what actually comes back.",
       path: mainPath,
     });
+  }
+
+  // C-10: customAction must read `id`. The spec calls
+  // customAction({ id, payload, skipAnimation }); a graphic that destructures
+  // `action` (an old draft's name) sees undefined, so every declared custom
+  // action silently answers "unknown" in a compliant renderer.
+  const customSignature = /\bcustomAction\s*\(\s*\{([^}]*)\}/.exec(source);
+  if (customSignature) {
+    const fields = customSignature[1] ?? "";
+    const readsAction = /\baction\b/.test(fields);
+    const readsId = /\bid\b/.test(fields);
+    if (readsAction && !readsId) {
+      findings.push({
+        id: "C-10",
+        category: "module",
+        severity: "error",
+        title: "customAction reads `action` instead of `id`",
+        message:
+          "Renderers call `customAction({ id, payload, skipAnimation })`. Destructuring `{ action }` gets undefined, so every custom action falls through to the unknown-action branch on a spec-compliant renderer. Rename it to `{ id, payload }`.",
+        path: `${mainPath}:${lineOf(source, /\bcustomAction\s*\(\s*\{/) ?? 0}`,
+        specRef: "https://ograf.ebu.io/v1/specification/docs/Specification.html",
+      });
+    } else if (readsId) {
+      findings.push({
+        id: "C-10",
+        category: "module",
+        severity: "pass",
+        title: "customAction reads `id`",
+        message: "The custom action handler uses the field name renderers send.",
+        path: mainPath,
+      });
+    }
   }
 
   // C-09: a graphic that advertises non-real-time rendering must implement the

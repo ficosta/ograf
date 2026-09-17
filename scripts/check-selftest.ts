@@ -15,7 +15,7 @@
 
 import JSZip from "jszip";
 import { runChecks } from "../apps/dev/src/lib/check/index";
-import { buildRuntimeFindings } from "../apps/dev/src/lib/check/runtime/rules";
+import { PLAY_TO_END_LABEL, buildRuntimeFindings } from "../apps/dev/src/lib/check/runtime/rules";
 import type { RuntimeSession } from "../apps/dev/src/lib/check/runtime/types";
 import type { Finding } from "../apps/dev/src/lib/check/types";
 
@@ -60,7 +60,7 @@ export default class SelfTestGraphic extends HTMLElement {
   async playAction() { this._initDom(); this._root.classList.add('visible'); return { statusCode: 200, currentStep: 0 }; }
   async updateAction({ data } = {}) { this._initDom(); return { statusCode: 200 }; }
   async stopAction() { this._initDom(); return { statusCode: 200 }; }
-  async customAction({ action } = {}) { return action === 'flash' ? { statusCode: 200 } : { statusCode: 404 }; }
+  async customAction({ id } = {}) { return id === 'flash' ? { statusCode: 200 } : { statusCode: 404, statusMessage: 'Unknown custom action' }; }
   async dispose() { this.innerHTML = ''; return { statusCode: 200 }; }
 }
 `;
@@ -186,8 +186,8 @@ const CASES: [
   ["C-03", "module self-registers with customElements.define", (f) => {
     f["graphic.mjs"] = GOOD_MODULE + "\ncustomElements.define('self-test', SelfTestGraphic);\n";
   }],
-  ["C-04", "lifecycle method declared without async", (f) => {
-    f["graphic.mjs"] = GOOD_MODULE.replace("async playAction()", "playAction()");
+  ["C-10", "customAction reads `action` instead of the spec's `id`", (f) => {
+    f["graphic.mjs"] = GOOD_MODULE.replace("customAction({ id } = {}) { return id ===", "customAction({ action } = {}) { return action ===");
   }],
   ["C-05", "top-level document access", (f) => {
     f["graphic.mjs"] = "document.title = 'x';\n" + GOOD_MODULE;
@@ -304,6 +304,20 @@ const CASES: [
   }],
 ];
 
+/**
+ * Valid variations the checker once flagged. Each mirrors something the EBU's
+ * own example packages do, so a warning here would fail the reference graphics.
+ */
+const MUST_NOT_FIRE: [rule: string, what: string, mutate: (f: Files) => void, rootFolder?: null][] = [
+  ["C-04", "lifecycle method without `async` that still returns a Promise", (f) => {
+    f["graphic.mjs"] = GOOD_MODULE.replace(
+      "async playAction() { this._initDom(); this._root.classList.add('visible'); return { statusCode: 200, currentStep: 0 }; }",
+      "playAction() { this._initDom(); this._root.classList.add('visible'); return Promise.resolve({ statusCode: 200, currentStep: 0 }); }",
+    );
+  }],
+  ["S-01", "files at the zip root, as the official example zips ship", () => {}, null],
+];
+
 /** Rules that must NOT fire on the baseline — guards against false positives. */
 const MUST_BE_CLEAN = true;
 
@@ -328,17 +342,51 @@ function session(over: Partial<RuntimeSession> = {}): RuntimeSession {
 const call = (action: string, over: Record<string, unknown> = {}) =>
   ({ action, label: `${action}()`, startedAt: 0, durationMs: 5, result: OK, ...over }) as never;
 
+const ONE_STEP = { stepCount: 1, supportsNonRealTime: false, customActions: [{ id: "flash" }] };
+
 const HEALTHY = session({
   calls: [
     call("load"),
-    call("playAction", { result: { statusCode: 200, currentStep: 0 } }),
+    call("playAction", { label: "playAction({})", result: { statusCode: 200, currentStep: 0 } }),
     call("updateAction"),
     call("stopAction"),
+    call("playAction", { label: "playAction({})", result: { statusCode: 200, currentStep: 0 } }),
+    call("playAction", { label: PLAY_TO_END_LABEL, result: { statusCode: 200 } }),
+    call("customAction", { payloadPreview: '{"id":"__ograf_unknown__"}', result: { statusCode: 404, statusMessage: "Unknown" } }),
+    call("customAction", { payloadPreview: '{"id":"flash"}' }),
     call("dispose"),
   ],
 });
 
-const RUNTIME_CASES: [rule: string, what: string, s: RuntimeSession][] = [
+const withCall = (index: number, replacement: unknown) =>
+  session({ calls: HEALTHY.calls.map((c, i) => (i === index ? replacement : c)) as never });
+
+/** Sessions that are spec-compliant and must stay clean. */
+const RUNTIME_CLEAN: [what: string, s: RuntimeSession, manifest: unknown][] = [
+  ["healthy one-step session", HEALTHY, ONE_STEP],
+  // "If the returned Promise resolves to undefined, it MUST be treated as a { statusCode: 200 }."
+  ["load/update/stop/custom/dispose resolving to undefined", session({
+    calls: HEALTHY.calls.map((c) => {
+      const action = (c as { action: string }).action;
+      const unknown = ((c as { payloadPreview?: string }).payloadPreview ?? "").includes("__ograf_unknown__");
+      return action === "playAction" || unknown ? c : { ...(c as object), result: undefined };
+    }) as never,
+  }), ONE_STEP],
+  // stepCount 0: "the currentStep field in the response MUST be undefined".
+  // The spec leaves unknown ids to the renderer; the EBU's l3rd-name resolves undefined.
+  ["unknown customAction resolving to success", withCall(6, call("customAction", { payloadPreview: '{"id":"__ograf_unknown__"}' })), ONE_STEP],
+  ["stepCount 0 graphic returning currentStep undefined", session({
+    calls: [call("load"), call("playAction", { label: "playAction({})", result: { statusCode: 200 } }), call("stopAction"), call("dispose")],
+  }), { stepCount: 0, supportsNonRealTime: false }],
+];
+
+const RUNTIME_CASES: [rule: string, what: string, s: RuntimeSession, manifest?: unknown][] = [
+  ["R-03", "one-step graphic's first play returns no currentStep", withCall(1, call("playAction", { label: "playAction({})", result: { statusCode: 200 } }))],
+  ["R-03", "stepCount 0 graphic returns a numeric currentStep", session({
+    calls: [call("load"), call("playAction", { label: "playAction({})", result: { statusCode: 200, currentStep: 0 } }), call("dispose")],
+  }), { stepCount: 0, supportsNonRealTime: false }],
+  ["R-12", "declared customAction answers 404 (reads the wrong field)", withCall(7, call("customAction", { payloadPreview: '{"id":"flash"}', result: { statusCode: 404 } }))],
+  ["R-15", "play past the last step keeps the graphic at step 0", withCall(5, call("playAction", { label: PLAY_TO_END_LABEL, result: { statusCode: 200, currentStep: 0 } }))],
   ["R-01", "module never imported", session({ status: "failed", failureReason: "SyntaxError" })],
   ["R-08", "uncaught window error during the run", session({
     ...HEALTHY,
@@ -356,20 +404,18 @@ const RUNTIME_CASES: [rule: string, what: string, s: RuntimeSession][] = [
 function runRuntimeCases(): number {
   console.log("\nruntime rules (pure function over a synthetic session)");
   let failures = 0;
-  const cleanIds = new Set(
-    buildRuntimeFindings(HEALTHY, { supportsNonRealTime: false })
-      .filter((f) => f.severity === "error" || f.severity === "warning")
-      .map((f) => f.id),
-  );
-  if (cleanIds.size > 0) {
-    failures++;
-    console.log(`  FAIL healthy session fired: ${[...cleanIds].join(", ")}`);
-  } else {
-    console.log("  ok   healthy session is clean");
+  for (const [what, sess, manifest] of RUNTIME_CLEAN) {
+    const cleanIds = new Set(
+      buildRuntimeFindings(sess, manifest)
+        .filter((f) => f.severity === "error" || f.severity === "warning")
+        .map((f) => f.id),
+    );
+    if (cleanIds.size > 0) failures++;
+    console.log(cleanIds.size > 0 ? `  FAIL ${what} fired: ${[...cleanIds].join(", ")}` : `  ok   ${what} is clean`);
   }
-  for (const [rule, what, sess] of RUNTIME_CASES) {
+  for (const [rule, what, sess, manifest = ONE_STEP] of RUNTIME_CASES) {
     const fired = new Set(
-      buildRuntimeFindings(sess, { supportsNonRealTime: false })
+      buildRuntimeFindings(sess, manifest)
         .filter((f) => f.severity === "error" || f.severity === "warning")
         .map((f) => f.id),
     );
@@ -416,19 +462,19 @@ async function main() {
     );
   }
 
-  // S-01 needs a package with no single top-level folder, which the CASES
-  // shape cannot express — the files go in at the zip root instead.
-  {
-    const fired = await idsFor(baseline(), null);
-    const ok = fired.has("S-01");
+  console.log("\nvalid variations (each must NOT make its rule fire)");
+  for (const [rule, what, mutateCase, rootFolder] of MUST_NOT_FIRE) {
+    const files = baseline();
+    mutateCase(files);
+    const fired = await idsFor(files, rootFolder === null ? null : "selftest");
+    const ok = !fired.has(rule);
     if (!ok) failures++;
-    console.log(`  ${ok ? "ok  " : "FAIL"} S-01  files at the zip root, no single top-level folder` +
-      (ok ? "" : `   got: ${[...fired].sort().join(", ") || "nothing"}`));
+    console.log(`  ${ok ? "ok  " : "FAIL"} ${rule.padEnd(5)} ${what}`);
   }
 
   failures += runRuntimeCases();
 
-  const total = CASES.length + 2 + RUNTIME_CASES.length + 1;
+  const total = CASES.length + 1 + MUST_NOT_FIRE.length + RUNTIME_CLEAN.length + RUNTIME_CASES.length;
   console.log(`\n${total - failures}/${total} passed`);
   if (failures > 0) process.exitCode = 1;
 }

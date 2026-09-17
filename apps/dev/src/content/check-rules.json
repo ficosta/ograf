@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "total": 83,
+  "total": 85,
   "categories": {
     "manifest": {
       "count": 19,
@@ -208,7 +208,7 @@
       "rules": [
         {
           "id": "S-01",
-          "title": "No single top-level folder"
+          "title": "Files at the zip root"
         },
         {
           "id": "S-02",
@@ -249,7 +249,7 @@
       ]
     },
     "module": {
-      "count": 9,
+      "count": 10,
       "ids": [
         "C-01",
         "C-02",
@@ -259,7 +259,8 @@
         "C-06",
         "C-07",
         "C-08",
-        "C-09"
+        "C-09",
+        "C-10"
       ],
       "rules": [
         {
@@ -276,7 +277,7 @@
         },
         {
           "id": "C-04",
-          "title": "Non-async lifecycle method…: …"
+          "title": "Lifecycle method… not declared async: …"
         },
         {
           "id": "C-05",
@@ -297,6 +298,10 @@
         {
           "id": "C-09",
           "title": "Non-real-time method… missing: …"
+        },
+        {
+          "id": "C-10",
+          "title": "customAction reads `action` instead of `id`"
         }
       ]
     },
@@ -390,7 +395,7 @@
       ]
     },
     "runtime": {
-      "count": 14,
+      "count": 15,
       "ids": [
         "R-01",
         "R-02",
@@ -405,7 +410,8 @@
         "R-11",
         "R-12",
         "R-13",
-        "R-14"
+        "R-14",
+        "R-15"
       ],
       "rules": [
         {
@@ -462,6 +468,10 @@
         },
         {
           "id": "R-14",
+          "title": null
+        },
+        {
+          "id": "R-15",
           "title": null
         }
       ]

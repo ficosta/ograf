@@ -2,12 +2,13 @@
 export type HarnessRequest =
   | { readonly id: string; readonly action: "load"; readonly data?: unknown }
   | { readonly id: string; readonly action: "playAction"; readonly payload?: unknown }
-  | { readonly id: string; readonly action: "updateAction"; readonly data?: unknown }
+  | { readonly id: string; readonly action: "updateAction"; readonly data?: unknown; readonly skipAnimation?: boolean }
   | { readonly id: string; readonly action: "stopAction"; readonly payload?: unknown }
   | {
       readonly id: string;
       readonly action: "customAction";
-      readonly payload: { readonly action: string; readonly data?: unknown };
+      /** The spec's shape: customAction({ id, payload, skipAnimation }). */
+      readonly payload: { readonly id: string; readonly payload?: unknown; readonly skipAnimation?: boolean };
     }
   | { readonly id: string; readonly action: "goToTime"; readonly payload: { readonly timestamp: number } }
   | {
