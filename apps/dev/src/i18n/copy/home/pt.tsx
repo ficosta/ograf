@@ -13,7 +13,7 @@ export const pt: HomeCopy = {
     heading: "Fabricantes e adotantes",
     vendorsLabel: "Fabricantes",
     organisationsLabel: "Organizações de broadcast",
-    sourcePrefix: "Empresas e emissoras listadas como fabricantes e adotantes do OGraf em",
+    sourcePrefix: "Empresas e emissoras que, nas palavras da EBU, apoiam a especificação OGraf, conforme a lista em",
   },
   featuresTitle: "Por que o OGraf importa.",
   featuresLead:

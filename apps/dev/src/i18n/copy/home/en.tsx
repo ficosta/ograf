@@ -14,7 +14,7 @@ export const en = {
     heading: "Vendors & adopters",
     vendorsLabel: "Vendors",
     organisationsLabel: "Broadcast organizations",
-    sourcePrefix: "Companies and broadcasters listed as OGraf vendors and adopters on",
+    sourcePrefix: "Companies and broadcast organizations that, in the EBU's words, support the OGraf specification, as listed on",
   },
   featuresTitle: "Why OGraf matters.",
   featuresLead:

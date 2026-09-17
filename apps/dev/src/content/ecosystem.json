@@ -31,7 +31,7 @@
         "desc": "Official specification repository with JSON schemas, examples, and documentation. MIT licensed.",
         "url": "https://github.com/ebu/ograf",
         "type": "official",
-        "stars": "115"
+        "stars": "128"
       }
     ]
   },
@@ -66,26 +66,26 @@
         "desc": "Web-based visual template editor with drag-and-drop, Monaco code editor, and animation system.",
         "url": "https://github.com/Eyevinn/ograf-editor",
         "type": "oss",
-        "stars": "2"
+        "stars": "5"
       },
       {
         "name": "Ferryman",
-        "desc": "Convert After Effects / Lottie JSON animations into HTML broadcast templates for CasparCG, SPX, and OGraf.",
+        "desc": "Converts After Effects / Lottie JSON animations into HTML broadcast templates for CasparCG and SPX. Last repository activity was October 2025.",
         "url": "https://ferryman.streamshapers.com",
         "type": "oss",
-        "stars": "30"
+        "stars": "38"
       },
       {
-        "name": "everviz",
-        "desc": "Browser-based interactive maps and charts. Exports OGraf packages using the standard .ograf.json manifest, so one map plays on any compliant renderer.",
+        "name": "everviz (becoming Teikna)",
+        "desc": "Browser-based charts and maps that export as OGraf packages. Fonn Group took full ownership in September 2026 and is relaunching the platform as Teikna for broadcast, streaming and digital media; everviz charting and mapping continue for existing customers.",
         "url": "https://www.everviz.com",
         "type": "commercial",
         "logo": "/logos/adopters/vendors/everviz.svg"
       },
       {
-        "name": "StreamShapers OGraf Export",
-        "desc": "After Effects extension that exports OGraf without leaving the app — preflight check and an embedded Ferryman config panel sit inside AE. Demoed to the working group in April 2026; StreamShapers say it goes on sale over the summer.",
-        "url": "https://www.streamshapers.com/ae-extension/",
+        "name": "StreamShapers OGraf Builder",
+        "desc": "After Effects extension that exports OGraf without leaving the app, tested on After Effects 23 to 26. Announced for summer 2026; not on sale yet.",
+        "url": "https://streamshapers.com/ograf-builder",
         "type": "commercial",
         "status": "soon"
       },
@@ -95,6 +95,12 @@
         "url": "https://www.adobe.com/products/aftereffects.html",
         "type": "commercial",
         "status": "soon"
+      },
+      {
+        "name": "Mapcreator",
+        "url": "https://mapcreator.io/broadcast/",
+        "type": "commercial",
+        "desc": "Web-based map design tool. Its animated maps can be exported as OGraf-compatible animations for real-time control; OGraf workflows sit on the enterprise tier."
       }
     ]
   },
@@ -105,17 +111,18 @@
     "description": "Drive graphics live from a control surface or operator UI.",
     "items": [
       {
-        "name": "SPX-GC",
-        "desc": "Professional browser-based graphics controller for live productions. CasparCG, OBS, vMix support. OGraf compliance in v1.4.",
+        "name": "SPX Solo (SPX-GC)",
+        "desc": "Browser-based graphics controller for live productions. Version 1.4 added support for OGraf files and aligned the name with the SPX product range.",
         "url": "https://github.com/TuomoKu/SPX-GC",
         "type": "oss",
-        "stars": "409"
+        "stars": "422"
       },
       {
         "name": "SuperConductor",
         "desc": "Cross-platform playout client controlling CasparCG, ATEM, OBS, vMix, and HTTP devices.",
         "url": "https://github.com/SuperFlyTV/SuperConductor",
-        "type": "oss"
+        "type": "oss",
+        "stars": "352"
       },
       {
         "name": "coralPlay",
@@ -125,7 +132,7 @@
       },
       {
         "name": "Sofie",
-        "desc": "SuperFly.tv's open-source TV automation system, already used for live news. A demo driving OGraf through the Control API is in development.",
+        "desc": "SuperFly.tv's open-source TV automation system, used for live news. OGraf schema support is an open pull request in sofie-core.",
         "url": "https://sofieautomation.com",
         "type": "oss",
         "status": "soon"
@@ -140,22 +147,22 @@
     "items": [
       {
         "name": "CasparCG",
-        "desc": "Open-source professional graphics and video playout server. SDI/NDI output. OGraf via HTML producer.",
+        "desc": "Open-source professional graphics and video playout server with SDI and NDI output. No native OGraf support yet; it can host a renderer page in its HTML producer.",
         "url": "https://github.com/CasparCG/server",
         "type": "oss",
-        "stars": "1000+"
+        "stars": "1090"
       },
       {
         "name": "ograf-server",
         "desc": "Reference OGraf renderer with upload API, control API, and browser-based rendering.",
         "url": "https://github.com/SuperFlyTV/ograf-server",
         "type": "oss",
-        "stars": "24"
+        "stars": "37"
       },
       {
-        "name": "SPX Graphics Server",
-        "desc": "Dedicated commercial server with full OGraf + SPX template support and ServerAPI for automated playout.",
-        "url": "https://www.spx.graphics",
+        "name": "SPX Broadcast",
+        "desc": "SPX's edition for newsrooms and 24/7 playout, with ServerAPI for automation-driven workflows. SPX says all its software supports OGraf.",
+        "url": "https://spxgraphics.com/software",
         "type": "commercial"
       },
       {
@@ -163,7 +170,7 @@
         "desc": "GStreamer source element wrapping Chromium Embedded Framework — renders any HTML/JS page as a video + audio source for a GStreamer pipeline. Not an OGraf server, but useful as a building block for HTML GFX into SDI/NDI/file output.",
         "url": "https://github.com/centricular/gstcefsrc",
         "type": "oss",
-        "stars": "210"
+        "stars": "102"
       },
       {
         "name": "Erizos Studio",
@@ -173,20 +180,21 @@
       },
       {
         "name": "LiveOS",
-        "desc": "NetOn.Live's local, remote and decentralised live production platform, with full OGraf support. NetOn.Live is a founding member of the EBU HTML graphics working group.",
+        "desc": "NetOn.Live's local, remote and cloud live production platform. Listed by the EBU as an OGraf vendor; no OGraf detail published on the company's own site.",
         "url": "https://www.neton.live",
         "type": "commercial",
         "logo": "/logos/adopters/vendors/neton-live.svg"
       },
       {
         "name": "BBright Integrated Playout",
-        "desc": "Software playout for UHD and SMPTE ST 2110 with a graphics engine that renders animated OGraf templates directly inside the playout workflow.",
+        "desc": "Software playout for UHD and SMPTE ST 2110. BBright demonstrated an OGraf graphics engine inside the playout workflow at IBC2026; no release date given.",
         "url": "https://www.bbright.com/product/integrated-playout/",
-        "type": "commercial"
+        "type": "commercial",
+        "status": "soon"
       },
       {
         "name": "Pixotope",
-        "desc": "Unreal-based virtual studio, AR and XR graphics platform. Named on the working group's adopter list; no release with OGraf support has been announced publicly yet.",
+        "desc": "Unreal-based virtual studio, AR and XR platform. Pixotope says 26.3 renders and controls HTML graphics, including OGraf, from the same control surface.",
         "url": "https://www.pixotope.com",
         "type": "commercial",
         "status": "soon",
@@ -194,10 +202,15 @@
       },
       {
         "name": "Grass Valley AMPP",
-        "desc": "Cloud-native live production platform. Grass Valley has been evaluating an OGraf integration, waiting on the Control API to consolidate before committing.",
+        "desc": "Cloud-native live production platform with its own HTML5 graphics system. No public OGraf commitment found on Grass Valley's site or in its IBC2026 announcements.",
         "url": "https://www.grassvalley.com/products/ampp/",
+        "type": "commercial"
+      },
+      {
+        "name": "Matrox ORIGIN",
+        "url": "https://video.matrox.com/en/products/broadcast-media/origin-series",
         "type": "commercial",
-        "status": "exploring"
+        "desc": "Open developer platform for media applications. Matrox says OGraf is available in the product, with desired-state control and multiple DVE effects driven by the OGraf graphics."
       }
     ]
   },
@@ -226,6 +239,19 @@
         "desc": "Web Component that auto-generates input forms from OGraf/GDD schemas.",
         "url": "https://github.com/SuperFlyTV/ograf-form",
         "type": "oss"
+      },
+      {
+        "name": "ograf-devtool",
+        "url": "https://github.com/SuperFlyTV/ograf-devtool",
+        "type": "oss",
+        "stars": "22",
+        "desc": "Loads an OGraf graphic from your own disk, checks it for common compliance mistakes and drives it through the real-time and non-real-time control surfaces."
+      },
+      {
+        "name": "StreamShapers OGraf Validator",
+        "url": "https://validator.streamshapers.com",
+        "type": "commercial",
+        "desc": "Validate, inspect and test OGraf v1 packages in the browser. Same job as our own Package Checker, from a vendor's toolbox."
       }
     ]
   },
@@ -240,7 +266,7 @@
         "desc": "Open-source collection of OGraf graphics templates.",
         "url": "https://github.com/nytamin/ograf-graphics",
         "type": "oss",
-        "stars": "4"
+        "stars": "12"
       }
     ]
   },
@@ -272,7 +298,7 @@
     "items": [
       {
         "name": "Xperity",
-        "desc": "OGraf adoption consulting with the Xperity Synthesis Framework for migration and integration.",
+        "desc": "Software delivery consultancy that publishes OGraf explainers and offers template production and migration help.",
         "url": "https://xperity.io",
         "type": "commercial",
         "logo": "/logos/xperity.svg"
