@@ -407,6 +407,63 @@
         "type": "commercial",
         "status": "notYet",
         "desc": "Aplicativo desktop gratuito, que funciona offline, para lower thirds, tickers e cronômetros, com saída no navegador para switchers de software."
+      },
+      {
+        "name": "NodeCG",
+        "url": "https://www.nodecg.dev/",
+        "type": "oss",
+        "stars": "1307",
+        "status": "notYet",
+        "desc": "Framework Node.js para grafismo de TV em que cada grafismo é uma página web, com painéis para os operadores. Popular em esports e speedrunning. MIT."
+      },
+      {
+        "name": "Holographics",
+        "url": "https://hologfx.io/",
+        "type": "oss",
+        "status": "notYet",
+        "desc": "Aplicativo desktop holandês para Windows e Mac, de lower thirds, tickers e cronômetros, feito com tecnologia web e controlável pelo Companion e por OSC."
+      },
+      {
+        "name": "XPression Chameleon",
+        "url": "https://www.rossvideo.com/products/graphics-and-virtual/xpression-workflow-tools/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Grafismo HTML5 alimentado por dados da Ross Video, vindo da compra da Bannister Lake: saída HTML5 junto com o SDI/2110 do XPression, ou sozinho no navegador para tickers e OTT."
+      },
+      {
+        "name": "BroadcastGraphics",
+        "url": "https://broadcastgraphics.io/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo HTML5 em tempo real para TV, streaming e eventos, da Roligt AB, de Estocolmo, com um aplicativo Windows que funciona offline."
+      },
+      {
+        "name": "SmartPanel",
+        "url": "https://smartpanelapp.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma no navegador, nativa em HTML5, para criar, disparar e controlar grafismos ao vivo, com saída para OBS e vMix."
+      },
+      {
+        "name": "Dizplai",
+        "url": "https://www.dizplai.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Grafismo HTML5 ao vivo que mistura estatísticas, votos do público e marcas de patrocinadores em overlays no ar."
+      },
+      {
+        "name": "LIGR",
+        "url": "https://www.ligrsystems.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma em nuvem para esportes ao vivo: grafismos como páginas HTML5 transparentes operadas de uma sala de controle no navegador, além de streaming, melhores momentos e patrocínio."
+      },
+      {
+        "name": "OpenTitler",
+        "url": "https://opentitler.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Lower thirds e grafismos para lives como templates de HTML e CSS simples, carregados como browser source no OBS e ferramentas parecidas."
       }
     ]
   },

@@ -407,6 +407,63 @@
         "type": "commercial",
         "status": "notYet",
         "desc": "Free, offline-capable desktop app for lower thirds, tickers and timers, with browser-based output for software switchers."
+      },
+      {
+        "name": "NodeCG",
+        "url": "https://www.nodecg.dev/",
+        "type": "oss",
+        "stars": "1307",
+        "status": "notYet",
+        "desc": "Node.js framework for broadcast graphics where every graphic is a web page, with dashboards for operators. Popular in esports and speedrunning. MIT."
+      },
+      {
+        "name": "Holographics",
+        "url": "https://hologfx.io/",
+        "type": "oss",
+        "status": "notYet",
+        "desc": "Desktop app for Windows and Mac from the Netherlands for lower thirds, tickers and timers, built on web technology and controllable from Companion and OSC."
+      },
+      {
+        "name": "XPression Chameleon",
+        "url": "https://www.rossvideo.com/products/graphics-and-virtual/xpression-workflow-tools/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Ross Video's data-driven HTML5 graphics, from its Bannister Lake acquisition: HTML5 output alongside XPression's SDI/2110, or standalone in the browser for tickers and OTT."
+      },
+      {
+        "name": "BroadcastGraphics",
+        "url": "https://broadcastgraphics.io/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Real-time HTML5 graphics platform for broadcast, streaming and events, from Roligt AB in Stockholm, with an offline Windows app."
+      },
+      {
+        "name": "SmartPanel",
+        "url": "https://smartpanelapp.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Browser-based, HTML5-native platform to design, trigger and control live graphics, with OBS and vMix output."
+      },
+      {
+        "name": "Dizplai",
+        "url": "https://www.dizplai.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "HTML5 live graphics that mix stats, audience votes and sponsor branding into on-air overlays."
+      },
+      {
+        "name": "LIGR",
+        "url": "https://www.ligrsystems.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Cloud platform for live sports: graphics as transparent HTML5 pages run from a browser control room, plus streaming, highlights and sponsorship."
+      },
+      {
+        "name": "OpenTitler",
+        "url": "https://opentitler.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Lower thirds and live-stream graphics as plain HTML and CSS templates, loaded as a browser source in OBS and similar tools."
       }
     ]
   },

@@ -407,6 +407,63 @@
         "type": "commercial",
         "status": "notYet",
         "desc": "Aplicación de escritorio gratuita, que funciona sin conexión, para rótulos, tickers y temporizadores, con salida en el navegador para mezcladores de software."
+      },
+      {
+        "name": "NodeCG",
+        "url": "https://www.nodecg.dev/",
+        "type": "oss",
+        "stars": "1307",
+        "status": "notYet",
+        "desc": "Framework de Node.js para grafismo de televisión en el que cada grafismo es una página web, con paneles para los operadores. Popular en esports y speedrunning. MIT."
+      },
+      {
+        "name": "Holographics",
+        "url": "https://hologfx.io/",
+        "type": "oss",
+        "status": "notYet",
+        "desc": "Aplicación de escritorio neerlandesa para Windows y Mac, de rótulos, tickers y temporizadores, hecha con tecnología web y controlable desde Companion y OSC."
+      },
+      {
+        "name": "XPression Chameleon",
+        "url": "https://www.rossvideo.com/products/graphics-and-virtual/xpression-workflow-tools/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Grafismo HTML5 alimentado por datos de Ross Video, procedente de la compra de Bannister Lake: salida HTML5 junto al SDI/2110 de XPression, o por sí solo en el navegador para tickers y OTT."
+      },
+      {
+        "name": "BroadcastGraphics",
+        "url": "https://broadcastgraphics.io/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo HTML5 en tiempo real para televisión, streaming y eventos, de Roligt AB, en Estocolmo, con una aplicación de Windows que funciona sin conexión."
+      },
+      {
+        "name": "SmartPanel",
+        "url": "https://smartpanelapp.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma en el navegador, nativa en HTML5, para diseñar, lanzar y controlar grafismos en directo, con salida para OBS y vMix."
+      },
+      {
+        "name": "Dizplai",
+        "url": "https://www.dizplai.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Grafismo HTML5 en directo que mezcla estadísticas, votos del público y marcas de patrocinadores en overlays al aire."
+      },
+      {
+        "name": "LIGR",
+        "url": "https://www.ligrsystems.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma en la nube para deportes en directo: grafismos como páginas HTML5 transparentes operadas desde una sala de control en el navegador, además de streaming, resúmenes y patrocinio."
+      },
+      {
+        "name": "OpenTitler",
+        "url": "https://opentitler.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Rótulos y grafismos para directos como plantillas sencillas de HTML y CSS, cargadas como browser source en OBS y herramientas similares."
       }
     ]
   },
