@@ -233,12 +233,6 @@
         "logo": "/logos/adopters/vendors/pixotope.svg"
       },
       {
-        "name": "Grass Valley AMPP",
-        "desc": "Plataforma de producción en directo nativa en la nube, con su propio sistema de grafismo HTML5. No hemos encontrado un compromiso público con OGraf en la web de Grass Valley ni en sus anuncios de IBC2026.",
-        "url": "https://www.grassvalley.com/products/ampp/",
-        "type": "commercial"
-      },
-      {
         "name": "Matrox ORIGIN",
         "url": "https://video.matrox.com/en/products/broadcast-media/origin-series",
         "type": "commercial",

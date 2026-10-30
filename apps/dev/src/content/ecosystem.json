@@ -233,12 +233,6 @@
         "logo": "/logos/adopters/vendors/pixotope.svg"
       },
       {
-        "name": "Grass Valley AMPP",
-        "desc": "Cloud-native live production platform with its own HTML5 graphics system. No public OGraf commitment found on Grass Valley's site or in its IBC2026 announcements.",
-        "url": "https://www.grassvalley.com/products/ampp/",
-        "type": "commercial"
-      },
-      {
         "name": "Matrox ORIGIN",
         "url": "https://video.matrox.com/en/products/broadcast-media/origin-series",
         "type": "commercial",
