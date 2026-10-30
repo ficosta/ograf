@@ -464,6 +464,49 @@
         "type": "commercial",
         "status": "notYet",
         "desc": "Lower thirds e grafismos para lives como templates de HTML e CSS simples, carregados como browser source no OBS e ferramentas parecidas."
+      },
+      {
+        "name": "OBScoreboard",
+        "url": "https://obscoreboard.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Overlays de placar para mais de 12 esportes, adicionados ao OBS, vMix ou Streamlabs como URL de browser source e atualizados pelo celular ou tablet."
+      },
+      {
+        "name": "ScoreLayer",
+        "url": "https://www.scorelayer.live/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Placar em browser source operado por um painel web, com plano gratuito, plugin para Stream Deck e feed de dados da Genius Sports."
+      },
+      {
+        "name": "OverlayOn",
+        "url": "https://overlayon.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Templates de placar entregues como URL de browser source, sem plugins, atualizados à mão ou com dados ao vivo da partida."
+      },
+      {
+        "name": "BallOBall",
+        "url": "https://balloball.com/features/streaming",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de gestão de ligas cuja pontuação ao vivo alimenta um placar em browser source no OBS ou no vMix, em 23 esportes."
+      },
+      {
+        "name": "StreamSlayers",
+        "url": "https://streamslayers.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Lower thirds, títulos 3D e posts de redes sociais para streamers, tudo a partir de uma única URL de browser source."
+      },
+      {
+        "name": "Breeze Overlay",
+        "url": "https://github.com/dwclarkphx/breeze-overlay",
+        "type": "oss",
+        "stars": "8",
+        "status": "notYet",
+        "desc": "Criador de overlays auto-hospedado que serve grafismos animados como páginas HTML5 ao vivo para vMix e OBS, pensado para produções de uma pessoa só; tem módulo para o Companion. MPL-2.0."
       }
     ]
   },

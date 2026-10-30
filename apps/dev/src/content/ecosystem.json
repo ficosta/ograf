@@ -464,6 +464,49 @@
         "type": "commercial",
         "status": "notYet",
         "desc": "Lower thirds and live-stream graphics as plain HTML and CSS templates, loaded as a browser source in OBS and similar tools."
+      },
+      {
+        "name": "OBScoreboard",
+        "url": "https://obscoreboard.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Sports scoreboard overlays for 12+ sports, added to OBS, vMix or Streamlabs as a browser-source URL and scored from a phone or tablet."
+      },
+      {
+        "name": "ScoreLayer",
+        "url": "https://www.scorelayer.live/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Browser-source scoreboard run from a web control panel, with a free tier, a Stream Deck plugin and a Genius Sports data feed."
+      },
+      {
+        "name": "OverlayOn",
+        "url": "https://overlayon.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Scorebug and scoreboard templates delivered as a browser-source URL, no plugins, updated by hand or from live match data."
+      },
+      {
+        "name": "BallOBall",
+        "url": "https://balloball.com/features/streaming",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "League management platform whose live scoring drives a browser-source scorebug in OBS or vMix, across 23 sports."
+      },
+      {
+        "name": "StreamSlayers",
+        "url": "https://streamslayers.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Lower thirds, 3D titles and social-post embeds for streamers, all from one browser-source URL."
+      },
+      {
+        "name": "Breeze Overlay",
+        "url": "https://github.com/dwclarkphx/breeze-overlay",
+        "type": "oss",
+        "stars": "8",
+        "status": "notYet",
+        "desc": "Self-hosted overlay builder that serves motion graphics as live HTML5 pages to vMix and OBS, made for one-person productions; has a Companion module. MPL-2.0."
       }
     ]
   },
