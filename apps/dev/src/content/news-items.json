@@ -1,5 +1,69 @@
 [
   {
+    "date": "2026-10-28",
+    "title": "The evolution of OGraf",
+    "source": "TVBEurope",
+    "url": "https://www.tvbeurope.com/live-production/the-evolution-of-ograf",
+    "type": "article",
+    "summary": "Jenny Priestley interviews Niels Borg (TV 2 Danmark), who chairs the EBU OGraf initiative: from its IBC Accelerator origins to TV 2's election touchscreen and telestration. TV 2 Danmark, YLE and SVT are named as broadcasters using OGraf in live production."
+  },
+  {
+    "date": "2026-10-28",
+    "title": "Working group merges a round of spec corrections",
+    "source": "EBU",
+    "url": "https://github.com/ebu/ograf/commits/main",
+    "type": "announcement",
+    "summary": "No new features, but clearer rules: stepCount -1 never triggers the end condition, playAction may omit currentStep once the graphic has ended, custom actions are documented as the array the schema always required, and a server MAY validate data against the manifest schema. Still open: HDR colour space (#98), uploading packages over the Server API (#100) and exposing package contents (#90)."
+  },
+  {
+    "date": "2026-10-26",
+    "title": "DaVinci Resolve 21.1.2: faster OGraf playback, and OGraf on Linux",
+    "source": "Newsshooter",
+    "url": "https://www.newsshooter.com/2026/10/26/davinci-resolve-21-1-2/",
+    "type": "announcement",
+    "summary": "Up to 4x faster OGraf playback on the edit and Fusion pages, select and multi-select template controls, responsive templates that follow the timeline aspect ratio, and OGraf and Lottie on Linux. OGraf clips also use the manifest's action durations to place the stop action."
+  },
+  {
+    "date": "2026-10-13",
+    "title": "Pixotope 26.3 ships OGraf playout and control",
+    "source": "Pixotope",
+    "url": "https://www.pixotope.com/blog/pixotope-26.3.0",
+    "type": "announcement",
+    "summary": "VideoIO renders OGraf and Live Controller drives it: import templates from a folder, a zip or an OGraf server, fill them in the same auto form as Pixotope's own templates, and use Continue, Delta step and Goto step on air. OGraf rendering is in the free Discovery tier too."
+  },
+  {
+    "date": "2026-09-15",
+    "title": "Matrox shows OGraf in ORIGIN at IBC, with NVIDIA Holoscan for Media",
+    "source": "AVNation",
+    "url": "https://www.avnation.tv/2026/09/15/matrox-video-integrates-matrox-origin-with-nvidia-holoscan-for-media-to-advance-software-defined-production/",
+    "type": "announcement",
+    "summary": "Matrox Video's software-defined production demo lists OGraf graphics among the ORIGIN services connected over MXL. A day later Matrox asked for ORIGIN to be listed as an OGraf renderer, and it now appears on the official site as Matrox Video."
+  },
+  {
+    "date": "2026-09-14",
+    "title": "OGraf Studio wins TVBEurope Best of Show at IBC 2026",
+    "source": "TVBEurope",
+    "url": "https://www.tvbeurope.com/business/tvbeurope-announces-winners-of-best-of-show-awards-at-ibc2026",
+    "type": "announcement",
+    "summary": "Zero Density's open-source OGraf editor is on TVBEurope's list of Best of Show winners, five days after launch."
+  },
+  {
+    "date": "2026-09-11",
+    "title": "Fonn Group buys everviz and relaunches it as Teikna",
+    "source": "Fonn Group",
+    "url": "https://fonngroup.com/press/fonn-group-acquires-everviz-and-introduces-teikna",
+    "type": "announcement",
+    "summary": "Fonn Group took the remaining everviz shares and is turning it into Teikna, a graphics platform tied into its Saga newsroom system and Mimir. The release does not mention OGraf, but everviz was an early OGraf exporter, and the official OGraf site now lists the vendor as Teikna."
+  },
+  {
+    "date": "2026-09-09",
+    "title": "Zero Density launches OGraf Studio, an open-source OGraf editor",
+    "source": "Zero Density",
+    "url": "https://www.zerodensity.io/news/press-release/zero-density-announces-ograf-studio/",
+    "type": "announcement",
+    "summary": "A browser-based authoring suite with a WYSIWYG canvas, animation tracks, data binding, manifest validation and an optional local MCP server for AI-assisted authoring. Source on GitHub; shown at IBC 2026 and NAB Show New York."
+  },
+  {
     "date": "2026-08-13",
     "title": "OGraf Server API v1 published — the spec is complete",
     "source": "EBU",
@@ -14,6 +78,14 @@
     "url": "https://www.sportsvideo.org/2026/08/12/ibc-2026-bbright-adds-ebu-ograf-graphics-support-to-uhd-and-st-2110-playout-platform/",
     "type": "announcement",
     "summary": "A new graphics engine renders animated OGraf templates directly inside BBright's software playout, covering Ultra HD and SMPTE ST 2110 including ST 2110-41 metadata and 2110-43 timed text. OGraf reaching the playout tier, not just the graphics tier."
+  },
+  {
+    "date": "2026-06-02",
+    "title": "DaVinci Resolve 21 ships with native OGraf support",
+    "source": "Newsshooter",
+    "url": "https://www.newsshooter.com/2026/06/02/davinci-resolve-21-final-release/",
+    "type": "announcement",
+    "summary": "The final Resolve 21 release brings OGraf HTML graphics to the Cut, Edit and Fusion pages. The first NLE with native OGraf, and the reason the spec's non-real-time half suddenly mattered."
   },
   {
     "date": "2026-04-13",

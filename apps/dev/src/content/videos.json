@@ -1,5 +1,59 @@
 [
   {
+    "youtubeId": "ej3ScUeyebA",
+    "title": "OGraf Studio | Open-Source HTML5 Graphics Suite for EBU's OGraf Standard",
+    "author": "Zero Density",
+    "summary": "Zero Density's IBC 2026 presentation: Claude Code, connected over MCP, builds a lower third in OGraf Studio, which then plays out through Lino and Reality Hub."
+  },
+  {
+    "youtubeId": "lDq3m3hnfDA",
+    "title": "OGraf Studio Demo | AI-Assisted HTML5 Broadcast Graphics",
+    "author": "Zero Density",
+    "summary": "A guided demo of OGraf Studio's canvas, animation tracks and AI-assisted authoring."
+  },
+  {
+    "youtubeId": "XIJ5qMEio04",
+    "title": "OGraf PieChart from After Effects | StreamShapers OGraf Builder",
+    "author": "StreamShapers",
+    "summary": "A data-driven pie chart designed in After Effects and exported as an OGraf package with the OGraf Builder extension."
+  },
+  {
+    "youtubeId": "bTNevlf627w",
+    "title": "OGraf Builder for After Effects – Professional HTML Graphics made with StreamShapers",
+    "author": "StreamShapers",
+    "summary": "The product overview of OGraf Builder: export OGraf from inside After Effects without hand-writing HTML."
+  },
+  {
+    "youtubeId": "GMG0NrY4N80",
+    "title": "Using an OGraf created with After Effects and StreamShapers OGraf Builder",
+    "author": "StreamShapers",
+    "summary": "What happens after export: the After Effects graphic loaded and played as an OGraf package."
+  },
+  {
+    "youtubeId": "EA4D3Nq03ko",
+    "title": "Audio Reactive OGraf with the Web Audio API in DaVinci Resolve Fusion",
+    "author": "Dunn Lewis",
+    "summary": "An OGraf graphic that reacts to audio through the Web Audio API, running inside Resolve's Fusion page. Part of a long series on OGraf in Fusion."
+  },
+  {
+    "youtubeId": "wXapu5jq2Qg",
+    "title": "OGraf Graphics in DaVinci Resolve Fusion, Active Development Showreel",
+    "author": "Dunn Lewis",
+    "summary": "A showreel of OGraf graphics built for DaVinci Resolve's Fusion page."
+  },
+  {
+    "youtubeId": "6IMGzvxe1AY",
+    "title": "OGraf: An Open Specification for HTML-Based Graphics",
+    "author": "SMPTE",
+    "summary": "Niels Borg (TV 2 Danmark) in a SMPTE webcast: what OGraf is, why it exists, and a live demo taking one graphic from definition to control to playout. About 43 minutes."
+  },
+  {
+    "youtubeId": "SVsp6gslxQk",
+    "title": "DaVinci Resolve 21 OGraf HTML Graphics & Lottie Animations",
+    "author": "KabeerVerse",
+    "summary": "An editor's tutorial on bringing OGraf and Lottie graphics into a Resolve 21 timeline."
+  },
+  {
     "youtubeId": "con5EdjpZps",
     "title": "Loopic 2.3 Walkthrough — Lottie support, UI & OGraf improvements",
     "author": "Loopic",

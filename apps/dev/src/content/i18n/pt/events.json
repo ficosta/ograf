@@ -1,5 +1,36 @@
 [
   {
+    "date": "2026-11-18",
+    "title": "OGraf – integração de grafismo HTML5 na CBC",
+    "location": "SMPTE Media Technology Summit, Pasadena · 11h30–12h00 (também online)",
+    "url": "https://summit.smpte.org/2026",
+    "summary": "Um estudo de caso na trilha \"IP and Software-Defined Production\" sobre como a CBC/Radio-Canada levou o OGraf para o seu fluxo de grafismo. A programação ainda não informa quem apresenta."
+  },
+  {
+    "date": "2026-11-10",
+    "title": "OGraf: primeiros passos (webinar da EBU)",
+    "location": "Online (Zoom) · 16h30–17h30 CET · gratuito, aberto ao público",
+    "speaker": "Pierre Hugues Routhier (CBC/Radio-Canada)",
+    "url": "https://tech.ebu.ch/events/2026/ograf-getting-started",
+    "summary": "Um passo a passo completo do grupo de especialistas em HTML Graphics da EBU: desenhar no After Effects, transformar em template OGraf, controlar ao vivo e depois usar num editor não linear. A inscrição está na página do evento."
+  },
+  {
+    "date": "2026-09-14",
+    "title": "SMPTE Roadshow: o futuro da infraestrutura de mídia",
+    "location": "IBC 2026, Amsterdam · sala G-106",
+    "speaker": "Pierre Hugues Routhier (CBC/Radio-Canada)",
+    "url": "https://www.tvtechnology.com/events/smpte-roadshow-to-examine-media-infrastructure-at-ibc-2026",
+    "summary": "A sessão da manhã, conduzida pela CBC/Radio-Canada, tem fluxos de grafismo HTML5 e OGraf entre os seus seis temas. Não é uma palestra dedicada ao OGraf."
+  },
+  {
+    "date": "2026-09-12",
+    "title": "OGraf Control API — Open Source Meetup da EBU na IBC",
+    "location": "IBC 2026, Amsterdam · estande da EBU 10.D21 · 16h00",
+    "speaker": "Johan Nyman (SuperFly.tv)",
+    "url": "https://tech.ebu.ch/events/2026/open-source-meetup-ebu-ibc-2026",
+    "summary": "Uma apresentação de cinco minutos sobre como comandar renderizadores pela Server API do OGraf. Os grafismos usados na demonstração estão no repositório ograf-graphics, na pasta IBC 2026."
+  },
+  {
     "date": "2026-09-12",
     "title": "OGraf — Making Broadcast Graphics Open and Accessible",
     "location": "IBC 2026, Amsterdã · Sala E102 · 16:10–16:50",

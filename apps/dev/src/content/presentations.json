@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-09-12",
+    "title": "OGraf Control API (EBU Open Source Meetup, IBC 2026)",
+    "speaker": "Johan Nyman, SuperFly.tv",
+    "externalUrl": "https://tech.ebu.ch/publications/presentations/2026/ibc_open_source_meetup/ograf-control-api",
+    "summary": "How a controller plays graphics on any compliant renderer through the Server API. The EBU page has no slides; the demo graphics are public in nytamin/ograf-graphics."
+  },
+  {
     "date": "2026-06-09",
     "title": "Open Graphics for Live Media: OGraf Proven in a National Election (EBU NTS 2026)",
     "speaker": "Niels Borg, TV 2 Danmark",

@@ -1,5 +1,36 @@
 [
   {
+    "date": "2026-11-18",
+    "title": "OGraf – HTML5 Graphics Integration at the CBC",
+    "location": "SMPTE Media Technology Summit, Pasadena · 11:30–12:00 (also online)",
+    "url": "https://summit.smpte.org/2026",
+    "summary": "A case-study slot in the \"IP and Software-Defined Production\" track on how CBC/Radio-Canada brought OGraf into its graphics workflow. The programme does not name the speaker yet."
+  },
+  {
+    "date": "2026-11-10",
+    "title": "OGraf: Getting Started (EBU webinar)",
+    "location": "Online (Zoom) · 16:30–17:30 CET · free, open to the public",
+    "speaker": "Pierre Hugues Routhier (CBC/Radio-Canada)",
+    "url": "https://tech.ebu.ch/events/2026/ograf-getting-started",
+    "summary": "An end-to-end walkthrough from the EBU HTML Graphics expert pool: design in After Effects, turn it into an OGraf template, control it live, then use it in an NLE. Registration is on the event page."
+  },
+  {
+    "date": "2026-09-14",
+    "title": "SMPTE Roadshow: The Future of Media Infrastructure",
+    "location": "IBC 2026, Amsterdam · Room G-106",
+    "speaker": "Pierre Hugues Routhier (CBC/Radio-Canada)",
+    "url": "https://www.tvtechnology.com/events/smpte-roadshow-to-examine-media-infrastructure-at-ibc-2026",
+    "summary": "The morning session, led by CBC/Radio-Canada, lists HTML5 and OGraf graphics workflows as one of its six topics. Not a dedicated OGraf talk."
+  },
+  {
+    "date": "2026-09-12",
+    "title": "OGraf Control API — EBU Open Source Meetup at IBC",
+    "location": "IBC 2026, Amsterdam · EBU stand 10.D21 · 16:00",
+    "speaker": "Johan Nyman (SuperFly.tv)",
+    "url": "https://tech.ebu.ch/events/2026/open-source-meetup-ebu-ibc-2026",
+    "summary": "A five-minute pitch on driving renderers through the OGraf Server API. The graphics used in the demo are in the ograf-graphics repository, in its IBC 2026 folder."
+  },
+  {
     "date": "2026-09-12",
     "title": "OGraf — Making Broadcast Graphics Open and Accessible",
     "location": "IBC 2026, Amsterdam · Room E102 · 16:10–16:50",
