@@ -46,7 +46,7 @@
         "desc": "Editor visual de código abierto de Zero Density: lienzo WYSIWYG con capas y máscaras, pistas de animación por propiedad, vinculación de datos con los campos del operador y autoría asistida por IA mediante MCP. Exporta paquetes OGraf que comprueba antes de guardar. Se ejecuta desde un único archivo descargable, sin necesidad de Node.js. AGPL-3.0.",
         "url": "https://github.com/zerodensity/ograf-studio",
         "type": "oss",
-        "stars": "35"
+        "stars": "63"
       },
       {
         "name": "Loopic",
@@ -66,7 +66,7 @@
         "desc": "Editor visual de plantillas web con arrastrar y soltar, editor de código Monaco y sistema de animación.",
         "url": "https://github.com/Eyevinn/ograf-editor",
         "type": "oss",
-        "stars": "5"
+        "stars": "6"
       },
       {
         "name": "Ferryman",
@@ -76,18 +76,17 @@
         "stars": "38"
       },
       {
-        "name": "everviz (pasa a llamarse Teikna)",
-        "desc": "Gráficos y mapas creados en el navegador que se exportan como paquetes OGraf. Fonn Group asumió la propiedad total en septiembre de 2026 y está relanzando la plataforma como Teikna, para broadcast, streaming y medios digitales; los gráficos y mapas de everviz continúan para los clientes actuales.",
+        "name": "Teikna (formerly everviz)",
+        "desc": "Gráficos y mapas en el navegador que se exportan como paquetes OGraf. Fonn Group compró everviz en septiembre de 2026 y la relanzó como Teikna, una plataforma de grafismo para televisión, streaming y medios digitales; los gráficos y mapas de everviz siguen para los clientes actuales.",
         "url": "https://www.everviz.com",
         "type": "commercial",
-        "logo": "/logos/adopters/vendors/everviz.svg"
+        "logo": "/logos/adopters/vendors/teikna.png"
       },
       {
         "name": "StreamShapers OGraf Builder",
-        "desc": "Extensión de After Effects que exporta OGraf sin salir de la aplicación, probada en After Effects 23 a 26. Anunciada para el verano de 2026; todavía no está a la venta.",
+        "desc": "Extensión de After Effects que exporta OGraf sin salir del programa, probada de After Effects 23 a 26. Incluida en los planes Pro y Studio de StreamShapers.",
         "url": "https://streamshapers.com/ograf-builder",
-        "type": "commercial",
-        "status": "soon"
+        "type": "commercial"
       },
       {
         "name": "Adobe After Effects",
@@ -101,6 +100,26 @@
         "url": "https://mapcreator.io/broadcast/",
         "type": "commercial",
         "desc": "Herramienta de creación de mapas en el navegador. Sus mapas animados pueden exportarse como animaciones compatibles con OGraf para control en tiempo real; los flujos OGraf están en el plan enterprise."
+      },
+      {
+        "name": "NoaCG Studio",
+        "desc": "Aplicación web para crear grafismos HTML de televisión (rótulos, tickers, marcadores) y exportarlos a OBS, vMix, SPX, CasparCG y OGraf. AGPL-3.0.",
+        "url": "https://github.com/NoaCG/NoaCG-Studio",
+        "type": "oss",
+        "stars": "9"
+      },
+      {
+        "name": "Falcon Graphics",
+        "desc": "Animador por keyframes en el navegador, de Falcon, con texto, formas, vídeo, datos en directo y composiciones anidadas. Exporta HTML u OGraf.",
+        "url": "https://graphics.wearefalcon.tv/",
+        "type": "commercial"
+      },
+      {
+        "name": "GrafBridge",
+        "desc": "Aplicación de escritorio que convierte títulos GT de vMix (.gtzip) en paquetes OGraf.",
+        "url": "https://github.com/vincentberry/grafbridge",
+        "type": "oss",
+        "stars": "0"
       }
     ]
   },
@@ -136,6 +155,20 @@
         "url": "https://sofieautomation.com",
         "type": "oss",
         "status": "soon"
+      },
+      {
+        "name": "Companion module for OGraf",
+        "desc": "Módulo de Bitfocus Companion que controla cualquier renderizador de la Server API v1 de OGraf desde un Stream Deck. MIT.",
+        "url": "https://github.com/JeLuF/companion-module-generic-ograf",
+        "type": "oss",
+        "stars": "0"
+      },
+      {
+        "name": "OGraf OBS dock",
+        "desc": "Un dock de navegador para controlar grafismos OGraf desde OBS Studio.",
+        "url": "https://github.com/markusnygard/ograf-obs-browser-dock",
+        "type": "oss",
+        "stars": "0"
       }
     ]
   },
@@ -147,7 +180,7 @@
     "items": [
       {
         "name": "CasparCG",
-        "desc": "Servidor de código abierto profesional de grafismo y playout de vídeo, con salida SDI y NDI. Todavía no tiene soporte nativo de OGraf; puede alojar la página de un renderizador en su HTML producer.",
+        "desc": "Servidor de playout de grafismo y vídeo profesional, de código abierto, con salida SDI y NDI. Aún sin soporte nativo para OGraf; puede alojar una página de renderizador en su HTML producer, y un pull request en borrador añade los paquetes OGraf al media scanner.",
         "url": "https://github.com/CasparCG/server",
         "type": "oss",
         "stars": "1090"
@@ -180,7 +213,7 @@
       },
       {
         "name": "LiveOS",
-        "desc": "Plataforma de producción en directo local, remota y en la nube de NetOn.Live. La EBU la lista como fabricante OGraf; la empresa no publica detalles sobre OGraf en su propia web.",
+        "desc": "Plataforma de producción en directo local, remota y en la nube de NetOn.Live. Su motor de grafismo HTML5 es compatible con OGraf: suelta la plantilla en la carpeta GFX de LiveOS y está lista para salir al aire.",
         "url": "https://www.neton.live",
         "type": "commercial",
         "logo": "/logos/adopters/vendors/neton-live.svg"
@@ -194,10 +227,9 @@
       },
       {
         "name": "Pixotope",
-        "desc": "Plataforma de estudio virtual, AR y XR basada en Unreal. Pixotope afirma que la versión 26.3 renderiza y controla grafismos HTML, incluido OGraf, desde la misma superficie de control.",
+        "desc": "Plataforma de estudio virtual, AR y XR basada en Unreal. Desde la 26.3 (octubre de 2026) VideoIO renderiza OGraf y Live Controller lo controla, con Continue, Delta step y Goto step en el aire. El renderizado OGraf también está en el nivel gratuito Discovery.",
         "url": "https://www.pixotope.com",
         "type": "commercial",
-        "status": "soon",
         "logo": "/logos/adopters/vendors/pixotope.svg"
       },
       {
@@ -211,6 +243,34 @@
         "url": "https://video.matrox.com/en/products/broadcast-media/origin-series",
         "type": "commercial",
         "desc": "Plataforma abierta de desarrollo para aplicaciones de medios. Matrox afirma que OGraf está disponible en el producto, con control por estado deseado y varios efectos DVE dirigidos por los grafismos OGraf."
+      },
+      {
+        "name": "Grafonaut",
+        "desc": "Renderizador OGraf multiusuario con catálogos públicos y privados, escaletas, y una salida en el navegador para usar en OBS o vMix.",
+        "url": "https://github.com/JeLuF/grafonaut",
+        "type": "oss",
+        "stars": "1"
+      },
+      {
+        "name": "erenprise ograf-server",
+        "desc": "Implementación de la Server API de OGraf que gestiona y renderiza grafismos, en Node.js o como .exe para Windows. GPL-3.0.",
+        "url": "https://github.com/erenprise/ograf-server",
+        "type": "oss",
+        "stars": "3"
+      },
+      {
+        "name": "ograf-renderer (NDI)",
+        "desc": "Renderizador OGraf v1 con salida NDI de fill y key.",
+        "url": "https://github.com/mos1907/ograf-renderer",
+        "type": "oss",
+        "stars": "1"
+      },
+      {
+        "name": "Eyevinn Open Live",
+        "desc": "Suite de producción en directo de código abierto en el navegador (mezclador de vídeo, mezclador de audio, multiviewer) que inserta plantillas OGraf mediante su downstream keyer. MIT.",
+        "url": "https://github.com/Eyevinn/open-live",
+        "type": "oss",
+        "stars": "26"
       }
     ]
   },
@@ -222,7 +282,7 @@
     "items": [
       {
         "name": "DaVinci Resolve",
-        "desc": "Importación nativa de OGraf desde Resolve 21 — suelta archivos .json / .lottie en el media pool y se comportan como clips de animación totalmente renderizados, con canal alfa reconocido.",
+        "desc": "Importación nativa de OGraf desde Resolve 21, en las páginas Cut, Edit y Fusion. La 21.1.2 hizo la reproducción hasta 4 veces más rápida, añadió controles select y multi-select y plantillas adaptables, usa las duraciones de acción del manifiesto para colocar el stop, y llevó OGraf a Linux.",
         "url": "https://www.blackmagicdesign.com/products/davinciresolve",
         "type": "commercial"
       }
@@ -251,7 +311,35 @@
         "name": "StreamShapers OGraf Validator",
         "url": "https://validator.streamshapers.com",
         "type": "commercial",
-        "desc": "Valida, inspecciona y prueba paquetes OGraf v1 en el navegador. La misma función que nuestro verificador de paquetes, desde la caja de herramientas de un fabricante."
+        "desc": "Valida, inspecciona y prueba paquetes OGraf v1 en el navegador. El mismo trabajo que nuestro Verificador de Paquetes, desde la caja de herramientas de un fabricante; el código y un núcleo en npm (@streamshapers/ograf-validator-core) tienen licencia MIT."
+      },
+      {
+        "name": "ograf-tools (SuperFly.tv)",
+        "desc": "Web Components para construir grafismos OGraf, del equipo de SuperFly.tv. En npm como ograf-tools. MIT.",
+        "url": "https://github.com/SuperFlyTV/ograf-tools",
+        "type": "oss",
+        "stars": "0"
+      },
+      {
+        "name": "ograf-core (Rust)",
+        "desc": "Biblioteca Rust para la API de control de OGraf v1 por HTTP y WebSocket, integrable como router de Axum. En fase inicial. Apache-2.0.",
+        "url": "https://github.com/HeineFro/ograf-core",
+        "type": "oss",
+        "stars": "1"
+      },
+      {
+        "name": "rollup-plugin-ograf",
+        "desc": "Plugin de Rollup para generar grafismos OGraf a partir de un proyecto con bundler.",
+        "url": "https://github.com/lucyydotp/rollup-plugin-ograf",
+        "type": "oss",
+        "stars": "0"
+      },
+      {
+        "name": "ografthumb",
+        "desc": "Renderiza un paquete OGraf como miniatura WebP animada o JPG con Chromium headless.",
+        "url": "https://github.com/JeLuF/ografthumb",
+        "type": "oss",
+        "stars": "0"
       }
     ]
   },
@@ -263,10 +351,24 @@
     "items": [
       {
         "name": "ograf-graphics",
-        "desc": "Colección de código abierto de plantillas de grafismo OGraf.",
+        "desc": "La colección de grafismos OGraf de código abierto de Johan Nyman, incluidos los que se mostraron en IBC 2026.",
         "url": "https://github.com/nytamin/ograf-graphics",
         "type": "oss",
-        "stars": "12"
+        "stars": "15"
+      },
+      {
+        "name": "cg-bootstrap",
+        "desc": "Plantilla inicial de Nebula para grafismos que funcionan tanto como OGraf como en CasparCG.",
+        "url": "https://github.com/nebulabroadcast/cg-bootstrap",
+        "type": "oss",
+        "stars": "0"
+      },
+      {
+        "name": "Sticker Graphics (free pack)",
+        "desc": "Tres títulos OGraf animados gratuitos para DaVinci Resolve 21: un rótulo, una tarjeta de capítulo y un destacado, con las fuentes incluidas.",
+        "url": "https://github.com/NovaireGroup/sticker-graphics-free",
+        "type": "oss",
+        "stars": "0"
       }
     ]
   },
@@ -287,6 +389,13 @@
         "desc": "Foro activo de la comunidad con hilos de discusión sobre OGraf.",
         "url": "https://casparcgforum.org",
         "type": "oss"
+      },
+      {
+        "name": "Amazing HTML Graphics",
+        "desc": "Una lista seleccionada de recursos de OGraf y grafismo HTML para directo, postproducción, cine y documental.",
+        "url": "https://github.com/avtools-io/amazing-html-graphics",
+        "type": "oss",
+        "stars": "3"
       }
     ]
   },

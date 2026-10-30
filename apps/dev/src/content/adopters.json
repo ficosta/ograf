@@ -1,6 +1,6 @@
 {
   "source": "https://ograf.ebu.io/",
-  "retrieved": "2026-09-17",
+  "retrieved": "2026-10-30",
   "vendors": [
     {
       "name": "Adobe",
@@ -28,9 +28,9 @@
       "logo": "/logos/adopters/vendors/blackmagic-design.svg"
     },
     {
-      "name": "Everviz",
+      "name": "Teikna",
       "url": "https://everviz.com/",
-      "logo": "/logos/adopters/vendors/everviz.svg"
+      "logo": "/logos/adopters/vendors/teikna.png"
     },
     {
       "name": "Loopic",
@@ -73,7 +73,7 @@
       "logo": "/logos/adopters/vendors/zero-density_black.svg"
     },
     {
-      "name": "Matrox",
+      "name": "Matrox Video",
       "url": "https://www.matrox.com/",
       "logo": "/logos/adopters/vendors/matrox.svg"
     },
