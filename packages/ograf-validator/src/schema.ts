@@ -1,18 +1,18 @@
 /**
  * Vendored EBU OGraf v1 JSON Schemas — offline snapshot.
  *
- * Pinned to ebu/ograf commit 8468da15f207384077a0d324af0e3fee20df03c6.
- * Fetched from https://github.com/ebu/ograf/tree/8468da15f207384077a0d324af0e3fee20df03c6/v1/specification/json-schemas
+ * Pinned to ebu/ograf commit f89f78942cca0e035ba0c8896ed4d5defcbf0054.
+ * Fetched from https://github.com/ebu/ograf/tree/f89f78942cca0e035ba0c8896ed4d5defcbf0054/v1/specification/json-schemas
  *
  * The checker normally validates against the live schema (see remote-schema.ts).
  * This snapshot is the fallback for offline / blocked / slow-network use, so it
  * must be the real spec — a hand-written approximation gives wrong answers to
  * exactly the users who cannot reach the network to find out.
  *
- * To refresh: run scripts/refresh-ograf-schemas.mjs and bump PINNED_COMMIT.
+ * To refresh: run scripts/refresh-ograf-schemas.mjs and commit the result.
  */
 
-export const PINNED_COMMIT = "8468da15f207384077a0d324af0e3fee20df03c6";
+export const PINNED_COMMIT = "f89f78942cca0e035ba0c8896ed4d5defcbf0054";
 
 export const OGRAF_SCHEMA_ROOT_ID = "https://ograf.ebu.io/v1/specification/json-schemas/graphics/schema.json";
 
@@ -1031,7 +1031,7 @@ export const OGRAF_SCHEMAS: Readonly<Record<string, object>> = {
         "minimum": -1
       },
       "schema": {
-        "description": "The schema is used by a Graphic to define the data parameters of the 'update' method.",
+        "description": "The schema is used by a Graphic to define the data parameters of the 'load()' and 'updateAction()' methods.",
         "type": "object",
         "$ref": "https://ograf.ebu.io/v1/specification/json-schemas/gdd/object.json"
       },
