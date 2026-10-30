@@ -1,73 +1,127 @@
 {
-  "20": {
-    "summary": "Graphics can now declare an optional thumbnail image in their manifest, giving controllers and editors a visual preview of each graphic.",
-    "mergedBy": 57
+  "1": {
+    "summary": "Set the direction for how OGraf graphics should load and reference fonts — recognising fonts as a first-class concern for broadcast-quality typography."
   },
-  "25": {
-    "summary": "Manifests can now declare which rendering engine version they require, letting servers reject graphics that target an incompatible runtime.",
-    "mergedBy": 58
+  "2": {
+    "summary": "Fixed the sample manifest files to correctly reference their JavaScript implementations — otherwise the examples wouldn't actually run."
   },
-  "27": {
-    "summary": "Added an optional property-order hint to manifest schemas so UIs can render fields in a predictable, designer-intended order.",
-    "mergedBy": 59
+  "5": {
+    "summary": "Concluded GDD is still needed — paving the way for its eventual merge into OGraf itself (see #24)."
   },
-  "46": {
-    "summary": "Designers can now mark which manifest fields contribute to a graphic's display name — making instances easier to identify in playlists.",
-    "mergedBy": 56
-  },
-  "63": {
-    "summary": "The OGraf specification is officially licensed under MIT — clearing up any ambiguity about commercial use, forks, and derivative works."
-  },
-  "50": {
-    "summary": "Manifests can now group related schema properties together, so form UIs can render them under labelled sections instead of a flat list."
-  },
-  "47": {
-    "summary": "Added position metadata to GDD types so layout-sensitive graphics (lower thirds, bugs, tickers) carry their intended screen placement."
-  },
-  "54": {
-    "summary": "Graphics that need internet access (live data, remote fonts, external APIs) now declare it up front — letting operators run them in air-gapped environments safely."
-  },
-  "42": {
-    "summary": "Removed the frame-count return from goToTime(). Graphics just seek to the time and return — less ceremony, fewer edge cases."
-  },
-  "49": {
-    "summary": "GDD gained a masked-text input type for sensitive fields like passwords, API keys, or anything that shouldn't show in plain text in the controller UI."
-  },
-  "24": {
-    "summary": "Graphics Data Definition (GDD), previously a separate spec, was merged into OGraf itself — one spec, one source of truth, one place to look things up.",
-    "mergedBy": 40
-  },
-  "41": {
-    "summary": "GDD added a drop-down input type so manifests can constrain fields to a fixed set of choices without custom validation logic."
-  },
-  "35": {
-    "summary": "Clarified exactly when playAction() should resolve its promise — removing ambiguity between 'started playing' and 'finished playing'.",
-    "mergedBy": 38
-  },
-  "29": {
-    "summary": "Tightened the spec around how OGraf graphics expose themselves as Web Components — making implementations more consistent across renderers.",
-    "mergedBy": 34
-  },
-  "22": {
-    "summary": "Documented the implications of AdditionalProperties: false in schemas — it's strict by design, but it bites if you're not expecting it during validation."
-  },
-  "36": {
-    "summary": "Clarified the distinction between step-based graphics (discrete stages) and updateAction-driven graphics (continuous data updates). Two patterns, two use cases."
+  "9": {
+    "summary": "Discussed how graphics should render preview images for controllers and editors — groundwork for the later Thumbnail decision (#20)."
   },
   "18": {
     "summary": "Manifest files now use the *.ograf.json extension convention — making OGraf graphics instantly recognisable in a filesystem or repo.",
     "mergedBy": 21
   },
-  "9": {
-    "summary": "Discussed how graphics should render preview images for controllers and editors — groundwork for the later Thumbnail decision (#20)."
+  "20": {
+    "summary": "Graphics can now declare an optional thumbnail image in their manifest, giving controllers and editors a visual preview of each graphic.",
+    "mergedBy": 57
   },
-  "1": {
-    "summary": "Set the direction for how OGraf graphics should load and reference fonts — recognising fonts as a first-class concern for broadcast-quality typography."
+  "22": {
+    "summary": "Documented the implications of AdditionalProperties: false in schemas — it's strict by design, but it bites if you're not expecting it during validation."
   },
-  "5": {
-    "summary": "Concluded GDD is still needed — paving the way for its eventual merge into OGraf itself (see #24)."
+  "24": {
+    "summary": "Graphics Data Definition (GDD), previously a separate spec, was merged into OGraf itself — one spec, one source of truth, one place to look things up.",
+    "mergedBy": 40
   },
-  "2": {
-    "summary": "Fixed the sample manifest files to correctly reference their JavaScript implementations — otherwise the examples wouldn't actually run."
+  "25": {
+    "summary": "Manifests can now declare which rendering engine version they require, letting servers reject graphics that target an incompatible runtime.",
+    "mergedBy": 58
+  },
+  "26": {
+    "summary": "Manifests can now declare how long each action's animation takes — per step for playAction — so NLEs like DaVinci Resolve can start an outro early enough to finish on the clip's last frame.",
+    "mergedBy": 67
+  },
+  "27": {
+    "summary": "Added an optional property-order hint to manifest schemas so UIs can render fields in a predictable, designer-intended order.",
+    "mergedBy": 59
+  },
+  "29": {
+    "summary": "Tightened the spec around how OGraf graphics expose themselves as Web Components — making implementations more consistent across renderers.",
+    "mergedBy": 34
+  },
+  "35": {
+    "summary": "Clarified exactly when playAction() should resolve its promise — removing ambiguity between 'started playing' and 'finished playing'.",
+    "mergedBy": 38
+  },
+  "36": {
+    "summary": "Clarified the distinction between step-based graphics (discrete stages) and updateAction-driven graphics (continuous data updates). Two patterns, two use cases."
+  },
+  "37": {
+    "summary": "GDD gained a select-multiple type, so a controller can offer a checklist where the operator picks zero, one or several options from a fixed list.",
+    "mergedBy": 70
+  },
+  "41": {
+    "summary": "GDD added a drop-down input type so manifests can constrain fields to a fixed set of choices without custom validation logic."
+  },
+  "42": {
+    "summary": "Removed the frame-count return from goToTime(). Graphics just seek to the time and return — less ceremony, fewer edge cases."
+  },
+  "44": {
+    "summary": "The human-readable Server API docs hung when expanding RenderTargetSchema, because the GDD schemas are recursive. The Swagger page was rebuilt so they render.",
+    "mergedBy": 76
+  },
+  "46": {
+    "summary": "Designers can now mark which manifest fields contribute to a graphic's display name — making instances easier to identify in playlists.",
+    "mergedBy": 56
+  },
+  "47": {
+    "summary": "Added position metadata to GDD types so layout-sensitive graphics (lower thirds, bugs, tickers) carry their intended screen placement."
+  },
+  "49": {
+    "summary": "GDD gained a masked-text input type for sensitive fields like passwords, API keys, or anything that shouldn't show in plain text in the controller UI."
+  },
+  "50": {
+    "summary": "Manifests can now group related schema properties together, so form UIs can render them under labelled sections instead of a flat list."
+  },
+  "51": {
+    "summary": "The Server API may live under any URL prefix. /ograf/v1 in the examples is a convention, not a requirement, so a server can expose OGraf inside a larger API.",
+    "mergedBy": 71
+  },
+  "54": {
+    "summary": "Graphics that need internet access (live data, remote fonts, external APIs) now declare it up front — letting operators run them in air-gapped environments safely."
+  },
+  "55": {
+    "summary": "Should OGraf add a real-time transport (WebSockets / AsyncAPI) for frame-by-frame updates? Closed without change: the REST API covers the 80% case, and the idea comes back only with a strong real-world use case."
+  },
+  "60": {
+    "summary": "Steps do not have to be linear. The working group agreed the spec has no opinion on what a step means; how a graphic moves between steps is up to its author."
+  },
+  "61": {
+    "summary": "A CasparCG-style named data store on the server was judged useful but too hard to specify generically. It stays a vendor-specific feature, not part of OGraf."
+  },
+  "62": {
+    "summary": "HDR (CICP, SMPTE ST 2094-50) was ruled out of scope: OGraf is not a rendering system. A minimal colour-space field in renderRequirements is still being discussed in #98."
+  },
+  "63": {
+    "summary": "The OGraf specification is officially licensed under MIT — clearing up any ambiguity about commercial use, forks, and derivative works."
+  },
+  "64": {
+    "summary": "The Server API now returns the thumbnails a graphic declares, so a controller can show previews without opening the package.",
+    "mergedBy": 68
+  },
+  "73": {
+    "summary": "GET /graphics/{graphicId} looked like it returned no parameters. It does — the full manifest, schema included; the docs simply failed to render it (see #44).",
+    "mergedBy": 76
+  },
+  "74": {
+    "summary": "Not a mismatch: 'properties' in a manifest is plain JSON Schema for an object's fields, and the data the Server API sends is an instance of that schema."
+  },
+  "75": {
+    "summary": "What should a server do with data that breaks the manifest schema? It MAY validate it, but the response is up to the implementation — no mandatory error or status code.",
+    "mergedBy": 79
+  },
+  "86": {
+    "summary": "Falcon Graphics, a free browser-based animator that exports OGraf, was flagged to the working group and its makers invited to join."
+  },
+  "88": {
+    "summary": "Matrox asked for Matrox ORIGIN to be listed as a commercial OGraf renderer, and it was added to the official site.",
+    "mergedBy": 89
+  },
+  "99": {
+    "summary": "Matrox's logo on the official site was updated to the current Matrox Video wordmark.",
+    "mergedBy": 102
   }
 }

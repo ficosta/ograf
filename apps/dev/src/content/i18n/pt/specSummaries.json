@@ -1,73 +1,127 @@
 {
-  "20": {
-    "summary": "Os grafismos agora podem declarar uma imagem de miniatura opcional no manifesto, dando a controladores e editores uma prévia visual de cada grafismo.",
-    "mergedBy": 57
+  "1": {
+    "summary": "Definiu o rumo de como os grafismos OGraf devem carregar e referenciar fontes — reconhecendo as fontes como uma questão central para uma tipografia com qualidade de broadcast."
   },
-  "25": {
-    "summary": "Os manifestos agora podem declarar qual versão do motor de renderização exigem, permitindo que servidores recusem grafismos feitos para um runtime incompatível.",
-    "mergedBy": 58
+  "2": {
+    "summary": "Os arquivos de manifesto de exemplo foram corrigidos para referenciar corretamente suas implementações em JavaScript — sem isso, os exemplos nem chegavam a rodar."
   },
-  "27": {
-    "summary": "Foi adicionada uma dica opcional de ordem das propriedades nos schemas do manifesto, para que as interfaces exibam os campos numa ordem previsível, definida por quem criou o grafismo.",
-    "mergedBy": 59
+  "5": {
+    "summary": "Concluiu que o GDD ainda é necessário — abrindo caminho para sua futura incorporação ao próprio OGraf (veja #24)."
   },
-  "46": {
-    "summary": "Quem cria o grafismo agora pode marcar quais campos do manifesto compõem o nome de exibição do grafismo — facilitando identificar as instâncias nas playlists.",
-    "mergedBy": 56
-  },
-  "63": {
-    "summary": "A especificação OGraf passa a ter licença MIT oficialmente — acabando com qualquer dúvida sobre uso comercial, forks e obras derivadas."
-  },
-  "50": {
-    "summary": "Os manifestos agora podem agrupar propriedades relacionadas do schema, para que os formulários as exibam em seções com título em vez de uma lista única."
-  },
-  "47": {
-    "summary": "Foram adicionados metadados de posição aos tipos GDD, para que grafismos sensíveis ao layout (lower thirds, bugs, tickers) carreguem o posicionamento pretendido na tela."
-  },
-  "54": {
-    "summary": "Grafismos que precisam de acesso à internet (dados ao vivo, fontes remotas, APIs externas) agora declaram isso de antemão — permitindo que operadores os rodem com segurança em ambientes isolados da rede."
-  },
-  "42": {
-    "summary": "O retorno da contagem de frames foi removido de goToTime(). Os grafismos simplesmente vão até o tempo indicado e retornam — menos cerimônia, menos casos extremos."
-  },
-  "49": {
-    "summary": "O GDD ganhou um tipo de entrada com texto mascarado para campos sensíveis, como senhas, chaves de API ou qualquer coisa que não deva aparecer em texto puro na interface do controlador."
-  },
-  "24": {
-    "summary": "O Graphics Data Definition (GDD), antes uma especificação separada, foi incorporado ao próprio OGraf — uma especificação, uma fonte da verdade, um só lugar para consultar.",
-    "mergedBy": 40
-  },
-  "41": {
-    "summary": "O GDD ganhou um tipo de entrada drop-down, para que os manifestos restrinjam campos a um conjunto fixo de opções sem lógica de validação própria."
-  },
-  "35": {
-    "summary": "Ficou definido exatamente quando playAction() deve resolver sua promise — eliminando a ambiguidade entre 'começou a reproduzir' e 'terminou de reproduzir'.",
-    "mergedBy": 38
-  },
-  "29": {
-    "summary": "A especificação ficou mais precisa sobre como os grafismos OGraf se expõem como Web Components — deixando as implementações mais consistentes entre renderizadores.",
-    "mergedBy": 34
-  },
-  "22": {
-    "summary": "Foram documentadas as implicações de AdditionalProperties: false nos schemas — é rígido de propósito, mas pega de surpresa quem não espera por isso na validação."
-  },
-  "36": {
-    "summary": "Ficou clara a distinção entre grafismos baseados em passos (etapas discretas) e grafismos guiados por updateAction (atualizações contínuas de dados). Dois padrões, dois casos de uso."
+  "9": {
+    "summary": "Discussão sobre como os grafismos devem gerar imagens de prévia para controladores e editores — a base para a decisão posterior sobre miniaturas (#20)."
   },
   "18": {
     "summary": "Os arquivos de manifesto agora seguem a convenção de extensão *.ograf.json — tornando os grafismos OGraf reconhecíveis de imediato num sistema de arquivos ou repositório.",
     "mergedBy": 21
   },
-  "9": {
-    "summary": "Discussão sobre como os grafismos devem gerar imagens de prévia para controladores e editores — a base para a decisão posterior sobre miniaturas (#20)."
+  "20": {
+    "summary": "Os grafismos agora podem declarar uma imagem de miniatura opcional no manifesto, dando a controladores e editores uma prévia visual de cada grafismo.",
+    "mergedBy": 57
   },
-  "1": {
-    "summary": "Definiu o rumo de como os grafismos OGraf devem carregar e referenciar fontes — reconhecendo as fontes como uma questão central para uma tipografia com qualidade de broadcast."
+  "22": {
+    "summary": "Foram documentadas as implicações de AdditionalProperties: false nos schemas — é rígido de propósito, mas pega de surpresa quem não espera por isso na validação."
   },
-  "5": {
-    "summary": "Concluiu que o GDD ainda é necessário — abrindo caminho para sua futura incorporação ao próprio OGraf (veja #24)."
+  "24": {
+    "summary": "O Graphics Data Definition (GDD), antes uma especificação separada, foi incorporado ao próprio OGraf — uma especificação, uma fonte da verdade, um só lugar para consultar.",
+    "mergedBy": 40
   },
-  "2": {
-    "summary": "Os arquivos de manifesto de exemplo foram corrigidos para referenciar corretamente suas implementações em JavaScript — sem isso, os exemplos nem chegavam a rodar."
+  "25": {
+    "summary": "Os manifestos agora podem declarar qual versão do motor de renderização exigem, permitindo que servidores recusem grafismos feitos para um runtime incompatível.",
+    "mergedBy": 58
+  },
+  "26": {
+    "summary": "Manifestos agora podem declarar quanto dura a animação de cada ação — por step no playAction — para que editores não lineares como o DaVinci Resolve comecem a saída a tempo de terminar no último frame do clipe.",
+    "mergedBy": 67
+  },
+  "27": {
+    "summary": "Foi adicionada uma dica opcional de ordem das propriedades nos schemas do manifesto, para que as interfaces exibam os campos numa ordem previsível, definida por quem criou o grafismo.",
+    "mergedBy": 59
+  },
+  "29": {
+    "summary": "A especificação ficou mais precisa sobre como os grafismos OGraf se expõem como Web Components — deixando as implementações mais consistentes entre renderizadores.",
+    "mergedBy": 34
+  },
+  "35": {
+    "summary": "Ficou definido exatamente quando playAction() deve resolver sua promise — eliminando a ambiguidade entre 'começou a reproduzir' e 'terminou de reproduzir'.",
+    "mergedBy": 38
+  },
+  "36": {
+    "summary": "Ficou clara a distinção entre grafismos baseados em passos (etapas discretas) e grafismos guiados por updateAction (atualizações contínuas de dados). Dois padrões, dois casos de uso."
+  },
+  "37": {
+    "summary": "O GDD ganhou o tipo select-multiple: o controlador pode mostrar uma lista de opções em que o operador marca nenhuma, uma ou várias.",
+    "mergedBy": 70
+  },
+  "41": {
+    "summary": "O GDD ganhou um tipo de entrada drop-down, para que os manifestos restrinjam campos a um conjunto fixo de opções sem lógica de validação própria."
+  },
+  "42": {
+    "summary": "O retorno da contagem de frames foi removido de goToTime(). Os grafismos simplesmente vão até o tempo indicado e retornam — menos cerimônia, menos casos extremos."
+  },
+  "44": {
+    "summary": "A documentação legível da Server API travava ao expandir RenderTargetSchema, porque os schemas do GDD são recursivos. A página Swagger foi refeita para exibi-los.",
+    "mergedBy": 76
+  },
+  "46": {
+    "summary": "Quem cria o grafismo agora pode marcar quais campos do manifesto compõem o nome de exibição do grafismo — facilitando identificar as instâncias nas playlists.",
+    "mergedBy": 56
+  },
+  "47": {
+    "summary": "Foram adicionados metadados de posição aos tipos GDD, para que grafismos sensíveis ao layout (lower thirds, bugs, tickers) carreguem o posicionamento pretendido na tela."
+  },
+  "49": {
+    "summary": "O GDD ganhou um tipo de entrada com texto mascarado para campos sensíveis, como senhas, chaves de API ou qualquer coisa que não deva aparecer em texto puro na interface do controlador."
+  },
+  "50": {
+    "summary": "Os manifestos agora podem agrupar propriedades relacionadas do schema, para que os formulários as exibam em seções com título em vez de uma lista única."
+  },
+  "51": {
+    "summary": "A Server API pode ficar sob qualquer prefixo de URL. O /ograf/v1 dos exemplos é convenção, não exigência, então um servidor pode expor o OGraf dentro de uma API maior.",
+    "mergedBy": 71
+  },
+  "54": {
+    "summary": "Grafismos que precisam de acesso à internet (dados ao vivo, fontes remotas, APIs externas) agora declaram isso de antemão — permitindo que operadores os rodem com segurança em ambientes isolados da rede."
+  },
+  "55": {
+    "summary": "O OGraf deveria ter um transporte em tempo real (WebSockets / AsyncAPI) para atualizações quadro a quadro? Encerrado sem mudança: a API REST cobre 80% dos casos, e a ideia só volta com um caso de uso real forte."
+  },
+  "60": {
+    "summary": "Os steps não precisam ser lineares. O grupo de trabalho concordou que a especificação não define o que um step significa; como o grafismo passa de um step a outro fica a critério de quem o cria."
+  },
+  "61": {
+    "summary": "Um repositório de dados nomeado no servidor, no estilo do CasparCG, foi considerado útil mas difícil demais de especificar de forma genérica. Fica como recurso de cada fabricante, fora do OGraf."
+  },
+  "62": {
+    "summary": "HDR (CICP, SMPTE ST 2094-50) ficou fora do escopo: o OGraf não é um sistema de renderização. Um campo mínimo de espaço de cor em renderRequirements segue em discussão na #98."
+  },
+  "63": {
+    "summary": "A especificação OGraf passa a ter licença MIT oficialmente — acabando com qualquer dúvida sobre uso comercial, forks e obras derivadas."
+  },
+  "64": {
+    "summary": "A Server API agora devolve as miniaturas que o grafismo declara, e o controlador pode mostrar prévias sem abrir o pacote.",
+    "mergedBy": 68
+  },
+  "73": {
+    "summary": "Parecia que GET /graphics/{graphicId} não devolvia os parâmetros. Devolve: o manifesto completo, com o schema; era a documentação que não conseguia exibi-lo (ver #44).",
+    "mergedBy": 76
+  },
+  "74": {
+    "summary": "Não há divergência: 'properties' no manifesto é JSON Schema comum para os campos de um objeto, e os dados que a Server API envia são uma instância desse schema."
+  },
+  "75": {
+    "summary": "O que o servidor deve fazer com dados que violam o schema do manifesto? Ele PODE validá-los, mas a resposta fica a critério da implementação — não há erro nem status obrigatório.",
+    "mergedBy": 79
+  },
+  "86": {
+    "summary": "O Falcon Graphics, um animador gratuito no navegador que exporta OGraf, foi apresentado ao grupo de trabalho, e seus criadores foram convidados a participar."
+  },
+  "88": {
+    "summary": "A Matrox pediu que o Matrox ORIGIN fosse listado como renderizador OGraf comercial, e ele entrou no site oficial.",
+    "mergedBy": 89
+  },
+  "99": {
+    "summary": "O logo da Matrox no site oficial foi trocado pela marca atual, Matrox Video.",
+    "mergedBy": 102
   }
 }

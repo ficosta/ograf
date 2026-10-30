@@ -1,5 +1,492 @@
 [
   {
+    "number": 99,
+    "title": "Update Matrox logo",
+    "url": "https://github.com/ebu/ograf/issues/99",
+    "closedAt": "2026-10-29",
+    "author": "danrobbo",
+    "labels": [],
+    "body": "Hi, \n\nCould you please update the Matrox logo to the latest version which includes the full company name?\n\n<img width=\"300\" height=\"150\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e4b1ebe7-cf59-46fb-aec5-87e5fce3a094\" />\n\nThanks,\nDaniel",
+    "comments": []
+  },
+  {
+    "number": 75,
+    "title": "Server response body for type mismatch",
+    "url": "https://github.com/ebu/ograf/issues/75",
+    "closedAt": "2026-10-28",
+    "author": "awils27",
+    "labels": [
+      "question",
+      "Server-API",
+      "OGraf Graphic",
+      "Concluded"
+    ],
+    "body": "If a graphic defines: \n```\n\"properties\": {\n      \"name\": {\n        \"type\": \"number\",\n        \"title\": \"Countdown\",\n        \"default\": \"10\"\n      }\n    }\n```\n\nBut I send:\n`/renderers/{rendererId}/target/graphicInstance/load`\n```\n{\n  \"renderTarget\": {\n    \"bank\": 1,\n    \"layer\": 14\n  },\n  \"graphicId\": \"simple-l3rd\",\n  \"params\": {\n    \"data\": {\n      \"Countdown\": \"10 Seconds\"\n    }\n  }\n}\n```\nShould the server respond with a 500? or a 550?\n\nShould there be a response body specifically for type mismatches or would this be apart of the 550 response?\nDoes the spec say if this is a hard fail condition?",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-02T07:17:53Z",
+        "body": "This is not specified in the OGraf definition as of now. Perhaps we should add a case for when the data is badly invalid according to the schema?\n\nThings to consider:\n* Should we demand of the OGraf server to parse and verify the data? Or should it be the Graphic template?\n* What error code should we return? 400 Bad Request?"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-06-02T08:10:33Z",
+        "body": "In my opinion the whole idea of the schema inside the manifest is to allow a client to present appropriate controls to the user, so that it's not possible to send invalid data to the template. I would not enforce that on the server a second time. - But I am open to other ideas."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-08-13T08:44:29Z",
+        "body": "Notes from the Working Group meeting 2026-06-12:\n\nWe discussed whether we should define the behavior of _when a client sends malformed data_ in the specification. We concluded on that it's up to the implementers to decide on how to handle this case.\n\nDocumentation could probably be updated with this clarification, I'll leave this issue open for someone to pick up to do just that."
+      }
+    ]
+  },
+  {
+    "number": 62,
+    "title": "Add support for HDR Graphics using CICP and SMPTE ST 2094-50",
+    "url": "https://github.com/ebu/ograf/issues/62",
+    "closedAt": "2026-09-30",
+    "author": "digitaltvguy",
+    "labels": [
+      "Idea"
+    ],
+    "body": "1.  SMPTE ST 2094-50 adds HDR Reference white metadata and parameterized adaptive tone mapping math with a relative color space for compositing of different image formats in a single render space which is anchored to HDR Reference White luminance. SMPTE ST 2094-50 has moved past the comment stage in Public Committee Draft # 2 and moving forward to a full standard if all goes well.    \n\n- HDR Reference White Luminance Metadata provides a common way of anchoring all elements together in a single output space\n- Parameterized tone mapper separates areas above HDR Reference white which is described as (HDR) Headroom.  This is the area that typically gets compressed when mapping HDR to SDR.\n\n2. Support PNG 3rd Edition CICP Chunk to explicitly identify image format\n3. Support ICC CICP Tag to explicitly identify image format\n\nCICP is ITU-T H.273 and identifies:\n\n- Image primaries\n- Transfer Function\n- Matrix Coefficients (conversion <> between RGB and other triplets like YCbCr\n- Signal Range (Full or Limited)",
+    "comments": [
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-04-16T05:20:01Z",
+        "body": "Hi Chris, what is exactly the request? Support for any image format, color spaces, etc. depends on the renderer implementation and the capabilities of HTML5. OGraf should stay independent from that and should work with any of these and future technologies. So the only place where this can be relevant is to add notion of these technologies inside the `renderRequirements` of the OGraf manifest and the `renderCharacteristics` provided in the description of a Renderer inside the OGraf Server API. Is that the request/proposal or do you mean something else?"
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-09-30T14:46:41Z",
+        "body": "Notes from the Working Group meeting 2026-09-30:\n\nWe decided that these are characteristics are out of scope of the OGraf definition. We should probably better document that OGraf is not a rendering system. In the future, we might add some HDR-related fields in `renderRequirements`, but we decided to keep that in the vendor-specific space at the moment."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-10-30T11:52:34Z",
+        "body": "See also #98 "
+      }
+    ]
+  },
+  {
+    "number": 88,
+    "title": "Add Matrox ORIGIN to website",
+    "url": "https://github.com/ebu/ograf/issues/88",
+    "closedAt": "2026-09-17",
+    "author": "danrobbo",
+    "labels": [
+      "Website"
+    ],
+    "body": "Hi,\n\nWe love the ograf project at Matrox and would like to request that our Product \"Matrox ORIGIN\" is added to the \"Renderers & Servers\" list as a commercial product.\n\nThis is the logo.\n<img width=\"1024\" height=\"225\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6c536843-0357-4cca-aee9-c24cd9cb3174\" />\n\nI've taken a screen capture of our output.\nhttps://matrox0-my.sharepoint.com/:v:/g/personal/drobinso_matrox_com/IQD3BBcWLUcCQZBmE8xvmoJgAa6OkwQbt7BaEKKfTnY7eh8?e=mH6hQ6\n\nDescription of the Product\n\n\"Matrox ORIGIN is an open developer platform for rapidly building media applications. OGraf is available in the product, which includes a desired state via the ORIGIN control model, with support for multiple DVE effects driven by the OGraf graphics.\"\n\nPlease let me know if you have any questions.\n\nThanks,\nDaniel\n\n",
+    "comments": []
+  },
+  {
+    "number": 86,
+    "title": "new free HTML-editor: Falcon Graphics by Falcon",
+    "url": "https://github.com/ebu/ograf/issues/86",
+    "closedAt": "2026-09-11",
+    "author": "wetterfrosch",
+    "labels": [],
+    "body": "As stumbled upon on [a announcement on reddit](https://www.reddit.com/r/broadcastengineering/comments/1w76p5y/new_ografhtml_falcon_graphics_animator/), there is now an at least free usable online/HTML-editor for animated graphics hosted at [graphics.wearefalcon.tv](https://graphics.wearefalcon.tv/).\n\nAs it is mentioned within the reddit-thread, the editor shall remain freely available, altough I haven't checked how the editor-software is licensed exactly.\n\nScreenshot of UI:\n\n<img width=\"1920\" height=\"1080\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ad7e3724-045f-4b99-b8c5-eeaa48f1c63f\" />",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-09-11T18:20:13Z",
+        "body": "Thank you for mentioning this, feel free to join the EBU HTML Graphics Working group, where we not only discuss the OGraf specification, but also share and demo tools in the OGraf space!"
+      }
+    ]
+  },
+  {
+    "number": 44,
+    "title": "Expanding RenderTargetSchema on the human-readable Server API docs either fails to render or causes page to hang",
+    "url": "https://github.com/ebu/ograf/issues/44",
+    "closedAt": "2026-08-13",
+    "author": "jhobz",
+    "labels": [
+      "Issue / Bug",
+      "documentation",
+      "Concluded"
+    ],
+    "body": "Repro steps:\n1. Navigate to https://ograf.ebu.io/v1/specification/open-api/docs/index.html\n2. Expand `RenderTargetSchema`\n3. Observe either a page hang or the element describes that the contents could not be rendered (page hang was more often the result in my experience)",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-02-16T06:30:23Z",
+        "body": "I can confirm there being an issue.\nWhen opening `RenderTargetSchema` the browser eventually throws an error:\n```\nResolver error\nMaximum call stack size exceeded\n```\n\nI'm not sure what causes the issue, either there is some recursive reference within `RenderTargetSchema` (which is technically allowed and not an issue on its own) and/or an issue in how the [Swagger-UI](https://www.npmjs.com/package/swagger-ui) generates the docs."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-05T08:03:34Z",
+        "body": "Notes from OGraf Meeting 2026-03-04:\n\nIt looks like this is an issue in the swagger docs, due to the recursive schemas in the GDD-json-schemas.\nHaving recursion is allowed in JSON-schemas, so we don't want to change the GDD-json-schemas themselves.\n\nIf anyone have an idea on how to fix the issue in the Swagger-UI, feel free to contribute a fix."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-04T08:04:01Z",
+        "body": "I've made an attempt at fixing this in https://github.com/ebu/ograf/pull/76"
+      }
+    ]
+  },
+  {
+    "number": 64,
+    "title": "Todo: Update Server API with thumbnails",
+    "url": "https://github.com/ebu/ograf/issues/64",
+    "closedAt": "2026-08-13",
+    "author": "nytamin",
+    "labels": [
+      "Server-API",
+      "Concluded"
+    ],
+    "body": "This is just a follow-up from https://github.com/ebu/ograf/pull/57#issuecomment-4253039698 to remember to update the Sever API with thumbnails.\n\n(Anyone, feel free to open a PR :) )\n\n",
+    "comments": []
+  },
+  {
+    "number": 73,
+    "title": "Server API Graphics Parameters on GET",
+    "url": "https://github.com/ebu/ograf/issues/73",
+    "closedAt": "2026-08-13",
+    "author": "awils27",
+    "labels": [
+      "question"
+    ],
+    "body": "I know it's still draft but it doesn't appear that the `GET` `/graphics/{graphicId}` endpoint returns parameters/data but the `POST` `/renderers/{rendererId}/target/graphicInstance/load` and similar accepts them in the request body.\n\nWould be fantastic if you could request form the server, either through this get endpoint or a `/graphics/{graphicId}/params` endpoint.\nThis would let templating tools/controllers build front end UI/databases for a show without having any prior knowledge about what graphics it will control.\n\n",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-02T06:29:01Z",
+        "body": "You might be dealing with an error in your server implementation (?).\n\nThe endpoint `GET graphics/{graphicId}` does return the graphics manifest which details what data is sent into the graphic.\nref: https://github.com/ebu/ograf/blob/main/v1/specification/open-api/server-api.yaml#L96"
+      },
+      {
+        "author": "awils27",
+        "createdAt": "2026-06-03T15:41:36Z",
+        "body": "I was just referencing the documentation here: https://ograf.ebu.io/v1/specification/open-api/docs/index.html"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-04T07:54:11Z",
+        "body": "Aha, I understand.\n\nThere is an issue with the documentatiion generation where certain properties aren't rendered properly in the docs.\n\nRelated to https://github.com/ebu/ograf/issues/44"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-04T08:03:15Z",
+        "body": "I've made an improvement to the docs generation, see https://github.com/ebu/ograf/pull/76"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-08-13T08:46:08Z",
+        "body": "The documentation at https://ograf.ebu.io/v1/specification/open-api/docs/index.html has been updated now, so I'll close this issue. Feel free to re-open it if the issue still persists."
+      }
+    ]
+  },
+  {
+    "number": 74,
+    "title": "Terminology mismatch between server and graphics",
+    "url": "https://github.com/ebu/ograf/issues/74",
+    "closedAt": "2026-08-13",
+    "author": "awils27",
+    "labels": [
+      "question"
+    ],
+    "body": "Based on: https://ograf.ebu.io/v1/specification/docs/Specification.html\nand: https://ograf.ebu.io/v1/specification/open-api/docs/index.html\n\nThe graphics spec refers to editable fields of a graphic as `properties`\n\n```\n\"properties\": {\n      \"name\": {\n        \"type\": \"string\",\n        \"title\": \"Name\",\n        \"default\": \"John Doe\"\n      }\n    }\n```\n\nBut the server spec shows what looks like populating these same fields using the terminology parameters/params:\n```\n  \"params\": {\n    \"data\": {\n      \"name\": \"John Doe\"\n    }\n  }\n```",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-06-02T07:13:09Z",
+        "body": "I think you misunderstand, the `properties` to refer to, is imply how a JSON-schema defines the properties of an object. Ref: https://json-schema.org/understanding-json-schema/reference/object#properties"
+      }
+    ]
+  },
+  {
+    "number": 26,
+    "title": "Outro duration",
+    "url": "https://github.com/ebu/ograf/issues/26",
+    "closedAt": "2026-06-03",
+    "author": "imaretic",
+    "labels": [
+      "Idea",
+      "OGraf Graphic",
+      "Concluded"
+    ],
+    "body": "When using OGrafs in an NLE, it's important for the NLE to know how long a graphic takes to animate out. This ensures the graphic animates out precisely at the end of its timeline piece, for example, rendering the final frame of the outro on the last frame of the OGraf piece on the timeline.\n\nSince a graphic can be in different states during playback, the stop duration may not always be the same.\n\nPotential solution to this problem could be making the outro duration a function in the web component rather than a static property in the manifest file. The OGraf client could then, after setting scheduled actions, call method like `getOutroDuration()`, or the outro duration could be returned as part of the response to `setActionsSchedule()`.",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2025-10-29T16:25:16Z",
+        "body": "After today's (2025-10-29) discussion I try to summarize what I think would make sense in my opinion.\n\nAdd a property to the manifest with the duration of the outro animation (stopAction) in milliseconds and let it be -1 if it's unknown and varies that much, that it does not make sense to default it to anything (what should seldom be the case).\n\n`outroDuration: 500,`"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2025-10-29T16:32:46Z",
+        "body": "Notes from Working Group meeting 2025-10-29:\n\nWe think that this is not limited to outros, as the animation between steps or other actions might be useful to know.\nIt is also relevant both for realtime and non-realtime applications.\n\nWe propose that a definition is added to the manifest that describes animation-times for different types of steps (such as intro/play, steps & outro/stop). If the animation time for a certain step is dynamic/unknown, it can be defined as \"-1\".\nIt is not a perfect solution, but having a statically defined animation-time allows for NLE's and automation software to predictably adjust action times.\n"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-19T15:02:24Z",
+        "body": "What about something like this:\n```\n    \"actionDurations\": [\n        {\n            \"id\": \"playAction\",\n            \"duration\": 150\n        }, {\n            \"id\": \"updateAction\",\n            \"duration\": 350\n        }, {\n            \"id\": \"stopAction\",\n            \"duration\": 250\n        }, {\n            \"id\": \"customAction\",\n            \"name\": \"showOvertime\",\n            \"duration\": 50\n        },, {\n            \"id\": \"customAction\",\n            \"name\": \"hideOvertime\",\n            \"duration\": 50\n        } \n    ]\n```\nWhile \"name\" is only needed when a \"customAction\" is affected. The duration would be in milliseconds."
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-20T07:16:38Z",
+        "body": "Yes, and for the `playAction`, we probably need an optional `step` field, as every step could potentially have a different transition duration."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-02-20T08:55:40Z",
+        "body": "> Yes, and for the playAction, we probably need an optional step field, as every step could potentially have a different transition duration.\n\nYou are right, I forgot this. What about something like that:\n\n```\n \"actionDurations\": [\n        {\n            \"id\": \"playAction\",\n            \"duration\": 150,\n            \"steps\": [\n               {\n                   \"step\": 1,\n                   \"duration\": 40\n               }, {\n                   \"step\": 2,\n                   \"duration\": 50\n               }, {\n                   \"duration\": 70\n               }\n           ]\n        }, {\n            \"id\": \"updateAction\",\n...\n\n```\nIf the \"step\" number is missing, that would mean all other steps are of this duration. In the case above see the third entry. For an unknown number of steps this would be the only entry."
+      },
+      {
+        "author": "mrfanny",
+        "createdAt": "2026-05-16T17:57:39Z",
+        "body": "Hi,\n\nI'm testing OGraf support in DaVinci Resolve 21 (public beta, released April 2026) and running into the exact issue described here.\n\nDR 21 appears to call stopAction() at the very last frame of the clip, which leaves no time for the out animation to play. The in animation (playAction) works correctly.\n\nA few questions:\n\nIs there any known workaround that works specifically with DaVinci Resolve 21's OGraf renderer?\nHas Blackmagic Design been in contact with the OGraf working group about this? Do they plan to implement outDuration or getOutroDuration() in their renderer?\nIs the v_ vendor prefix approach viable as a short-term workaround — e.g. adding \"v_outDuration\": 900 to the manifest and hoping DR reads it?\nDoes setActionsSchedule get called by DR's renderer at all? In my testing I cannot confirm whether DR calls it or just calls playAction + stopAction directly.\nFor context: I'm building a lower-third name graphic (similar to the l3rd-name example in this repo). Everything works except the out animation.\n\nThanks"
+      }
+    ]
+  },
+  {
+    "number": 37,
+    "title": "Proposal for new GDD Type: select multiple",
+    "url": "https://github.com/ebu/ograf/issues/37",
+    "closedAt": "2026-06-03",
+    "author": "nytamin",
+    "labels": [
+      "Data Types",
+      "Concluded",
+      "GDD Types"
+    ],
+    "body": "As discussed in the Working Group meeting 2025-10-29, here is a proposal for adding a GDD type for selecting multiple items from a list of options, similar to the existing [Select type](https://github.com/SuperFlyTV/GraphicsDataDefinition#select).\n\n\n### Select-multiple\nLets the user select zero, one or multiple from a limited number of options (this is often done with checkboxes).\n\nPlease note that the type for this can be either of \"string\", \"integer\" or \"number\".\n\n```json\n{\n  \"type\": \"array\",\n  \"items\": { \"type\": \"string\" },\n  \"enum\": [\"one\", \"two\", \"three\"],\n  \"gddType\": \"select-multiple\",\n  \"gddOptions\": {\n    \"labels\": {\n      \"one\": \"Label for one\",\n      \"two\": \"Label for two\",\n      \"three\": \"Label for three\"\n    }\n  }\n}\n{\n  \"type\": \"array\",\n  \"items\": { \"type\": \"integer\" },\n  \"enum\": [1, 2, 3],\n  \"gddType\": \"select-multiple\",\n  \"gddOptions\": {\n    \"labels\": { \"1\": \"Small\", \"2\": \"Medium\", \"3\": \"Large\" }\n  }\n}\n{\n  \"type\": \"array\",\n  \"items\": { \"type\": \"number\" },\n  \"enum\": [1.2, 3.5, 9.0],\n  \"gddType\": \"select-multiple\",\n  \"gddOptions\": {\n    \"labels\": { \"1.2\": \"Small\", \"3.5\": \"Medium\", \"9.0\": \"Large\" }\n  }\n}\n```",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2025-11-12T15:35:58Z",
+        "body": "Notes from Working Group 2025-11-12:\n\nYes, this looks good.\n~Please note that this is blocked by https://github.com/ebu/ograf/issues/24, which will have to be done first.~"
+      }
+    ]
+  },
+  {
+    "number": 51,
+    "title": "ServerApi: Propsal/clarification: prefix in URL",
+    "url": "https://github.com/ebu/ograf/issues/51",
+    "closedAt": "2026-06-03",
+    "author": "nytamin",
+    "labels": [
+      "Idea",
+      "Server-API",
+      "Concluded"
+    ],
+    "body": "I'd like to be able to implement an Ograf Server which exposes its OGraf API on urls with various prefixes.\nFor example, the API can be exposed on url `johans-server.com/myPrefix/MyFolder/something-else/ograf/v1/**`.\n\nI'd like to hear your thoughts on this, and whether we should modify the API specification to explicitly support this?\neg, `/graphics` -> `{prefix}/graphics`.\nOr is this implied to be acceptable already? (I'm a bit unsure what the OpenAPI spec allows and not.)\n\nAnother question to consider is should we require the url to be prefixed with `/ograf/v1/**`? (this might be useful in case we'd add breaking changes in the future).",
+    "comments": [
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-02-19T07:04:09Z",
+        "body": "Reading the OpenAPI spec, what comes close to what you ask is the `servers` field (see https://learn.openapis.org/specification/servers.html). It allows you to specify a list of 'prefixes' in your OpenAPI definition. Typical use case is when you have multiple environments (like dev, staging, production) and you provide the base URL for each environment. A UI visualizing your OpenAPI spec can then easily switch between these servers. However, this solution is not feasible for the OGraf OpenAPI spec, because these prefixes are vendor-specific and can never be part of the actual OpenAPI definition in our case. So the real answer here is: is it possible to formally describe it with OpenAPI that various prefixes are allowed: no. Do we allow various prefixes: yes, but we need to explicitly mention this in plain normative text.\n\nRegarding you proposal for adding the version inside the URL, it is a pattern that you see a lot but I'm personally not a big fan of it. The advantage of doing that, is that it is very clear for clients against which version they are talking to. The disadvantage is as follows. Implementations supporting multiple versions need to duplicate their endpoints, even if they are actually still doing exactly the same thing (I guess there will be some breaking changes, but not everything will be changed). This is needed if you want to keep supporting clients that are on older versions. If you don't introduce a version in your path, server implementations only need to implement the new things (on condition that this is possible). Besides, for the OGraf spec, we promised to keep it both backwards and forwards compatible. Why shouldn't we keep that promise for the Server API?\n"
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-03T14:08:54Z",
+        "body": "> Besides, for the OGraf spec, we promised to keep it both backwards and forwards compatible. Why shouldn't we keep that promise for the Server API\n\nI think this should be formalized if that's the case, as it's indeed very common to have API versioning in REST APIs. Guaranteeing bidirectional compatibility can elimitate the need for this... but it could become a maintenance burden down the road."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-18T15:48:20Z",
+        "body": "Notes from Working Group 2026-03-18:\n\nYes, this should be allowed, let's update the specification to clarify that it is."
+      }
+    ]
+  },
+  {
+    "number": 55,
+    "title": "Suggestion: real-time transport mode (AsyncApi?)",
+    "url": "https://github.com/ebu/ograf/issues/55",
+    "closedAt": "2026-04-29",
+    "author": "rinode",
+    "labels": [
+      "Idea",
+      "Server-API"
+    ],
+    "body": "Just to provide some extra context and avoid misunderstanding: this suggestion concerns high frequency updates of graphics properties while it's on air and if OGraf should play a role here.\n\nLast meeting got me thinking... @axelboberg raised a very interesting point about transport, whether we have ever considered using WebSockets. Generally, HTTP/3 (using QUIC, based on UDP) should provide a boost in performance over 'traditional' HTTP over TCP, with only one round-trip for the handshake and lost packets being non-blocking. However... Have we ever benchmarked this, especially for high framerate scenarios?\n\nShould the need arise for low-latency communication, would it be an idea to adopt AsyncApi, but using the OpenApi schema? See: https://www.asyncapi.com/docs/tutorials/getting-started/coming-from-openapi, they seem quite clear about this:\n> AsyncAPI is compatible with OpenAPI schemas.\n\nPerhaps this is a nice performance profiling/benchmark task, a cross-comparison of framerates and transport modes:\n- Framerates: 23.976, 25fps, 29.97fps, 30fps, 50fpx, 59.94fps, 60fps, 120fps\n- Transport:  REST over HTTP/2 (TCP), REST over HTTP/3 (QUIC/UDP), WebSockets (TCP), WebTransport (HTTP/3)\n\nWould love to hear your input! Let's get technical 🤓",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-05T16:41:23Z",
+        "body": "I don't know, if there is a misunderstanding, what the whole thing is about. The Server-API is used to control the play-out of graphic templates. \n\nI don't know, if you are familiar with [CasparCG](https://casparcg.com/) There is the [AMCP-protocol](https://github.com/CasparCG/help/wiki/AMCP-Protocol) that does something similar. It's based on TCP-IP socket communication. You use it to tell the server, what and when you want to play something. You do not call it frame by frame. As the HTML-template itself usually needs a short time to load itself, that would not make sense. The idea is, that an operator loads a template (lower third etc.) a few seconds before it needs to go on air, and then plays it on cue. The communication latency is the least problem here. But usually this works quite well and timing is seldom an issue."
+      },
+      {
+        "author": "axelboberg",
+        "createdAt": "2026-03-05T16:48:38Z",
+        "body": "What you're saying @didikunz is true for simple graphics such as nameplates and titles. However whenever something needs to be updated on a frame-by-frame basis this starts becoming more interesting.\n\nSome examples:\n- A template rendering a clock from an external input such as a sports event\n- Multiple redundant servers that need to depend on an external state\n- Templates relying on positional data from external sources\n\nSure you can still do this with AMCP but then you'd have to abandon the standard. And even though you may have a faster transport the load command is still relevant."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-05T17:00:37Z",
+        "body": "I guess it comes down to whether those properties are controllable from an OGraph perspective, or should be considered \"internally controlled\" and not exposed through the protocol. It does raise questions about what the real-time mode in the OGraph spec actually entails – and more importantly: what not.\n\nRegarding the misunderstanding @didikunz: this is exactly the answer I gave @axelboberg regarding the \"purpose\" of the Server API last meeting. But it doesn't completely rule it out.\n\nIn the end, if the API is not built for this, it might be good if we advise against this in its documentation."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-05T17:20:20Z",
+        "body": "I am not completely against it, but most of the mentioned stuff is not done via the server API. For instance a clock is usually done with some internal logic, that either count on it's own, use the system clock or connect to a timing source directly. \n\nFor stuff like football or basketball the latency of these protocols are usually fast enough to set the game clock (or shot clock) from the server. For instance the [ScoreboardOCR](https://scoreboard-ocr.com/) app does exactly this (not yet for OGraf). "
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-05T17:20:48Z",
+        "body": "For example, let's take this graphic that @nytamin shared:\nhttps://github.com/ebu/ograf/issues/47\n\nIf the positions of those labels were to be provided by an external tracking system, sending updates every frame while the graphic is on-air... Would we say that's out of scope for OGraf and should be handled internally by the playout system itself? Or do we perhaps want to explore the possibilities and limitations here?"
+      },
+      {
+        "author": "axelboberg",
+        "createdAt": "2026-03-05T18:27:48Z",
+        "body": "That is a good example. The question whether or not this is in scope of OGraf requires more knowledge of the intentions of the protocol than I currently have.\n\nMy initial thoughts however, and seeing this as a way to standardize how graphics templates are controlled both in live settings and offline (non real time), is that I fear lacking a good real time transport would force developers out of the standard for way too little or no reason."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-03-05T20:16:53Z",
+        "body": "This is a quite interesting idea!\nThere was an intention when designing the OGraf API to make it versatile enough so most vendors wouldn't have to resort to secondary data channels when implementing their graphics in OGraf (that's why we included the \"v_\" prefix, for vendor-specific extensions of the API).\n\nI can see a few possible options:\n\n* Discard the REST API entirely, in favor of a websocket one _(a _very_ breaking change. Still allowed at this point, but would require much work and likely delay the release of the Server API)._\n* Keep the REST API, but also add a functionally equivalent one based on websockets (AsyncApi based on the same OpenApi schema). _(A lot of work, but could be added in a later version)_\n* Add a SINGLE websocket API endpoint for the \"update\" method only (since that will likely be the one most commonly used for realtime updates). _(Least amount of extra work)_\n\n---\n\nJust out of curiosity; to see if a REST API implementation can be capable of handling realtime data updates I ran a quick test locally using [OGraf Server](https://github.com/SuperFlyTV/ograf-server), pushing data updates at 60 fps to a local renderer and filmed it in slow-motion:\n\nhttps://github.com/user-attachments/assets/6c3a6fc4-731d-4fae-a103-10c7d5e85af9\n\nIt looks like _most__ of the data comes through in time for each frame to get updated, so that's pretty good.\nThe calls took about 3-5ms, and that includes a roundtrip of the message being passed from Controller to Server to Renderer and back again.\nBut this was a local test, perhaps network overhead would be higher over a typical network.."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-05T23:05:32Z",
+        "body": "Certainly not an easy choice.\n\nDiscarding the REST API feels radical, but I would prefer that over maintaining two API's if we treat this as a priority. I do fear that it might affect the adoption of OGraf though.\n\nWe were developing a combined OpenAPI / AsyncAPI protocol when I worked at EVS (for Cerebrum), I'll check in with them to see how that's working out. It might help us to decide whether it's worth going down that road. I do recall some of your colleagues at SuperFly implementing that protocol @nytamin, would be good to hear about their experiences."
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-03-06T07:05:08Z",
+        "body": "Interesting discussion, but let's not forget our audience and Tuomo's infamous 80-20 rule. Why do we specify a schema for each parameter? Because implementers of controllers can then render them without prior knowledge. Why do you want to render them? So users can control it. In most of the cases, updating graphics will be triggered by manual interaction. Does that mean we prevent automated updates? Of course not. Most of the automated updates will not be every frame either, on the contrary. So I want to highlight that this case is relevant, but is only about a small portion of everyday's graphics updates.\n\nLet's focus on these high-frequency update use cases. I see two categories:\n* fully automated, no user interaction at all: the clock example falls in this category, as well as an algorithm that tracks players on a pitch and provides the bounding boxes. So for these use cases, what is the benefit to create an OGraf parameter for this? You will never have to visualize it in a controller. The only thing I see is that you expose a consistent way for external systems to 'push' this data into the template. But should we use (or misuse?) OGraf for that? You could easily build and define your own API (in whatever technology) and use it inside your template, you would obtain the same consistency. \n* user-driven: for example a user manipulating a (physical or virtual) joystick, a T-bar, a jog to steer certain parameter values. You could still tackle this in the same way as the previous point (i.e. build an API where these controls are talking to and push them into your graphics via your preferred transport). However, I see more reasons that this category could benefit from being a parameter because it is possible to show them in the controller and to interact with it as a user. A noticeable difference here is that the interaction is not full time, but only when the user actually does something. However, when the user does something, it generate high-frequency updates.\n\nSo in my opinion, only user-driven high-frequency updates are valid use cases for this topic. That said, what are the options if we want to render based on high-frequency updates:\n1) not make it a parameter at all, and implement the communication channel inside the template implementation. This solution will work in every compliant renderer and what's more, the implementer can choose the best protocol that suite his/her needs. You have access to all the options available and are not restricted to what the OGraf spec supports today (whatever that may be).\n2) introduce a WebSocket endpoint for updates only (and I assume we keep the one in the REST API as well). A valid proposal although annoying for vendors that don't need this feature. You could make it optional but many optional things inside a spec is not great for the overall interoperability. We should think about whether it is worth to annoy the 80% in order to please the 20% :-). \n\nFor me the other options like fully replacing the API with an Async API or maintaining two APIs would be enormous overkill and a bad signal towards the vendors that focus on the 'simple' use cases."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-06T08:06:30Z",
+        "body": "> Why do we specify a schema for each parameter? Because implementers of controllers can then render them without prior knowledge. Why do you want to render them? So users can control it.\n\nI think it all boils down to whether this is indeed the focus, as you could also treat it as an abstraction layer for graphics control where you don't care whether it's controlled by a human, or automated and at what frequency. We did a show once where the position of a graphic was based upon multi-touch dragging on a touchscreen: high-frequency, user-driven, but causing a massive burst of updates that you probably don't want to wire through OGraf.\n\nIt would be good to formalize the intent of the protocol, to prevent anyone treating it like such an abstraction layer and building full-blown automated data connection workflows on top of it, if it's simply not built for it.\n\nJust because you can, doesn't mean you should 😊"
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-03-06T08:50:40Z",
+        "body": "Well, the use case does make sense, and can even be done with HTTP as Johan demonstrated. Since this was a local test, I assume this was HTTP 1.1? From HTTP2 and further, things can only get better in this context :). So we shouldn't prevent or discourage users from doing this, if it fits their requirements, why not. But I agree that for users that need to go beyond the boundaries of static HTTP requests, we can (and should) provide guidelines if we decide not to introduce an OGraf WebSocket endpoint.\n\nI don't think this is about 'intents', but about how to achieve interoperability across multiple vendors without ruling out certain use cases, but at the same time make adoption as easy as possible."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-06T10:15:31Z",
+        "body": "Interesting points. I second Tuomo's 80/20 rule: Keep the basics as simple as possible. Another thing maybe worth considering is, that we should keep the template authoring process for basic stuff as simple as possible, so that basic web-developers (or automated tools) can quickly and easily create OGraf templates. While the uses cases, that you mention are usually handled by high skilled programmers who even dream in JavaScript :)"
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-06T11:11:44Z",
+        "body": "For the sake of familiarization I'll look into a very \"simple\" benchmark (it never really is simple!), exploring the boundaries of HTTP version (1.1/2/3) vs. update frequency (framerates for now) vs. payload size (one property, five properties, ten properties... fifty??) using OGraf. That could give us some numbers that might help in deciding whether this is worth further investigating. While I am leaning more and more towards prioritizing the simplicity of the protocol, it's still worth measuring!"
+      },
+      {
+        "author": "axelboberg",
+        "createdAt": "2026-03-06T11:13:19Z",
+        "body": "> This is a quite interesting idea! There was an intention when designing the OGraf API to make it versatile enough so most vendors wouldn't have to resort to secondary data channels when implementing their graphics in OGraf (that's why we included the \"v_\" prefix, for vendor-specific extensions of the API).\n> \n> I can see a few possible options:\n> \n> * Discard the REST API entirely, in favor of a websocket one _(a _very_ breaking change. Still allowed at this point, but would require much work and likely delay the release of the Server API)._\n> * Keep the REST API, but also add a functionally equivalent one based on websockets (AsyncApi based on the same OpenApi schema). _(A lot of work, but could be added in a later version)_\n> * Add a SINGLE websocket API endpoint for the \"update\" method only (since that will likely be the one most commonly used for realtime updates). _(Least amount of extra work)_\n> \n> Just out of curiosity; to see if a REST API implementation can be capable of handling realtime data updates I ran a quick test locally using [OGraf Server](https://github.com/SuperFlyTV/ograf-server), pushing data updates at 60 fps to a local renderer and filmed it in slow-motion:\n> \n>  VID_20260305_210047616.mp4 \n> \n> It looks like _most__ of the data comes through in time for each frame to get updated, so that's pretty good. The calls took about 3-5ms, and that includes a roundtrip of the message being passed from Controller to Server to Renderer and back again. But this was a local test, perhaps network overhead would be higher over a typical network..\n\nI'll just jump in and mention that while this is a good test for speeds on a local network it doesn't take request ordering into account, so it implies that logic for handling dropped or late data is required to be implemented within templates. Whereas another transport would solve that issue.\n\nI hear what you're saying about 80/20, I just can't help wondering if playout commands in real time settings at least shouldn't be limited by HTTP requests. Maybe I'm wrong."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-06T11:31:11Z",
+        "body": "> it doesn't take request ordering into account, so it implies that logic for handling dropped or late data is required to be implemented within templates.\n\nYep... This touches the whole aspect of frame accuracy with HTML Graphics though. I completely agree that for simple use-cases (still the majority and from what I gather the focus of OGraf) the current approach works. But I would be careful with basing our verdict on high-frequency updates on one demo, where only one property is updated at high frequency on a local network. That's a very favorable scenario."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-17T13:11:24Z",
+        "body": "As suggested elsewhere: Maybe a \"Profile\" approach, similar to the ones in MOS, could be the solution, so that a real time protocol could be specified as a separate profile. The schema would then need to have a way to indicate that the template need this functionality."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-15T14:52:05Z",
+        "body": "Note from Working Group 2026-04-15:\n\nNot that many opinions where raised.\nThe 80/20 rule probably applies, so we probably don't want to replace the whole REST API with an AsyncAPI.\nBut we recognize the usefulness of having a higher performance API in some cases.\n\nNo conclusion reached, discussion to be continued next meeting."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-29T14:28:43Z",
+        "body": "Notes from the Working Group meeting 2026-04-29:\n\nThere was a question whether we have a real-world use case that highlights the need for a high-performance API (and that the REST API is not performant enough)?\nWe concluded that we'll stick to the REST API for now, as we think that will be easier to use for the most common use cases."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-29T14:31:52Z",
+        "body": "I'll close this thread for now. If anyone want to champion this at a later time and can present a strong use case we'll reopen it."
+      }
+    ]
+  },
+  {
+    "number": 60,
+    "title": "Question: non-linear graphic steps",
+    "url": "https://github.com/ebu/ograf/issues/60",
+    "closedAt": "2026-04-29",
+    "author": "rinode",
+    "labels": [
+      "question"
+    ],
+    "body": "So the [step model](https://github.com/ebu/ograf/blob/main/v1/specification/docs/Specification.md) is visualized as a linear path:\n<img width=\"1971\" height=\"794\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4af69c24-caf3-4e2e-aa7c-2ef3d88728cc\" />\n\nHowever, the documentation doesn't specifically mention whether a step is meant to be linear (i.e. a 'marker' on a timeline), or can be non-linear, such as the following example:\n![Image](https://github.com/user-attachments/assets/f8cd02e1-ff41-4f3d-aece-732473c5437e)\nIn this example, directionality of transitions affects the step it will traverse.\n\nAnother example:\n![Image](https://github.com/user-attachments/assets/0beb0172-9cef-4815-be4c-10187353cc3d)\n\nIs OGraf's step model restricted to linear timelines, or can steps diverge to (and join from) separate paths?",
+    "comments": [
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-16T16:19:44Z",
+        "body": "As I understand it, the step model is more in a linera fashion. What you show here can be represented with custom commands.\nCall \"step 1\" then either \"A\", \"B\" or \"C\" and then \"step 2\". While the steps would maybe not be called \"step X\"."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-16T18:23:46Z",
+        "body": "@didikunz \n > As I understand it, the step model is more in a linera fashion. What you show here can be represented with custom commands.\n\nJust to be sure, you're referring to the customActions field right? Makes sense, thanks! Doesn't seem like you can limit custom actions to a certain step from an API point of view, right?"
+      },
+      {
+        "author": "dvdeurse",
+        "createdAt": "2026-03-17T07:38:08Z",
+        "body": "The step model does not have to be linear. I don't think OGraf should have an opinion about what steps mean. It is the implementer of the Graphics that determines the semantics of the steps for that Graphics. All OGraf defines is \n* the fact that a Graphic can have multiple steps\n* a step is identified by a number\n* a function to navigate to these steps (either absolute or relative). \n\nWhat this actually means (i.e. rendering a particular step) is up to the Graphics implementer and can depend on internal state, external state, step number, etc. And yes, you could use custom actions to manipulate the current step, if that is necessary, but it shouldn't be a requirement to implement non-linear step models."
+      },
+      {
+        "author": "christianeide",
+        "createdAt": "2026-03-17T08:32:23Z",
+        "body": "I agree that the step model should not be locked to a linear, I have several usecases where a non-linear step model makes sense. F. ex. if you have several images in a full screen or studio screen, then we would like to jump to whatever image the user wants.\n\nWith that being said, from my own experience it is more demanding to create graphics that handles non-linear playout. So I dont think Ograf should demand that everyone should support non-linear step logic. And at the same time not limit users to only support a linear step logic.\n\nShould this be a configuration the graphic instance declears? If the graphics can handle non-linear, or orderLocked, step?"
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-17T10:33:05Z",
+        "body": "The OGraf specification actually supports a non linear way of the stepCount. That is correct. If that makes sense or not is not the point. Actually you can either use the stepCount or could use a customAction. That depends on the use case, while you only could give the stepCount (a number) as a parameter in the first case you can send a full payload with data (variables etc.) in the second case. \n\nBy the way: I would do the use-case of the studio screen you mentioned by updating the image and not by loading everything beforehand and step back and fore. But it sure could be done that way if it makes sense for any reason."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-17T12:20:39Z",
+        "body": "Going from a step to a directly connected step feels natural, but with diverging/joining paths and being able to select 'multiple steps ahead' complexity arises (multiple possible paths to the same step). Then again, why would you introduce diverging paths if you don't explicitly want to traverse them... I'm not big on introducing another mode, but if we want to fully support this it might be good to provide the necessary feedback to determine which steps can be taken."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-03-17T13:07:06Z",
+        "body": "Hmmm. I think there is a slight misunderstanding here. The diagrams are meant to show possible ways to call these steps, not the way they must be called. \n\nIn CasparCG we have the \"Next\" command, that works similar, but in a less flexible way. It simply calles the next step, without giving the operator a way to skip steps. In my understanding the nextStep variable is more to be able to skip steps to preview a step before putting it on air, similar to the \"skipAnimation\" flag. Mostly this step animations are used to either show other pages of informations (like for a ranking in sports) or to reveal something, like having a bars showing the points/percentages in a voting and revealing the actual names of the winners one by one. In such scenarios it can be handy to be able to skip to a step to see it as preview but would ruin the tension if used on air.\n\nSo I would keep this stuff as simple as possible and not over engineer it too much. But that is only my opinion."
+      },
+      {
+        "author": "rinode",
+        "createdAt": "2026-03-18T09:33:22Z",
+        "body": "It feels like we've reached consensus about this: steps can be non-linear, but step transitions are unopinionated and left to the implementer to handle correctly."
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-29T14:32:01Z",
+        "body": "Notes from Working Group meeting 2026-04-29:\n\nYes, we agree with @rinode 's comment above."
+      }
+    ]
+  },
+  {
+    "number": 61,
+    "title": "ServerApi: Something to load data into a store",
+    "url": "https://github.com/ebu/ograf/issues/61",
+    "closedAt": "2026-04-29",
+    "author": "didikunz",
+    "labels": [
+      "Idea",
+      "Server-API"
+    ],
+    "body": "In CasparCG there are commands (DATA STORE, DATA RETRIEVE, DATA LIST, DATA REMOVE) that allows to send template data to a storage under a name. The template play-out commands allow this name be given instead of the (JSON or XML) data for the template. This is often used, when some external data is processed by a middle ware (stock courses etc.) and simply are sent to a data-set on the server. During broadcasting this data will be accessed directly.\n\nWould it maybe make sense to invent something similar in OGraf also?",
+    "comments": [
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-13T07:28:26Z",
+        "body": "This sounds like something could be useful, but would add additional requirements on server/renderer implementers.\n\nI think that this should be a vendor-specific implementation (ie not added to the ograf-specification) for now. If it turns out that there is a massive need for this, we could add it as a opt-in feature in a later version."
+      },
+      {
+        "author": "didikunz",
+        "createdAt": "2026-04-13T09:15:47Z",
+        "body": "I agree,"
+      },
+      {
+        "author": "nytamin",
+        "createdAt": "2026-04-29T14:36:33Z",
+        "body": "Notes from the Working Group meeting 2026-04-29:\n\nWe think that while this feature might be useful, we don't directly see how to implement this in a good generic way, and it might lie outside of the core scope of OGraf.\n\nWe'll close this thread for now"
+      }
+    ]
+  },
+  {
     "number": 20,
     "title": "Thumbnail",
     "url": "https://github.com/ebu/ograf/issues/20",
