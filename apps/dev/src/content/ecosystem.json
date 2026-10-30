@@ -367,6 +367,50 @@
     ]
   },
   {
+    "id": "html-platforms",
+    "name": "Other HTML graphics platforms",
+    "icon": "Globe",
+    "description": "Broadcast graphics systems that already render HTML but don't read or write OGraf yet. Listed for context, not counted above — each is one export or import away.",
+    "outsideOGraf": true,
+    "items": [
+      {
+        "name": "MXMZ",
+        "url": "https://mxmz.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Cloud-native graphics platform from the Netherlands, spun out of Banijay's Southfields. Designs come in from Illustrator, Figma or Canva as SVG and play out as HTML5, with sports control interfaces and integration into Grass Valley AMPP and Premiere."
+      },
+      {
+        "name": "Viz Flowics",
+        "url": "https://www.flowics.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Vizrt's browser-based, cloud-only platform for designing and operating data-driven HTML5 graphics, with SDI, NDI and cloud outputs."
+      },
+      {
+        "name": "Singular.live",
+        "url": "https://www.singular.live/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Web-native, subscription-based live graphics platform used by broadcasters, sports and esports, with an HTML-to-NDI converter (Recast) for output."
+      },
+      {
+        "name": "Grass Valley AMPP Graphics",
+        "url": "https://www.grassvalley.com/latest-news-from-the-world-of-ampp/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "AMPP's own HTML5 graphics tool for straps and bugs, triggered from AMPP control panels and macros. AMPP also hosts Singular, Flowics and MXMZ."
+      },
+      {
+        "name": "H2R Graphics",
+        "url": "https://h2r.graphics/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Free, offline-capable desktop app for lower thirds, tickers and timers, with browser-based output for software switchers."
+      }
+    ]
+  },
+  {
     "id": "community",
     "name": "Community & Docs",
     "icon": "BookOpen",

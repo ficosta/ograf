@@ -367,6 +367,50 @@
     ]
   },
   {
+    "id": "html-platforms",
+    "name": "Outras plataformas de grafismo HTML",
+    "icon": "Globe",
+    "description": "Sistemas de grafismo para TV que já renderizam HTML, mas ainda não leem nem escrevem OGraf. Estão aqui como referência e não entram na contagem acima — cada um está a uma exportação ou importação de distância.",
+    "outsideOGraf": true,
+    "items": [
+      {
+        "name": "MXMZ",
+        "url": "https://mxmz.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo nativa da nuvem, holandesa, nascida dentro da Southfields, da Banijay. Os designs vêm do Illustrator, Figma ou Canva como SVG e vão ao ar em HTML5, com interfaces de controle para esportes e integração com o Grass Valley AMPP e o Premiere."
+      },
+      {
+        "name": "Viz Flowics",
+        "url": "https://www.flowics.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma da Vizrt, no navegador e só na nuvem, para criar e operar grafismos HTML5 alimentados por dados, com saídas SDI, NDI e em nuvem."
+      },
+      {
+        "name": "Singular.live",
+        "url": "https://www.singular.live/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo ao vivo, nativa da web e por assinatura, usada por emissoras, esportes e esports, com um conversor de HTML para NDI (Recast) na saída."
+      },
+      {
+        "name": "Grass Valley AMPP Graphics",
+        "url": "https://www.grassvalley.com/latest-news-from-the-world-of-ampp/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "A ferramenta de grafismo HTML5 do próprio AMPP para tarjas e logos, disparada pelos painéis de controle e macros do AMPP. O AMPP também hospeda Singular, Flowics e MXMZ."
+      },
+      {
+        "name": "H2R Graphics",
+        "url": "https://h2r.graphics/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Aplicativo desktop gratuito, que funciona offline, para lower thirds, tickers e cronômetros, com saída no navegador para switchers de software."
+      }
+    ]
+  },
+  {
     "id": "community",
     "name": "Comunidade e documentação",
     "icon": "BookOpen",

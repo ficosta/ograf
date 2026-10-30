@@ -17,6 +17,7 @@ export const es: EcosystemCopy = {
   statusLabels: {
     soon: "próximamente",
     exploring: "en estudio",
+    notYet: "aún sin OGraf",
   },
   youAreHere: "Estás aquí",
   ctaTitle: "¿Falta algo en la lista?",

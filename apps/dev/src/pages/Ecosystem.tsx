@@ -7,6 +7,7 @@ import {
   ExternalLink,
   FileCode2,
   Gamepad2,
+  Globe,
   Heart,
   PenTool,
   Plus,
@@ -31,6 +32,7 @@ const ICON_MAP: Readonly<Record<string, LucideIcon>> = {
   Clapperboard,
   FileCode2,
   Gamepad2,
+  Globe,
   Heart,
   PenTool,
   Server,
@@ -64,6 +66,7 @@ const TYPE_STYLES: Record<EcoItem["type"], string> = {
 const STATUS_STYLES: Record<NonNullable<EcoItem["status"]>, string> = {
   soon: "bg-violet-50 text-violet-700 ring-violet-600/20",
   exploring: "bg-slate-100 text-slate-600 ring-slate-500/20",
+  notYet: "bg-slate-100 text-slate-500 ring-slate-500/20",
 };
 
 /** Initials for the fallback tile — most vendors publish no SVG logo. */
@@ -73,7 +76,9 @@ function monogram(name: string): string {
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
-const ALL_ITEMS = CATEGORIES.flatMap((c) => c.items);
+// Platforms listed for context (outsideOGraf) are not OGraf projects.
+const COUNTED = CATEGORIES.filter((c) => !c.outsideOGraf);
+const ALL_ITEMS = COUNTED.flatMap((c) => c.items);
 const TOTAL = ALL_ITEMS.length;
 const OSS_COUNT = ALL_ITEMS.filter((i) => i.type === "oss").length;
 const COMMERCIAL_COUNT = ALL_ITEMS.filter((i) => i.type === "commercial").length;
@@ -148,7 +153,7 @@ export function Ecosystem() {
               </p>
             </div>
             <div className="text-center">
-              <p className="font-display text-4xl font-light text-slate-900">{CATEGORIES.length}</p>
+              <p className="font-display text-4xl font-light text-slate-900">{COUNTED.length}</p>
               <p className="mt-1 text-xs font-medium uppercase tracking-wider text-slate-500">
                 {c.stats.categories}
               </p>

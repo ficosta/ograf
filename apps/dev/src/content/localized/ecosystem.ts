@@ -11,8 +11,11 @@ export interface EcoItem {
   readonly stars?: string;
   /** Path under /logos/. Falls back to a monogram tile when absent. */
   readonly logo?: string;
-  /** Support announced or being evaluated, but not shipping yet. */
-  readonly status?: "soon" | "exploring";
+  /**
+   * Support announced or being evaluated, but not shipping yet; or, for
+   * "notYet", an HTML graphics platform with no OGraf support at all.
+   */
+  readonly status?: "soon" | "exploring" | "notYet";
 }
 
 export interface EcoCategoryJson {
@@ -22,6 +25,8 @@ export interface EcoCategoryJson {
   readonly description: string;
   readonly items: readonly EcoItem[];
   readonly featured?: boolean;
+  /** Listed for context, not as OGraf tools: left out of the counts. */
+  readonly outsideOGraf?: boolean;
 }
 
 /**

@@ -15,6 +15,7 @@ export const en = {
   statusLabels: {
     soon: "coming soon",
     exploring: "exploring",
+    notYet: "not OGraf yet",
   },
   youAreHere: "You are here",
   ctaTitle: "Missing from the list?",

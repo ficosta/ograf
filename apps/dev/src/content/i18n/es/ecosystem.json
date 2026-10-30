@@ -367,6 +367,50 @@
     ]
   },
   {
+    "id": "html-platforms",
+    "name": "Otras plataformas de grafismo HTML",
+    "icon": "Globe",
+    "description": "Sistemas de grafismo para televisión que ya renderizan HTML, pero aún no leen ni escriben OGraf. Están aquí como referencia y no cuentan arriba — a cada uno le separa una exportación o importación.",
+    "outsideOGraf": true,
+    "items": [
+      {
+        "name": "MXMZ",
+        "url": "https://mxmz.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo nativa de la nube, neerlandesa, nacida dentro de Southfields, de Banijay. Los diseños llegan desde Illustrator, Figma o Canva como SVG y salen al aire en HTML5, con interfaces de control para deportes e integración con Grass Valley AMPP y Premiere."
+      },
+      {
+        "name": "Viz Flowics",
+        "url": "https://www.flowics.com/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de Vizrt, en el navegador y solo en la nube, para diseñar y operar grafismos HTML5 alimentados por datos, con salidas SDI, NDI y en la nube."
+      },
+      {
+        "name": "Singular.live",
+        "url": "https://www.singular.live/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Plataforma de grafismo en directo, nativa de la web y por suscripción, usada por cadenas, deportes y esports, con un conversor de HTML a NDI (Recast) para la salida."
+      },
+      {
+        "name": "Grass Valley AMPP Graphics",
+        "url": "https://www.grassvalley.com/latest-news-from-the-world-of-ampp/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "La herramienta de grafismo HTML5 del propio AMPP para rótulos y logos, que se dispara desde los paneles de control y macros de AMPP. AMPP también aloja Singular, Flowics y MXMZ."
+      },
+      {
+        "name": "H2R Graphics",
+        "url": "https://h2r.graphics/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Aplicación de escritorio gratuita, que funciona sin conexión, para rótulos, tickers y temporizadores, con salida en el navegador para mezcladores de software."
+      }
+    ]
+  },
+  {
     "id": "community",
     "name": "Comunidad y documentación",
     "icon": "BookOpen",

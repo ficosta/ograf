@@ -92,7 +92,7 @@ let full = llms;
 
 const ecoLines = [];
 for (const cat of ecosystem) {
-  ecoLines.push(`\n### ${cat.name}`);
+  ecoLines.push(`\n### ${cat.name}${cat.outsideOGraf ? " (not OGraf-compatible yet)" : ""}`);
   for (const item of cat.items ?? []) {
     const status = item.status ? ` [${item.status}]` : "";
     ecoLines.push(`- ${item.name} (${item.type}${status}) — ${item.desc} ${item.url}`);
