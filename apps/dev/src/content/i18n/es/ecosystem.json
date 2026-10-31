@@ -507,6 +507,37 @@
         "stars": "8",
         "status": "notYet",
         "desc": "Creador de overlays autoalojado que sirve grafismos animados como páginas HTML5 en vivo para vMix y OBS, pensado para producciones de una sola persona; tiene módulo para Companion. MPL-2.0."
+      },
+      {
+        "name": "TournamentStreamHelper",
+        "url": "https://github.com/joaorb64/TournamentStreamHelper",
+        "type": "oss",
+        "stars": "141",
+        "status": "notYet",
+        "desc": "Asistente de retransmisión para torneos de juegos de lucha que trae cuadros y jugadores de start.gg y alimenta una biblioteca de layouts HTML animados usados como browser source. MIT."
+      },
+      {
+        "name": "Melee Stream Tool",
+        "url": "https://github.com/Readek/Melee-Stream-Tool",
+        "type": "oss",
+        "stars": "85",
+        "status": "notYet",
+        "desc": "Marcador y panel de control para Super Smash Bros. Melee; los overlays son HTML y JavaScript puros cargados como browser source en OBS. MIT."
+      },
+      {
+        "name": "LoL Pick & Ban UI",
+        "url": "https://github.com/RCVolus/lol-pick-ban-ui",
+        "type": "oss",
+        "stars": "289",
+        "status": "notYet",
+        "desc": "Overlay web de la selección de campeones de League of Legends para torneos de esports, hecho en HTML, CSS y JS y alimentado por WebSocket. MIT."
+      },
+      {
+        "name": "LHM.gg",
+        "url": "https://lhm.gg/",
+        "type": "commercial",
+        "status": "notYet",
+        "desc": "Gestor de HUDs de Lexogrine para retransmisiones de CS2, League of Legends, Dota 2 y Valorant; los HUDs son apps web en React, con ejemplos open source y plan gratuito."
       }
     ]
   },
