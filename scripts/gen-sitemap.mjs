@@ -56,6 +56,7 @@ const STATIC_ROUTES = [
   { path: "/news", priority: "0.7", changefreq: "weekly", sources: [`${SRC}/pages/News.tsx`, `${CONTENT}/news.ts`, `${CONTENT}/news-items.json`, `${CONTENT}/events.json`, `${CONTENT}/presentations.json`, `${CONTENT}/videos.json`, `${CONTENT}/resources.json`] },
   { path: "/tools", priority: "0.8", changefreq: "monthly", sources: [`${SRC}/pages/Tools.tsx`] },
   { path: "/tools/schema-explorer", priority: "0.7", changefreq: "monthly", sources: [`${SRC}/pages/SchemaExplorer.tsx`, `${SRC}/lib/schema`] },
+  { path: "/tools/generator", priority: "0.8", changefreq: "monthly", sources: [`${SRC}/pages/Generator.tsx`, `${SRC}/lib/generator`, `${SRC}/components/generator`, "apps/dev/public/templates"] },
   { path: "/check", priority: "0.8", changefreq: "monthly", sources: [`${SRC}/pages/Check.tsx`, `${SRC}/lib/check`, `${SRC}/components/check`, `${CONTENT}/check-rules.json`] },
   { path: "/check/rules", priority: "0.6", changefreq: "monthly", sources: [`${SRC}/pages/CheckRules.tsx`, `${CONTENT}/check-rules.json`] },
   { path: "/about", priority: "0.5", changefreq: "yearly", sources: [`${SRC}/pages/About.tsx`] },

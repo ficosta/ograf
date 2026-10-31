@@ -31,6 +31,7 @@ const CheckRules = lazy(() => import("./pages/CheckRules").then((m) => ({ defaul
 const Check = lazy(() => import("./pages/Check").then((m) => ({ default: m.Check })));
 const Tools = lazy(() => import("./pages/Tools").then((m) => ({ default: m.Tools })));
 const SchemaExplorer = lazy(() => import("./pages/SchemaExplorer").then((m) => ({ default: m.SchemaExplorer })));
+const Generator = lazy(() => import("./pages/Generator").then((m) => ({ default: m.Generator })));
 const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 const PAGES: ReadonlyArray<readonly [path: string, Page: ComponentType]> = [
@@ -53,6 +54,7 @@ const PAGES: ReadonlyArray<readonly [path: string, Page: ComponentType]> = [
   ["/spec", Spec],
   ["/tools", Tools],
   ["/tools/schema-explorer", SchemaExplorer],
+  ["/tools/generator", Generator],
   ["/check/rules", CheckRules],
   ["/check", Check],
   ["/about", About],

@@ -29,7 +29,7 @@ export const es: ToolsCopy = {
       tagline: "Crea la base de un nuevo paquete OGraf a partir de un preajuste.",
       description: () =>
         "Elige una base (rótulo inferior, mosca, ticker, …), ajusta unos cuantos campos y descarga un paquete listo para editar, con manifiesto, módulo, hoja de estilos y fuentes locales ya bien conectados.",
-      badge: undefined,
+      badge: "Nuevo",
       open: "Abrir el generador de plantillas",
     },
   },

@@ -68,6 +68,7 @@ const guides = [
   `- [Specification Guide](${ORIGIN}/spec): packaging, manifest, lifecycle and the data schema, in plain language.`,
   `- [Schema Explorer](${ORIGIN}/tools/schema-explorer): every manifest field, with the operator-input types catalogued.`,
   `- [Package Checker](${ORIGIN}/check): validates a .zip against ${rules?.total ?? "80+"} rules and can run the graphic in a sandbox. Entirely client-side.`,
+  `- [Template Generator](${ORIGIN}/tools/generator): scaffolds a spec-valid OGraf package from one of the tutorial templates — name, id, colours, font, position and default data applied to the real files, previewed live, checked, downloaded as a zip. Entirely client-side.`,
   `- [History](${ORIGIN}/history): how the specification got to v1.`,
   `- [Ecosystem](${ORIGIN}/ecosystem): tools that read or write OGraf.`,
   `- [News & Events](${ORIGIN}/news): releases, talks and conference sessions.`,

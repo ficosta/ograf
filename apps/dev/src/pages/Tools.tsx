@@ -18,7 +18,7 @@ interface Tool {
 const TOOLS: readonly Tool[] = [
   { slug: "check", icon: ShieldCheck, href: "/check", status: "available" },
   { slug: "schema", icon: FileSearch, href: "/tools/schema-explorer", status: "available" },
-  { slug: "generator", icon: Wand2, href: "#", status: "coming-soon" },
+  { slug: "generator", icon: Wand2, href: "/tools/generator", status: "available" },
 ];
 
 export function Tools() {

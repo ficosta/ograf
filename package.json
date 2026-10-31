@@ -13,7 +13,7 @@
     "clean": "turbo clean",
     "setup:hooks": "git config core.hooksPath .githooks",
     "prepare": "git config core.hooksPath .githooks || true",
-    "check:selftest": "node scripts/check-selftest.mjs"
+    "check:selftest": "node scripts/check-selftest.mjs && node scripts/check-selftest.mjs scripts/generator-selftest.ts"
   },
   "devDependencies": {
     "turbo": "^2.5.0",

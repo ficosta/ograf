@@ -7,6 +7,8 @@
  * Vite rather than pulling in a test framework.
  *
  * Usage:  pnpm check:selftest        (from the repo root)
+ *         node scripts/check-selftest.mjs scripts/generator-selftest.ts
+ *                                     (bundle and run another suite)
  * Exits non-zero if any case fails, so it is CI-safe.
  */
 
@@ -38,12 +40,13 @@ if (!jszip) {
   process.exit(1);
 }
 
+const entry = process.argv[2] ? resolve(repoRoot, process.argv[2]) : join(repoRoot, "scripts/check-selftest.ts");
 const out = join(mkdtempSync(join(tmpdir(), "ograf-selftest-")), "selftest.mjs");
 
 execFileSync(
   esbuild,
   [
-    join(repoRoot, "scripts/check-selftest.ts"),
+    entry,
     "--bundle",
     "--platform=node",
     "--format=esm",

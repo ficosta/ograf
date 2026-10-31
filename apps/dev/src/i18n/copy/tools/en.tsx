@@ -28,7 +28,7 @@ export const en = {
       tagline: "Scaffold a new OGraf package from a preset.",
       description: (_rules: number) =>
         "Pick a base (lower third, bug, ticker, …), tweak a handful of fields, and download a ready-to-edit package with manifest, module, stylesheet, and local fonts already wired up correctly.",
-      badge: undefined as string | undefined,
+      badge: "New" as string | undefined,
       open: "Open template generator",
     },
   },

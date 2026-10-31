@@ -29,7 +29,7 @@ export const pt: ToolsCopy = {
       tagline: "Crie a base de um novo pacote OGraf a partir de um modelo.",
       description: () =>
         "Escolha uma base (lower third, bug, ticker, …), ajuste alguns campos e baixe um pacote pronto para editar, com manifesto, módulo, folha de estilos e fontes locais já conectados corretamente.",
-      badge: undefined,
+      badge: "Novo",
       open: "Abrir o gerador de templates",
     },
   },
